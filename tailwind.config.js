@@ -14,7 +14,23 @@ export default {
       'lg': '1280px',
       'xl': '1536px',
     },
-    extend: {}
+    extend: {
+      colors: {
+        'brand': {
+          50: '#fefae8',
+          100: '#fef2c3',
+          200: '#fee78a',
+          300: '#fdd847',
+          DEFAULT: '#facc15',
+          400: '#eabd08',
+          500: '#caa204',
+          600: '#a18207',
+          700: '#856d0e',
+          800: '#715e12',
+          900: '#423606',
+        },
+      }
+    }
   },
 
 	plugins: [
