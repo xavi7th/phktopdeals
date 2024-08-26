@@ -1,12 +1,68 @@
 <!doctype html>
 <html lang="en">
 	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <title>PHKTopDeals</title>
+
+    <link rel="dns-prefetch" href="//fonts.bunny.net">
+    <link rel="preconnect" href="https://fonts.bunny.net">
+
+    <link rel="shortcut icon" href="%sveltekit.assets%/favicon.png" type="image/png">
+		<link rel="icon" href="%sveltekit.assets%/favicon.png" type="image/png"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="Experience a groundbreaking e-commerce revolution with PHKTopDeals! Our blockchain-powered platform seamlessly integrates cryptocurrency transactions, offering over 190,000 virtual items worldwide. Step into the future of online shopping with instant delivery, support for 90+ cryptocurrencies, and strategic partnerships. Join PHKTopDeals and transform the way you shop online." />
+
+    <meta name="abstract" content="Experience a groundbreaking e-commerce revolution with PHKTopDeals! Our blockchain-powered platform seamlessly integrates cryptocurrency transactions, offering over 190,000 virtual items worldwide. Step into the future of online shopping with instant delivery, support for 90+ cryptocurrencies, and strategic partnerships. Join PHKTopDeals and transform the way you shop online." />
+    <meta name="author" content="Daniel Akhile">
+
+    <meta itemprop="name" content="PHKTopDeals Ltd">
+    <link itemprop="url" href="https://theelects.com">
+    <meta name="theme-color" content="#facc15">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#facc15">
+
+    <meta property="og:description" content="Experience a groundbreaking e-commerce revolution with PHKTopDeals! Our blockchain-powered platform seamlessly integrates cryptocurrency transactions, offering over 190,000 virtual items worldwide. Step into the future of online shopping with instant delivery, support for 90+ cryptocurrencies, and strategic partnerships. Join PHKTopDeals and transform the way you shop online." />
+    <meta property="og:title" content="PHKTopDeals Ltd" />
+    <meta property="og:site_name" content="PHKTopDeals Ltd" />
+    <meta property="og:url" content="https://theelects.com" />
+    <meta property="og:image" content="/the-elects-card-image-960x960.jpg" />
+
+    <meta name="twitter:card" content="summary_large_images" />
+    <meta name="twitter:site" content="@the_elects" />
+    <meta name="twitter:url" content="https://theelects.com" />
+    <meta name="twitter:description" content="Experience a groundbreaking e-commerce revolution with PHKTopDeals! Our blockchain-powered platform seamlessly integrates cryptocurrency transactions, offering over 190,000 virtual items worldwide. Step into the future of online shopping with instant delivery, support for 90+ cryptocurrencies, and strategic partnerships. Join PHKTopDeals and transform the way you shop online." />
+    <meta name="twitter:title" content="PHKTopDeals Ltd" />
+    <meta name="twitter:image" content="/the-elects-card-image-960x960.jpg" />
+
+    <meta name="robots" content="index,follow">
+
+    <link href="https://fonts.bunny.net/css?family=exo-2:100,200,300,400,500,600,700|noto-sans:100,200,300,500,700|roboto:100,100i,400,400i,500,500i,700|tajawal:200,400,500,700&display=swap" rel="stylesheet" />
+
+
 		%sveltekit.head%
+
 	</head>
 	<body data-sveltekit-preload-data="hover">
-		<div style="display: contents">%sveltekit.body%</div>
+    <div id="google_translate_element"></div>
+
+		<div style="display: contents">
+      %sveltekit.body%
+    </div>
+
+    <a href="#" data-target="html" class="scroll-to-target scroll-to-top">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-up" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#fff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+        <path d="M6 15l6 -6l6 6" />
+      </svg>
+    </a>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" referrerpolicy="no-referrer"></script>
+
+		<script>
+      Modernizr.addTest('ios', function() { //Add Modernizr test to detect ios devices
+        return navigator.userAgent.match(/(iPad|iPhone|iPod)/g) || ((navigator.userAgent.includes('Macintosh') || navigator.userAgent.includes('MacIntel')) && navigator.maxTouchPoints >= 1);
+      });
+		</script>
 	</body>
 </html>
