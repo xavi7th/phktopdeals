@@ -9,7 +9,7 @@
 		<div class="w-full">
 			<div class="mx-auto flex max-w-screen-lg gap-x-60">
 				<div class="flex w-full flex-col md:w-4/5">
-					<Typewriter mode="loop" element="h1" --cursor-color="white" --cursor-width="2px">
+					<Typewriter mode="loop" element="h1" --cursor-color="white" --cursor-width="2px" interval={60} wordInterval={2000} unwriteInterval={80}>
 						<span data-static>Buy</span>
 						<span>eSim</span>
 						<span>Software</span>

@@ -1,6 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-	content: ['./src/**/*.{html,js,svelte,ts}'],
+	content: [
+    './node_modules/preline/preline.js',
+    './src/**/*.{html,js,svelte,ts}',
+  ],
 
   theme: {
     // => @media (min-width: Xpx) { ... }
@@ -17,5 +20,6 @@ export default {
 	plugins: [
     require('@tailwindcss/typography'),
     require('@tailwindcss/forms'),
+    require('preline/plugin'),
   ]
 };
