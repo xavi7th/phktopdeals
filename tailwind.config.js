@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'selector',
 	content: [
     './node_modules/preline/preline.js',
     './src/**/*.{html,js,svelte,ts}',
