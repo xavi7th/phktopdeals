@@ -15,6 +15,9 @@ export default {
       'lg': '1280px',
       'xl': '1536px',
     },
+    container: {
+      center: true,
+    },
     extend: {
       colors: {
         'brand': {

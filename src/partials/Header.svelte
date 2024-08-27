@@ -1,7 +1,7 @@
 <header class="fixed z-10 flex w-full flex-wrap bg-black/40 py-4 text-sm backdrop-blur sm:flex-nowrap sm:justify-start dark:bg-neutral-900 dark:lg:bg-transparent">
   <nav class="mx-auto flex w-full max-w-[85rem] basis-full flex-wrap items-center justify-between px-4">
     <a class="flex-none text-xl font-semibold focus:opacity-80 focus:outline-none sm:order-1 dark:text-white" href="/">
-      <img class="rounded-full" src="https://images.unsplash.com/photo-1612810806563-4cb8265db55f?q=80&w=500&h=500&auto=format&fit=crop" alt="Logo" width="50" />
+      <enhanced:img class="py-3 lg:py-5 w-20 h-auto md:w-28 lg:w-32 text-neutral-400" src="$lib/images/partners/binance-logo.png?enhance&w=100" alt="partner-img-thumb" />
     </a>
 
     <div class="flex items-center gap-x-2 sm:order-4 sm:hidden">
