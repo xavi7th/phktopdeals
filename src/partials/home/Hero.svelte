@@ -154,7 +154,7 @@
         </div>
 
         <div class="bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
-          <a href="/shop" target="_blank">
+          <a href="/store" target="_blank">
             <enhanced:img class="h-full rounded-xl" src="$lib/images/buy-with-binance.webp?enhance" alt="hero-img-thumb" />
           </a>
         </div>

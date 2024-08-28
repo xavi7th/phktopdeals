@@ -3,7 +3,7 @@
 </script>
 
 
-<section class="w-full mt-20">
+<section class="w-full mt-20 mb-10">
   <div class="container">
     <div class="row px-8">
       <div class="max-w-2xl mx-auto text-center mb-10 lg:mb-14">

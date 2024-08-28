@@ -7,6 +7,14 @@ html{
                 Noto Sans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji";
 }
 
+body,
+.dark,
+.light {
+  --tw-text-opacity: 1;
+  --tw-bg-opacity: 1;
+  background-color:rgba(245, 245, 245 , var(--tw-bg-opacity));
+}
+
 @layer utilities {
   .text-title {
     @apply text-2xl font-bold capitalize md:text-4xl md:leading-tight dark:text-brand-500/80 text-brand-900/70;

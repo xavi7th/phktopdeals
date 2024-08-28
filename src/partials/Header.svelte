@@ -47,10 +47,11 @@
       aria-labelledby="hs-navbar-alignment-collapse"
     >
       <div class="mt-5 flex flex-col gap-5 sm:mt-0 sm:flex-row sm:items-center">
-        <a class="p-3.5 font-medium text-blue-500 focus:outline-none ml-4" href="#" aria-current="page">Landing</a>
-        <a class="p-3.5 font-medium text-gray-600 hover:text-gray-400 focus:text-gray-400 focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500" href="#">Account</a>
-        <a class="p-3.5 font-medium text-gray-600 hover:text-gray-400 focus:text-gray-400 focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500" href="#">Work</a>
-        <a class="mr-1 inline-flex items-center gap-x-3 rounded-full bg-gray-800 px-5 py-3 text-xs font-medium text-white hover:bg-gray-900 focus:bg-gray-900 focus:outline-none dark:bg-white dark:text-neutral-800" href="#">Sign In</a>
+        <a class="p-3.5 font-bold tracking-tighter text-brand-500 focus:outline-none ml-4" href="/store/gift-cards" aria-current="page">Games</a>
+        <a class="p-3.5 font-bold tracking-tighter text-gray-600 hover:text-gray-400 focus:text-gray-400 focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500" href="/store/gift-cards">Gift Cards</a>
+        <a class="p-3.5 font-bold tracking-tighter text-gray-600 hover:text-gray-400 focus:text-gray-400 focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500" href="/store/gift-cards">eSims</a>
+        <a class="p-3.5 font-bold tracking-tighter text-gray-600 hover:text-gray-400 focus:text-gray-400 focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500" href="/store/gift-cards">Top-Up</a>
+        <a class="mr-1 inline-flex items-center gap-x-3 rounded-full bg-gray-800 px-5 py-3 text-xs font-bold tracking-tighter text-white hover:bg-gray-900 focus:bg-gray-900 focus:outline-none dark:bg-white dark:text-neutral-800" href="#">Sign In</a>
       </div>
     </div>
 
