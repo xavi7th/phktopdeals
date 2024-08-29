@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "@preline/carousel": "^2.4.1",
+    "@preline/select": "^2.4.1",
     "@preline/theme-switch": "^2.4.1",
     "@sveltejs/adapter-auto": "^3.0.0",
     "@sveltejs/enhanced-img": "^0.3.3",

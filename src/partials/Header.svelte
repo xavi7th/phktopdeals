@@ -1,7 +1,7 @@
-<header class="fixed z-10 flex w-full flex-wrap bg-black/40 py-4 text-sm backdrop-blur sm:flex-nowrap sm:justify-start dark:bg-neutral-900 dark:lg:bg-transparent">
-  <nav class="mx-auto flex w-full max-w-[85rem] basis-full flex-wrap items-center justify-between px-4">
+<header class="fixed z-30 flex w-full flex-wrap bg-black/40 py-4 text-sm backdrop-blur sm:flex-nowrap sm:justify-start dark:bg-neutral-900 dark:sm:bg-transparent">
+  <nav class="mx-auto flex w-full max-w-[85rem] basis-full flex-wrap items-center justify-between sm:px-4">
     <a class="flex-none text-xl font-semibold focus:opacity-80 focus:outline-none sm:order-1 dark:text-white" href="/">
-      <enhanced:img class="py-3 lg:py-5 w-20 h-auto md:w-28 lg:w-32 text-neutral-400" src="$lib/images/partners/binance-logo.png?enhance&w=100" alt="partner-img-thumb" />
+      <enhanced:img class="py-3 sm:py-5 w-20 h-auto md:w-28 sm:w-32 text-neutral-400" src="$lib/images/partners/binance-logo.png?enhance&w=100" alt="partner-img-thumb" />
     </a>
 
     <div class="flex items-center gap-x-2 sm:order-4 sm:hidden">
@@ -43,15 +43,15 @@
 
     <div
       id="hs-navbar-alignment"
-      class="hs-collapse hidden grow basis-full space-x-0.5 overflow-hidden rounded-full border border-gray-200 transition-all duration-300 sm:order-2 sm:block sm:grow-0 sm:basis-auto dark:border-white/20 bg-gray-200"
+      class="hs-collapse hidden grow basis-full space-x-0.5 overflow-hidden rounded-0 sm:rounded-full border border-gray-200 transition-all duration-300 sm:order-2 sm:block sm:grow-0 sm:basis-auto dark:border-white/20 bg-gray-200"
       aria-labelledby="hs-navbar-alignment-collapse"
     >
-      <div class="mt-5 flex flex-col gap-5 sm:mt-0 sm:flex-row sm:items-center">
-        <a class="p-3.5 font-bold tracking-tighter text-brand-500 focus:outline-none ml-4" href="/store/gift-cards" aria-current="page">Games</a>
-        <a class="p-3.5 font-bold tracking-tighter text-gray-600 hover:text-gray-400 focus:text-gray-400 focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500" href="/store/gift-cards">Gift Cards</a>
-        <a class="p-3.5 font-bold tracking-tighter text-gray-600 hover:text-gray-400 focus:text-gray-400 focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500" href="/store/gift-cards">eSims</a>
-        <a class="p-3.5 font-bold tracking-tighter text-gray-600 hover:text-gray-400 focus:text-gray-400 focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500" href="/store/gift-cards">Top-Up</a>
-        <a class="mr-1 inline-flex items-center gap-x-3 rounded-full bg-gray-800 px-5 py-3 text-xs font-bold tracking-tighter text-white hover:bg-gray-900 focus:bg-gray-900 focus:outline-none dark:bg-white dark:text-neutral-800" href="#">Sign In</a>
+      <div class="flex flex-col sm:gap-5 sm:flex-row sm:items-center divide-y sm:divide-y-0">
+        <a class="p-3.5 border-gray-400/60 font-bold tracking-tighter text-brand-500 focus:outline-none sm:ml-4" href="/store/games" aria-current="page">Games</a>
+        <a class="p-3.5 border-gray-400/60 font-bold tracking-tighter text-gray-600 hover:text-gray-400 focus:text-gray-400 focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500" href="/store/gift-cards">Gift Cards</a>
+        <a class="p-3.5 border-gray-400/60 font-bold tracking-tighter text-gray-600 hover:text-gray-400 focus:text-gray-400 focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500" href="/store/e-sims">eSims</a>
+        <a class="p-3.5 border-gray-400/60 font-bold tracking-tighter text-gray-600 hover:text-gray-400 focus:text-gray-400 focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500" href="/store/top-up">Top-Up</a>
+        <a class="hidden sm:block mr-1 inline-flex items-center gap-x-3 sm:rounded-full bg-gray-800 px-5 py-3 text-xs font-bold tracking-tighter text-white  hover:bg-gray-900 focus:bg-gray-900 focus:outline-none dark:bg-white dark:text-neutral-800 dark:hover:text-white" href="#">Sign In</a>
       </div>
     </div>
 

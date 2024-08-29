@@ -52,7 +52,7 @@
               <div class="w-full h-px flex-1 border border-double border-brand-200 group-last:hidden"></div>
             </div>
 
-            <div class="max-w-xs flex flex-col bg-white dark:bg-neutral-900">
+            <div class="max-w-xs flex flex-col dark:bg-neutral-900">
               <div class="py-5 pr-6">
                 <h3 class="text-md font-bold text-gray-600 dark:text-white">
                   {step.title}
@@ -73,7 +73,7 @@
             <div class="w-full h-px flex-1 border border-double border-brand-200 group-last:hidden"></div>
           </div>
 
-          <div class="max-w-xs flex flex-col bg-white dark:bg-neutral-900">
+          <div class="max-w-xs flex flex-col dark:bg-neutral-900">
             <div class="py-5 pr-6">
               <h3 class="text-md font-bold text-gray-600 dark:text-white">
                 Browse our catalog
@@ -93,7 +93,7 @@
             <div class="w-full h-px flex-1 border border-double border-brand-200 group-last:hidden"></div>
           </div>
 
-          <div class="max-w-xs flex flex-col bg-white dark:bg-neutral-900">
+          <div class="max-w-xs flex flex-col dark:bg-neutral-900">
             <div class="py-5 pr-6">
               <h3 class="text-md font-bold text-gray-600 dark:text-white">
                 Add product to cart
@@ -113,7 +113,7 @@
             <div class="w-full h-px flex-1 border border-double border-brand-200 group-last:hidden"></div>
           </div>
 
-          <div class="max-w-xs flex flex-col bg-white dark:bg-neutral-900">
+          <div class="max-w-xs flex flex-col dark:bg-neutral-900">
             <div class="py-5 pr-6">
               <h3 class="text-md font-bold text-gray-600 dark:text-white">
                 Pay with Cryptos
@@ -133,7 +133,7 @@
             <div class="w-full h-px flex-1 border border-double border-brand-200 group-last:hidden"></div>
           </div>
 
-          <div class="max-w-xs flex flex-col bg-white dark:bg-neutral-900">
+          <div class="max-w-xs flex flex-col dark:bg-neutral-900">
             <div class="py-5 pr-6">
               <h3 class="text-md font-bold text-gray-600 dark:text-white">
                 That’s it, Order processed!
