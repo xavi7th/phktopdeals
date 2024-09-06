@@ -12,6 +12,7 @@
     "format": "prettier --write ."
   },
   "devDependencies": {
+    "@preline/accordion": "^2.4.1",
     "@preline/carousel": "^2.4.1",
     "@preline/select": "^2.4.1",
     "@preline/theme-switch": "^2.4.1",
