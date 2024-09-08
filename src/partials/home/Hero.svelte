@@ -71,20 +71,20 @@
         {/each}
       </div>
 
-      <div class="grid grid-cols-5 gap-3 mt-28 mb-8 h-80">
+      <div class="grid grid-cols-5 gap-3 mt-28 mb-8 h-[450px]">
         <div class="bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
           <a href="http://goofle.com" target="_blank">
-            <enhanced:img class="h-full rounded-xl" src="$lib/images/buy-with-gate.io.svg?enhance" alt="hero-img-thumb" />
+            <enhanced:img class="h-full rounded-xl w-full" src="$lib/images/buy-with-gate.io.svg?enhance" alt="hero-img-thumb" />
           </a>
         </div>
 
-        <div class="col-span-3 bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
+        <div class="col-span-3 bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70 !h-[450px]">
 
-          <div class="w-full bg-white rounded-lg shadow-md dark:bg-neutral-800">
-            <div data-hs-carousel='{ `{"loadingClasses": "opacity-0", "isAutoPlay": "true"}` }' class="relative">
-              <div class="hs-carousel relative overflow-hidden w-full h-80 bg-white rounded-lg">
-                <div class="hs-carousel-body absolute top-0 bottom-0 start-0 flex flex-nowrap transition-transform duration-700 opacity-0">
-                  <div class="hs-carousel-slide">
+          <div class="w-full h-full bg-white rounded-lg shadow-md dark:bg-neutral-800">
+            <div data-hs-carousel='{ `{"loadingClasses": "opacity-0", "isAutoPlay": "true"}` }' class="relative h-full">
+              <div class="hs-carousel relative overflow-hidden w-full h-full bg-white rounded-lg">
+                <div class="hs-carousel-body absolute top-0 bottom-0 start-0 flex flex-nowrap transition-transform duration-700 opacity-0 h-full">
+                  <div class="hs-carousel-slide h-full">
                     <a href="/shop" target="_blank">
                       <enhanced:img class="h-full w-full rounded-xl" src="$lib/images/sliders/hero-slider-2.png?enhance" alt="hero-img-thumb" />
                     </a>
