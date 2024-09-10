@@ -1,4 +1,4 @@
-<footer class="bg-gray-900 w-full dark:bg-neutral-950 relative overflow-hidden mt-12 border-t-[2.5rem] rounded-3xl border-brand-400">
+<footer class="bg-gray-900 w-full dark:bg-neutral-950 relative overflow-hidden mt-12 border-t-[2.5rem] rounded-3xl border-brand-400 z-50">
   <svg class="absolute -bottom-20 start-1/2 w-[1900px] transform -translate-x-1/2" width="2745" height="488" viewBox="0 0 2745 488" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M0.5 330.864C232.505 403.801 853.749 527.683 1482.69 439.719C2111.63 351.756 2585.54 434.588 2743.87 487" class="stroke-neutral-700/50" stroke="currentColor"/>
     <path d="M0.5 308.873C232.505 381.81 853.749 505.692 1482.69 417.728C2111.63 329.765 2585.54 412.597 2743.87 465.009" class="stroke-neutral-700/50" stroke="currentColor"/>
