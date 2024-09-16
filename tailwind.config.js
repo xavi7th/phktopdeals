@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: 'selector',
-	content: [
+  content: [
     './node_modules/preline/preline.js',
     './src/**/*.{html,js,svelte,ts}',
   ],
@@ -21,23 +21,23 @@ export default {
     extend: {
       colors: {
         'brand': {
-          50: '#fefae8',
-          100: '#fef2c3',
-          200: '#fee78a',
-          300: '#fdd847',
-          DEFAULT: '#facc15',
-          400: '#eabd08',
-          500: '#caa204',
-          600: '#a18207',
-          700: '#856d0e',
-          800: '#715e12',
-          900: '#423606',
+          50: '#bdbeda',
+          100: '#5f61b0',
+          200: '#3538b0',
+          300: '#202391',
+          DEFAULT: '#2225a1',
+          400: '#2a2d95',
+          500: '#232450',
+          600: '#232450',
+          700: '#101175',
+          800: '#1a1b82',
+          900: '#101151',
         },
       }
     }
   },
 
-	plugins: [
+  plugins: [
     require('@tailwindcss/typography'),
     require('@tailwindcss/forms'),
     require('preline/plugin'),
