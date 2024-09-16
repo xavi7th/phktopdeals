@@ -21,7 +21,7 @@
 
                 <div class="flex flex-wrap items-start gap-1.5">
                   {#each Array(10) as item}
-                    <span class="inline-flex items-center py-1 px-2 rounded-full text-xs bg-brand-200 text-brand-900 dark:bg-brand-800/30 dark:text-brand-400">10 USDT</span>
+                    <span class="inline-flex items-center py-1 px-2 rounded-full text-xs bg-brand-200 text-brand-50 dark:bg-brand-800/30 dark:text-brand-50">10 USDT</span>
                   {/each}
                 </div>
               </div>
@@ -31,7 +31,7 @@
                 <a href="#"><span class="w-10 h-10 flex justify-center items-center bg-gray-100/80 hover:bg-brand-200/80 rounded">{@html favoriteIcon }</span></a>
               </div>
 
-              <button class="transition-colors duration-300 bg-brand hover:bg-brand-500 border-t rounded-b-xl py-3 px-4 md:py-4 md:px-5 dark:bg-brand-900 dark:border-brand-700 mt-1 text-sm text-black dark:text-brand-50 hover:text-white">
+              <button class="transition-colors duration-300 bg-brand hover:bg-brand-500 border-t rounded-b-xl py-3 px-4 md:py-4 md:px-5 dark:bg-brand-900 dark:border-brand-700 mt-1 text-sm text-white  dark:text-brand-50 hover:text-white">
                 ADD TO CART
               </button>
             </div>

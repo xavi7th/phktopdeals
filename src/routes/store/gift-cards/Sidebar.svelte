@@ -18,10 +18,10 @@
       </div>
 
       <div class="flex justify-around mt-5">
-        <button type="button" class="py-1.5 px-5 inline-flex items-center font-medium rounded-lg border border-transparent bg-brand text-brand-800 hover:bg-brand-700 hover:text-brand-50 focus:outline-none focus:bg-brand-700 disabled:opacity-50 disabled:pointer-events-none">
+        <button type="button" class="py-1.5 px-5 inline-flex items-center font-medium rounded-lg border border-transparent bg-brand text-brand-50 hover:bg-brand-700 hover:text-brand-50 focus:outline-none focus:bg-brand-700 disabled:opacity-50 disabled:pointer-events-none">
           MasterCard
         </button>
-        <button type="button" class="py-1.5 px-5 inline-flex items-center font-medium rounded-lg border border-transparent bg-brand text-brand-800 hover:bg-brand-700 hover:text-brand-50 focus:outline-none focus:bg-brand-700 disabled:opacity-50 disabled:pointer-events-none">
+        <button type="button" class="py-1.5 px-5 inline-flex items-center font-medium rounded-lg border border-transparent bg-brand text-brand-50 hover:bg-brand-700 hover:text-brand-50 focus:outline-none focus:bg-brand-700 disabled:opacity-50 disabled:pointer-events-none">
           Subscriptions
         </button>
       </div>
@@ -29,7 +29,7 @@
 
 
     <div class="py-6">
-      <div class="mb-1"><h1 class="text-black text-base font-500">Product categories</h1></div>
+      <div class="mb-1"><h1 class="text-black dark:text-white text-base font-500">Product categories</h1></div>
 
       <div class="filter-items">
         <ul>

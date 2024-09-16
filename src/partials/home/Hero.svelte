@@ -24,7 +24,7 @@
           <span>Airbnb</span>
 
           <SvgIcon svgHeight={25} svgWidth={568} data-static class="typewriter-stroke">
-            <path data-static opacity="0.7" d="M2 22.5972C104.5 10.5972 295 -16.4028 566 22.5972" stroke="#FFDA1C" stroke-opacity="0.42" stroke-width="3" stroke-linecap="round"/>
+            <path data-static opacity="0.7" d="M2 22.5972C104.5 10.5972 295 -16.4028 566 22.5972" stroke="#5f61b0" stroke-opacity="0.42" stroke-width="3" stroke-linecap="round"/>
           </SvgIcon>
         </Typewriter>
 
@@ -41,7 +41,7 @@
                   <path d="m21 21-4.3-4.3"></path>
                 </svg>
               </div>
-              <button type="button" class="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold text-gray-800
+              <button type="button" class="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold text-slate-100
                             rounded-e-md border border-transparent bg-brand-400 hover:bg-brand-500 focus:outline-none
                             focus:bg-brand-500 disabled:opacity-50 disabled:pointer-events-none text-nowrap">
                 Start Shopping

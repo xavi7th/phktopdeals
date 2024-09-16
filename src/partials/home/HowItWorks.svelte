@@ -36,7 +36,7 @@
           How It Works
 
           <SvgIcon svgHeight={25} svgWidth={568} data-static class="absolute !w-1/4 -bottom-9 left-1/2">
-            <path data-static opacity="1" d="M2 22.5972C104.5 10.5972 295 -16.4028 566 22.5972" stroke="#FFDA1C" stroke-opacity="1" stroke-width="5" stroke-linecap="round"/>
+            <path data-static opacity="1" d="M2 22.5972C104.5 10.5972 295 -16.4028 566 22.5972" stroke="#101151" stroke-opacity="1" stroke-width="5" stroke-linecap="round"/>
           </SvgIcon>
         </h2>
       </div>
