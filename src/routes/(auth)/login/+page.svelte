@@ -24,7 +24,7 @@
                     </div>
                     <div class="space-y-10"><div class="mt-8 flex items-center">
                         <div class="mt-px flex-auto border-t"></div>
-                        <div class="text-bold text-secondary mx-2 text-2xl dark:text-slate-50"> Or </div>
+                        <div class="text-bold text-secondary mx-6 text-md dark:text-slate-50"> Or </div>
                         <div class="mt-px flex-auto border-t"></div>
                     </div>
                     <form action="" class="flex flex-col gap-4">
