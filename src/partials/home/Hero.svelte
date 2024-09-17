@@ -62,7 +62,7 @@
         {/each}
 
         {#each Array(3) as n}
-          <span class="relative mr-0.5">
+          <span class="relative mr-0.5 hidden lg:block">
             <span class="flex absolute top-[-5px] start-0 size-2">
               <span class="animate-ping absolute inline-flex size-full rounded-full bg-brand-50 opacity-25 dark:bg-brand-600"></span>
               <span class="relative inline-flex rounded-full size-2 bg-brand-400"></span>
@@ -71,20 +71,20 @@
         {/each}
       </div>
 
-      <div class="grid grid-cols-5 gap-3 mt-28 mb-8 h-80">
-        <div class="bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
+      <div class="grid grid-cols-5 gap-3 mt-28 mb-8 h-max content-start">
+        <div class="col-span-2 sm:col-span-1 bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
           <a href="http://goofle.com" target="_blank">
-            <enhanced:img class="h-full rounded-xl" src="$lib/images/buy-with-gate.io.svg?enhance" alt="hero-img-thumb" />
+            <enhanced:img class="md:h-full rounded-xl w-full" src="$lib/images/buy-with-gate.io.svg?enhance" alt="hero-img-thumb" />
           </a>
         </div>
 
-        <div class="col-span-3 bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
+        <div class="order-last md:order-none col-span-5 md:col-span-3 bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70 h-[200px] sm:h-[300px] lg:!h-[360px]">
 
-          <div class="w-full bg-white rounded-lg shadow-md dark:bg-neutral-800">
-            <div data-hs-carousel='{ `{"loadingClasses": "opacity-0", "isAutoPlay": "true"}` }' class="relative">
-              <div class="hs-carousel relative overflow-hidden w-full h-80 bg-white rounded-lg">
-                <div class="hs-carousel-body absolute top-0 bottom-0 start-0 flex flex-nowrap transition-transform duration-700 opacity-0">
-                  <div class="hs-carousel-slide">
+          <div class="w-full h-full bg-white rounded-lg shadow-md dark:bg-neutral-800">
+            <div data-hs-carousel='{ `{"loadingClasses": "opacity-0", "isAutoPlay": "true"}` }' class="relative h-full">
+              <div class="hs-carousel relative overflow-hidden w-full h-full bg-white rounded-lg">
+                <div class="hs-carousel-body absolute top-0 bottom-0 start-0 flex flex-nowrap transition-transform duration-700 opacity-0 h-full">
+                  <div class="hs-carousel-slide h-full">
                     <a href="/shop" target="_blank">
                       <enhanced:img class="h-full w-full rounded-xl" src="$lib/images/sliders/hero-slider-2.png?enhance" alt="hero-img-thumb" />
                     </a>
@@ -153,9 +153,9 @@
           </div>
         </div>
 
-        <div class="bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
+        <div class="col-span-2 sm:col-span-1 col-start-4 sm:col-start-5 bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
           <a href="/store" target="_blank">
-            <enhanced:img class="h-full rounded-xl" src="$lib/images/buy-with-binance.webp?enhance" alt="hero-img-thumb" />
+            <enhanced:img class="md:h-full rounded-xl" src="$lib/images/buy-with-binance.webp?enhance" alt="hero-img-thumb" />
           </a>
         </div>
       </div>
