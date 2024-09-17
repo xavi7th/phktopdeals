@@ -70,7 +70,7 @@
             <div class="min-w-7 min-h-7 inline-flex justify-center items-center text-xs align-middle">
               <enhanced:img class="shrink-0 size-20 rounded-md" src="$lib/images/steps/step-1-browse.png?enhance" alt=" icon" />
             </div>
-            <div class="w-full h-px flex-1 border border-double border-brand-200 group-last:hidden"></div>
+            <div class="md:block hidden w-full h-px flex-1 border border-double border-brand-200 group-last:hidden"></div>
           </div>
 
           <div class="max-w-xs flex flex-col dark:bg-neutral-900">
@@ -90,7 +90,7 @@
             <div class="min-w-7 min-h-7 inline-flex justify-center items-center text-xs align-middle">
               <enhanced:img class="shrink-0 size-20 rounded-md" src="$lib/images/steps/step-2-add-to-cart.png?enhance" alt=" icon" />
             </div>
-            <div class="w-full h-px flex-1 border border-double border-brand-200 group-last:hidden"></div>
+            <div class="md:block hidden w-full h-px flex-1 border border-double border-brand-200 group-last:hidden"></div>
           </div>
 
           <div class="max-w-xs flex flex-col dark:bg-neutral-900">
@@ -110,7 +110,7 @@
             <div class="min-w-7 min-h-7 inline-flex justify-center items-center text-xs align-middle">
               <enhanced:img class="shrink-0 size-20 rounded-md" src="$lib/images/steps/step-3-make-payment.png?enhance" alt="partner-img-thumb" />
             </div>
-            <div class="w-full h-px flex-1 border border-double border-brand-200 group-last:hidden"></div>
+            <div class="md:block hidden w-full h-px flex-1 border border-double border-brand-200 group-last:hidden"></div>
           </div>
 
           <div class="max-w-xs flex flex-col dark:bg-neutral-900">

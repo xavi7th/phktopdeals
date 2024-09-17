@@ -1,7 +1,13 @@
+<script lang="ts">
+  function navigate(route:string) {
+    window.location.href = route;
+  }
+</script>
+
 <header class="fixed z-30 flex w-full flex-wrap bg-black/40 py-4 text-sm backdrop-blur sm:flex-nowrap sm:justify-start dark:bg-neutral-900 dark:sm:bg-transparent">
   <nav class="mx-auto flex w-full max-w-[85rem] basis-full flex-wrap items-center justify-between sm:px-4">
     <a class="flex-none text-xl font-semibold focus:opacity-80 focus:outline-none sm:order-1 dark:text-white" href="/">
-      <enhanced:img class="py-3 sm:py-5 w-20 h-auto md:w-28 sm:w-32 text-neutral-400" src="$lib/images/partners/binance-logo.png?enhance&w=100" alt="partner-img-thumb" />
+      <enhanced:img class="w-10 sm:w-14 pl-2 ml-2 text-neutral-400" src="$lib/images/logos/logo-light.png?enhance&w=150" alt="partner-img-thumb" />
     </a>
 
     <div class="flex items-center gap-x-2 sm:order-4 sm:hidden">
@@ -36,9 +42,9 @@
         </svg>
         <span class="sr-only">Toggle</span>
       </button>
-      <button type="button" class="mr-1 inline-flex items-center gap-x-3 rounded-full bg-gray-800 px-5 py-3 text-xs font-medium text-white hover:bg-gray-900 focus:bg-gray-900 focus:outline-none dark:bg-white dark:text-neutral-800">
+      <a href="/login" type="button" class="mr-1 inline-flex items-center gap-x-3 rounded-full bg-gray-800 px-5 py-3 text-xs font-medium text-white hover:bg-gray-900 focus:bg-gray-900 focus:outline-none dark:bg-white dark:text-neutral-800">
         Sign In
-      </button>
+      </a>
     </div>
 
     <div
@@ -51,7 +57,7 @@
         <a class="p-3.5 border-gray-400/60 font-bold tracking-tighter text-gray-600 hover:text-gray-400 focus:text-gray-400 focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500" href="/store/gift-cards">Gift Cards</a>
         <a class="p-3.5 border-gray-400/60 font-bold tracking-tighter text-gray-600 hover:text-gray-400 focus:text-gray-400 focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500" href="/store/e-sims">eSims</a>
         <a class="p-3.5 border-gray-400/60 font-bold tracking-tighter text-gray-600 hover:text-gray-400 focus:text-gray-400 focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500" href="/store/top-up">Top-Up</a>
-        <a class="hidden sm:block mr-1 inline-flex items-center gap-x-3 sm:rounded-full bg-gray-800 px-5 py-3 text-xs font-bold tracking-tighter text-white  hover:bg-gray-900 focus:bg-gray-900 focus:outline-none dark:bg-white dark:text-neutral-800 dark:hover:text-white" href="#">Sign In</a>
+        <a class="hidden sm:block mr-1 inline-flex items-center gap-x-3 sm:rounded-full bg-gray-800 px-5 py-3 text-xs font-bold tracking-tighter text-white  hover:bg-gray-900 focus:bg-gray-900 focus:outline-none dark:bg-white dark:text-neutral-800 dark:hover:text-white" href="/login">Sign In</a>
       </div>
     </div>
 
