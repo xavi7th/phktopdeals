@@ -28,7 +28,7 @@
 </script>
 
 <section class="w-full mt-10">
-  <div class="container">
+  <div class="container-fluid">
     <div class="row px-8">
 
       <div class="max-w-2xl mx-auto text-center mb-12 lg:mb-16">
@@ -41,7 +41,7 @@
         </h2>
       </div>
 
-      <ul class="relative flex md:flex-row flex-col gap-x-2 items-start max-w-screen-md mx-auto">
+      <ul class="relative flex sm:flex-row  sm:flex-nowrap flex-wrap gap-x-2 items-start sm:max-w-screen-md mx-auto">
 
         <!-- {#each steps as step}
           <li class="flex flex-col group mb-2">
