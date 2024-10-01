@@ -1,5 +1,8 @@
-<script lang="ts">
-  function navigate(route:string) {
+<script>
+  /**
+   * @param {string} route
+   */
+  function navigate(route) {
     window.location.href = route;
   }
 </script>
