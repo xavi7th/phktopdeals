@@ -30,6 +30,21 @@
     }`;
 
 	let count = 0, selectedDenomination = 0;
+
+	const getAmountWithoutDiscount = (/** @type {number} */ amount = 0, /** @type {number} */ commission_percent = 0) => { 
+
+		let amount_to_pay = amount - ((amount*commission_percent) / 100);
+
+		return amount_to_pay.toFixed(2);
+	};
+
+	const getAmountWithDiscount = (/** @type {number} */ amount = 0, /** @type {number} */ discount_percent = 0, /** @type {number} */ commission_percent = 0) => { 
+
+		let discounted_amount = amount - ((amount*discount_percent) / 100);
+		let amount_to_pay = discounted_amount + ((discounted_amount*commission_percent) / 100)
+
+		return amount_to_pay;
+	 };
 </script>
 
 <svelte:head>
@@ -120,11 +135,23 @@
 			</div>
 
 			<div class="mt-5 rounded-t-lg bg-brand-100 p-4">
-        {#if prod_desc.price_tags?.denominations?.length}
+        {#if prod_desc.price_tags?.denominations?.length || prod_desc.price_tags.flexible}
           <div class="py-4">
             <h3 class="text-xl font-medium">Choose a Denomination</h3>
           </div>
         {/if}
+		{#if prod_desc.price_tags && prod_desc.price_tags.flexible}
+			<div
+				class="flex items-center rounded-lg border border-solid border-gray-200 bg-white pl-4 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 mb-4"
+			>
+				<p class="shrink-0">Amount :</p>
+				<input
+					type="text"
+					class="grow border-0 bg-transparent py-3 pr-4 text-sm focus:ring-0 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-0"
+					placeholder="0.00"
+				/>
+			</div>
+		{/if}
 				<div class="grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-4">
 					{#each prod_desc.price_tags?.denominations || [] as amount, idx}
 						<button
@@ -133,7 +160,10 @@
               class:selected={selectedDenomination == amount}
               on:click={() => { selectedDenomination = amount; } }
 						>
-							{toCurrency(amount)}
+							<!-- {toCurrency(amount)} -->
+
+							{!prod_desc.discount ? getAmountWithoutDiscount(amount, prod_desc.price_tags.commission) : 'Pay '+toCurrency(getAmountWithDiscount(amount, prod_desc.discount, prod_desc.price_tags.commission))+' and get '+toCurrency(amount) }
+
 							<span
 								class="invisible absolute left-0 top-0 flex h-7 w-7 items-center justify-center rounded-ee-2xl rounded-ss-md bg-white group-hover:text-brand-600 group-focus:text-brand-600 group-[.selected]:visible"
 								>{@html checkPlus}</span
