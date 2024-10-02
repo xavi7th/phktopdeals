@@ -14,43 +14,49 @@
   }`;
 </script>
 
-<div class="sm:mx-10 bg-white dark:bg-[#404040] sm:mt-28 mb-28 rounded-xl shadow-lg p-10 px-4">
-    <h1 class="text-2xl font-extrabold text-slate-900 dark:text-slate-100">Verify Account</h1>
-    <div class="flex justify-between items-center gap-4 px-6 mt-10 text-slate-800 dark:text-slate-200">
-        <div class="flex items-center gap-2">
-            <p class="grid place-content-center size-6 text-sm bg-[#FFDA1C] rounded-full">1</p>
-            <span class="text-sm">ID document</span>
-        </div>
-        <hr class="flex-1" />
-        <div class="flex items-center gap-2">
-            <p class="grid place-content-center size-6 text-sm bg-[#64748b] rounded-full">2</p>
-            <span class="text-sm">Proof of address</span>
-        </div>
-        <hr class="flex-1" />
-        <div class="flex items-center gap-2">
-            <p class="grid place-content-center size-6 text-sm bg-[#64748b] rounded-full">3</p>
-            <span class="text-sm">Done</span>
-        </div>
-    </div>
-    <div class="mt-8 sm:px-10 pb-12 text-slate-800 dark:text-slate-200">
-        <div class="rounded-xl border border-dashed p-6 pb-12">
-            <div class="flex flex-col items-center">
-                <!-- <input type="text" name="" id="" class="block w-full border rounded-xl text-center"> -->
-                <select id="region-select" data-hs-select={regionSelectOptions} class="hidden" value="Drivers License">
-                    <option value="ID card">ID card</option>
-                    <option value="Drivers License">Drivers License</option>
-                </select>
-                <span class="text-xs">Only image/PDF file are accepted ( Max size 1MB )</span>
+<section class="pb-28 lg:py-[130px] w-full px-2">
+    <div class="sm:mx-10 bg-white dark:bg-[#404040] mb-28 rounded-xl shadow-lg p-10 px-4">
+        <h1 class="text-2xl font-extrabold text-slate-900 dark:text-slate-100">Verify Account</h1>
+        <div class="flex justify-between items-center gap-4 md:px-6 mt-10 text-slate-800 dark:text-slate-200">
+            <div class="flex items-center gap-2">
+                <p class="grid place-content-center size-6 text-sm bg-[#FFDA1C] rounded-full">1</p>
+                <span class="md:text-sm text-[.6em]">ID document</span>
             </div>
-            <div class="flex flex-col items-center justify-center mt-8">
-                <div class="size-20 rounded-full border"></div>
-                <span class="text-[#FFDA1C]">Drage & Drop</span>
-                <span>Or</span>
-                <label class="block p-6 py-2.5 bg-[#FFDA1C] rounded-full shadow-md text-sm text-[#713f12] border border-transparent hover:bg-brand-500 focus:outline-none focus:bg-brand-500 disabled:opacity-50 disabled:pointer-events-none text-nowrap">
-                    Browse File
-                    <input type="file" class="hidden">
-                </label>
+            <hr class="flex-1" />
+            <div class="flex items-center gap-2">
+                <p class="grid place-content-center size-6 text-sm bg-[#64748b] rounded-full">2</p>
+                <span class="md:text-sm text-[.6em]">Proof of address</span>
+            </div>
+            <hr class="flex-1" />
+            <div class="flex items-center gap-2">
+                <p class="grid place-content-center size-6 text-sm bg-[#64748b] rounded-full">3</p>
+                <span class="md:text-sm text-[.6em]">Done</span>
             </div>
         </div>
+        <div class="mt-8 sm:px-10 pb-12 text-slate-800 dark:text-slate-200">
+            <div class="rounded-xl border border-dashed p-6 pb-12">
+                <div class="flex flex-col items-center">
+                    <!-- <input type="text" name="" id="" class="block w-full border rounded-xl text-center"> -->
+                    <select id="region-select" data-hs-select={regionSelectOptions} class="hidden" value="Drivers License">
+                        <option value="ID card">ID card</option>
+                        <option value="Drivers License">Drivers License</option>
+                    </select>
+                    <span class="text-xs">Only image/PDF file are accepted ( Max size 1MB )</span>
+                </div>
+                <div class="flex flex-col items-center justify-center mt-8">
+                    <div class="grid place-content-center size-20 rounded-full border">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="size-[45px]" viewBox="0 0 24 24">
+                            <path fill="none" stroke="#FFDA1C" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18v-3m0 0v-3m0 3H9m3 0h3M13 3H8.2c-1.12 0-1.68 0-2.108.218a2 2 0 0 0-.874.874C5 4.52 5 5.08 5 6.2v11.6c0 1.12 0 1.68.218 2.108a2 2 0 0 0 .874.874c.427.218.987.218 2.105.218h7.606c1.118 0 1.677 0 2.104-.218c.377-.192.683-.498.875-.874c.218-.428.218-.986.218-2.104V9m-6-6c.286.003.466.014.639.055q.308.075.578.24c.202.124.375.297.72.643l3.126 3.125c.346.346.518.518.642.72q.165.271.24.578c.04.173.051.354.054.639M13 3v2.8c0 1.12 0 1.68.218 2.108a2 2 0 0 0 .874.874c.427.218.987.218 2.105.218h2.802m0 0H19" />
+                        </svg>
+                    </div>
+                    <span class="text-[#FFDA1C]">Drage & Drop</span>
+                    <span>Or</span>
+                    <label class="block p-6 py-2.5 bg-[#FFDA1C] rounded-full shadow-md text-sm text-[#713f12] border border-transparent hover:bg-brand-500 focus:outline-none focus:bg-brand-500 disabled:opacity-50 disabled:pointer-events-none text-nowrap">
+                        Browse File
+                        <input type="file" class="hidden">
+                    </label>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+</section>

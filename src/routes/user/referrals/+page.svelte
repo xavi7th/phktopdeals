@@ -1,8 +1,8 @@
 <script>
     import Table from '$lib/Components/Table.svelte';
 </script>
-<section class="pb-28">
-    <div class="sm:mx-10 bg-white dark:bg-[#404040] sm:mt-28 rounded-xl shadow-md p-10">
+<section class="pb-28 lg:py-[130px] w-full px-2">
+    <div class="sm:mx-10 bg-white dark:bg-[#404040] rounded-xl shadow-md p-10">
         <h1 class="text-2xl font-extrabold text-slate-800 dark:text-slate-200">Referrals</h1>
         <p class="mt-10 text-sm text-slate-800 dark:text-slate-200">We're giving our best customers a chance to try our new Refer-a-Friend program before anyone else. After verification of your email, refer your friends & family to cryptomate.online and earn $5 when they spend $50! <a href="#" class="text-[#FFDA1C] hover:underline">Terms and conditions</a></p>
     
