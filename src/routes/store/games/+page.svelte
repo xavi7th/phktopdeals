@@ -1,7 +1,7 @@
 <script>
-  import SearchBar from './SearchBar.svelte';
-	import FeaturedCategories from './FeaturedCategories.svelte';
+  import SearchBar from '$partials/games/SearchBar.svelte';
 	import { favoriteIcon, maximiseIcon } from '$lib/Components/iconPaths';
+	import FeaturedCategories from '$partials/games/FeaturedCategories.svelte';
 </script>
 
 <div class="container py-28 lg:py-40">
