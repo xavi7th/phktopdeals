@@ -50,6 +50,123 @@ export const hot_deals = [
   }
 ]
 
+export const gift_cards = [
+    {
+      name: 'Amazon Gift Card US',
+      product_type: 'Gift Cards',
+      url: '/store/gift-cards/amazon-card',
+      imgUrl: 'https://shopvian.com/wp-content/uploads/2021/07/778f2cee60f050175dbbee93d205e194.png',
+      country: 'US',
+      brand: 'Amazon',
+      categories: ['shopping', 'gift cards'],
+      price_tags: {
+        min: 25,
+        denominations: [25, 50, 100, 200],
+        flexible: true,
+        commission: 3,
+      },
+      discount: 5,
+      discount_until: 7,
+      faq: `
+        <h3>Redemption Instructions:</h3>
+        <p>1. Go to <a href="https://www.amazon.com/redeem" target="_blank">amazon.com/redeem</a></p>
+        <p>2. Enter your code and click apply</p>
+        <p>Your balance will be updated immediately.</p>
+      `,
+    },
+    {
+      name: 'iTunes Gift Card US',
+      product_type: 'Gift Cards',
+      url: '/store/gift-cards/itunes-card',
+      imgUrl: 'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/giftcard-email-geode-select-2021?wid=1200&hei=630&fmt=jpeg&qlt=95&.v=1705086455500',
+      country: 'US',
+      brand: 'Apple',
+      categories: ['entertainment', 'gift cards'],
+      price_tags: {
+        min: 10,
+        denominations: [10, 25, 50, 100],
+        flexible: true,
+        commission: 4,
+      },
+      discount: 3,
+      discount_until: 5,
+      faq: `
+        <h3>Redemption Instructions:</h3>
+        <p>1. Open the iTunes App;</p>
+        <p>2. Click on 'Redeem' and enter the 16-digit code;</p>
+        <p>Your balance will be updated immediately.</p>
+      `,
+    },
+    {
+      name: 'Google Play Gift Card US',
+      product_type: 'Gift Cards',
+      url: '/store/gift-cards/google-play-card',
+      imgUrl: 'https://www.digitec.ch/im/productimages/7/5/9/1/4/1/7/2/1/6/8/3/8/2/3/9/8/7/1/df869161-8b98-41b0-8a99-13f0dc3c5bd9_cropped.png?impolicy=product&resizeWidth=480',
+      country: 'US',
+      brand: 'Google',
+      categories: ['entertainment', 'apps', 'gift cards'],
+      price_tags: {
+        min: 15,
+        denominations: [15, 30, 50, 100],
+        flexible: false,
+        commission: 4,
+      },
+      discount: 0,
+      discount_until: false,
+      faq: `
+        <h3>Redemption Instructions:</h3>
+        <p>1. Open the Google Play Store;</p>
+        <p>2. Tap 'Redeem' from the menu and enter the code;</p>
+        <p>Your balance will be updated immediately.</p>
+      `,
+    },
+    {
+      name: 'Steam Gift Card Global',
+      product_type: 'Gift Cards',
+      url: '/store/gift-cards/steam-card',
+      imgUrl: 'https://read.cardtonic.com/wp-content/uploads/2023/03/Steam-Gift-card.jpg',
+      country: 'Global',
+      brand: 'Steam',
+      categories: ['games', 'gift cards'],
+      price_tags: {
+        min: 20,
+        denominations: [20, 50, 100],
+        flexible: true,
+        commission: 6,
+      },
+      discount: 10,
+      discount_until: 2,
+      faq: `
+        <h3>Redemption Instructions:</h3>
+        <p>1. Open the Steam client and log in to your account;</p>
+        <p>2. Go to 'Redeem a Steam Gift Card' and enter the code;</p>
+        <p>Your balance will be updated immediately.</p>
+      `,
+    },
+    {
+      name: 'Netflix Gift Card US',
+      product_type: 'Gift Cards',
+      url: '/store/gift-cards/netflix-card',
+      imgUrl: 'https://img.gg.deals/54/c4/f01a8bbc02aeb0d31019bbdbe02b2d3e72af_1232xr706_Q100.png',
+      country: 'US',
+      brand: 'Netflix',
+      categories: ['entertainment', 'gift cards'],
+      price_tags: {
+        min: 30,
+        denominations: [30, 60, 100],
+        flexible: false,
+        commission: 5,
+      },
+      discount: 2,
+      discount_until: 4,
+      faq: `
+        <h3>Redemption Instructions:</h3>
+        <p>1. Go to <a href="https://www.netflix.com/redeem" target="_blank">netflix.com/redeem</a>;</p>
+        <p>2. Enter the code and apply it to your account.</p>
+      `,
+    }
+  ]
+
 export const prod_desc = {
   name: 'Assassin\'s Creed Brotherhood PC Ubisoft Connect CD Key',
   product_type: 'Games',
