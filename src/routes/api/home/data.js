@@ -50,6 +50,37 @@ export const hot_deals = [
   }
 ]
 
+export const e_sim = {
+  available_esim: [
+    {
+      name: 'Google eSim',
+      placeholder: '0.00',
+      min: 10,
+      imgUrl: 'https://img.etimg.com/photo/msid-106641937/E%20SIM.jpg',
+    },
+    {
+      name: 'Global eSim',
+      placeholder: '0.00',
+      min: 10,
+      imgUrl: 'https://img.etimg.com/photo/msid-106641937/E%20SIM.jpg',
+    },
+  ],
+  faq: [
+    {
+      title: "Accordion",
+      description: "This is the third item's accordion body.</em> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions."
+    },
+    {
+      title: "Accordion",
+      description: "This is the third item's accordion body.</em> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions."
+    },
+    {
+      title: "Accordion",
+      description: "This is the third item's accordion body.</em> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions."
+    },
+  ]
+}
+
 export const prod_desc = {
   name: 'Assassin\'s Creed Brotherhood PC Ubisoft Connect CD Key',
   product_type: 'Games',

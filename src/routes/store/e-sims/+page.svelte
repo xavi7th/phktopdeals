@@ -3,6 +3,9 @@
   import HowItWorks from '$partials/home/HowItWorks.svelte';
 	import SectionTitle from '$partials/SectionTitle.svelte';
 
+  export let data;
+
+  $: ({e_sim} = data);
 </script>
 
 <main>
@@ -41,29 +44,40 @@
       </div>
     </div>
 
-    <div class="flex flex-col justify-center pb-10 md:px-20 sm:px-10 px-2 mt-20 w-4/5 mx-auto">
+    <div class="flex flex-col justify-center pb-10 md:px-20 sm:px-10 px-2 mt-20 sm:w-4/5 mx-auto">
       <SectionTitle title="Popular Destinations:" sectionClass="ml-0" svgClass="!w-1/2 !stroke-brand-500"/>
 
-      <div class="grid sm:grid-cols-4 grid-cols-3 gap-4 justify-center">
+      <main class="flex-1">
+        <div class="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 xl:gap-3 gap-5 mb-8">
 
-        {#each [1,2,3,4,5] as n}
-          <a href="/" class="h-14 bg-transparent hover:bg-brand-200 border-2 border-brand-600 rounded-xl shadow-sm sm:flex dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
-            <div class="relative w-1/3 overflow-hidden rounded-s-lg">
-              <enhanced:img class="size-full absolute top-0 start-0 object-cover" src="$lib/images/flags/uk.svg?h=200" alt="hero-img-thumb" />
+          {#each e_sim.available_esim as item}
+            <div class="group relative flex flex-col overflow-hidden rounded-2xl bg-white shadow transition hover:-translate-y-1 hover:translate-x-1 hover:scale-[1.025] hover:shadow-sm hover:drop-shadow-xl dark:border-neutral-700 dark:bg-neutral-700/30 dark:shadow-neutral-700/70">
+              <img class="h-auto w-full rounded-xl" src="{item.imgUrl}" alt="prod-thumb"/>
+    
+              <div class="relative flex-1 px-4 py-2 md:px-5">
+                <h3 class="text-lg font-bold text-gray-800 dark:text-white">
+                  {item.name}
+                </h3>
+              </div>
+    
+              <div class="flex items-end gap-1.5 transition-colors duration-300 bg-[#FFDA1C] hover:shadow-md shadow-[#FFDA1C] rounded-b-xl py-3 px-4 md:py-4 md:px-5 dark:border-brand-700 mt-1 text-sm text-black dark:text-brand-50 hover:text-white">
+                <div class="flex flex-col gap-1 w-4/5">
+                    <span class="text-md text-black">Amount</span>
+                    <input type="text" class="border border-black/30 focus:border-[#FFDA1C] rounded-md" placeholder={item.placeholder}>
+                </div>
+                <button type="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="3em" height="3em" viewBox="0 0 48 48"><g fill="none" stroke="white" stroke-linejoin="round" stroke-width="4.25"><path d="M24 44c11.046 0 20-8.954 20-20S35.046 4 24 4S4 12.954 4 24s8.954 20 20 20Z"/><path stroke-linecap="round" d="m21 33l9-9l-9-9"/></g></svg>
+                </button>
+              </div>
             </div>
-            <div class="h-full inline-flex flex-1 items-center pl-3">
-              <h3 class="text-lg font-bold text-gray-600/90 dark:text-gray-100 p3 sm:p5 sm:pr-1">
-                UK
-              </h3>
-            </div>
-          </a>
-        {/each}
+          {/each}
 
-      </div>
+        </div>
+      </main>
 
       <div class="flex flex-row-reverse">
         <button class="bg-brand hover:bg-brand-400 rounded-xl px-5 py-3">
-          <span class="">Show all destinations </span>
+          <span class="">Available E-sims</span>
         </button>
       </div>
     </div>
@@ -85,56 +99,24 @@
   
             <div class="w-full bg-white rounded-lg shadow-md dark:bg-neutral-800">
               <div class="hs-accordion-group" data-hs-accordion-always-open>
-                <div class="hs-accordion active bg-white p-5 border -mt-px first:rounded-t-lg last:rounded-b-lg dark:bg-neutral-800 dark:border-neutral-700" id="hs-basic-with-title-and-arrow-stretched-heading-one">
-                  <button class="hs-accordion-toggle hs-accordion-active:text-blue-600 py-3 inline-flex items-center justify-between gap-x-3 w-full font-semibold text-start text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:hs-accordion-active:text-blue-500 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:outline-none dark:focus:text-neutral-400" aria-expanded="true" aria-controls="hs-basic-with-title-and-arrow-stretched-collapse-one">
-                    Accordion #1
-                    <svg class="hs-accordion-active:hidden block size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="m6 9 6 6 6-6"></path>
-                    </svg>
-                    <svg class="hs-accordion-active:block hidden size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="m18 15-6-6-6 6"></path>
-                    </svg>
-                  </button>
-                  <div id="hs-basic-with-title-and-arrow-stretched-collapse-one" class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300" role="region" aria-labelledby="hs-basic-with-title-and-arrow-stretched-heading-one">
-                    <p class="text-gray-800 dark:text-neutral-200">
-                      <em>This is the third item's accordion body.</em> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions.
-                    </p>
+                {#each e_sim.faq as item}
+                  <div class="hs-accordion bg-white p-5 border -mt-px first:rounded-t-lg last:rounded-b-lg dark:bg-neutral-800 dark:border-neutral-700" id="hs-basic-with-title-and-arrow-stretched-heading-two">
+                    <button class="hs-accordion-toggle hs-accordion-active:text-blue-600 py-3 inline-flex items-center justify-between gap-x-3 w-full font-semibold text-start text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:hs-accordion-active:text-blue-500 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:outline-none dark:focus:text-neutral-400" aria-expanded="false" aria-controls="hs-basic-with-title-and-arrow-stretched-collapse-two">
+                      {item.title}
+                      <svg class="hs-accordion-active:hidden block size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m6 9 6 6 6-6"></path>
+                      </svg>
+                      <svg class="hs-accordion-active:block hidden size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m18 15-6-6-6 6"></path>
+                      </svg>
+                    </button>
+                    <div id="hs-basic-with-title-and-arrow-stretched-collapse-two" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" role="region" aria-labelledby="hs-basic-with-title-and-arrow-stretched-heading-two">
+                      <p class="text-gray-800 dark:text-neutral-200">
+                        <em>{item.description}
+                      </p>
+                    </div>
                   </div>
-                </div>
-  
-                <div class="hs-accordion bg-white p-5 border -mt-px first:rounded-t-lg last:rounded-b-lg dark:bg-neutral-800 dark:border-neutral-700" id="hs-basic-with-title-and-arrow-stretched-heading-two">
-                  <button class="hs-accordion-toggle hs-accordion-active:text-blue-600 py-3 inline-flex items-center justify-between gap-x-3 w-full font-semibold text-start text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:hs-accordion-active:text-blue-500 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:outline-none dark:focus:text-neutral-400" aria-expanded="false" aria-controls="hs-basic-with-title-and-arrow-stretched-collapse-two">
-                    Accordion #2
-                    <svg class="hs-accordion-active:hidden block size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="m6 9 6 6 6-6"></path>
-                    </svg>
-                    <svg class="hs-accordion-active:block hidden size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="m18 15-6-6-6 6"></path>
-                    </svg>
-                  </button>
-                  <div id="hs-basic-with-title-and-arrow-stretched-collapse-two" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" role="region" aria-labelledby="hs-basic-with-title-and-arrow-stretched-heading-two">
-                    <p class="text-gray-800 dark:text-neutral-200">
-                      <em>This is the third item's accordion body.</em> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions.
-                    </p>
-                  </div>
-                </div>
-  
-                <div class="hs-accordion bg-white p-5 border -mt-px first:rounded-t-lg last:rounded-b-lg dark:bg-neutral-800 dark:border-neutral-700" id="hs-basic-with-title-and-arrow-stretched-heading-three">
-                  <button class="hs-accordion-toggle hs-accordion-active:text-blue-600 py-3 inline-flex items-center justify-between gap-x-3 w-full font-semibold text-start text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:hs-accordion-active:text-blue-500 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:outline-none dark:focus:text-neutral-400" aria-expanded="false" aria-controls="hs-basic-with-title-and-arrow-stretched-collapse-three">
-                    Accordion #3
-                    <svg class="hs-accordion-active:hidden block size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="m6 9 6 6 6-6"></path>
-                    </svg>
-                    <svg class="hs-accordion-active:block hidden size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="m18 15-6-6-6 6"></path>
-                    </svg>
-                  </button>
-                  <div id="hs-basic-with-title-and-arrow-stretched-collapse-three" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" role="region" aria-labelledby="hs-basic-with-title-and-arrow-stretched-heading-three">
-                    <p class="text-gray-800 dark:text-neutral-200">
-                      <em>This is the third item's accordion body.</em> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions.
-                    </p>
-                  </div>
-                </div>
+                {/each}
               </div>
             </div>
   
