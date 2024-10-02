@@ -25,7 +25,7 @@ export const getErrorString = errors => {
  * @param {String} currencySymbol The currency symbol to use. Default Naira
  * @returns {import('$lib/types').MediaHandler}
  */
-export const toCurrency = ( amount, currencySymbol = '₦' ) => {
+export const toCurrency = ( amount, currencySymbol = '$' ) => {
   if ( isNaN(amount) ) {
     console.log(amount);
     return 'Invalid Amount';
