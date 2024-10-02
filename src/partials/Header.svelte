@@ -1,10 +1,8 @@
 <script>
-  /**
-   * @param {string} route
-   */
-  function navigate(route) {
-    window.location.href = route;
-  }
+  import { page } from '$app/stores';
+
+  /** @type {import('$lib/types').NavData[]} */
+  export let main_nav;
 </script>
 
 <header class="fixed z-30 flex w-full flex-wrap bg-black/40 py-4 text-sm backdrop-blur sm:flex-nowrap sm:justify-start dark:bg-neutral-900 dark:sm:bg-transparent">
@@ -56,10 +54,9 @@
       aria-labelledby="hs-navbar-alignment-collapse"
     >
       <div class="flex flex-col sm:gap-5 sm:flex-row sm:items-center divide-y sm:divide-y-0">
-        <a class="p-3.5 border-gray-400/60 font-bold tracking-tighter text-brand-500 focus:outline-none sm:ml-4" href="/store/games" aria-current="page">Games</a>
-        <a class="p-3.5 border-gray-400/60 font-bold tracking-tighter text-gray-600 hover:text-gray-400 focus:text-gray-400 focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500" href="/store/gift-cards">Gift Cards</a>
-        <a class="p-3.5 border-gray-400/60 font-bold tracking-tighter text-gray-600 hover:text-gray-400 focus:text-gray-400 focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500" href="/store/e-sims">eSims</a>
-        <a class="p-3.5 border-gray-400/60 font-bold tracking-tighter text-gray-600 hover:text-gray-400 focus:text-gray-400 focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500" href="/store/top-up">Top-Up</a>
+        {#each main_nav as nav_item}
+          <a class="p-3.5 border-gray-400/60 font-bold tracking-tighter text-gray-600 hover:text-gray-400 focus:text-gray-400 focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500" href="{nav_item.url}" aria-current="{$page.url.pathname.includes(nav_item.url) ? 'page' : undefined}">{nav_item.name}</a>
+        {/each}
         <a class="hidden sm:block mr-1 inline-flex items-center gap-x-3 sm:rounded-full bg-gray-800 px-5 py-3 text-xs font-bold tracking-tighter text-white  hover:bg-gray-900 focus:bg-gray-900 focus:outline-none dark:bg-white dark:text-neutral-800 dark:hover:text-white" href="/login">Sign In</a>
       </div>
     </div>
@@ -110,3 +107,9 @@
     </div>
   </nav>
 </header>
+
+<style>
+  a[aria-current='page'] {
+    color: theme('colors.brand.500');
+  }
+</style>

@@ -8,9 +8,14 @@
 	afterNavigate(() => {
 		window.HSStaticMethods.autoInit();
 	});
+
+  /** @type {import('./$types').LayoutServerData} */
+  export let data;
+
+  $: ({main_nav} = data)
 </script>
 
-<Header />
+<Header {main_nav}/>
 
 <slot></slot>
 
