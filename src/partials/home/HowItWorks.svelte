@@ -27,7 +27,7 @@
 
 </script>
 
-<section class="w-full mt-10">
+<section class="w-full mt-20">
   <div class="container-fluid">
     <div class="row px-8">
 
