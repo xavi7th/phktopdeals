@@ -1,6 +1,7 @@
 import { json } from "@sveltejs/kit";
 import { sections, product_types, filters } from "./data.js";
 
+/** @type {import('./$types').RequestHandler} */
 export function GET() {
   return json({
     sections,

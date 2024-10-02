@@ -1,6 +1,19 @@
 <script>
-	import { checkPlus, minusIcon, plusIcon } from '$lib/Components/iconPaths';
 	import { toCurrency } from '$lib/helpers';
+	import { checkPlus, minusIcon, plusIcon } from '$lib/Components/iconPaths';
+
+  /** @type {import('./$types').PageData} */
+  export let data;
+
+  /** @type {import('$lib/types').Product} */
+  let prod_desc;
+
+  /**
+   * @param {[prod_desc, bar, baz]: [import('$lib/types').Product, *, Number]} data
+   */
+
+
+  $: ({prod_desc} = data);
 
 	let platformSelectOptions = `{
         "hasSearch": true,
@@ -16,25 +29,35 @@
         "extraMarkup": "<div class='absolute top-1/2 end-3 -translate-y-1/2'><svg class='shrink-0 size-3.5 text-gray-500 dark:text-neutral-500' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m7 15 5 5 5-5'/><path d='m7 9 5-5 5 5'/></svg></div>"
     }`;
 
-	let count = 0, selectedDenomination = 'btn-0';
+	let count = 0, selectedDenomination = 0;
 </script>
+
+<svelte:head>
+  <title>PHKHotDeals | Purchase {prod_desc.name}</title>
+  <meta name="description" content="Purchase {prod_desc.name} from PHKHot Deals at very discounted prices. Blazing fast transactions and discreet are assured.">
+</svelte:head>
 
 <div class="container px-4 py-28 lg:py-40">
 	<main class="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2">
 		<div class="w-full pr-20">
-			<div class="">
-				<enhanced:img
-					class="h-auto w-full rounded-xl"
-					src="$lib/images/games-6.avif?aspect=400:320&fit=cover"
-					alt="hero-img-thumb"
-				/>
+			<div class="relative">
+				<img class="h-auto w-full rounded-xl" src="{prod_desc.imgUrl}" alt="prod-img-thumb"/>
+        <div class="inline-flex flex-wrap gap-2 absolute top-2 left-4">
+          {#each prod_desc.categories as cat}
+            <div class="inline-flex flex-nowrap items-center bg-white border border-gray-200 rounded-full py-1.5 px-3 dark:bg-neutral-900 dark:border-neutral-700">
+              <div class="whitespace-nowrap text-xs font-medium text-gray-800 dark:text-white">
+                {cat}
+              </div>
+            </div>
+          {/each}
+        </div>
 			</div>
 		</div>
 		<div>
 			<div class="w-full">
 				<div>
 					<div class="title text-black dark:text-white" style="font-size: 40px; font-weight: bold;">
-						The Title
+						{prod_desc.name} ({prod_desc.country})
 					</div>
 				</div>
 			</div>
@@ -60,7 +83,7 @@
 									Quantity
 								</span>
 								<span class="block text-xs text-gray-500 dark:text-neutral-400">
-									{toCurrency(count * 5)} total
+									{ toCurrency(count * selectedDenomination) } total
 								</span>
 							</div>
 							<div class="flex items-center gap-x-1.5">
@@ -97,20 +120,22 @@
 			</div>
 
 			<div class="mt-5 rounded-t-lg bg-brand-100 p-4">
-				<div class="py-4">
-					<h3 class="text-xl font-medium">Choose a Denomination</h3>
-				</div>
+        {#if prod_desc.price_tags?.denominations?.length}
+          <div class="py-4">
+            <h3 class="text-xl font-medium">Choose a Denomination</h3>
+          </div>
+        {/if}
 				<div class="grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-4">
-					{#each Array(10) as item, idx}
+					{#each prod_desc.price_tags?.denominations || [] as amount, idx}
 						<button
 							type="button"
-							class="group relative flex h-[6vw] items-center justify-center rounded-lg border border-transparent bg-brand font-medium text-brand-800 hover:bg-brand-700 hover:text-brand-50 focus:bg-brand-700 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-              class:selected={selectedDenomination == `btn-${idx}`}
-              on:click={() => { selectedDenomination = `btn-${idx}`; } }
+							class="group relative flex h-[6vw] items-center justify-center rounded-lg border border-transparent font-medium text-brand-800 hover:text-brand-50 focus:text-brand-50 bg-brand hover:bg-brand-700 focus:bg-brand-700 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+              class:selected={selectedDenomination == amount}
+              on:click={() => { selectedDenomination = amount; } }
 						>
-							{toCurrency(10 * (item + 1))}
+							{toCurrency(amount)}
 							<span
-								class="invisible absolute left-0 top-0 flex h-7 w-7 items-center justify-center rounded-ee-2xl rounded-ss-md bg-white group-hover:text-brand-600 group-[.selected]:visible"
+								class="invisible absolute left-0 top-0 flex h-7 w-7 items-center justify-center rounded-ee-2xl rounded-ss-md bg-white group-hover:text-brand-600 group-focus:text-brand-600 group-[.selected]:visible"
 								>{@html checkPlus}</span
 							>
 						</button>
@@ -164,10 +189,10 @@
 					</p>
 					<button
 						type="button"
-						class="mt-10 inline-flex items-center rounded-lg border border-transparent bg-brand px-10 py-1.5 font-medium text-brand-800 hover:bg-brand-700 hover:text-brand-50 focus:bg-brand-700 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+						class="mt-10 inline-flex items-center rounded-lg border border-transparent bg-brand px-10 py-1.5 font-bold text-brand-800 hover:bg-brand-700 hover:text-brand-50 focus:bg-brand-700 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
 						style="justify-content: center;"
 					>
-						Buy Now $ 4,000
+						Buy Now { toCurrency(count * selectedDenomination) }
 					</button>
 				</div>
 			</div>
@@ -179,71 +204,15 @@
 					<div>
 						<div>
 							<div class="py-4">
-								<h2 class="text-2xl font-bold">Product Description</h2>
+								<h2 class="text-2xl font-bold">Frequently Asked Questions</h2>
 							</div>
-							<div
-								style="transform: translateX(165px) translateX(-50%); transition-duration: 0.3s;"
-							></div>
+							<div style="transform: translateX(165px) translateX(-50%); transition-duration: 0.3s;"></div>
 						</div>
 					</div>
 					<div>
 						<div>
-							<div class="question-item space-y-4">
-								<!-- <h3 class="mb-4">Product Description</h3> -->
-								<p>
-									Amazon.com Gift Cards* never expire and can be redeemed towards millions of items
-									at www.amazon.com
-								</p>
-								<h3>Redemption</h3>
-								<p>To redeem your gift card, follow these steps:</p>
-								<p>
-									1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Visit <a
-										href="https://panel.ezpaypin.com/www.amazon.com/redeem"
-										rel="noopener noreferrer"
-										target="_blank"
-										style="color: rgb(3, 155, 229);">www.amazon.com/redeem</a
-									>
-								</p>
-								<p>
-									2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enter the Claim Code when prompted.
-								</p>
-								<p>
-									3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gift card funds will be applied
-									automatically to eligible orders during the checkout process.
-								</p>
-								<p>
-									4.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;You must pay for any remaining balance
-									on your order with another payment method.
-								</p>
-								<p>&nbsp;</p>
-								<p>
-									Your gift card claim code may also be entered when prompted during checkout. To
-									redeem your gift card using the <a
-										href="https://www.amazon.com/"
-										rel="noopener noreferrer"
-										target="_blank"
-										style="color: rgb(3, 155, 229);">Amazon.com</a
-									> 1-Click® service, first add the gift card funds to Your Account.
-								</p>
-								<p>
-									If you have questions about redeeming your gift card, please visit <a
-										href="https://panel.ezpaypin.com/www.amazon.com/gc-redeem"
-										rel="noopener noreferrer"
-										target="_blank"
-										style="color: rgb(3, 155, 229);">www.amazon.com/gc-redeem</a
-									>.
-								</p>
-								<h3>Terms and Conditions</h3>
-								<p>Restrictions apply, see amazon.com/gc-legal</p>
-								<h3>Legal Disclaimer</h3>
-								<p>
-									Restrictions apply, see <a
-										href="https://panel.ezpaypin.com/amazon.com/gc-legal"
-										rel="noopener noreferrer"
-										target="_blank"
-										style="color: rgb(3, 155, 229);">amazon.com/gc-legal</a
-									>
-								</p>
+							<div class="question-item space-y-4 prose">
+                {@html prod_desc.faq}
 							</div>
 						</div>
 					</div>
