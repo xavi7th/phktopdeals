@@ -12,7 +12,7 @@
 		arrows: true,
 		pagination: false,
 		rewind: false,
-    lazyLoad:'nearby',
+    lazyLoad:"nearby",
 		breakpoints: {
 			1200: {
 				perPage: 4
