@@ -1,6 +1,7 @@
 <script>
 	import Sidebar from '$partials/gift-cards/Sidebar.svelte';
 	import { favoriteIcon, maximiseIcon } from '$lib/Components/iconPaths';
+  import { percentageCalculation } from '$lib/helpers';
 
   export let data;
 
@@ -25,7 +26,7 @@
 
                 <div class="flex flex-wrap items-start gap-1.5">
                   {#each item.price_tags.denominations as denomination}
-                    <span class="inline-flex items-center py-1 px-2 rounded-full text-xs bg-brand-200 text-brand-900 dark:bg-brand-800/30 dark:text-brand-400">{!item.discount ? Math.ceil((denomination*item.price_tags.commission)) : Math.ceil((denomination*item.price_tags.commission)/item.discount) } USDT</span>
+                    <span class="inline-flex items-center py-1 px-2 rounded-full text-xs bg-brand-200 text-brand-900 dark:bg-brand-800/30 dark:text-brand-400">{percentageCalculation(denomination, item.price_tags.commission)} USDT</span>
                   {/each}
                 </div>
               </div>
