@@ -52,7 +52,7 @@ export const percentageCalculation = (amount = 0, commission = 0, discount = 0) 
   }else{
     amount_to_pay = amount + ((amount*commission) / 100);
   }
-  return amount_to_pay
+  return toCurrency(amount_to_pay);
 }
 
 /**
