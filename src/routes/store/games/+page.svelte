@@ -17,14 +17,8 @@
 
       {#each games.list as item, index}
         <div class="group overflow-hidden relative flex flex-col bg-white shadow rounded-xl dark:bg-neutral-700/30 dark:border-neutral-700 dark:shadow-neutral-700/70 transition hover:drop-shadow-xl hover:shadow-sm hover:-translate-y-1 hover:translate-x-1 hover:scale-[1.025]">
-
-          {#if index%2 == 0}
-            <img class="w-full h-auto rounded-xl" src={item.imgUrl} alt="hero-img-thumb" />
-          {:else if index%3 == 0}
-            <img class="w-full h-auto rounded-xl" src={item.imgUrl} alt="hero-img-thumb" />
-          {:else}
-            <img class="w-full h-auto rounded-xl" src={item.imgUrl} alt="hero-img-thumb" />
-          {/if}
+          
+          <img class="w-full h-auto rounded-xl" src={item.imgUrl} alt="hero-img-thumb" />
 
           <div class="px-4 md:px-5 py-2 md:py-3 flex-1 relative min-h-28">
             <h3 class="text-lg font-bold text-gray-800 dark:text-white border-b-2 pb-3 mb-5 truncate">{item.name}</h3>
