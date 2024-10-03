@@ -31,24 +31,24 @@
 
 	let count = 0, selectedDenomination = 0;
 
-	const getAmountWithoutDiscount = (/** @type {number} */ amount = 0, /** @type {number} */ commission_percent = 0) => { 
+	const getAmountWithoutDiscount = ( amount = 0, commission_percent = 0) => { 
 
-		let amount_to_pay = amount - ((amount*commission_percent) / 100);
+		let amount_to_pay = amount - ( amount * (commission_percent / 100) );
 
 		return amount_to_pay.toFixed(2);
 	};
 
-	const getAmountWithDiscount = (/** @type {number} */ amount = 0, /** @type {number} */ discount_percent = 0, /** @type {number} */ commission_percent = 0) => { 
+	const getAmountWithDiscount = ( amount = 0, discount_percent = 0, commission_percent = 0) => { 
 
-		let discounted_amount = amount - ((amount*discount_percent) / 100);
-		let amount_to_pay = discounted_amount + ((discounted_amount*commission_percent) / 100)
+		let discounted_amount = amount - ( amount * (commission_percent / 100) );
+		let amount_to_pay = discounted_amount + ( discounted_amount * (discount_percent / 100) );
 
 		return amount_to_pay;
 	 };
 </script>
 
 <svelte:head>
-  <title>PHKHotDeals | Purchase {prod_desc.name}</title>
+  <title>PHKHotDeals | Purchase {prod_desc?.name}</title>
   <meta name="description" content="Purchase {prod_desc.name} from PHKHot Deals at very discounted prices. Blazing fast transactions and discreet are assured.">
 </svelte:head>
 
@@ -58,7 +58,7 @@
 			<div class="relative">
 				<img class="h-auto w-full rounded-xl" src="{prod_desc.imgUrl}" alt="prod-img-thumb"/>
         <div class="inline-flex flex-wrap gap-2 absolute top-2 left-4">
-          {#each prod_desc.categories as cat}
+          {#each prod_desc?.categories as cat}
             <div class="inline-flex flex-nowrap items-center bg-white border border-gray-200 rounded-full py-1.5 px-3 dark:bg-neutral-900 dark:border-neutral-700">
               <div class="whitespace-nowrap text-xs font-medium text-gray-800 dark:text-white">
                 {cat}
@@ -72,7 +72,7 @@
 			<div class="w-full">
 				<div>
 					<div class="title text-black dark:text-white" style="font-size: 40px; font-weight: bold;">
-						{prod_desc.name} ({prod_desc.country})
+						{prod_desc?.name} ({prod_desc?.country})
 					</div>
 				</div>
 			</div>
@@ -135,12 +135,12 @@
 			</div>
 
 			<div class="mt-5 rounded-t-lg bg-brand-100 p-4">
-        {#if prod_desc.price_tags?.denominations?.length || prod_desc.price_tags.flexible}
+        {#if prod_desc?.price_tags?.denominations?.length || prod_desc?.price_tags?.flexible}
           <div class="py-4">
             <h3 class="text-xl font-medium">Choose a Denomination</h3>
           </div>
         {/if}
-		{#if prod_desc.price_tags && prod_desc.price_tags.flexible}
+		{#if prod_desc?.price_tags && prod_desc?.price_tags?.flexible}
 			<div
 				class="flex items-center rounded-lg border border-solid border-gray-200 bg-white pl-4 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 mb-4"
 			>
@@ -153,7 +153,7 @@
 			</div>
 		{/if}
 				<div class="grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-4">
-					{#each prod_desc.price_tags?.denominations || [] as amount, idx}
+					{#each prod_desc?.price_tags?.denominations || [] as amount, idx}
 						<button
 							type="button"
 							class="group relative flex h-[6vw] items-center justify-center rounded-lg border border-transparent font-medium text-brand-800 hover:text-brand-50 focus:text-brand-50 bg-brand hover:bg-brand-700 focus:bg-brand-700 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
@@ -242,7 +242,7 @@
 					<div>
 						<div>
 							<div class="question-item space-y-4 prose">
-                {@html prod_desc.faq}
+                {@html prod_desc?.faq}
 							</div>
 						</div>
 					</div>
