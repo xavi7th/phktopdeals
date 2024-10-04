@@ -1,6 +1,6 @@
 <script>
+	import Sidebar from '$partials/gift-cards/Sidebar.svelte';
 	import { favoriteIcon, maximiseIcon } from '$lib/Components/iconPaths';
-	import Sidebar from './Sidebar.svelte';
 </script>
 
 <div class="container">
