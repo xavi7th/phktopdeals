@@ -43,6 +43,18 @@ export const toCurrency = ( amount, currencySymbol = '$' ) => {
     }, "") + "." + p[1];
 }
 
+export const percentageCalculation = (amount = 0, commission = 0, discount = 0) => {
+  let amount_to_pay;
+
+  if(discount){
+    const discount_percent = amount - ((amount*discount) / 100);
+    amount_to_pay = discount_percent - ((discount_percent*commission) / 100);
+  }else{
+    amount_to_pay = amount + ((amount*commission) / 100);
+  }
+  return toCurrency(amount_to_pay);
+}
+
 /**
  *
  * @param {String} timeString the time string to convert to 12hr format eg 13:45

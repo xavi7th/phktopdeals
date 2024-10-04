@@ -50,6 +50,76 @@ export const hot_deals = [
   }
 ]
 
+export const gift_cards = [
+    {
+      name: 'Amazon Gift Card US',
+      product_type: 'Gift Cards',
+      url: '/store/gift-cards/amazon-card',
+      imgUrl: 'https://shopvian.com/wp-content/uploads/2021/07/778f2cee60f050175dbbee93d205e194.png',
+      categories: ['shopping', 'gift cards'],
+      price_tags: {
+        min: 25,
+        denominations: [25, 50, 100, 200],
+        flexible: true,
+        commission: 3,
+      },
+      discount: 5,
+    },
+    {
+      name: 'iTunes Gift Card US',
+      product_type: 'Gift Cards',
+      url: '/store/gift-cards/itunes-card',
+      imgUrl: 'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/giftcard-email-geode-select-2021?wid=1200&hei=630&fmt=jpeg&qlt=95&.v=1705086455500',
+      price_tags: {
+        min: 10,
+        denominations: [10, 25, 50, 100],
+        flexible: true,
+        commission: 4,
+      },
+      discount: 3,
+    },
+    {
+      name: 'Google Play Gift Card US',
+      product_type: 'Gift Cards',
+      url: '/store/gift-cards/google-play-card',
+      imgUrl: 'https://www.digitec.ch/im/productimages/7/5/9/1/4/1/7/2/1/6/8/3/8/2/3/9/8/7/1/df869161-8b98-41b0-8a99-13f0dc3c5bd9_cropped.png?impolicy=product&resizeWidth=480',
+      price_tags: {
+        min: 15,
+        denominations: [15, 30, 50, 100],
+        flexible: false,
+        commission: 4,
+      },
+      discount: 0,
+    },
+    {
+      name: 'Steam Gift Card Global',
+      product_type: 'Gift Cards',
+      url: '/store/gift-cards/steam-card',
+      imgUrl: 'https://read.cardtonic.com/wp-content/uploads/2023/03/Steam-Gift-card.jpg',
+      price_tags: {
+        min: 20,
+        denominations: [20, 50, 100],
+        flexible: true,
+        commission: 6,
+      },
+      discount: 10,
+    },
+    {
+      name: 'Netflix Gift Card US',
+      product_type: 'Gift Cards',
+      url: '/store/gift-cards/netflix-card',
+      imgUrl: 'https://img.gg.deals/54/c4/f01a8bbc02aeb0d31019bbdbe02b2d3e72af_1232xr706_Q100.png',
+      categories: ['entertainment', 'gift cards'],
+      price_tags: {
+        min: 30,
+        denominations: [30, 60, 100],
+        flexible: false,
+        commission: 5,
+      },
+      discount: 2,
+    }
+  ]
+
 export const prod_desc = {
   name: 'Assassin\'s Creed Brotherhood PC Ubisoft Connect CD Key',
   product_type: 'Games',
