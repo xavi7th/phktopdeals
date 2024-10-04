@@ -149,6 +149,35 @@ export const prod_desc = {
   `,
 };
 
+export const games = {
+  category: [
+    {
+      title: "DLC",
+      imgUrl: "https://cdn.mos.cms.futurecdn.net/7Cbpe8JbsPYc3ZfhzrP5ae-1200-80.jpg",
+    },
+  ],
+  list: [
+    {
+      name: 'Assassin\'s Creed Brotherhood PC Ubisoft Connect CD Key',
+      url: '/store/gift-cards/itunes-card',
+      imgUrl: 'https://static.kinguin.net/media/images/products/_AssassinsCreedBrotherhood111.jpg',
+      amount: 20.45,
+    },
+    {
+      name: 'Assassin\'s Creed Brotherhood PC Ubisoft Connect CD Key',
+      url: '/store/gift-cards/itunes-card',
+      imgUrl: 'https://static.kinguin.net/media/images/products/_AssassinsCreedBrotherhood111.jpg',
+      amount: 20.45,
+    },
+    {
+      name: 'Assassin\'s Creed Brotherhood PC Ubisoft Connect CD Key',
+      url: '/store/gift-cards/itunes-card',
+      imgUrl: 'https://static.kinguin.net/media/images/products/_AssassinsCreedBrotherhood111.jpg',
+      amount: 20.45,
+    },
+  ]
+}
+
 export const filters = [ // 3 random categories, brands, countries
   {
     filter: 'Amazon',
