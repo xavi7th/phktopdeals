@@ -2,35 +2,33 @@
   import SearchBar from '$partials/games/SearchBar.svelte';
 	import { favoriteIcon, maximiseIcon } from '$lib/Components/iconPaths';
 	import FeaturedCategories from '$partials/games/FeaturedCategories.svelte';
+
+  export let data;
+
+  $: ({games} = data);
 </script>
 
 <div class="container py-28 lg:py-40">
   <div class="row">
     <main class="grid lg:grid-cols-4 grid-cols-2 gap-3 mb-8 px-2">
-      <FeaturedCategories />
+      <FeaturedCategories category={games.category}  />
 
       <SearchBar />
 
-      {#each [1,2,3,4,5,6,7,8,9,10] as n}
+      {#each games.list as item, index}
         <div class="group overflow-hidden relative flex flex-col bg-white shadow rounded-xl dark:bg-neutral-700/30 dark:border-neutral-700 dark:shadow-neutral-700/70 transition hover:drop-shadow-xl hover:shadow-sm hover:-translate-y-1 hover:translate-x-1 hover:scale-[1.025]">
-
-          {#if n%2 == 0}
-            <enhanced:img class="w-full h-auto rounded-xl" src="$lib/images/games-6.avif?aspect=400:320&fit=cover" alt="hero-img-thumb" />
-          {:else if n%3 == 0}
-            <enhanced:img class="w-full h-auto rounded-xl" src="$lib/images/games-5.avif?aspect=400:320&fit=cover" alt="hero-img-thumb" />
-          {:else}
-            <enhanced:img class="w-full h-auto rounded-xl" src="$lib/images/games-3.avif?aspect=400:320&fit=cover" alt="hero-img-thumb" />
-          {/if}
+          
+          <img class="w-full h-auto rounded-xl" src={item.imgUrl} alt="hero-img-thumb" />
 
           <div class="px-4 md:px-5 py-2 md:py-3 flex-1 relative min-h-28">
-            <h3 class="text-lg font-bold text-gray-800 dark:text-white border-b-2 pb-3 mb-5">VISA Card</h3>
+            <h3 class="text-lg font-bold text-gray-800 dark:text-white border-b-2 pb-3 mb-5 truncate">{item.name}</h3>
 
             <div class="flex items-center justify-center mt-4 absolute bottom-0 right-0 left-0">
               <div class="flex basis-1/2 justify-center border-[#e5e5e5] border-r-2 flex-1">
                 <enhanced:img class="h-8 w-8 self-center sm:h-10 sm:w-10 ng-star-inserted" src="$lib/images/icons/steam.svg?enhance"/>
                 <enhanced:img class="h-10 w-10 sm:w-12" src="$lib/images/icons/others.svg?enhance" />
               </div>
-              <div class="text-exo-2 basis-1/2 text-center text-2xl font-bold text-[#484C50] dark:text-white">$49.85</div>
+              <div class="text-exo-2 basis-1/2 text-center text-2xl font-bold text-[#484C50] dark:text-white">${item.amount}</div>
             </div>
 
           </div>

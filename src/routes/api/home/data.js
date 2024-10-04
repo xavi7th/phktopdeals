@@ -81,6 +81,76 @@ export const e_sim = {
   ]
 }
 
+export const gift_cards = [
+    {
+      name: 'Amazon Gift Card US',
+      product_type: 'Gift Cards',
+      url: '/store/gift-cards/amazon-card',
+      imgUrl: 'https://shopvian.com/wp-content/uploads/2021/07/778f2cee60f050175dbbee93d205e194.png',
+      categories: ['shopping', 'gift cards'],
+      price_tags: {
+        min: 25,
+        denominations: [25, 50, 100, 200],
+        flexible: true,
+        commission: 3,
+      },
+      discount: 5,
+    },
+    {
+      name: 'iTunes Gift Card US',
+      product_type: 'Gift Cards',
+      url: '/store/gift-cards/itunes-card',
+      imgUrl: 'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/giftcard-email-geode-select-2021?wid=1200&hei=630&fmt=jpeg&qlt=95&.v=1705086455500',
+      price_tags: {
+        min: 10,
+        denominations: [10, 25, 50, 100],
+        flexible: true,
+        commission: 4,
+      },
+      discount: 3,
+    },
+    {
+      name: 'Google Play Gift Card US',
+      product_type: 'Gift Cards',
+      url: '/store/gift-cards/google-play-card',
+      imgUrl: 'https://www.digitec.ch/im/productimages/7/5/9/1/4/1/7/2/1/6/8/3/8/2/3/9/8/7/1/df869161-8b98-41b0-8a99-13f0dc3c5bd9_cropped.png?impolicy=product&resizeWidth=480',
+      price_tags: {
+        min: 15,
+        denominations: [15, 30, 50, 100],
+        flexible: false,
+        commission: 4,
+      },
+      discount: 0,
+    },
+    {
+      name: 'Steam Gift Card Global',
+      product_type: 'Gift Cards',
+      url: '/store/gift-cards/steam-card',
+      imgUrl: 'https://read.cardtonic.com/wp-content/uploads/2023/03/Steam-Gift-card.jpg',
+      price_tags: {
+        min: 20,
+        denominations: [20, 50, 100],
+        flexible: true,
+        commission: 6,
+      },
+      discount: 10,
+    },
+    {
+      name: 'Netflix Gift Card US',
+      product_type: 'Gift Cards',
+      url: '/store/gift-cards/netflix-card',
+      imgUrl: 'https://img.gg.deals/54/c4/f01a8bbc02aeb0d31019bbdbe02b2d3e72af_1232xr706_Q100.png',
+      categories: ['entertainment', 'gift cards'],
+      price_tags: {
+        min: 30,
+        denominations: [30, 60, 100],
+        flexible: false,
+        commission: 5,
+      },
+      discount: 2,
+    }
+  ]
+
 export const prod_desc = {
   name: 'Assassin\'s Creed Brotherhood PC Ubisoft Connect CD Key',
   product_type: 'Games',
@@ -109,6 +179,35 @@ export const prod_desc = {
     <div data-v-b25dd4ac="" class="question-item"><h3>Redemption Instruction:</h3><p><br></p><p>Redeem your iTunes card via the App Store, or via the Apple Music app on your iPhone.</p><p>In the App Store:</p><p>Log in with your Apple ID and navigate to 'Redeem';</p><p>Enter the code and the balance is topped up Immediately;</p><p>You're done, enjoy!</p><p>Via the Apple Music App</p><p>Open the iTunes App;</p><p>Click on 'Redeem' and enter the 16 digit code;</p><p>Your balance has been topped up! That's it, you are now ready to get started with the latest games and apps.</p><h3>Product Description</h3><p>One card, millions of ways to enjoy it. Use the App Store &amp; iTunes Gift Card to get apps, games, music, films, and TV programmers. Available in a variety of denominations—spend it on in-app content, books, TV-programmer subscriptions, or even iCloud storage to secure files from all your Apple devices</p><p><br></p><h3>Terms and Conditions:</h3><p>Valid only on purchases from the US iTunes Store. Use requires an active iTunes account &amp; prior acceptance of license &amp; usage terms.</p><p>Brand Partner Contact:</p><p><br></p><p>Visit:<a href="https://www.apple.com/" rel="noopener noreferrer" target="_blank" style="color: rgb(3, 155, 229);">https://www.apple.com</a></p></div>
   `,
 };
+
+export const games = {
+  category: [
+    {
+      title: "DLC",
+      imgUrl: "https://cdn.mos.cms.futurecdn.net/7Cbpe8JbsPYc3ZfhzrP5ae-1200-80.jpg",
+    },
+  ],
+  list: [
+    {
+      name: 'Assassin\'s Creed Brotherhood PC Ubisoft Connect CD Key',
+      url: '/store/gift-cards/itunes-card',
+      imgUrl: 'https://static.kinguin.net/media/images/products/_AssassinsCreedBrotherhood111.jpg',
+      amount: 20.45,
+    },
+    {
+      name: 'Assassin\'s Creed Brotherhood PC Ubisoft Connect CD Key',
+      url: '/store/gift-cards/itunes-card',
+      imgUrl: 'https://static.kinguin.net/media/images/products/_AssassinsCreedBrotherhood111.jpg',
+      amount: 20.45,
+    },
+    {
+      name: 'Assassin\'s Creed Brotherhood PC Ubisoft Connect CD Key',
+      url: '/store/gift-cards/itunes-card',
+      imgUrl: 'https://static.kinguin.net/media/images/products/_AssassinsCreedBrotherhood111.jpg',
+      amount: 20.45,
+    },
+  ]
+}
 
 export const filters = [ // 3 random categories, brands, countries
   {
