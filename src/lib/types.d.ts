@@ -1,3 +1,14 @@
+import type { RequestEvent } from '@sveltejs/kit';
+
+export interface ApiParams {
+	method: string;
+	event?: RequestEvent;
+	resource?: string;
+  /** Indicates whether to append the base url to the supplied resource url */
+  toBaseDomain?: boolean;
+  logResponse?: boolean;
+	data?: Record<string, unknown> | null;
+}
 export type MediaHandler = {
   isDesktop: boolean,
   isMobile: boolean,
@@ -46,4 +57,9 @@ export type Product = {
   /** Number of days left for discount to expire. */
   discount_until: number,
   faq: string,
+}
+export type AppUser = {
+  name: string
+  email: string,
+  phone: string,
 }

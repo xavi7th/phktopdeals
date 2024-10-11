@@ -218,3 +218,44 @@ export const getFirstElement = (str, elem = 'p') => {
   console.log("not valid data");
   return ''
 }
+
+import { PUBLIC_VITE_BASE_API, PUBLIC_VITE_BASE_DOMAIN } from '$env/static/public';
+
+/**
+ * Custom function to set API headers and make API calls
+ *
+ * @param {import('$lib/types').ApiParams} params
+ *
+ * @returns {Promise<Response> | undefined}
+ */
+export async function api({toBaseDomain, resource, event, method, data, logResponse}) {
+	const base = PUBLIC_VITE_BASE_DOMAIN
+	const baseApi = PUBLIC_VITE_BASE_API
+	let fullurl = toBaseDomain ? base : baseApi
+
+	if (resource) {
+		fullurl += resource
+	}
+
+  console.log('--------------- API Request: ' + method.toUpperCase() + ' ' + fullurl);
+
+	const response = await event?.fetch(fullurl, {
+		method: method,
+		headers: {
+			'content-type': 'application/json',
+			'accept': 'application/json',
+			'cookie': event.request?.headers?.get('cookie') || '',
+			'referer': event.request?.headers?.get('referer') || '',
+      'x-xsrf-token': event.cookies.get('XSRF-TOKEN') || '',
+		},
+		body: data && JSON.stringify(data),
+	});
+
+  if(logResponse){
+    console.log('--------------- API Response: ');
+    let spyResponse = await response?.clone();
+    console.log({status: spyResponse?.status, body: spyResponse?.status==204 ? null : await spyResponse?.json()}, '\n\n')
+  }
+
+	return response;
+}
