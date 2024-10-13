@@ -215,7 +215,6 @@ export const getFirstElement = (str, elem = 'p') => {
 
   if (match) return match[0];
 
-  console.log("not valid data");
   return ''
 }
 
