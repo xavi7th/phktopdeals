@@ -1,6 +1,8 @@
+import { parse } from 'cookie';
 import { api } from '$lib/helpers';
+import scp from 'set-cookie-parser';
 import { dev } from "$app/environment";
-import cookie, { parse } from 'cookie';
+import { redirect } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 import { handleDeviecDetector } from 'sveltekit-device-detector';
 
@@ -11,7 +13,7 @@ async function logger({event, resolve}){
   //Await here. Run other hooks AND LOAD FUNCTIONS then come back here to continue
   const response = await resolve(event)
 
-  if ( dev ) {
+  if ( dev && ! event.request.url.includes('assets') ) {
     console.log(`
       INTERNAL REQUEST: ${Date.now() - start_time}ms ${event.locals.deviceName} ${event.request.method} ${event.url.pathname}
     `)
@@ -22,31 +24,19 @@ async function logger({event, resolve}){
 
 /** @type {import('@sveltejs/kit').Handle} */
 async function setCsrf({event, resolve}){
+	const cookies = parse(event.request.headers.get('cookie') || '')
+	event.locals.session = cookies[import.meta.env.VITE_SESSION_NAME]
 
-	const sessionName = import.meta.env.VITE_SESSION_NAME
-	const cookies = cookie.parse(event.request.headers.get('cookie') || '')
-	event.locals.session = cookies[sessionName]
-
-  const response = await resolve(event)
-
-	if (!event.locals.session) {
-		const sanctumRequest = await api({
-			method: 'get',
+	if (!event.locals.session && ! event.route.id?.includes('http://')) { //fire this ONLY on requests that hit our back end. Dont use this on requests that hit internal routes
+    await api({
+      method: 'get',
 			resource: 'sanctum/csrf-cookie',
       toBaseDomain: true,
       event,
 		});
-
-		if (sanctumRequest?.status === 204) {
-			// set cookie in the client
-			response.headers.set(
-				'set-cookie',
-				sanctumRequest?.headers.get('set-cookie') ?? ''
-			)
-		}
 	}
 
-  return response;
+  return resolve(event);
 }
 
 /** @type {import('@sveltejs/kit').Handle} */
@@ -78,47 +68,74 @@ async function addSecurityHeaders({event, resolve}){
 
 /** @type {import('@sveltejs/kit').Handle} */
 async function getUserDetails({event, resolve}){
-  if ( ! event.locals.user ) {
-
+  if ( ! event.locals?.user?.name && ! event.route.id?.includes('api/home') && ! event.request.url.includes('assets')) {
 		const getUserDetails = await api({
 			method: 'get',
 			resource: 'user',
 			event,
-      logResponse:true
 		});
 
-    event.locals.user = (getUserDetails?.json())?.user
-    event.locals.deviceName = event.locals.deviceType.isDesktop
-                                ? `${event.locals.deviceType?.mobileVendor || ''} ${event.locals.deviceType?.mobileModel || ''}`
-                                : `${event.locals.deviceType?.mobileVendor || ''} ${event.locals.deviceType?.mobileModel || ''} ${event.locals.deviceType?.osVersion || ''}`;
+    event.locals.user = await getUserDetails?.json() //use this to determine auth on frontend. Before accessing auth routes if this is null redirect to login page
 	}
+
+  event.locals.deviceName = event.locals.deviceType.isDesktop
+                              ? `${event.locals.deviceType?.mobileVendor || ''} ${event.locals.deviceType?.mobileModel || ''}`
+                              : `${event.locals.deviceType?.mobileVendor || ''} ${event.locals.deviceType?.mobileModel || ''} ${event.locals.deviceType?.osVersion || ''}`;
 
   return resolve(event);
 }
 
 /** @type {import('@sveltejs/kit').Handle} */
 function authorize({event, resolve}){
-  if ( ! event.locals.user ) {
-    // and this is an auth route redirect to login page
-	}
+
+  if ( ! event.request.url.includes('assets')) {
+    console.log(`--------------AUTHORIZING ${event.request.url}---------------`);
+    console.log({user: event.locals?.user?.name});
+  }
+
+  if (event.url.pathname.startsWith('/user') && ! event.locals?.user?.name) {
+    redirect(303, '/login') //303 will always redirect with GET, 307 will redirect with the original request method, while 302 is just 303 made popular
+  }
+
+  if (event.route.id?.includes('(auth)') && event.locals?.user?.name) {
+    redirect(303, '/user/settings')
+  }
 
   return resolve(event);
 }
 
 /** @type {import('@sveltejs/kit').HandleFetch} */
-export const handleFetch = ({request, fetch}) => {
-  // console.log('request', request);
+export const handleFetch = async ({request, fetch, event}) => {
 
-  return fetch(request)
+  console.log(`--------------FETCHING ${request.url}---------------`);
+
+  const response = await fetch(request);
+
+  /** @type {CookieSerializeOptions[]} */
+  let cookies = scp.parse(response)
+
+  if (cookies.length) {
+    cookies.forEach(cookie => {
+      event.cookies.set(cookie.name, cookie.value, {
+        ...cookie,
+        sameSite: cookie.sameSite,
+        secure: !dev,
+      });
+    })
+  }
+
+  return response
 }
 
 /** @type {import('@sveltejs/kit').HandleServerError} */
 export const handleError = ({event, error}) => {
-  console.log('error', error);
+  if ( ! event.request.url.includes('assets')) {
+    console.log('error', error);
 
-  return {
-    message: 'Oops',
-    code: error?.code ?? 500,
+    return {
+      message: 'Oops',
+      code: error?.code ?? 500,
+    }
   }
 }
 
