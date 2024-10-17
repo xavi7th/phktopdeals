@@ -230,7 +230,7 @@ export const getFirstElement = (str, elem = 'p') => {
   return ''
 }
 
-import { PUBLIC_VITE_BASE_API, PUBLIC_VITE_BASE_DOMAIN } from '$env/static/public';
+import { env } from '$env/dynamic/public';
 
 /**
  * Custom function to set API headers and make API calls
@@ -240,15 +240,15 @@ import { PUBLIC_VITE_BASE_API, PUBLIC_VITE_BASE_DOMAIN } from '$env/static/publi
  * @returns {Promise<Response> | undefined}
  */
 export async function api({toBaseDomain, resource, event, method, data, logResponse}) {
-	const base = PUBLIC_VITE_BASE_DOMAIN
-	const baseApi = PUBLIC_VITE_BASE_API
+	const base = env.PUBLIC_VITE_BASE_DOMAIN
+	const baseApi = env.PUBLIC_VITE_BASE_API
 	let fullurl = toBaseDomain ? base : baseApi
 
 	if (resource) {
 		fullurl += resource
 	}
 
-  console.log('--------------- API Request: ' + method.toUpperCase() + ' ' + fullurl);
+  console.error('--------------- API Request: ' + method.toUpperCase() + ' ' + fullurl);
 
 	const response = await event?.fetch(fullurl, {
 		method: method,
@@ -263,9 +263,9 @@ export async function api({toBaseDomain, resource, event, method, data, logRespo
 	});
 
   if(logResponse){
-    console.log('--------------- API Response: ');
+    console.error('--------------- API Response: ');
     let spyResponse = await response?.clone();
-    console.log({status: spyResponse?.status, body: spyResponse?.status==204 ? null : await spyResponse?.json()}, '\n\n')
+    console.error({status: spyResponse?.status, body: spyResponse?.status==204 ? null : await spyResponse?.json()}, '\n\n')
   }
 
 	return response;
