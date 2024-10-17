@@ -1,8 +1,26 @@
 import { api } from '$lib/helpers';
 import { redirect, fail } from '@sveltejs/kit';
 
+/** @type {import('./$types').PageServerLoad} */
+export async function load(event) {
+  if ( ! event.locals.session) {
+    await api({
+      method: 'get',
+      resource: 'sanctum/csrf-cookie',
+      toBaseDomain: true,
+      event,
+    });
+  }
+
+  event.setHeaders({
+    'Cache-Control': 'public, max-age=604800, stale-while-revalidate=86400, immutable',
+  });
+
+  return {}
+}
+
 /** @type {import('./$types').Actions} */
-export const actions = {
+ export const actions = {
 
   /** @param {import('@sveltejs/kit').RequestEvent} event */
 	default: async (event) => {
@@ -22,6 +40,10 @@ export const actions = {
 
 		if (response?.status == 422) {
 			return fail(response?.status || 400, await response?.json());
+		}
+
+		if (response?.status == 419) {
+			return fail(response?.status || 419, {message: 'Page has expired. Please reload and try again.'});
 		}
 
     if ( ! response?.ok) {

@@ -1,3 +1,11 @@
+/**
+ * This hook fires on EVERY request handled by the server side router.
+ *
+ * The request goes from here to the load functions and then back here and from here the response is sent back to the client
+ *
+ * So this is more like a controller in Laravel that is responsible for receiving the request, forwarding it to processors and then sending it back to the browsr
+ */
+
 import { parse } from 'cookie';
 import { api } from '$lib/helpers';
 import scp from 'set-cookie-parser';
@@ -23,52 +31,11 @@ async function logger({event, resolve}){
 }
 
 /** @type {import('@sveltejs/kit').Handle} */
-async function setCsrf({event, resolve}){
-	const cookies = parse(event.request.headers.get('cookie') || '')
+async function getUserDetails({event, resolve}){
+  const cookies = parse(event.request.headers.get('cookie') || '')
 	event.locals.session = cookies[import.meta.env.VITE_SESSION_NAME]
 
-	if (!event.locals.session && ! event.route.id?.includes('http://')) { //fire this ONLY on requests that hit our back end. Dont use this on requests that hit internal routes
-    await api({
-      method: 'get',
-			resource: 'sanctum/csrf-cookie',
-      toBaseDomain: true,
-      event,
-		});
-	}
-
-  return resolve(event);
-}
-
-/** @type {import('@sveltejs/kit').Handle} */
-async function addSecurityHeaders({event, resolve}){
-
-	const securityHeaders = { //@see https://edoverflow.com/2023/sveltekit-security-headers/
-    'Cross-Origin-Embedder-Policy': 'require-corp',
-    'Cross-Origin-Opener-Policy': 'same-origin',
-    'Cross-Origin-Resource-Policy': 'same-origin',
-    // 'Content-Security-Policy': 'script-src \'self\' \'nonce-Y70QFNhAVmer2wdobT8YoQ==\'',
-    // 'Referrer-Policy': 'no-referrer',
-    // 'Strict-transport-security': 'max-age=15552000; includeSubDomains',
-    // 'X-Content-Type-Options': 'nosniff',
-    // 'X-DNS-Prefetch-Control': 'off',
-    // 'X-Download-Options': 'noopen',
-    // 'X-Permitted-Cross-Domain-Policies': 'none',
-    'X-Frame-Options': 'SAMEORIGIN',
-    'X-XSS-Protection': '0',
-  }
-
-  const response = await resolve(event);
-
-  Object.entries(securityHeaders).forEach(
-      ([header, value]) => response.headers.set(header, value)
-  );
-
-  return response;
-}
-
-/** @type {import('@sveltejs/kit').Handle} */
-async function getUserDetails({event, resolve}){
-  if ( ! event.locals?.user?.name && ! event.route.id?.includes('api/home') && ! event.request.url.includes('assets')) {
+  if (event.locals.session && ! event.locals?.user && ! event.route.id?.includes('api/home') && ! event.request.url.includes('assets')) {
 		const getUserDetails = await api({
 			method: 'get',
 			resource: 'user',
@@ -88,12 +55,7 @@ async function getUserDetails({event, resolve}){
 /** @type {import('@sveltejs/kit').Handle} */
 function authorize({event, resolve}){
 
-  if ( ! event.request.url.includes('assets')) {
-    console.log(`--------------AUTHORIZING ${event.request.url}---------------`);
-    console.log({user: event.locals?.user?.name});
-  }
-
-  if (event.url.pathname.startsWith('/user') && ! event.locals?.user?.name) {
+  if ((event.url.pathname.startsWith('/user') && ! event.locals?.user?.name)) {
     redirect(303, '/login') //303 will always redirect with GET, 307 will redirect with the original request method, while 302 is just 303 made popular
   }
 
@@ -104,16 +66,40 @@ function authorize({event, resolve}){
   return resolve(event);
 }
 
+/** @type {import('@sveltejs/kit').Handle} */
+async function addSecurityHeaders({event, resolve}){
+	const securityHeaders = { //@see https://edoverflow.com/2023/sveltekit-security-headers/
+    'Cross-Origin-Embedder-Policy': 'require-corp',
+    'Cross-Origin-Opener-Policy': 'same-origin',
+    'Cross-Origin-Resource-Policy': 'same-origin',
+    // 'Content-Security-Policy': 'script-src \'self\' \'nonce-Y70QFNhAVmer2wdobT8YoQ==\'',
+    // 'Referrer-Policy': 'no-referrer',
+    // 'Strict-transport-security': 'max-age=15552000; includeSubDomains',
+    // 'X-Content-Type-Options': 'nosniff',
+    // 'X-DNS-Prefetch-Control': 'off',
+    // 'X-Download-Options': 'noopen',
+    // 'X-Permitted-Cross-Domain-Policies': 'none',
+    'X-Frame-Options': 'SAMEORIGIN',
+    'X-XSS-Protection': '0',
+  }
+  const response = await resolve(event);
+
+  Object.entries(securityHeaders).forEach(
+      ([header, value]) => response.headers.set(header, value)
+  );
+
+
+  return response;
+}
+
 /** @type {import('@sveltejs/kit').HandleFetch} */
 export const handleFetch = async ({request, fetch, event}) => {
-
-  console.log(`--------------FETCHING ${request.url}---------------`);
-
   const response = await fetch(request);
 
   /** @type {CookieSerializeOptions[]} */
   let cookies = scp.parse(response)
 
+  //This will take care of updating the csrf cookies from our backend for us.
   if (cookies.length) {
     cookies.forEach(cookie => {
       event.cookies.set(cookie.name, cookie.value, {
@@ -129,10 +115,10 @@ export const handleFetch = async ({request, fetch, event}) => {
 
 /** @type {import('@sveltejs/kit').HandleServerError} */
 export const handleError = ({event, error}) => {
-  console.log('------------SERVER ERROR-----------');
-  console.error({event, error});
-
   if ( ! event.request.url.includes('assets')) {
+    console.log('------------SERVER ERROR-----------');
+    console.error({event, error});
+
     return {
       message: error,
       code: error?.code ?? 500,
@@ -141,4 +127,4 @@ export const handleError = ({event, error}) => {
 }
 
 /** @type {import('@sveltejs/kit').Handle} */
-export const handle = sequence(handleDeviecDetector({}),logger, setCsrf, getUserDetails, authorize, addSecurityHeaders);
+export const handle = sequence(handleDeviecDetector({}),logger, getUserDetails, authorize, addSecurityHeaders);
