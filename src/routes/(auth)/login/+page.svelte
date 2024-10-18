@@ -1,17 +1,11 @@
 <script>
   import { enhance } from '$app/forms';
+  import OauthSignUp from '../OauthSignUp.svelte';
 	import Toast from '$lib/Components/Toast.svelte';
-	import SvgIcon from '$lib/Components/SvgIcon.svelte';
-	import { faceBookFilled, googleColored } from '$lib/Components/iconPaths';
 	import FloatingTextInput from '$lib/Components/FormInputs/FloatingTextInput.svelte';
 
-	export let
-        /** @type {import('./$types').PageData} */
-        // data,
-        /** @type {import('./$types').ActionData} */
-        form;
-
-  // $: console.log({form});
+  /** @type {import('./$types').ActionData} */
+	export let form;
 </script>
 
 {#if form?.message}
@@ -35,10 +29,7 @@
           </div>
 
           <div class="flex flex-col justify-center gap-6 mt-6 text-sm">
-            <div class="flex justify-between gap-1">
-              <a href="/register" class="text-brand-500">Don't have an account?</a>
-              <a href="#/" class="cursor-pointer text-brand-500 hover:underline">Forgot Password?</a>
-            </div>
+            <a href="#/" class="cursor-pointer text-brand-500 text-right hover:underline">Forgot Password?</a>
 
             <button type="submit" class="rounded-full bg-brand px-5 py-3 hover:bg-brand-400">
               <span class="">Sign in</span>
@@ -46,22 +37,7 @@
           </div>
         </form>
 
-        <!-- <div class="flex flex-col gap-2">
-          <div class="my-8 flex items-center">
-            <div class="mt-px flex-auto border-t"></div>
-            <div class="text-bold text-secondary text-md mx-6 dark:text-slate-50">Or</div>
-            <div class="mt-px flex-auto border-t"></div>
-          </div>
-
-          <button type="button" class="relative flex h-[38px] items-center justify-center gap-1.5 rounded-full border dark:border-0 dark:bg-white/20">
-            <SvgIcon class="size-[1.2em]" svgHeight={128} slot={googleColored}/>
-            <span class="rounded-sm text-sm dark:text-slate-50">Login with Google</span>
-          </button>
-          <button type="button" class="relative flex h-[38px] items-center justify-center gap-1.5 rounded-full border dark:border-0 dark:bg-white/20">
-            <SvgIcon class="size-[1.5em]" svgHeight={24} slot={faceBookFilled}/>
-            <span class="rounded-sm text-sm dark:text-slate-50">Login with Facebook</span>
-          </button>
-        </div> -->
+        <OauthSignUp />
 			</div>
 		</div>
 	</div>

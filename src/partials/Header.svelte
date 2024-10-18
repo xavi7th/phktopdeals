@@ -5,8 +5,6 @@
   export let main_nav;
 
  $: ({ user } = $page.data)
-
- $: console.log($page.data);
 </script>
 
 <header class="fixed z-30 flex w-full flex-wrap bg-black/40 py-4 text-sm backdrop-blur sm:flex-nowrap sm:justify-start dark:bg-neutral-900 dark:sm:bg-transparent">
@@ -47,7 +45,7 @@
         </svg>
         <span class="sr-only">Toggle</span>
       </button>
-      {#if user?.name}
+      {#if user?.full_name}
         <a href="/logout" data-sveltekit-reload class="mr-1 inline-flex items-center gap-x-3 rounded-full bg-gray-800 px-5 py-3 text-xs font-medium text-white hover:bg-gray-900 focus:bg-gray-900 focus:outline-none dark:bg-white dark:text-neutral-800">Logout</a>
       {:else}
         <a href="/login" class="mr-1 inline-flex items-center gap-x-3 rounded-full bg-gray-800 px-5 py-3 text-xs font-medium text-white hover:bg-gray-900 focus:bg-gray-900 focus:outline-none dark:bg-white dark:text-neutral-800">Sign In</a>
@@ -63,7 +61,7 @@
         {#each main_nav as nav_item}
           <a class="p-3.5 border-gray-400/60 font-bold tracking-tighter text-gray-600 hover:text-gray-400 focus:text-gray-400 focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500" href="{nav_item.url}" aria-current="{$page.url.pathname.includes(nav_item.url) ? 'page' : undefined}">{nav_item.name}</a>
         {/each}
-        {#if user?.name}
+        {#if user?.full_name}
           <a class="hidden sm:block mr-1 inline-flex items-center gap-x-3 sm:rounded-full bg-gray-800 px-5 py-3 text-xs font-bold tracking-tighter text-white  hover:bg-gray-900 focus:bg-gray-900 focus:outline-none dark:bg-white dark:text-neutral-800 dark:hover:text-white" href="/logout" data-sveltekit-reload>Logout</a>
         {:else}
           <a class="hidden sm:block mr-1 inline-flex items-center gap-x-3 sm:rounded-full bg-gray-800 px-5 py-3 text-xs font-bold tracking-tighter text-white  hover:bg-gray-900 focus:bg-gray-900 focus:outline-none dark:bg-white dark:text-neutral-800 dark:hover:text-white" href="/login">Sign In</a>

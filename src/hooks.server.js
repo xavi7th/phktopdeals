@@ -39,8 +39,7 @@ async function getUserDetails({event, resolve}){
 		const getUserDetails = await api({
 			method: 'get',
 			resource: 'user',
-			event,
-      logResponse: true,
+			event
 		});
 
     if (getUserDetails?.status == 200) {
@@ -58,11 +57,11 @@ async function getUserDetails({event, resolve}){
 /** @type {import('@sveltejs/kit').Handle} */
 function authorize({event, resolve}){
 
-  if ((event.url.pathname.startsWith('/user') && ! event.locals?.user?.name)) {
+  if ((event.url.pathname.startsWith('/user') && ! event.locals?.user?.full_name)) {
     redirect(303, '/login') //303 will always redirect with GET, 307 will redirect with the original request method, while 302 is just 303 made popular
   }
 
-  if (event.route.id?.includes('(auth)') && ! event.route.id?.includes('logout') && event.locals?.user?.name) {
+  if (event.route.id?.includes('(auth)') && ! event.route.id?.includes('logout') && event.locals?.user?.full_name) {
     redirect(303, '/user/settings')
   }
 

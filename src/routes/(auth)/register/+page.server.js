@@ -21,21 +21,22 @@ export async function load(event) {
 
 /** @type {import('./$types').Actions} */
  export const actions = {
-
   /** @param {import('@sveltejs/kit').RequestEvent} event */
 	default: async (event) => {
 		const form = await event.request.formData();
 
 		const response = await api({
 			method: 'post',
-			resource: 'login',
+			resource: 'register',
 			data: {
+        'full_name': form.has('full_name') ? form.get('full_name') : undefined,
 				'email': form.has('email') ? form.get('email') : undefined,
 				'password': form.has('password') ? form.get('password') : undefined,
+				'password_confirmation': form.has('password_confirmation') ? form.get('password_confirmation') : undefined,
 				'remember': form.has('remember') ? form.get('remember') : false,
         'device_name': event.locals.deviceName,
 			},
-      event,
+      event
 		});
 
 		if (response?.status == 422) {
@@ -50,7 +51,7 @@ export async function load(event) {
       return fail(response?.status || 500, {message: response?.statusText || 'An error occured while processing your request'});
     }
 
-		if (response?.status == 200 || response?.status == 201) {
+		if (response?.status == 201) {
 			throw redirect(302, '/user/settings')
 		}
 	},
