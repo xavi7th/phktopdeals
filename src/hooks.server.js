@@ -40,9 +40,12 @@ async function getUserDetails({event, resolve}){
 			method: 'get',
 			resource: 'user',
 			event,
+      logResponse: true,
 		});
 
-    event.locals.user = await getUserDetails?.json() //use this to determine auth on frontend. Before accessing auth routes if this is null redirect to login page
+    if (getUserDetails?.status == 200) {
+      event.locals.user = await getUserDetails?.json() //use this to determine auth on frontend. Before accessing auth routes if this is null redirect to login page
+    }
 	}
 
   event.locals.deviceName = event.locals.deviceType.isDesktop
@@ -59,7 +62,7 @@ function authorize({event, resolve}){
     redirect(303, '/login') //303 will always redirect with GET, 307 will redirect with the original request method, while 302 is just 303 made popular
   }
 
-  if (event.route.id?.includes('(auth)') && event.locals?.user?.name) {
+  if (event.route.id?.includes('(auth)') && ! event.route.id?.includes('logout') && event.locals?.user?.name) {
     redirect(303, '/user/settings')
   }
 

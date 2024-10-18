@@ -248,7 +248,9 @@ export async function api({toBaseDomain, resource, event, method, data, logRespo
 		fullurl += resource
 	}
 
-  console.error('--------------- API Request: ' + method.toUpperCase() + ' ' + fullurl);
+  if(logResponse){
+    console.error('--------------- API Request: ' + method.toUpperCase() + ' ' + fullurl);
+  }
 
 	const response = await event?.fetch(fullurl, {
 		method: method,

@@ -28,41 +28,40 @@
 					Sign In
 				</div>
 
-				<div class="flex flex-col gap-2">
-					<button type="button" class="relative flex h-[38px] items-center justify-center gap-1.5 rounded-full border dark:border-0 dark:bg-white/20">
-            <SvgIcon class="size-[1.2em]" svgHeight={128} slot={googleColored}/>
-						<span class="rounded-sm text-sm dark:text-slate-50">Sign Up with Google</span>
-					</button>
-					<button type="button" class="relative flex h-[38px] items-center justify-center gap-1.5 rounded-full border dark:border-0 dark:bg-white/20">
-            <SvgIcon class="size-[1.5em]" svgHeight={24} slot={faceBookFilled}/>
-						<span class="rounded-sm text-sm dark:text-slate-50">Sign Up with Facebook</span>
-					</button>
-				</div>
+        <form class="flex flex-col" method="POST" use:enhance>
+          <div class="space-y-8">
+            <FloatingTextInput name="email" isError={! form?.success} msg={form?.success || form?.errors?.email && form?.errors?.email[0]} label="Email"/>
+            <FloatingTextInput name="password" type="password" isError={! form?.success} msg={form?.success || form?.errors?.password && form?.errors?.password[0]} label="Password" togglePw='"#password"'/>
+          </div>
 
-				<div class="space-y-10">
-					<div class="mt-8 flex items-center">
-						<div class="mt-px flex-auto border-t"></div>
-						<div class="text-bold text-secondary text-md mx-6 dark:text-slate-50">Or</div>
-						<div class="mt-px flex-auto border-t"></div>
-					</div>
-
-					<form class="flex flex-col gap-4" method="POST" use:enhance>
-            <div class="flex gap-1 mb-4"><span>Don't have an account?</span> <a href="/register" class="text-brand-500">Sign Up</a></div>
-
-            <div class="space-y-8">
-              <FloatingTextInput name="email" isError={! form?.success} msg={form?.success || form?.errors?.email && form?.errors?.email[0]} label="Email"/>
-              <FloatingTextInput name="password" type="password" isError={! form?.success} msg={form?.success || form?.errors?.password && form?.errors?.password[0]} label="Password" togglePw='"#password"'/>
+          <div class="flex flex-col justify-center gap-6 mt-6 text-sm">
+            <div class="flex justify-between gap-1">
+              <a href="/register" class="text-brand-500">Don't have an account?</a>
+              <a href="#/" class="cursor-pointer text-brand-500 hover:underline">Forgot Password?</a>
             </div>
 
-						<div class="flex flex-col justify-center gap-4 mt-4">
-							<a href="#/" class="cursor-pointer text-center text-sm text-brand-500 hover:underline">Forgot Password?</a>
+            <button type="submit" class="rounded-full bg-brand px-5 py-3 hover:bg-brand-400">
+              <span class="">Sign in</span>
+            </button>
+          </div>
+        </form>
 
-							<button type="submit" class="rounded-full bg-brand px-5 py-3 text-sm hover:bg-brand-400">
-								<span class="">Sign in</span>
-							</button>
-						</div>
-					</form>
-				</div>
+        <!-- <div class="flex flex-col gap-2">
+          <div class="my-8 flex items-center">
+            <div class="mt-px flex-auto border-t"></div>
+            <div class="text-bold text-secondary text-md mx-6 dark:text-slate-50">Or</div>
+            <div class="mt-px flex-auto border-t"></div>
+          </div>
+
+          <button type="button" class="relative flex h-[38px] items-center justify-center gap-1.5 rounded-full border dark:border-0 dark:bg-white/20">
+            <SvgIcon class="size-[1.2em]" svgHeight={128} slot={googleColored}/>
+            <span class="rounded-sm text-sm dark:text-slate-50">Login with Google</span>
+          </button>
+          <button type="button" class="relative flex h-[38px] items-center justify-center gap-1.5 rounded-full border dark:border-0 dark:bg-white/20">
+            <SvgIcon class="size-[1.5em]" svgHeight={24} slot={faceBookFilled}/>
+            <span class="rounded-sm text-sm dark:text-slate-50">Login with Facebook</span>
+          </button>
+        </div> -->
 			</div>
 		</div>
 	</div>
