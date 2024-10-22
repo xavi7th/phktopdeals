@@ -63,4 +63,5 @@ export type AppUser = {
   email: string;
   phone?: string;
   is_active: boolean;
+  is_admin?: boolean;
 }
