@@ -21,12 +21,12 @@
   <div class="mt-auto w-full max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 lg:pt-12 mx-auto relative z-10">
 
     <div class="text-center flex flex-col items-center justify-center">
-      <a class="flex-none text-xl font-semibold text-white" href="/" aria-label="Brand">
-        <enhanced:img class="py-3 lg:py-5 w-3/5 sm:w-72 mx-auto text-neutral-400" src="$lib/images/logos/logo-wide-light.png?enhance" alt="partner-img-thumb" />
+      <a class="flex-none text-xl font-semibold text-white" href="#" aria-label="Brand">
+        <enhanced:img class="py-3 lg:py-5 w-20 h-auto md:w-28 lg:w-32 text-neutral-400" src="$lib/images/partners/binance-logo.png?enhance" alt="partner-img-thumb" />
       </a>
 
       <div class="mt-3">
-        <p class="text-gray-500 dark:text-neutral-500">Providing you the best deals in the <a class="text-brand-600 decoration-2 hover:underline focus:outline-none focus:underline font-medium dark:text-brand-500" href="#/">Crypto</a> space.</p>
+        <p class="text-gray-500 dark:text-neutral-500">Prociding you the best deals in the <a class="text-brand-600 decoration-2 hover:underline focus:outline-none focus:underline font-medium dark:text-brand-500" href="#">Crypto</a> space.</p>
         <p class="text-gray-500 dark:text-neutral-500">© Minds&Machines {new Date().getFullYear()}. All rights reserved.</p>
       </div>
 
@@ -60,9 +60,9 @@
         <h4 class="font-semibold text-gray-100">Services</h4>
 
         <div class="mt-3 grid space-y-3">
-          <p><a class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:outline-none focus:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200" href="/games">Games</a></p>
-          <p><a class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:outline-none focus:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200" href="/gift-cards">Gift Cards</a></p>
-          <p><a class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:outline-none focus:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200" href="/softwares">Softwares</a></p>
+          <p><a class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:outline-none focus:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200" href="#">Games</a></p>
+          <p><a class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:outline-none focus:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200" href="#">Gift Cards</a></p>
+          <p><a class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:outline-none focus:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200" href="#">Softwares</a></p>
         </div>
       </div>
 
@@ -70,14 +70,14 @@
         <h4 class="font-semibold text-gray-100">Company</h4>
 
         <div class="mt-3 grid space-y-3">
-          <p><a class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:outline-none focus:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200" href="/">About us</a></p>
-          <!-- <p><a class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:outline-none focus:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200" href="#">Blog</a></p> -->
-          <p><a class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:outline-none focus:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200" href="mailto:hello@phkhotdeals.com">Careers</a> <span class="inline-block ms-1 text-xs bg-blue-700 text-white py-1 px-2 rounded-lg">We're hiring</span></p>
-          <p><a class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:outline-none focus:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200" href="/">Customers</a></p>
+          <p><a class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:outline-none focus:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200" href="#">About us</a></p>
+          <p><a class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:outline-none focus:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200" href="#">Blog</a></p>
+          <p><a class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:outline-none focus:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200" href="#">Careers</a> <span class="inline-block ms-1 text-xs bg-blue-700 text-white py-1 px-2 rounded-lg">We're hiring</span></p>
+          <p><a class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:outline-none focus:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200" href="#">Customers</a></p>
         </div>
       </div>
 
-      <!-- <div class="col-span-full lg:col-span-2">
+      <div class="col-span-full lg:col-span-2">
         <h4 class="font-semibold text-gray-100">Stay up to date</h4>
 
         <form>
@@ -91,7 +91,7 @@
             </a>
           </div>
         </form>
-      </div> -->
+      </div>
     </div>
   </div>
 </footer>

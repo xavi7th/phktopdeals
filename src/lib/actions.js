@@ -7,6 +7,9 @@
  * @param {number} [options.typingSpeed=100] - the speed of the typewriter
  */
 export function typewriter(node, options = {texts: []}) {
+
+  console.log(options);
+
 	let texts = options.texts, txtIdx = 0, charIndex = 0, curText = '';
 
   /** @param {boolean} [isTyping] */
@@ -78,10 +81,12 @@ export function typewriter(node, options = {texts: []}) {
 	return {
 		onDestroy() {},
     afterUpdate() {
+      console.log('updatedx');
     },
 
     /** @param {string[]} newTexts */
 		update(newTexts) {
+      console.log(newTexts);
 			texts = newTexts;
 		}
 	};

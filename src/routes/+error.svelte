@@ -2,7 +2,7 @@
   import { page } from '$app/stores'
 	import { onMount } from 'svelte';
 
-  // $: console. log ('page', $page);
+  $: console. log ('page', $page);
 
   onMount(() => {
     let PAGE_NOT_FOUND = document.querySelector(".caution__tape .PAGE_NOT_FOUND")

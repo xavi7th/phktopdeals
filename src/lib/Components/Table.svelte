@@ -15,7 +15,7 @@
 </script>
 
 <div class="sm:mx-10 bg-white dark:bg-[#404040] mt-7 rounded-xl shadow-lg overflow-hidden">
-    <div class="flex sm:flex-row flex-col gap-5 items-center sm:px-10 px-5 py-7 pb-9 border-b border-[#00000020]">
+    <div class="flex sm:flex-row flex-col gap-5 items-center sm:px-10 px-5 py-7 pb-9 border-b border-[#00000020] dark:border-slate-200">
         <div class="flex sm:w-[280px] w-full">
             <input type="date" name="" id="" class="block w-full border rounded-xl">
         </div>
@@ -29,7 +29,7 @@
             </button>
         </div>
     </div>
-    <div class="flex gap-7 sm:px-10 px-5 items-center py-3 border-b border-[#00000020] text-slate-800 dark:text-slate-100">
+    <div class="flex gap-7 sm:px-10 px-5 items-center py-3 border-b border-[#00000020] dark:border-slate-200 text-slate-800 dark:text-slate-100">
         <p class="text-xs">Items per page</p>
         <div class="flex w-[70px]">
             <!-- <input type="text" name="" id="" class="block w-full border rounded-xl text-center"> -->
@@ -53,7 +53,7 @@
                 <th>Total</th>
                 <th>Balance</th>
             </tr>
-            <tr class="h-14 border-y border-[#00000020] text-slate-800 dark:text-slate-100">
+            <tr class="h-14 border-y text-slate-800 dark:text-slate-100">
                 <td>1</td>
                 <td>#re135</td>
                 <td>1</td>
@@ -61,7 +61,7 @@
                 <td>1</td>
                 <td>1</td>
             </tr>
-            <tr class="h-14 border-y border-[#00000020] text-slate-800 dark:text-slate-100">
+            <tr class="h-14 border-y text-slate-800 dark:text-slate-100">
                 <td>1</td>
                 <td>#re135</td>
                 <td>1</td>
@@ -69,7 +69,7 @@
                 <td>1</td>
                 <td>1</td>
             </tr>
-            <tr class="h-14 border-y border-[#00000020] text-slate-800 dark:text-slate-100">
+            <tr class="h-14 border-y text-slate-800 dark:text-slate-100">
                 <td>1</td>
                 <td>#re135</td>
                 <td>1</td>
@@ -77,7 +77,7 @@
                 <td>1</td>
                 <td>1</td>
             </tr>
-            <tr class="h-14 border-y border-[#00000020] text-slate-800 dark:text-slate-100">
+            <tr class="h-14 border-y text-slate-800 dark:text-slate-100">
                 <td>1</td>
                 <td>#re135</td>
                 <td>1</td>
@@ -85,7 +85,7 @@
                 <td>1</td>
                 <td>1</td>
             </tr>
-            <tr class="h-14 border-y border-[#00000020] text-slate-800 dark:text-slate-100">
+            <tr class="h-14 border-y text-slate-800 dark:text-slate-100">
                 <td>1</td>
                 <td>#re135</td>
                 <td>1</td>
@@ -93,7 +93,7 @@
                 <td>1</td>
                 <td>1</td>
             </tr>
-            <tr class="h-14 border-y border-[#00000020] text-slate-800 dark:text-slate-100">
+            <tr class="h-14 border-y text-slate-800 dark:text-slate-100">
                 <td>1</td>
                 <td>#re135</td>
                 <td>1</td>
@@ -101,7 +101,7 @@
                 <td>1</td>
                 <td>1</td>
             </tr>
-            <tr class="h-14 border-y border-[#00000020] text-slate-800 dark:text-slate-100">
+            <tr class="h-14 border-y text-slate-800 dark:text-slate-100">
                 <td>1</td>
                 <td>#re135</td>
                 <td>1</td>
@@ -109,7 +109,7 @@
                 <td>1</td>
                 <td>1</td>
             </tr>
-            <tr class="h-14 border-y border-[#00000020] text-slate-800 dark:text-slate-100">
+            <tr class="h-14 border-y text-slate-800 dark:text-slate-100">
                 <td>1</td>
                 <td>#re135</td>
                 <td>1</td>
