@@ -1,6 +1,4 @@
 <script>
-  import Header from '$partials/Header.svelte';
-	import Footer from '$partials/Footer.svelte';
 	import { afterNavigate } from '$app/navigation';
 
 	import '../app.scss';
@@ -10,8 +8,6 @@
 	});
 </script>
 
-<Header />
 
 <slot></slot>
 
-<Footer />

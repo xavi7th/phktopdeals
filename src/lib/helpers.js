@@ -25,7 +25,7 @@ export const getErrorString = errors => {
  * @param {String} currencySymbol The currency symbol to use. Default Naira
  * @returns {import('$lib/types').MediaHandler}
  */
-export const toCurrency = ( amount, currencySymbol = '₦' ) => {
+export const toCurrency = ( amount, currencySymbol = '$' ) => {
   if ( isNaN(amount) ) {
     console.log(amount);
     return 'Invalid Amount';
@@ -41,6 +41,18 @@ export const toCurrency = ( amount, currencySymbol = '₦' ) => {
     .reduce(function ( acc, amount, i, orig ) {
       return amount == "-" ? acc : amount + ( i && !( i % 3 ) ? "," : "" ) + acc;
     }, "") + "." + p[1];
+}
+
+export const percentageCalculation = (amount = 0, commission = 0, discount = 0) => {
+  let amount_to_pay;
+
+  if(discount){
+    const discount_percent = amount - ((amount*discount) / 100);
+    amount_to_pay = discount_percent - ((discount_percent*commission) / 100);
+  }else{
+    amount_to_pay = amount + ((amount*commission) / 100);
+  }
+  return toCurrency(amount_to_pay);
 }
 
 /**
@@ -215,6 +227,48 @@ export const getFirstElement = (str, elem = 'p') => {
 
   if (match) return match[0];
 
-  console.log("not valid data");
   return ''
+}
+
+import { env } from '$env/dynamic/public';
+
+/**
+ * Custom function to set API headers and make API calls
+ *
+ * @param {import('$lib/types').ApiParams} params
+ *
+ * @returns {Promise<Response> | undefined}
+ */
+export async function api({toBaseDomain, resource, event, method, data, logResponse}) {
+	const base = env.PUBLIC_VITE_BASE_DOMAIN
+	const baseApi = env.PUBLIC_VITE_BASE_API
+	let fullurl = toBaseDomain ? base : baseApi
+
+	if (resource) {
+		fullurl += resource
+	}
+
+  if(logResponse){
+    console.error('--------------- API Request: ' + method.toUpperCase() + ' ' + fullurl);
+  }
+
+	const response = await event?.fetch(fullurl, {
+		method: method,
+		headers: {
+			'content-type': 'application/json',
+			'accept': 'application/json',
+			'cookie': event.request?.headers?.get('cookie') || '',
+			'referer': event.request?.headers?.get('referer') || '',
+      'x-xsrf-token': event.cookies.get('XSRF-TOKEN') || '',
+		},
+		body: data && JSON.stringify(data),
+	});
+
+  if(logResponse){
+    console.error('--------------- API Response: ');
+    let spyResponse = await response?.clone();
+    console.error({status: spyResponse?.status, body: spyResponse?.status==204 ? null : await spyResponse?.json()}, '\n\n')
+  }
+
+	return response;
 }
