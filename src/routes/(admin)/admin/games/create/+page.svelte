@@ -1,5 +1,5 @@
 <script>
-    import Modal from "../../../../../shared/Modal.svelte";
+    import Modal from "../../../../shared/Modal.svelte";
 
     /**
 	 * @type {string}
