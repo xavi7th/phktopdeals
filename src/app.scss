@@ -1,6 +1,5 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
-@import '@splidejs/svelte-splide/css';
 
 @layer components {
   .text-title {
@@ -19,10 +18,6 @@ body,
 
   font-family: "Exo 2", Tajawal, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial,
                 Noto Sans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji";
-}
-
-.register-card{
-  //
 }
 
 .login-card {
