@@ -1,6 +1,6 @@
 {
-  "name": "phktopdeals",
-  "version": "0.1.0",
+  "name": "phkhotdeals",
+  "version": "0.5.0",
   "private": true,
   "scripts": {
     "predev": "cp pre-commit .git/hooks/ && chmod +x .git/hooks/pre-commit && echo 'hook copied'",
