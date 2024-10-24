@@ -35,14 +35,16 @@ async function getUserDetails({event, resolve}){
   const cookies = parse(event.request.headers.get('cookie') || '')
 	event.locals.session = cookies[import.meta.env.VITE_SESSION_NAME]
 
+  // console.log({reqUrl: event.url.pathname, user: event.locals?.user, gettingDetails: event.locals.session && ! event.locals?.user && ! event.route.id?.includes('api/home') && ! event.request.url.includes('assets')});
   if (event.locals.session && ! event.locals?.user && ! event.route.id?.includes('api/home') && ! event.request.url.includes('assets')) {
 		const getUserDetails = await api({
 			method: 'get',
 			resource: 'user',
-			event
+			event,
 		});
 
     if (getUserDetails?.status == 200) {
+      //TODO: Set a localStorage with key user and expiration time for 5mins. If that key is present, no need to getUserDetails. @see https://www.sohamkamani.com/javascript/localstorage-with-ttl-expiry/
       event.locals.user = await getUserDetails?.json() //use this to determine auth on frontend. Before accessing auth routes if this is null redirect to login page
     }
 	}
@@ -56,13 +58,36 @@ async function getUserDetails({event, resolve}){
 
 /** @type {import('@sveltejs/kit').Handle} */
 function authorize({event, resolve}){
-
-  if ((event.url.pathname.startsWith('/user') && ! event.locals?.user?.full_name)) {
-    redirect(303, '/login') //303 will always redirect with GET, 307 will redirect with the original request method, while 302 is just 303 made popular
+  /**
+   * @auth Protect routes that need authentication
+   * NOTE: 303 will always redirect with GET, 307 will redirect with the original request method, while 302 is just 303 made popular
+   */
+  if (['/user', '/admin'].some(forbiddenUrlPattern => event.url.pathname.startsWith(forbiddenUrlPattern)) && ! event.locals?.user?.full_name) {
+    redirect(303, '/login')
   }
 
-  if (event.route.id?.includes('(auth)') && ! event.route.id?.includes('logout') && event.locals?.user?.full_name) {
+  /**
+   * @guest Protect guest routes
+   */
+  if (['/login', '/register'].some(guestRoutes => event.route.id?.includes(guestRoutes)) && event.locals?.user?.full_name) {
+    if (event?.locals?.user?.is_admin) {
+      redirect(303, '/admin/dashboard')
+    }
     redirect(303, '/user/settings')
+  }
+
+  /**
+   * @authorize Protect User routes from admins
+   */
+  if (event.url.pathname.startsWith('/user') && event.locals?.user?.is_admin) {
+    redirect(303, '/admin/dashboard')
+  }
+
+  /**
+   * @authorize Protect Admin routes
+   */
+  if (event.url.pathname.startsWith('/admin') && ! event.locals?.user?.is_admin) {
+    redirect(303, '/logout')
   }
 
   return resolve(event);
