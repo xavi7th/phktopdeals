@@ -50,7 +50,7 @@ const config = {
 		adapter: adapter(),
     alias: {
       '$partials': './src/partials',
-      '$stores': './src/stores',
+      '$stores': './src/routes/shared/store.js',
     },
 	}
 };

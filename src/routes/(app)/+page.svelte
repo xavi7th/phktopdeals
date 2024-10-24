@@ -1,4 +1,5 @@
 <script>
+	import { pageTitle } from '$stores';
 	import Hero from '$partials/home/Hero.svelte';
 	import Services from '$partials/home/Services.svelte';
 	import HowItWorks from '$partials/home/HowItWorks.svelte';
@@ -9,8 +10,9 @@
   export let data;
 
   $: ({sections, filters} = data);
-
+  $pageTitle.title = `Welcome to ${$pageTitle.appName} – Explore Our World of blockchain`
 </script>
+
 <main class="flex flex-col flex-auto">
   <Hero />
 

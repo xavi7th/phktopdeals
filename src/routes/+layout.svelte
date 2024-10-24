@@ -1,4 +1,5 @@
 <script>
+	import { pageTitle } from '$stores';
 	import { afterNavigate } from '$app/navigation';
 
 	import '../app.scss';
@@ -8,6 +9,9 @@
 	});
 </script>
 
+<svelte:head>
+	<title>{$pageTitle.title}</title>
+</svelte:head>
 
 <slot></slot>
 

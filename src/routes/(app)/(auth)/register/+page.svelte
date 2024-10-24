@@ -4,9 +4,12 @@
 	import Toast from '$lib/Components/Toast.svelte';
 	import PrimaryBtn from '$lib/Components/PrimaryBtn.svelte';
 	import FloatingTextInput from '$lib/Components/FormInputs/FloatingTextInput.svelte';
+	import { pageTitle } from '$stores';
 
   /** @type {import('./$types').ActionData} */
   export let form;
+
+  $pageTitle.title = `Register Now – Become a Member of ${$pageTitle.appName}`;
 </script>
 
 {#if form?.message}

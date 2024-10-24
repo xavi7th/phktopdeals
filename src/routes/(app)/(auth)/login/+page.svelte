@@ -1,4 +1,5 @@
 <script>
+	import { pageTitle } from '$stores';
   import { enhance } from '$app/forms';
   import OauthSignUp from '../OauthSignUp.svelte';
 	import Toast from '$lib/Components/Toast.svelte';
@@ -6,6 +7,8 @@
 
   /** @type {import('./$types').ActionData} */
 	export let form;
+
+  $pageTitle.title = `Sign In to ${$pageTitle.appName} – Secure Account Access`;
 </script>
 
 {#if form?.message}
