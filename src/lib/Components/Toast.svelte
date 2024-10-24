@@ -3,7 +3,9 @@
 
 <script>
   import SvgIcon from '$lib/Components/SvgIcon.svelte';
+	import { onMount } from 'svelte';
 	import { bell, checkMarkFilledAlt, exclamationFilled, infoFilled, x, xFilled } from './iconPaths';
+  import { fade, fly } from "svelte/transition";
 
   export let type = 'grey', msg = 'A toast message is required', dismissable = true, positioned = true, toastId = 'toast-' + crypto.randomUUID().replaceAll('-', '').substring(0, 10);
 
@@ -35,37 +37,59 @@
       close: 'text-gray-800 dark:text-white',
     },
   }
+
+  let showToast = true;
+
+  function updateToast() {
+      setTimeout(() => {
+        showToast = false;
+      }, 5000)
+  }
+
+  onMount(() => {
+    updateToast();
+
+      // Optional: Listen for manual toggling of the `dark` class
+      const observer = new MutationObserver(updateToast);
+      observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+
+      return () => {
+          observer.disconnect(); // Cleanup the observer
+      };
+  });
 </script>
 
-<div class="{positioned ? 'fixed top-24 end-3' : ''}">
-  <div id="{toastId}" class="hs-removing:translate-x-5 hs-removing:opacity-0 transition duration-300 max-w-xs rounded-xl shadow-lg {toastClasses[`${type}`]?.bg}" role="alert" tabindex="-1" aria-labelledby="{toastId}-label">
-    <div class="flex p-4">
-      <div class="shrink-0 self-center">
-        {#if type == 'info'}
-          <SvgIcon class="shrink-0 size-4 text-blue-500 mt-0.5" svgHeight={16} fill="currentColor" slot={infoFilled}/>
-        {:else if  type == 'success'}
-          <SvgIcon class="shrink-0 size-4 text-teal-500 mt-0.5" svgHeight={16} fill="currentColor" slot={checkMarkFilledAlt}/>
-        {:else if  type == 'error'}
-          <SvgIcon class="shrink-0 size-4 text-red-500" svgHeight={16} fill="currentColor" slot={xFilled}/>
-        {:else if  type == 'warning'}
-          <SvgIcon class="shrink-0 size-4 text-yellow-500 mt-0.5" svgHeight={16} fill="currentColor" slot={exclamationFilled}/>
-        {:else}
-          <SvgIcon class="shrink-0 size-4 text-gray-600 mt-0.5" svgHeight={16} fill="currentColor" slot={bell}/>
+{#if showToast}
+  <div class="toast {true ? 'fixed top-24 end-3 transition duration-300' : ''}" out:fly={{ x: 50, duration: 1000 }}>
+    <div id="{toastId}" class="hs-removing:translate-x-5 hs-removing:opacity-0 transition duration-300 max-w-xs rounded-xl shadow-lg {toastClasses[`${type}`]?.bg}" role="alert" tabindex="-1" aria-labelledby="{toastId}-label">
+      <div class="flex p-4">
+        <div class="shrink-0 self-center">
+          {#if type == 'info'}
+            <SvgIcon class="shrink-0 size-4 text-blue-500 mt-0.5" svgHeight={16} fill="currentColor" slot={infoFilled}/>
+          {:else if  type == 'success'}
+            <SvgIcon class="shrink-0 size-4 text-teal-500 mt-0.5" svgHeight={16} fill="currentColor" slot={checkMarkFilledAlt}/>
+          {:else if  type == 'error'}
+            <SvgIcon class="shrink-0 size-4 text-red-500" svgHeight={16} fill="currentColor" slot={xFilled}/>
+          {:else if  type == 'warning'}
+            <SvgIcon class="shrink-0 size-4 text-yellow-500 mt-0.5" svgHeight={16} fill="currentColor" slot={exclamationFilled}/>
+          {:else}
+            <SvgIcon class="shrink-0 size-4 text-gray-600 mt-0.5" svgHeight={16} fill="currentColor" slot={bell}/>
+          {/if}
+        </div>
+
+        <div class="ms-3 me-3">
+          <p id="{toastId}-label" class="text-sm">{msg}</p>
+        </div>
+
+        {#if dismissable}
+          <div class="ms-auto">
+            <button type="button" class="inline-flex shrink-0 justify-center items-center size-5 rounded-lg opacity-50 hover:opacity-100 focus:outline-none focus:opacity-100 {toastClasses[`${type}`]?.close}" aria-label="Close" data-hs-remove-element="{`#${toastId}`}" on:click={() => showToast = false}>
+              <span class="sr-only">Close</span>
+              <SvgIcon class="shrink-0 size-4" svgHeight={24} stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" slot={x}/>
+            </button>
+          </div>
         {/if}
       </div>
-
-      <div class="ms-3 me-3">
-        <p id="{toastId}-label" class="text-sm">{msg}</p>
-      </div>
-
-      {#if dismissable}
-        <div class="ms-auto">
-          <button type="button" class="inline-flex shrink-0 justify-center items-center size-5 rounded-lg opacity-50 hover:opacity-100 focus:outline-none focus:opacity-100 {toastClasses[`${type}`]?.close}" aria-label="Close" data-hs-remove-element="{`#${toastId}`}">
-            <span class="sr-only">Close</span>
-            <SvgIcon class="shrink-0 size-4" svgHeight={24} stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" slot={x}/>
-          </button>
-        </div>
-      {/if}
     </div>
   </div>
-</div>
+{/if}

@@ -10,7 +10,7 @@
 
 {#if form?.message}
   <div class="fixed top-24 end-3 space-y-3">
-    <Toast positioned={false} type="error" msg={form?.message}/>
+    <Toast positioned={false} type="error" msg={form?.message} />
   </div>
 {/if}
 
