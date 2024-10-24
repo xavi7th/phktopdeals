@@ -60,7 +60,7 @@
 </script>
 
 {#if showToast}
-  <div class="toast {true ? 'fixed top-24 end-3 transition duration-300' : ''}" out:fly={{ x: 50, duration: 1000 }}>
+  <div class="toast {positioned ? 'fixed top-24 end-3 transition duration-300' : ''}" out:fly={{ x: 50, duration: 1000 }}>
     <div id="{toastId}" class="hs-removing:translate-x-5 hs-removing:opacity-0 transition duration-300 max-w-xs rounded-xl shadow-lg {toastClasses[`${type}`]?.bg}" role="alert" tabindex="-1" aria-labelledby="{toastId}-label">
       <div class="flex p-4">
         <div class="shrink-0 self-center">
