@@ -77,6 +77,28 @@ function authorize({event, resolve}){
   return resolve(event);
 }
 
+
+/** @type {import('@sveltejs/kit').Handle} */
+// function authorize({event, resolve}){
+//   if ((['/user', '/admin'].some(forbiddenUrlPattern => event.url.pathname.startsWith(forbiddenUrlPattern)) && ! event.locals?.user?.full_name)) {
+//     redirect(303, '/login') //303 will always redirect with GET, 307 will redirect with the original request method, while 302 is just 303 made popular
+//   }
+
+//   if (event.url.pathname.startsWith('/admin') && ! event.locals?.user?.is_admin) {
+//     redirect(303, '/logout')
+//   }
+
+//   if (['/login', '/register'].some(guestRoutes => event.route.id?.includes(guestRoutes)) && event.locals?.user?.full_name) {
+//     if (event?.locals?.user?.is_admin) {
+//       redirect(302, '/admin/dashboard')
+//     }
+
+//     redirect(303, '/user/settings')
+//   }
+
+//   return resolve(event);
+// }
+
 /** @type {import('@sveltejs/kit').Handle} */
 async function addSecurityHeaders({event, resolve}){
 	const securityHeaders = { //@see https://edoverflow.com/2023/sveltekit-security-headers/
