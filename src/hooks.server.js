@@ -61,6 +61,15 @@ function authorize({event, resolve}){
     redirect(303, '/login') //303 will always redirect with GET, 307 will redirect with the original request method, while 302 is just 303 made popular
   }
 
+  if ((event.url.pathname.startsWith('/admin'))) {
+    if(!event.locals?.user?.full_name){
+      redirect(303, '/login') //303 will always redirect with GET, 307 will redirect with the original request method, while 302 is just 303 made popular
+    }
+    if(! event.locals?.user?.is_admin){
+      redirect(303, '/user') //303 will always redirect with GET, 307 will redirect
+    }
+  }
+
   if (event.route.id?.includes('(auth)') && ! event.route.id?.includes('logout') && event.locals?.user?.full_name) {
     redirect(303, '/user/settings')
   }
