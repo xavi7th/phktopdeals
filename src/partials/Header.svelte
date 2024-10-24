@@ -1,5 +1,6 @@
 <script>
   import { page } from '$app/stores';
+	import Logo from '$lib/Components/Logo.svelte';
 
   /** @type {import('$lib/types').NavData[]} */
   export let main_nav;
@@ -9,9 +10,7 @@
 
 <header class="fixed z-30 flex w-full flex-wrap bg-black/40 py-4 text-sm backdrop-blur sm:flex-nowrap sm:justify-start dark:bg-neutral-900 dark:sm:bg-transparent">
   <nav class="mx-auto flex w-full max-w-[85rem] basis-full flex-wrap items-center justify-between sm:px-4">
-    <a class="flex-none text-xl font-semibold focus:opacity-80 focus:outline-none sm:order-1 dark:text-white" href="/">
-      <enhanced:img class="w-10 sm:w-14 pl-2 ml-2 text-neutral-400" src="$lib/images/logos/logo-light.png?enhance&w=150" alt="partner-img-thumb" />
-    </a>
+    <Logo />
 
     <div class="flex items-center gap-x-2 sm:order-4 sm:hidden">
       <button

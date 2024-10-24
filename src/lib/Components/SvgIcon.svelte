@@ -14,7 +14,6 @@
    * </SvgIcon>
    *
    * @property {string} slot the contents of the svg
-   * @property {number} strokeWidth the stroke with attribute. Default 2
    * @property {string} fill the fill or the background color of the icon. Default none.
    * @property {number} svgWidth Default 24.
    * @property {number} svgHeight Default 24.

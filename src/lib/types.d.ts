@@ -1,4 +1,5 @@
 import type { RequestEvent } from '@sveltejs/kit';
+import type { HTMLAttributes } from 'svelte/elements';
 
 export interface ApiParams {
 	method: string;
@@ -64,4 +65,10 @@ export type AppUser = {
   phone?: string;
   is_active: boolean;
   is_admin?: boolean;
+}
+export type AdminNavMenuItem = {
+  name: string;
+  uri: string;
+  icon: string;
+  iconAttributes?: HTMLAttributes;
 }
