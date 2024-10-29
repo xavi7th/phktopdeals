@@ -12,6 +12,7 @@ import scp from 'set-cookie-parser';
 import { dev } from "$app/environment";
 import { redirect } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
+import { env } from '$env/dynamic/public';
 import { handleDeviecDetector } from 'sveltekit-device-detector';
 
 /** @type {import('@sveltejs/kit').Handle} */
@@ -123,7 +124,14 @@ async function addSecurityHeaders({event, resolve}){
 export const handleFetch = async ({request, fetch, event}) => {
   const response = await fetch(request);
 
-  /** @type {CookieSerializeOptions[]} */
+   /**
+   * @crsf Handle expired tokens and csrf expiry
+   */
+   if (response?.status == 419 && event.url.pathname.startsWith(env.PUBLIC_VITE_BASE_API)) {
+    redirect(303, '/logout');
+  }
+
+  /** @type {import('set-cookie-parser').Cookie[]} */
   let cookies = scp.parse(response)
 
   //This will take care of updating the csrf cookies from our backend for us.
