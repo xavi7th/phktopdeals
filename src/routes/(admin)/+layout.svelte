@@ -9,7 +9,7 @@
   const { admin_routes } = data;
 </script>
 
-<section class="bg-gray-50 dark:bg-neutral-900">
+<section class="dark:bg-neutral-900">
   <Header />
 
   <div class="sticky top-0 inset-x-0 z-20 bg-white border-y px-4 sm:px-6 lg:px-8 lg:hidden dark:bg-neutral-800 dark:border-neutral-700">
@@ -27,8 +27,10 @@
     </div>
   </div>
 
-  <Sidebar {admin_routes}/>
+  <div class="grid grid-cols-5">
+    <Sidebar {admin_routes}/>
 
-  <slot></slot>
+    <slot></slot>
+  </div>
 
 </section>

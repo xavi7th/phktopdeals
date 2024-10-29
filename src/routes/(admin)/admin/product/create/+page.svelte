@@ -5,72 +5,72 @@
   $: formType = 'create';
 </script>
 
-<div class="max-w-4xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+<div class="col-span-5 lg:col-span-4 lg:col-start-2 px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
   <div class="bg-white rounded-xl shadow p-4 sm:p-7 dark:bg-neutral-900">
     <form>
-      <div class="grid sm:grid-cols-12 gap-2 sm:gap-4 py-8 first:pt-0 last:pb-0 border-t first:border-transparent border-gray-200 dark:border-neutral-700 dark:first:border-transparent">
-        <div class="sm:col-span-12">
+      <div class="grid grid-cols-12 gap-2 sm:gap-4 py-8 first:pt-0 last:pb-0 border-t first:border-transparent border-gray-200 dark:border-neutral-700 dark:first:border-transparent">
+        <div class="col-span-12">
           <h2 class="text-lg font-semibold text-gray-800 dark:text-neutral-200">
             Product Management
           </h2>
         </div>
 
-        <div class="sm:col-span-3">
+        <div class="col-span-3">
           <label for="af-submit-application-full-name" class="inline-block text-sm font-medium text-gray-500 mt-2.5 dark:text-neutral-500">
             Name
           </label>
         </div>
 
-        <div class="sm:col-span-9">
+        <div class="col-span-9">
           <div class="sm:flex">
             <input id="af-submit-application-full-name" type="text" class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm -mt-px -ms-px first:rounded-t-lg last:rounded-b-lg sm:first:rounded-s-lg sm:mt-0 sm:first:ms-0 sm:first:rounded-se-none sm:last:rounded-es-none sm:last:rounded-e-lg text-sm relative focus:z-10 focus:border-brand-500 focus:ring-brand-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
           </div>
         </div>
 
-        <div class="sm:col-span-3">
+        <div class="col-span-3">
           <label for="af-submit-application-resume-cv" class="inline-block text-sm font-medium text-gray-500 mt-2.5 dark:text-neutral-500">
             Image
           </label>
         </div>
 
-        <div class="sm:col-span-9">
+        <div class="col-span-9">
           <label for="af-submit-application-resume-cv" class="sr-only">Choose file</label>
           <input type="file" name="af-submit-application-resume-cv" id="af-submit-application-resume-cv" class="block w-full border border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-brand-500 focus:ring-brand-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 file:bg-gray-50 file:border-0 file:bg-gray-100 file:me-4 file:py-2 file:px-4 dark:file:bg-neutral-700 dark:file:text-neutral-400">
         </div>
 
-        <div class="sm:col-span-3">
+        <div class="col-span-3">
           <label for="af-submit-application-email" class="inline-block text-sm font-medium text-gray-500 mt-2.5 dark:text-neutral-500">
             Product Type
           </label>
         </div>
 
-        <div class="sm:col-span-9 flex gap-3">
+        <div class="col-span-9 flex gap-3">
           <input id="af-submit-application-email" type="email" class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm text-sm rounded-lg focus:border-brand-500 focus:ring-brand-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
           <button type="button" class="w-40 py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-brand-600 text-white hover:bg-brand-700 focus:outline-none focus:bg-brand-700 disabled:opacity-50 disabled:pointer-events-none"aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-static-create-modal" data-hs-overlay="#hs-static-create-modal"  on:click={() => title = 'Manage Type'}>
             Manage
           </button>
         </div>
 
-        <div class="sm:col-span-3">
+        <div class="col-span-3">
           <label for="af-submit-application-email" class="inline-block text-sm font-medium text-gray-500 mt-2.5 dark:text-neutral-500">
             Brand
           </label>
         </div>
 
-        <div class="sm:col-span-9 flex gap-3">
+        <div class="col-span-9 flex gap-3">
           <input id="af-submit-application-email" type="email" class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm text-sm rounded-lg focus:border-brand-500 focus:ring-brand-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
           <button type="button" class="w-40 py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-brand-600 text-white hover:bg-brand-700 focus:outline-none focus:bg-brand-700 disabled:opacity-50 disabled:pointer-events-none" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-static-create-modal" data-hs-overlay="#hs-static-create-modal" on:click={() => title = 'Manage Brand'}>
             Manage
           </button>
         </div>
 
-        <div class="sm:col-span-3">
+        <div class="col-span-3">
           <label for="af-submit-application-email" class="inline-block text-sm font-medium text-gray-500 mt-2.5 dark:text-neutral-500">
             Category
           </label>
         </div>
 
-        <div class="sm:col-span-9 flex gap-3">
+        <div class="col-span-9 flex gap-3">
           <input id="af-submit-application-email" type="email" class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm text-sm rounded-lg focus:border-brand-500 focus:ring-brand-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
           <button type="button" class="w-40 py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-brand-600 text-white hover:bg-brand-700 focus:outline-none focus:bg-brand-700 disabled:opacity-50 disabled:pointer-events-none" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-static-create-modal" data-hs-overlay="#hs-static-create-modal" on:click={() => title = 'Manage Category'}>
             Manage
@@ -79,72 +79,72 @@
       </div>
 
       <div class="grid sm:grid-cols-12 gap-2 sm:gap-4 py-8 first:pt-0 last:pb-0 border-t first:border-transparent border-gray-200 dark:border-neutral-700 dark:first:border-transparent">
-        <div class="sm:col-span-12">
+        <div class="col-span-12">
           <h2 class="text-lg font-semibold text-gray-800 dark:text-neutral-200">
             Pricing
           </h2>
         </div>
 
-        <div class="sm:col-span-3">
+        <div class="col-span-3">
           <label for="af-submit-application-linkedin-url" class="inline-block text-sm font-medium text-gray-500 mt-2.5 dark:text-neutral-500">
             Min
           </label>
         </div>
 
-        <div class="sm:col-span-9">
+        <div class="col-span-9">
           <input id="af-submit-application-linkedin-url" type="number" class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm text-sm rounded-lg focus:border-brand-500 focus:ring-brand-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
         </div>
 
-        <div class="sm:col-span-3">
+        <div class="col-span-3">
           <label for="af-submit-application-twitter-url" class="inline-block text-sm font-medium text-gray-500 mt-2.5 dark:text-neutral-500">
             Denominations
           </label>
         </div>
 
-        <div class="sm:col-span-9">
+        <div class="col-span-9">
           <input id="af-submit-application-twitter-url" type="number" class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm text-sm rounded-lg focus:border-brand-500 focus:ring-brand-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
         </div>
 
-        <div class="sm:col-span-3">
+        <div class="col-span-3">
           <label for="af-submit-application-github-url" class="inline-block text-sm font-medium text-gray-500 mt-2.5 dark:text-neutral-500">
             Flexible
           </label>
         </div>
 
-        <div class="sm:col-span-9">
+        <div class="col-span-9">
           <select class="py-3 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-brand-500 focus:ring-brand-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
             <option selected>Yes</option>
             <option>No</option>
           </select>
         </div>
 
-        <div class="sm:col-span-3">
+        <div class="col-span-3">
           <label for="af-submit-application-portfolio-url" class="inline-block text-sm font-medium text-gray-500 mt-2.5 dark:text-neutral-500">
             Commision
           </label>
         </div>
 
-        <div class="sm:col-span-9">
+        <div class="col-span-9">
           <input id="af-submit-application-portfolio-url" type="number" class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm text-sm rounded-lg focus:border-brand-500 focus:ring-brand-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
         </div>
 
-        <div class="sm:col-span-3">
+        <div class="col-span-3">
           <label for="af-submit-application-other-website" class="inline-block text-sm font-medium text-gray-500 mt-2.5 dark:text-neutral-500">
             Discount
           </label>
         </div>
 
-        <div class="sm:col-span-9">
+        <div class="col-span-9">
           <input id="af-submit-application-other-website" type="number" class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm text-sm rounded-lg focus:border-brand-500 focus:ring-brand-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
         </div>
 
-        <div class="sm:col-span-3">
+        <div class="col-span-3">
           <label for="af-submit-application-other-website" class="inline-block text-sm font-medium text-gray-500 mt-2.5 dark:text-neutral-500">
             Discount Until
           </label>
         </div>
 
-        <div class="sm:col-span-9">
+        <div class="col-span-9">
           <input id="af-submit-application-other-website" type="number" class="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm text-sm rounded-lg focus:border-brand-500 focus:ring-brand-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
         </div>
       </div>
@@ -152,14 +152,14 @@
 
 
       <div class="grid sm:grid-cols-12 gap-2 sm:gap-4 py-8 first:pt-0 last:pb-0 border-t first:border-transparent border-gray-200 dark:border-neutral-700 dark:first:border-transparent">
-        <div class="sm:col-span-12">
+        <div class="col-span-12">
           <h2 class="text-lg font-semibold text-gray-800 dark:text-neutral-200">
             FAQ
           </h2>
         </div>
 
 
-        <div class="sm:col-span-12">
+        <div class="col-span-12">
           <div class="bg-white border border-gray-200 rounded-xl overflow-hidden dark:bg-neutral-800 dark:border-neutral-700">
             <div id="hs-editor-tiptap">
               <div class="flex align-middle gap-x-0.5 border-b border-gray-200 p-2 dark:border-neutral-700">

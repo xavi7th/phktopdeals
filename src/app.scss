@@ -21,10 +21,9 @@ body,
                 Noto Sans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji";
 }
 
-.register-card{
-  //
-}
-
-.login-card {
-  // width: 500px;
+.super-debug{
+  position: fixed !important;
+  left:0;
+  bottom: 0;
+  z-index: 60;
 }

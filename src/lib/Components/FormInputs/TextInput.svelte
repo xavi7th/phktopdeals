@@ -11,12 +11,12 @@
 	import SvgIcon from '../SvgIcon.svelte';
 	import FormMessage from '$lib/Components/FormMessage.svelte';
 
-  export let name = 'input-' + crypto.randomUUID().replaceAll('-', '').substring(0, 10), msg = '', isError = true,
-              label = '', placeholder = ' ', gray = false, togglePw = undefined, strongPw = undefined, value = '';
+  export let name = 'input-' + crypto.randomUUID().replaceAll('-', '').substring(0, 10), msg = '', isError = true, label = '', placeholder = ' ',
+              gray = false, togglePw = undefined, strongPw = undefined, value = '';
 </script>
 
 <div class="relative flex-1">
-  <input {name} id="{name}" {placeholder} {...$$restProps} bind:value
+  <input {name} id="{name}" bind:value {placeholder} {...$$restProps}
       class="peer p-4 block w-full border-gray-200 rounded-lg text-sm placeholder:text-transparent focus:border-brand-500/50 focus:ring-brand-500/50
       disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400
       dark:focus:ring-neutral-600 focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2

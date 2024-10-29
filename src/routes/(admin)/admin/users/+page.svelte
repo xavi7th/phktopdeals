@@ -1,4 +1,4 @@
-<div class="w-full lg:ps-64">
+<div class="col-span-5 lg:col-span-4 lg:col-start-2">
   <div class="p-4 sm:p-6 space-y-4 sm:space-y-6">
     <div class="flex flex-col">
       <div class="-m-1.5 overflow-x-auto">

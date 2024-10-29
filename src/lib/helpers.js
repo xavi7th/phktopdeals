@@ -21,26 +21,18 @@ export const getErrorString = errors => {
 }
 
 /**
- * @param {Number} amount The number to convert to currency
- * @param {String} currencySymbol The currency symbol to use. Default Naira
- * @returns {import('$lib/types').MediaHandler}
+ * @param {number} amount The number to convert to currency
+ * @param {string} currencySymbol The currency symbol to use. Default Naira
+ * @returns {string}
  */
 export const toCurrency = ( amount, currencySymbol = '$' ) => {
   if ( isNaN(amount) ) {
     console.log(amount);
     return 'Invalid Amount';
   }
-  return currencySymbol + Number(amount).toFixed(2)
-    .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
 
-  var p = Number(amount)
-    .toFixed(2)
-    .split(".");
-  return currency + p[0].split("")
-    .reverse()
-    .reduce(function ( acc, amount, i, orig ) {
-      return amount == "-" ? acc : amount + ( i && !( i % 3 ) ? "," : "" ) + acc;
-    }, "") + "." + p[1];
+  return currencySymbol + Number(amount).toFixed(2)
+    .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
 }
 
 export const percentageCalculation = (amount = 0, commission = 0, discount = 0) => {
@@ -191,6 +183,22 @@ export const getParamsAsObject = function ( query ) {
 };
 
 /**
+ * @param {any} val
+ * @returns {boolean}
+ */
+export const isObject = val => {
+  return typeof val === 'object' && !Array.isArray(val) && val !== null;
+}
+
+/**
+ * @param {any} val
+ * @returns {boolean}
+ */
+export const isArrayable = val => {
+  return typeof val === 'object' && val !== null;
+}
+
+/**
  *
  * @param {Number|String} val
  * @returns {Boolean}
@@ -237,12 +245,33 @@ import { env } from '$env/dynamic/public';
  *
  * @param {import('$lib/types').ApiParams} params
  *
- * @returns {Promise<Response> | undefined}
+ * @returns {Promise<Response|undefined>}
  */
-export async function api({toBaseDomain, resource, event, method, data, logResponse}) {
+export async function api({toBaseDomain, resource, event, method, data, logResponse, toJSON = true}) {
 	const base = env.PUBLIC_VITE_BASE_DOMAIN
 	const baseApi = env.PUBLIC_VITE_BASE_API
 	let fullurl = toBaseDomain ? base : baseApi
+  /** @type {import('$lib/types').ApiHeaders} */
+  let headers = {
+    'accept': 'application/json',
+    'accept-encoding': event.request?.headers?.get('accept-encoding') || '',
+    'accept-language': event.request?.headers?.get('accept-language') || '',
+    'connection': event.request?.headers?.get('connection') || '',
+    'cookie': event.request?.headers?.get('cookie') || '',
+    'host': event.request?.headers?.get('host') || '',
+    'referer': event.request?.headers?.get('referer') || '',
+    'origin': event.request?.headers?.get('origin') || '',
+    'x-xsrf-token': event.cookies.get('XSRF-TOKEN') || '',
+    'sec-ch-ua': event.cookies.get('sec-ch-ua') || '',
+    'sec-ch-ua-mobile': event.cookies.get('sec-ch-ua-mobile') || '',
+    'sec-ch-ua-platform': event.cookies.get('sec-ch-ua-platform') || '',
+    'user-agent': event.cookies.get('user-agent') || '',
+    'x-sveltekit-action': event.cookies.get('x-sveltekit-action') || false,
+  };
+
+  if (toJSON) {
+    headers['content-type'] = 'application/json';
+  }
 
 	if (resource) {
 		fullurl += resource
@@ -254,14 +283,8 @@ export async function api({toBaseDomain, resource, event, method, data, logRespo
 
 	const response = await event?.fetch(fullurl, {
 		method: method,
-		headers: {
-			'content-type': 'application/json',
-			'accept': 'application/json',
-			'cookie': event.request?.headers?.get('cookie') || '',
-			'referer': event.request?.headers?.get('referer') || '',
-      'x-xsrf-token': event.cookies.get('XSRF-TOKEN') || '',
-		},
-		body: data && JSON.stringify(data),
+		headers,
+		body: data && (toJSON ? JSON.stringify(data) : data) || null,
 	});
 
   if(logResponse){
@@ -271,4 +294,96 @@ export async function api({toBaseDomain, resource, event, method, data, logRespo
   }
 
 	return response;
+}
+
+/**
+ * Retrieves input data from a form and returns it as a JSON object.
+ * @param  {HTMLFormControlsCollection} elements  the form elements
+ */
+export const formToJSON = elements => [].reduce.call(elements, (data, element) => {
+
+  /**
+   * Checks that an element has a non-empty `name` and `value` property.
+   * @param  {Element} element  the element to check
+   * @return {boolean} true if the element is an input, false if not
+   */
+  const isValidElement = element => element.name && element.value
+
+  /**
+   * Checks if an element’s value can be saved (e.g. not an unselected checkbox).
+   * @param  {Element} element  the element to check
+   * @return {boolean}    true if the value should be added, false if not
+   */
+  const isValidValue = element => (!['checkbox', 'radio'].includes(element.type) || element.checked);
+
+  /**
+   * Checks if an input is a checkbox, because checkboxes allow multiple values.
+   * @param  {Element} element  the element to check
+   * @return {boolean}          true if the element is a checkbox, false if not
+   */
+  const isCheckbox = element => element.type === 'checkbox';
+
+  /**
+   * Checks if an input is a `select` with the `multiple` attribute.
+   * @param  {Element} element  the element to check
+   * @return {boolean}          true if the element is a multiselect, false if not
+   */
+  const isMultiSelect = element => element.options && element.multiple;
+
+  /**
+   * Retrieves the selected options from a multi-select as an array.
+   * @param  {HTMLOptionsCollection} options  the options for the select
+   * @return {array}                 an array of selected option values
+   */
+  const getSelectValues = options => [].reduce.call(options, (values, option) => {
+    return option.selected ? values.concat(option.value) : values;
+  }, []);
+
+  // Make sure the element has the required properties and should be added.
+  if (isValidElement(element) && isValidValue(element)) {
+
+    /*
+     * Some fields allow for more than one value, so we need to check if this
+     * is one of those fields and, if so, store the values as an array.
+     */
+    if (isCheckbox(element)) {
+      data[element.name] = (data[element.name] || []).concat(element.value);
+    } else if (isMultiSelect(element)) {
+      data[element.name] = getSelectValues(element);
+    } else {
+      data[element.name] = element.value;
+    }
+  }
+
+  return data;
+}, {});
+
+/**
+ *
+ * @param {FormData} form The form data
+ * @returns {pbject}
+ */
+export const formDataToObject = form => {
+  return Object.fromEntries(
+    Array.from(form.keys()).map(key => [
+      key, form.getAll(key).length > 1 ?
+        form.getAll(key) : form.get(key)
+    ])
+  )
+}
+
+/**
+ * @param {object} data The Non-POJO object to convert
+ * @returns {object}
+ */
+export const convertNonPOJOsToPOJOs = data => JSON.parse(JSON.stringify(data));
+
+import { clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+/**
+ * @param  {import('clsx').ClassValue[]} inputs
+ */
+export function cn(...inputs) {
+ return twMerge(clsx(inputs));
 }

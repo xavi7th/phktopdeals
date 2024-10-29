@@ -38,7 +38,13 @@ const config = {
     // vitePreprocess(),
 
     sveltePreprocess({
+      sass:{
+        quietDeps: true,
+        silenceDeprecations: ['import', 'legacy-js-api'],
+      },
       scss: {
+        quietDeps: true,
+        silenceDeprecations: ['import', 'legacy-js-api'],
         prependData: `@import './src/lib/css/variables';`
       }
     }),

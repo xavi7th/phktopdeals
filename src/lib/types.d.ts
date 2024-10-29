@@ -1,14 +1,32 @@
-import type { RequestEvent } from '@sveltejs/kit';
+import type { Cookies, RequestEvent } from '@sveltejs/kit';
 import type { HTMLAttributes } from 'svelte/elements';
 
-export interface ApiParams {
+export type ApiParams = {
 	method: string;
-	event?: RequestEvent;
+	event: RequestEvent;
 	resource?: string;
   /** Indicates whether to append the base url to the supplied resource url */
   toBaseDomain?: boolean;
+  toJSON?: boolean;
   logResponse?: boolean;
-	data?: Record<string, unknown> | null;
+	data?: Record<string, unknown> | FormData | null;
+}
+export type ApiHeaders = {
+  'accept': 'application/json' | 'plain/text';
+  'accept-encoding': string;
+  'content-type'?: 'application/json' | 'plain/text';
+  'accept-language': string;
+  'connection': string;
+  'cookie': string;
+  'host': string;
+  'referer': string;
+  'origin': string;
+  'x-xsrf-token': string;
+  'sec-ch-ua': string;
+  'sec-ch-ua-mobile': string;
+  'sec-ch-ua-platform': string;
+  'user-agent': string;
+  'x-sveltekit-action'?: boolean|string;
 }
 export type MediaHandler = {
   isDesktop: boolean,

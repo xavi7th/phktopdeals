@@ -19,7 +19,7 @@ export async function load(event) {
   return {}
 }
 
-/** @type {import('./$types').Actions} */
+/** @satisfies {import('./$types').Actions} */
  export const actions = {
   /** @param {import('@sveltejs/kit').RequestEvent} event */
 	default: async (event) => {

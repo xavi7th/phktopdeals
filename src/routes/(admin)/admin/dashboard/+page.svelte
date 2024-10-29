@@ -1,4 +1,4 @@
-<div class="w-full lg:ps-64">
+<div class="col-span-5 lg:col-span-4 lg:col-start-2">
   <div class="p-4 sm:p-6 space-y-4 sm:space-y-6">
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
       <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700">

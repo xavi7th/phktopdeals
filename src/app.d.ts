@@ -14,8 +14,17 @@ declare global {
       deviceName?: string;
     }
 		interface PageData {
-      deviceType: DevicePayload;
+      deviceType?: DevicePayload;
       deviceName?: string;
+    }
+		interface ActionData {
+      message: string
+    }
+    namespace Superforms {
+      type Message = {
+        type: 'grey' | 'success' | 'info' | 'error' | 'warning' | 'white',
+        msg: string
+      }
     }
 		// interface PageState {}
 		// interface Platform {}
