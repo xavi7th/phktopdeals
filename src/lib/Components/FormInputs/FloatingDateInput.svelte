@@ -10,7 +10,10 @@
 import DatePicker from 'stwui/date-picker';
 	import { onMount } from 'svelte';
 
-  export let name = 'input-' + crypto.randomUUID().replaceAll('-', '').substring(0, 10), msg = '', format = 'MMMM D, YYYY', label = '', inputClases = '';
+  export let name = 'input-' + crypto.randomUUID().replaceAll('-', '').substring(0, 10), format = 'MMMM D, YYYY', label = '', inputClases = '';
+
+  /** @type {string|string[]|undefined} */
+  export let msg = [];
 
   /** @type {Date|undefined} */
   export let value;
@@ -31,6 +34,3 @@ import DatePicker from 'stwui/date-picker';
     <DatePicker.Label slot="label" class="absolute z-10 top-0 start-0 p-4 h-full truncate pointer-events-none border border-transparent text-xs capitalize -translate-y-2 text-gray-500 dark:text-neutral-500">{label}</DatePicker.Label>
   </DatePicker>
 </div>
-
-<style global>
-</style>

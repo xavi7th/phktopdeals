@@ -11,9 +11,12 @@
 	import { isObject } from '$lib/helpers';
 	import FormMessage from '../FormMessage.svelte';
 
-  export let name = 'select-' + crypto.randomUUID().replaceAll('-', '').substring(0, 10), msg = '', isError = true, label = 'Choose', gray = false, size='p-4', value = '';
+  export let name = 'select-' + crypto.randomUUID().replaceAll('-', '').substring(0, 10), isError = true, label = 'Choose', gray = false, size='p-4', value = '';
 
-  /** @type {array | object<any, string>} */
+  /** @type {string|string[]|undefined} */
+  export let msg = [];
+
+  /** @type {string[] | Object<any, string>} */
   export let options = [];
 
   export {className as class}
@@ -25,9 +28,9 @@
   <select {name} id="{name}" bind:value class="peer {size} pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-brand-500/50 focus:ring-brand-500/50
         disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400
         dark:focus:ring-neutral-600 focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2
-        {gray ? 'bg-gray-100 dark:!bg-neutral-800' : ''} { !msg && gray ? 'border-transparent dark:border-transparent' : ''}
-        {msg && isError ? 'border-red-500 focus:border-red-500 focus:ring-red-500 dark:bg-red-900/20' : ''}
-        {msg && ! isError ? 'border-teal-500 focus:border-teal-500 focus:ring-teal-500 dark:bg-teal-900/20' : ''}" {...$$restProps}>
+        {gray ? 'bg-gray-100 dark:!bg-neutral-800' : ''} { !msg?.toString() && gray ? 'border-transparent dark:border-transparent' : ''}
+        {msg?.toString() && isError ? 'border-red-500 focus:border-red-500 focus:ring-red-500 dark:bg-red-900/20' : ''}
+        {msg?.toString() && ! isError ? 'border-teal-500 focus:border-teal-500 focus:ring-teal-500 dark:bg-teal-900/20' : ''}" {...$$restProps}>
 
         <option value="{undefined}">Select a choice</option>
 
@@ -49,7 +52,7 @@
           peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:-translate-y-1.5 peer-[:not(:placeholder-shown)]:text-gray-500
           dark:peer-focus:text-neutral-500 dark:peer-[:not(:placeholder-shown)]:text-neutral-500 dark:text-neutral-500">{label}</label>
 
-  {#if msg}
+  {#if msg?.toString()}
     <FormMessage type="{isError ? 'error' : 'success'}" {msg}/>
   {/if}
 </div>

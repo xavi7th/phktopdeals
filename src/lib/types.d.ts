@@ -9,7 +9,7 @@ export type ApiParams = {
   toBaseDomain?: boolean;
   toJSON?: boolean;
   logResponse?: boolean;
-	data?: Record<string, unknown> | FormData | null;
+	data?: Record<string, unknown> | FormData | array | object | null;
 }
 export type ApiHeaders = {
   'accept': 'application/json' | 'plain/text';

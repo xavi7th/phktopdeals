@@ -2,10 +2,9 @@
   import SvgIcon from '$lib/Components/SvgIcon.svelte';
   import {exclamationCircle, checkMarkFilled} from '$lib/Components/iconPaths';
 
-  export let msg = '', type = 'error', name = '', errorIconPosition = type == 'error' ? 'end-0' : 'end-4';
-
-  console.log({msg});
-
+  /** @type {string|string[]|undefined} */
+  export let msg = [];
+  export let type = 'error', name = '', errorIconPosition = type == 'error' ? 'end-0' : 'end-4';
 </script>
 
 <div class="absolute top-0 bottom-7 {errorIconPosition} flex items-center pointer-events-none pe-3">
@@ -15,7 +14,7 @@
       slot={type == 'error' ? exclamationCircle : checkMarkFilled}/>
 </div>
 
-{#if msg}
+{#if msg?.toString()}
   <p class="text-sm dark:font-extralight {type == 'error' ? 'text-red-600 dark:text-red-300' : 'text-teal-600 datk:text-teal-300'} mt-1 ml-2 first-letter:uppercase" id="msg-{name}" >
     { msg.toString().replaceAll('_', ' ') }
   </p>

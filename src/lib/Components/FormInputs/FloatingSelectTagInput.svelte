@@ -6,12 +6,14 @@
 	import { onMount } from 'svelte';
 	import FormMessage from '../FormMessage.svelte';
 
-  export let name = 'tags-' + crypto.randomUUID().replaceAll('-', '').substring(0, 10), msg = '', isError = true, label = 'Choose', gray = false, size='pt-3 pb-0.5';
+  export let name = 'tags-' + crypto.randomUUID().replaceAll('-', '').substring(0, 10), isError = true, label = 'Choose', gray = false, size='pt-3 pb-0.5';
+  /** @type {string|string[]|undefined} */
+  export let msg = [];
 
   /** @type { string[] }*/
   export let value = [];
 
-  /** @type {array | object<any, string>} */
+  /** @type {string[] | Object.<string, string>} */
   export let options = [];
 
   export {className as class}
@@ -33,13 +35,13 @@
 </script>
 
 <div id="{name}-wrapper" class="relative {className}
-        {gray ? 'bg-gray-100 dark:!bg-neutral-800' : ''} { !msg && gray ? 'border-transparent dark:border-transparent' : ''}
-        {msg && isError ? 'error' : ''}
-        {msg && ! isError ? 'success' : ''}">
+        {gray ? 'bg-gray-100 dark:!bg-neutral-800' : ''} { !msg?.toString() && gray ? 'border-transparent dark:border-transparent' : ''}
+        {msg?.toString() && isError ? 'error' : ''}
+        {msg?.toString() && ! isError ? 'success' : ''}">
 
   <select {name} id={name} bind:value multiple data-hs-select='{`{
         "placeholder": "Select option...",
-        "dropdownClasses": "mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white border border-gray-200 rounded-lg overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 dark:bg-neutral-900 dark:border-neutral-700",
+        "dropdownClasses": "mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white border border-gray-200 rounded-lg overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 dark:bg-neutral-900 dark:border-neutral-700 capitalize",
         "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-lg focus:outline-none focus:bg-gray-100 hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 dark:bg-neutral-900 dark:hover:bg-neutral-800 dark:text-neutral-200 dark:focus:bg-neutral-800",
         "mode": "tags",
         "wrapperClasses": "relative ${size} ps-0.5 pe-9 min-h-[46px] flex items-center flex-wrap text-nowrap w-full border border-gray-200 rounded-lg text-start text-sm focus:border-brand-500 focus:ring-brand-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 hs-error:border-red-500 hs-success:border-teal-500 hs-error:focus:border-red-500 hs-success:focus:border-teal-500 hs-error:focus:ring-red-500 hs-success:focus:ring-teal-500 before:absolute before:inset-0 before:z-[1]",
@@ -69,7 +71,7 @@
 
   <label for="{name}" class="absolute top-0 start-0 p-4 h-full truncate pointer-events-none border border-transparent text-xs capitalize -translate-y-2.5 text-gray-500 dark:text-neutral-500">{label}</label>
 
-  {#if msg}
+  {#if msg?.toString()}
     <FormMessage type="{isError ? 'error' : 'success'}" {msg}/>
   {/if}
 </div>

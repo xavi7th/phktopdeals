@@ -1,45 +1,45 @@
-import { type } from 'arktype';
 import { api } from '$lib/helpers';
 import { arktype } from 'sveltekit-superforms/adapters';
+import { giftCardDefaults , giftCardSchema} from '$lib/schemas';
 import { message, superValidate, fail, setError } from 'sveltekit-superforms';
-
-const schema = type({
-  product_name: type("string>1").describe("not be empty"),
-  product_type: ["string>1", "@", "selected"], //optional syntax
-  product_image: "File?",
-  product_category: ["string[]>1", "@", "2 and above"],
-  "product_min_price?": "number",
-  percentage_discount: "0<=number<100",
-  purchase_commission: "0<number<100",
-  variable_denomination: "boolean?",
-  'price_denominations?': "number[]",
-  "discount_until?": "Date|null",
-});
-
-const defaults = {
-  product_name: '',
-  product_type: '',
-  product_image: null,
-  product_category: [''],
-  price_denominations: [0],
-  product_min_price: 0,
-  percentage_discount: 0,
-  purchase_commission: 5,
-  variable_denomination: false,
-  discount_until: null,
-};
-
-
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load(event) {
-  const form = await superValidate(arktype(schema, { defaults }))
+  const form = await superValidate(arktype(giftCardSchema, { defaults: giftCardDefaults }));
+
+  const fetchProductTypes = async () => {
+    const res = await api({
+			method: 'get',
+			resource: 'product-types',
+      event,
+      logResponse: true,
+		});
+
+    return res?.json();
+  }
+
+  const fetchCategories = async () => {
+    const res = await api({
+			method: 'get',
+			resource: 'product-categories',
+      event,
+      logResponse: true,
+		});
+
+    return res?.json();
+  }
+
+
+	const [types, categories] = await Promise.all([
+	  fetchProductTypes(),
+	  fetchCategories(),
+	]);
 
   event.setHeaders({
     'Cache-Control': 'public, max-age=604800',
   });
 
-  return { form }
+  return { form, types, categories }
 }
 
 /** @satisfies {import('./$types').Actions} */
@@ -47,7 +47,7 @@ export async function load(event) {
 
   /** @param {import('@sveltejs/kit').RequestEvent} event */
 	default: async (event) => {
-    const form = await superValidate(event, arktype(schema, { defaults }));
+    const form = await superValidate(event, arktype(giftCardSchema, { defaults: giftCardDefaults }));
 
     if (!form.valid) {
       return fail(422, { form });
@@ -65,7 +65,6 @@ export async function load(event) {
 			data: formData,
       event,
       toJSON: false,
-      logResponse: true,
 		});
 
     if (res?.status == 422) {

@@ -9,7 +9,9 @@ togglePw='["#password-confirmation", "#hs-floating-input-passowrd-value"]'/> -->
 <script>
   import FormMessage from '$lib/Components/FormMessage.svelte';
 
-  export let name = 'check-' + crypto.randomUUID().replaceAll('-', '').substring(0, 10), msg = '', isError = true, label = 'Label', tooltip = ' ', gray = false, value = true, checked = false;
+  export let name = 'check-' + crypto.randomUUID().replaceAll('-', '').substring(0, 10), isError = true, label = 'Label', tooltip = ' ', gray = false, value = true, checked = false;
+  /** @type {string|string[]|undefined} */
+  export let msg = [];
 </script>
 
 <div class="relative flex-1">
@@ -20,9 +22,9 @@ togglePw='["#password-confirmation", "#hs-floating-input-passowrd-value"]'/> -->
               dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-600
               before:inline-block before:size-6 before:bg-white checked:before:bg-blue-200 before:translate-x-0 checked:before:translate-x-full
               before:rounded-full before:shadow before:transform before:ring-0 before:transition before:ease-in-out before:duration-200 dark:before:bg-neutral-400
-              dark:checked:before:bg-blue-200 {gray ? 'bg-gray-100 dark:!bg-neutral-800' : ''} { !msg && gray ? 'border-transparent dark:border-transparent' : ''}
-              {msg && isError ? 'border-red-500 focus:border-red-500 focus:ring-red-500 dark:bg-red-900/20' : ''}
-              {msg && ! isError ? 'border-teal-500 focus:border-teal-500 focus:ring-teal-500 dark:bg-teal-900/20' : ''}">
+              dark:checked:before:bg-blue-200 {gray ? 'bg-gray-100 dark:!bg-neutral-800' : ''} { !msg?.toString() && gray ? 'border-transparent dark:border-transparent' : ''}
+              {msg?.toString() && isError ? 'border-red-500 focus:border-red-500 focus:ring-red-500 dark:bg-red-900/20' : ''}
+              {msg?.toString() && ! isError ? 'border-teal-500 focus:border-teal-500 focus:ring-teal-500 dark:bg-teal-900/20' : ''}">
 
     <label for={name} class="text-sm text-gray-500 ms-3 dark:text-neutral-400">{label}</label>
 
@@ -31,7 +33,7 @@ togglePw='["#password-confirmation", "#hs-floating-input-passowrd-value"]'/> -->
     </div>
   </div>
 
-  {#if msg}
+  {#if msg?.toString()}
     <FormMessage type="{isError ? 'error' : 'success'}" {msg}/>
   {/if}
 </div>

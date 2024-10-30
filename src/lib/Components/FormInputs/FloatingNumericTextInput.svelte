@@ -5,8 +5,12 @@
 	import FormMessage from '$lib/Components/FormMessage.svelte';
 	import { minusIcon, plusIcon } from '../iconPaths';
 
-  export let name = 'input-' + crypto.randomUUID().replaceAll('-', '').substring(0, 10), msg = '', isError = true, label = '', placeholder = '', gray = false;
-  /** @type {number|undefined} */
+  export let name = 'input-' + crypto.randomUUID().replaceAll('-', '').substring(0, 10), isError = true, label = '', placeholder = '', gray = false;
+
+  /** @type {string|string[]|undefined} */
+  export let msg = [];
+
+  /** @type {number} */
   export let value = 0;
 
   $: valueChars = value?.toString()?.length || 0;
@@ -16,9 +20,9 @@
 
 <div class="relative">
   <div class="py-2 px-3 bg-white border border-gray-200 rounded-lg dark:bg-neutral-900 dark:border-neutral-700
-        {gray ? 'bg-gray-100 dark:!bg-neutral-800' : ''} { !msg && gray ? 'border-transparent dark:border-transparent' : ''}
-        {msg && isError ? 'border-red-500 focus:border-red-500 focus:ring-red-500 dark:bg-red-900/20' : ''}
-        {msg && ! isError ? 'border-teal-500 focus:border-teal-500 focus:ring-teal-500 dark:bg-teal-900/20' : ''}">
+        {gray ? 'bg-gray-100 dark:!bg-neutral-800' : ''} { !msg?.toString() && gray ? 'border-transparent dark:border-transparent' : ''}
+        {msg?.toString() && isError ? 'border-red-500 focus:border-red-500 focus:ring-red-500 dark:bg-red-900/20' : ''}
+        {msg?.toString() && ! isError ? 'border-teal-500 focus:border-teal-500 focus:ring-teal-500 dark:bg-teal-900/20' : ''}">
     <div class="w-full flex justify-between items-center gap-x-3">
 
       <div>
@@ -42,7 +46,7 @@
     </div>
   </div>
 
-  {#if msg}
+  {#if msg?.toString()}
     <FormMessage type="{isError ? 'error' : 'success'}" {msg} errorIconPosition="end-0"/>
   {/if}
 </div>
