@@ -37,16 +37,33 @@ async function getUserDetails({event, resolve}){
 
   // console.log({reqUrl: event.url.pathname, user: event.locals?.user, gettingDetails: event.locals.session && ! event.locals?.user && ! event.route.id?.includes('api/home') && ! event.request.url.includes('assets')});
   if (event.locals.session && ! event.locals?.user && ! event.route.id?.includes('api/home') && ! event.request.url.includes('assets')) {
-		const getUserDetails = await api({
-			method: 'get',
-			resource: 'user',
-			event,
-		});
+    // set time, this can also be easily changed to days, hours or month
+    const date = new Date().setMinutes(new Date().getMinutes() + 5); //change this to increase tht expiring date
+    
+    const user = sessionStorage.getItem('user');
 
-    if (getUserDetails?.status == 200) {
-      //TODO: Set a localStorage with key user and expiration time for 5mins. If that key is present, no need to getUserDetails. @see https://www.sohamkamani.com/javascript/localstorage-with-ttl-expiry/
-      sessionStorage.setItem('user', JSON.stringify(getUserDetails?.json()));
-      event.locals.user = await getUserDetails?.json() //use this to determine auth on frontend. Before accessing auth routes if this is null redirect to login page
+    if(!user){
+      const getUserDetails = await api({
+        method: 'get',
+        resource: 'user',
+        event,
+      });
+  
+      if (getUserDetails?.status == 200) {
+        //TODO: Set a localStorage with key user and expiration time for 5mins. If that key is present, no need to getUserDetails. @see https://www.sohamkamani.com/javascript/localstorage-with-ttl-expiry/
+        event.locals.user = await getUserDetails?.json(); //use this to determine auth on frontend. Before accessing auth routes if this is null redirect to login page
+
+        sessionStorage.setItem('user', JSON.stringify({
+          value: event.locals.user,
+          expire_date: date,
+        }))
+      }
+    }else {
+      if(new Date().getMinutes() > JSON.parse(user).expire_date){
+        sessionStorage.removeItem('user');
+      }else{
+        event.locals.user = JSON.parse(user).value;
+      }
     }
 	}
 
