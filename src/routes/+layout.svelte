@@ -5,7 +5,15 @@
 	import '../app.scss';
 
 	afterNavigate(() => {
-		window.HSStaticMethods.autoInit();
+		try {
+      let int = setInterval(() => {
+        window.HSStaticMethods.autoInit();
+      }, 600);
+
+      clearInterval(int);
+    } catch (e) {
+      console.log(e);
+    }
 	});
 </script>
 

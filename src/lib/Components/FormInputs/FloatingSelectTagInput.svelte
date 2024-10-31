@@ -24,7 +24,7 @@
   let elem;
 
   onMount(() => {
-    elem = window.HSSelect.getInstance(`#${name}`);
+    elem = window.HSSelect?.getInstance(`#${name}`);
 
     if (elem) { // That means this is an old elem previously initialised by the init call in our root layout.
       elem?.destroy();
