@@ -62,19 +62,19 @@ export type ProductPriceTag = {
   commission: number,
 }
 export type Product = {
-  name: string
-  product_type: string
+  id: string;
   url: string,
-  imgUrl: string,
-  country: string,
-  brand: string,
-  categories: array<string>,
+  product_name: string
+  product_type: string
+  product_type_slug: string
+  product_image_url: string,
+  product_category: array<string>,
   /** All currencies will be set in dollars. We can implement a site-wide converter later OR we can have a field that specifies currencies (more difficult) */
-  price_tags: ProductPriceTag,
+  product_price: ProductPriceTag,
   /** Percent off or false. If there is a discount display like this 9.5U will get you $10 (Assuming a 5% discount) */
-  discount: number,
+  percentage_discount: number,
   /** Number of days left for discount to expire. */
-  discount_until: number,
+  discount_until: Date,
   faq: string,
 }
 export type AppUser = {

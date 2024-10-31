@@ -7,6 +7,7 @@
    * import SvgIcon from '$lib/Components/SvgIcon.svelte';
    * import {softwareIcon} from '$lib/Components/iconPaths';
    *
+   * <SvgIcon class="shrink-0 size-4" slot={leftAngle}/>
    * <SvgIcon class="shrink-0 size-4 text-red-500" svgHeight={24} minHeight="65%" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" slot={exclamationCircle}/>
    *
    * <SvgIcon svgHeight={25} svgWidth={568} data-static class="typewriter-stroke">
