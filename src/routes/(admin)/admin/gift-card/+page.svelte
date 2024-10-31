@@ -90,10 +90,10 @@
                     <td class="size-px whitespace-nowrap">
                       <div class="ps-6 lg:ps-3 xl:ps-0 pe-6 py-3">
                         <div class="flex items-center gap-x-3">
-                          <img class="inline-block size-[38px] rounded-full" src="{card.product_image_url}" alt="Avatar" crossorigin="anonymous" referrerpolicy="no-referrer">
+                          <img class="inline-block size-[38px] rounded-full" src="{card.product_image_url}" alt="Avatar" referrerpolicy="no-referrer">
                           <div class="grow">
                             <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">{card.product_name}</span>
-                            <span class="block text-sm text-gray-500 dark:text-neutral-500">{card.product_category.toString()}</span>
+                            <span class="block text-sm text-gray-500 dark:text-neutral-500 text-wrap">{card.product_category.toString()}</span>
                           </div>
                         </div>
                       </div>
@@ -103,7 +103,7 @@
                         <div class="flex items-center gap-x-3">
                           <div class="grow">
                             <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">Commission Percentage: <span class="font-semibold">{ card.product_price.commission }%</span>
-                            <span class="block text-sm text-gray-500 dark:text-neutral-500">Denominations: <br />{ card.product_price.denominations?.map(x => toCurrency(x)) }</span></span>
+                            <span class="block text-sm text-gray-500 dark:text-neutral-500 text-wrap">Denominations: <br />{ card.product_price.denominations?.map(x => toCurrency(x)) }</span></span>
                             {#if card.product_price.flexible}
                               <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">Minimum Custom Price: { toCurrency(card.product_price.min) }</span>
                             {/if}

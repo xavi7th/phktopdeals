@@ -97,7 +97,7 @@ function authorize({event, resolve}){
 /** @type {import('@sveltejs/kit').Handle} */
 async function addSecurityHeaders({event, resolve}){
 	const securityHeaders = { //@see https://edoverflow.com/2023/sveltekit-security-headers/
-    'Cross-Origin-Embedder-Policy': 'require-corp',
+    'Cross-Origin-Embedder-Policy': 'credentialless',
     'Cross-Origin-Opener-Policy': 'same-origin',
     'Cross-Origin-Resource-Policy': 'same-origin',
     // 'Content-Security-Policy': 'script-src \'self\' \'nonce-Y70QFNhAVmer2wdobT8YoQ==\'',
