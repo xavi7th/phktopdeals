@@ -12,10 +12,10 @@
     <div class="mt-px flex-auto border-t"></div>
   </div>
 
-  <a href="{register ? '/login' : '/register'}" class="group relative flex h-[38px] items-center justify-center gap-1.5 rounded-full border dark:border-0 dark:bg-white/20">
+  <!-- <a href="{register ? '/login' : '/register'}" class="group relative flex h-[38px] items-center justify-center gap-1.5 rounded-full border dark:border-0 dark:bg-white/20">
     <SvgIcon class="size-[1.2em] stroke-[3] group-hover:stroke-[5] transition-all" svgHeight={48} slot={atSign}/>
     <span class="rounded-sm text-sm dark:text-slate-50">{register ? 'Sign in' : 'Register'} with Email</span>
-  </a>
+  </a> -->
 
   <button type="button" class="relative flex h-[38px] items-center justify-center gap-1.5 rounded-full border dark:border-0 dark:bg-white/20">
     <SvgIcon class="size-[1.2em]" svgHeight={128} slot={googleColored}/>
