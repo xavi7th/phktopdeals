@@ -1,8 +1,10 @@
 <script>
+	import { navigating } from '$app/stores';
 	import Header from '$partials/admin/Header.svelte';
 	import { open } from '$lib/Components/iconPaths.js';
 	import SvgIcon from '$lib/Components/SvgIcon.svelte';
 	import Sidebar from '$partials/admin/Sidebar.svelte';
+	import PageSkeleton from '$lib/Components/PageSkeleton.svelte';
 
   export let data;
 
@@ -30,7 +32,11 @@
   <div class="grid grid-cols-5">
     <Sidebar {admin_routes}/>
 
-    <slot></slot>
+    {#if $navigating}
+      <PageSkeleton />
+    {:else}
+      <slot></slot>
+    {/if}
   </div>
 
 </section>
