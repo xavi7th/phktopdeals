@@ -11,6 +11,7 @@ export const giftCardSchema = type({
   variable_denomination: "boolean?",
   'price_denominations?': "number[]",
   "discount_until?": "Date|null",
+  faqs: type("string").describe("not be empty"),
 });
 
 export const giftCardDefaults = {
@@ -24,4 +25,5 @@ export const giftCardDefaults = {
   purchase_commission: 5,
   variable_denomination: false,
   discount_until: null,
+  faqs: undefined
 };

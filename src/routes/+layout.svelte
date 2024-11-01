@@ -8,13 +8,9 @@
 
 	afterNavigate(() => {
 		try {
-      let int = setInterval(() => {
-        window.HSStaticMethods.autoInit();
-      }, 600);
-
-      clearInterval(int);
+      window.HSStaticMethods.autoInit();
     } catch (e) {
-      console.log(e);
+      console.error('HSStaticMethods initialisation failed!');
     }
 	});
 

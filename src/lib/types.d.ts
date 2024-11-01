@@ -75,7 +75,7 @@ export type Product = {
   percentage_discount: number,
   /** Number of days left for discount to expire. */
   discount_until: Date,
-  faq: string,
+  faqs: string|undefined,
 }
 export type AppUser = {
   full_name: string;

@@ -2,6 +2,7 @@
 	import { dev } from '$app/environment';
 	import Toast from '$lib/Components/Toast.svelte';
 	import SuperDebug, { superForm } from 'sveltekit-superforms';
+	import WysiwygEditor from '$lib/Components/TipTapEditor.svelte';
 	import { animatedDotsSVG, spinnerSVG } from '$lib/Components/iconPaths';
   import FloatingTextInput from '$lib/Components/FormInputs/FloatingTextInput.svelte';
 	import FloatingFileInput from '$lib/Components/FormInputs/FloatingFileInput.svelte';
@@ -91,6 +92,10 @@
             <FloatingDateInput name="discount_until" label="Discount Valid Until (optional)" bind:value={$formData.discount_until} msg={$errors?.product_name?.[0]}/>
           </div>
         {/if}
+
+        <div class="col-span-12">
+          <WysiwygEditor bind:val={$formData.faqs} label="Card FAQs" />
+        </div>
 
       </div>
       <button type="submit" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-brand-600 text-white hover:bg-brand-700 focus:outline-none focus:bg-brand-700 disabled:opacity-50 disabled:pointer-events-none" disabled={$submitting}>
