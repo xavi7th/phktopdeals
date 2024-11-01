@@ -1,5 +1,7 @@
 <script>
+	import { onMount } from 'svelte';
   import { page } from "$app/stores";
+	import { pageMounted } from '$stores';
 	import { afterNavigate } from '$app/navigation';
 
 	import '../app.scss';
@@ -15,6 +17,10 @@
       console.log(e);
     }
 	});
+
+  onMount(() => {
+    $pageMounted = true;
+  })
 </script>
 
 

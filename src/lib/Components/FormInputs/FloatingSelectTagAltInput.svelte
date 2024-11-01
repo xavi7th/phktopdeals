@@ -10,6 +10,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import { x } from '../iconPaths';
+  import { pageMounted } from '$stores';
 	import SvgIcon from '../SvgIcon.svelte';
 	import { isObject } from '$lib/helpers';
 	import FormMessage from '../FormMessage.svelte';
@@ -31,10 +32,7 @@
   let elem;
 
   onMount(() => {
-    elem = window.HSSelect?.getInstance(`#${name}`);
-
-    if (elem) { // That means this is an old elem previously initialised by the init call in our root layout.
-      elem?.destroy();
+    if ($pageMounted) {
       new window.HSSelect(document.querySelector(`#${name}`));
       elem = window.HSSelect.getInstance(`#${name}`);
     }
