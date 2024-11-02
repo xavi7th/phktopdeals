@@ -6,7 +6,7 @@
 	import Placeholder from '@tiptap/extension-placeholder';
 	import Underline from '@tiptap/extension-underline';
 	import Link from '@tiptap/extension-link';
-	import SvgIcon from './SvgIcon.svelte';
+	import SvgIcon from '../SvgIcon.svelte';
 	import {
 		blockquotesIcon,
 		boldIcon,
@@ -20,10 +20,14 @@
 		strikethroughIcon,
 		underlineIcon,
 		undoIcon
-	} from './iconPaths';
+	} from '../iconPaths';
+	import FormMessage from '../FormMessage.svelte';
 
 	/** @type {string|undefined} */
 	export let label;
+
+	/** @type {string} */
+	export let name = 'tiptap-textarea-' + crypto.randomUUID();
 
 	/** @type {string|undefined} */
 	export let val;
@@ -33,6 +37,11 @@
 
 	/** @type {Editor} */
 	let editor;
+
+  /** @type {string|string[]|undefined} */
+  export let msg = [];
+
+  export let isError = true;
 
 	let setLink = () => {
 		const previousUrl = editor.getAttributes('link').href;
@@ -240,8 +249,14 @@
 			</div>
 		{/if}
 
-		<div class="h-[10rem] overflow-auto" bind:this={element} />
+		<div class="h-[10rem] overflow-auto" bind:this={element}/>
+
+    <textarea {name} id={name} bind:value={val} class="hidden"></textarea>
 	</div>
+
+  {#if msg?.toString()}
+    <FormMessage type="{isError ? 'error' : 'success'}" {msg}/>
+  {/if}
 </div>
 
 <style global>

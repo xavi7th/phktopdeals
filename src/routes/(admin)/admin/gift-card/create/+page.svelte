@@ -2,8 +2,8 @@
 	import { dev } from '$app/environment';
 	import Toast from '$lib/Components/Toast.svelte';
 	import SuperDebug, { superForm } from 'sveltekit-superforms';
-	import WysiwygEditor from '$lib/Components/TipTapEditor.svelte';
 	import { animatedDotsSVG, spinnerSVG } from '$lib/Components/iconPaths';
+	import WysiwygEditor from '$lib/Components/FormInputs/TipTapEditor.svelte';
   import FloatingTextInput from '$lib/Components/FormInputs/FloatingTextInput.svelte';
 	import FloatingFileInput from '$lib/Components/FormInputs/FloatingFileInput.svelte';
 	import FloatingDateInput from '$lib/Components/FormInputs/FloatingDateInput.svelte';
@@ -32,7 +32,9 @@
 
 <div class="col-span-5 lg:col-span-4 lg:col-start-2 px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto min-w-[70%]">
 
-  <SuperDebug data={{$message, $formData, $errors}} label="My form data" collapsible={true} display={dev} />
+  <div class="max-w-md fixed left-0 bottom-0 z-[60]">
+    <SuperDebug data={{$message, $formData, $errors}} label="My form data" collapsible={true} display={dev} />
+  </div>
 
   <div class="bg-white rounded-xl shadow p-4 sm:p-7 dark:bg-neutral-900">
     <form method="POST" enctype="multipart/form-data" use:enhance>
@@ -94,7 +96,7 @@
         {/if}
 
         <div class="col-span-12">
-          <WysiwygEditor bind:val={$formData.faqs} label="Card FAQs" />
+          <WysiwygEditor name="faqs" bind:val={$formData.faqs} label="Card FAQs" msg={$errors?.faqs?.[0]}/>
         </div>
 
       </div>

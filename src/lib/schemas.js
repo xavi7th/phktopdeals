@@ -5,7 +5,7 @@ export const giftCardSchema = type({
   product_type: ["string>1", "@", "selected"], //optional syntax
   product_image: "File?",
   product_category: ["string[]>1", "@", "2 and above"],
-  product_min_price: "number>0",
+  product_min_price: "number>=0",
   percentage_discount: "0<=number<100",
   purchase_commission: "0<number<100",
   variable_denomination: "boolean?",
