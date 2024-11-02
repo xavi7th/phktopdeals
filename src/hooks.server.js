@@ -35,6 +35,7 @@ async function logger({event, resolve}){
 async function getUserDetails({event, resolve}){
   const cookies = parse(event.request.headers.get('cookie') || '')
 	event.locals.session = cookies[import.meta.env.VITE_SESSION_NAME]
+  event.locals.user = {}
 
   // console.log({reqUrl: event.url.pathname, user: event.locals?.user, gettingDetails: event.locals.session && ! event.locals?.user && ! event.route.id?.includes('api/home') && ! event.request.url.includes('assets')});
   if (event.locals.session && ! event.locals?.user && ! event.route.id?.includes('api/home') && ! event.request.url.includes('assets')) {

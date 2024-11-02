@@ -8,7 +8,7 @@ declare global {
 	namespace App {
 		// interface Error {}
 		interface Locals {
-      user: AppUser | undefined;
+      user: AppUser | {};
       session: string | undefined;
       deviceType: DevicePayload;
       deviceName?: string;

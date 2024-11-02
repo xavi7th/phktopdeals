@@ -58,7 +58,7 @@
 
       <div class="my-4 flex flex-wrap items-center gap-3">
         {#each shuffle(['Restaurants', 'Groceries', 'Games', 'Softwares', 'Subscriptions', 'VISA Cards']).slice(0, 3) as item}
-          <a class="mr-1 inline-flex items-center gap-x-3 rounded-full bg-white px-5 py-3 text-xs font-medium text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none dark:bg-gray-900 dark:text-neutral-50 font-semibold" href="#">{item}</a>
+          <a class="mr-1 inline-flex items-center gap-x-3 rounded-full bg-white px-5 py-3 text-xs text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none dark:bg-gray-900 dark:text-neutral-50 font-semibold" href="#">{item}</a>
         {/each}
 
         {#each Array(3) as n}
@@ -72,11 +72,11 @@
       </div>
 
       <div class="grid grid-cols-5 gap-3 mt-28 mb-8 h-max content-start">
-        <div class="col-span-2 sm:col-span-1 bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
+        <!-- <div class="col-span-2 sm:col-span-1 bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
           <a href="http://goofle.com" target="_blank">
             <enhanced:img class="md:h-full rounded-xl w-full" src="$lib/images/buy-with-gate.io.svg?enhance" alt="hero-img-thumb" />
           </a>
-        </div>
+        </div> -->
 
         <div class="order-last md:order-none col-span-5 md:col-span-3 bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70 h-[200px] sm:h-[300px] lg:!h-[360px]">
 
@@ -153,11 +153,11 @@
           </div>
         </div>
 
-        <div class="col-span-2 sm:col-span-1 col-start-4 sm:col-start-5 bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
+        <!-- <div class="col-span-2 sm:col-span-1 col-start-4 sm:col-start-5 bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
           <a href="/store" target="_blank">
             <enhanced:img class="md:h-full rounded-xl" src="$lib/images/buy-with-binance.webp?enhance" alt="hero-img-thumb" />
           </a>
-        </div>
+        </div> -->
       </div>
 		</div>
 	</div>
