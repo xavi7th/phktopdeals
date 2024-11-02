@@ -29,7 +29,7 @@
     </div>
   </div>
 
-  <div class="grid grid-cols-5">
+  <div class="grid grid-cols-5 relative">
     <Sidebar {admin_routes}/>
 
     {#if $navigating}
