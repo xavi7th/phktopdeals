@@ -8,7 +8,7 @@ export async function load(event) {
   const fetchGiftCards = async () => {
     const res = await api({
 			method: 'get',
-			resource: 'gift-cards',
+			resource: 'product-brands',
       event,
       logResponse: true,
 		});
@@ -39,7 +39,7 @@ export async function load(event) {
 
     const res = await api({
 			method: 'post',
-			resource: 'gift-cards',
+			resource: 'product-brands',
 			data: [],
       event,
 		});

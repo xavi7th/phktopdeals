@@ -61,7 +61,7 @@ export async function load(event) {
 
     const res = await api({
 			method: 'post',
-			resource: 'gift-cards',
+			resource: 'product-brands',
 			data: formData,
       event,
       toJSON: false,
