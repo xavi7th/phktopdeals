@@ -47,7 +47,7 @@ export const actions = {
     }
 
     if ( !response?.ok ) {
-      return fail( response?.status || 500, { message: response?.statusText || 'An error occured while processing your request' } );
+      return fail( response?.status || 500, { message: response?.statusText || 'An error occurred while processing your request' } );
     }
 
     if ( response?.status == 200 || response?.status == 201 ) {
