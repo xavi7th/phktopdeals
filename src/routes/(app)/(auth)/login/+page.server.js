@@ -50,7 +50,7 @@ export const actions = {
       return fail( response?.status || 500, { message: response?.statusText || 'An error occured while processing your request' } );
     }
 
-    if ( response?.status == 200 || response?.status == 201 ) {
+    if ( response?.status == 200 || response?.status == 201 || response?.status == 205 ) {
       event.locals.user = ( await response?.json() )?.user;
 
       if ( event?.locals?.user?.is_admin ) {
