@@ -130,9 +130,10 @@
                         <a class="inline-flex items-center gap-x-1 text-sm text-brand-600 decoration-2 hover:underline focus:outline-none focus:underline font-medium dark:text-brand-500" href="#">
                           Edit
                         </a>
-                        <a class="inline-flex items-center gap-x-1 text-sm text-red-600 decoration-2 hover:underline focus:outline-none focus:underline font-medium dark:text-red-500" href="#">
-                          Delete
-                        </a>
+                        <form action="/?delete" class="inline-flex items-center gap-x-1 text-sm text-red-600 decoration-2 hover:underline focus:outline-none focus:underline font-medium dark:text-red-500">
+                          <input type="text" class="hidden" bind:value={card.id}>
+                          <button type="submit" class="bg-transparent p-0 m-0 border-0 shadow-none">Delete</button>
+                        </form>
                       </div>
                     </td>
                   </tr>
