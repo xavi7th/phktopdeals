@@ -40,6 +40,7 @@ async function getUserDetails({event, resolve}){
 
   // console.log({reqUrl: event.url.pathname, user: event.locals?.user, gettingDetails: event.locals.session && ! event.locals?.user && ! event.route.id?.includes('api/home') && ! event.request.url.includes('assets')});
   if (event.locals.session && ! Object.entries(event.locals?.user).length && ! event.route.id?.includes('api/home') && ! event.request.url.includes('assets')) {
+
 		const getUserDetails = await api({
 			method: 'get',
 			resource: 'user',
