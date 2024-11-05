@@ -6,7 +6,10 @@ import type { DevicePayload } from 'sveltekit-device-detector';
 // for information about these interfaces
 declare global {
 	namespace App {
-		// interface Error {}
+		interface Error {
+      code: number,
+      message: string | array,
+    }
 		interface Locals {
       user: AppUser | {};
       session: string | undefined;
