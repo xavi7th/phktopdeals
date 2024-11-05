@@ -1,11 +1,11 @@
 import { api } from '$lib/helpers';
 import { arktype } from 'sveltekit-superforms/adapters';
-import { giftCardDefaults , giftCardSchema} from '$lib/schemas';
+import { gameDefaults , gameSchema} from '$lib/schemas';
 import { message, superValidate, fail, setError } from 'sveltekit-superforms';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load(event) {
-  const form = await superValidate(arktype(giftCardSchema, { defaults: giftCardDefaults }));
+  const form = await superValidate(arktype(gameSchema, { defaults: gameDefaults }));
 
   const fetchProductTypes = async () => {
     const res = await api({
@@ -47,7 +47,7 @@ export async function load(event) {
 
   /** @param {import('@sveltejs/kit').RequestEvent} event */
 	default: async (event) => {
-    const form = await superValidate(event, arktype(giftCardSchema, { defaults: giftCardDefaults }));
+    const form = await superValidate(event, arktype(gameSchema, { defaults: gameDefaults }));
 
     if (!form.valid) {
       return fail(422, { form });
@@ -61,7 +61,7 @@ export async function load(event) {
 
     const res = await api({
 			method: 'post',
-			resource: 'product-brands',
+			resource: 'games',
 			data: formData,
       event,
       toJSON: false,

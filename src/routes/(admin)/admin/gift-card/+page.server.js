@@ -35,7 +35,6 @@ export const actions = {
 
   /** @param {import('@sveltejs/kit').RequestEvent} event */
   default: async ( event ) => {
-
     const res = await api( {
       method: 'post',
       resource: 'gift-cards',

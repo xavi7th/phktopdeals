@@ -1,11 +1,11 @@
 import { api } from '$lib/helpers';
 import { arktype } from 'sveltekit-superforms/adapters';
-import { giftCardDefaults , giftCardSchema} from '$lib/schemas';
+import { eSimDefaults , eSimSchema} from '$lib/schemas';
 import { message, superValidate, fail, setError } from 'sveltekit-superforms';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load(event) {
-  const form = await superValidate(arktype(giftCardSchema, { defaults: giftCardDefaults }));
+  const form = await superValidate(arktype(eSimSchema, { defaults: eSimDefaults }));
 
   const fetchProductTypes = async () => {
     const res = await api({
@@ -47,7 +47,7 @@ export async function load(event) {
 
   /** @param {import('@sveltejs/kit').RequestEvent} event */
 	default: async (event) => {
-    const form = await superValidate(event, arktype(giftCardSchema, { defaults: giftCardDefaults }));
+    const form = await superValidate(event, arktype(eSimSchema, { defaults: eSimDefaults }));
 
     if (!form.valid) {
       return fail(422, { form });
@@ -61,7 +61,7 @@ export async function load(event) {
 
     const res = await api({
 			method: 'post',
-			resource: 'product-brands',
+			resource: 'esims',
 			data: formData,
       event,
       toJSON: false,
