@@ -7,6 +7,8 @@
 
   /** @type {import('./$types').ActionData} */
 	export let form;
+
+  let loading = false;
 </script>
 
 {#if form?.message}
@@ -33,7 +35,13 @@
         <div id="bar-with-underline-1" class:hidden={$page.url.hash === '#register'} role="tabpanel" aria-labelledby="bar-with-underline-item-1">
           <div class="w-full p-12 sm:w-[500px]">
 
-            <form class="flex flex-col" method="POST" action="?/login" use:enhance>
+            <form class="flex flex-col" method="POST" action="?/login" use:enhance={() => {
+                  loading = true;
+                  return async ({ update }) => {
+                      loading = false;
+                      update();
+                  };
+              }}>
               <div class="space-y-8">
                 <FloatingTextInput name="login-email" isError={! form?.success} msg={form?.success || form?.errors?.email && form?.errors?.email[0]} label="Email"/>
                 <FloatingTextInput name="login-password" type="password" isError={! form?.success} msg={form?.success || form?.errors?.password && form?.errors?.password[0]} label="Password" togglePw='"#login-password"'/>
@@ -42,9 +50,10 @@
               <div class="flex flex-col justify-center gap-6 mt-6 text-sm">
                 <a href="#/" class="cursor-pointer text-brand-500 text-right hover:underline">Forgot Password?</a>
 
-                <button type="submit" class="rounded-full bg-brand px-5 py-3 hover:bg-brand-400">
+                <!-- <button type="submit" class="rounded-full bg-brand px-5 py-3 hover:bg-brand-400">
                   <span class="">Sign in</span>
-                </button>
+                </button> -->
+                <PrimaryBtn label='Sign In' {loading}/>
               </div>
             </form>
 
@@ -54,7 +63,13 @@
 
         <div id="bar-with-underline-2" class:hidden={$page.url.hash !== '#register'} role="tabpanel" aria-labelledby="bar-with-underline-item-2">
           <div class="sm:w-[500px] w-full p-12">
-            <form class="flex flex-col gap-6 dark:text-slate-50" method="POST" action="?/register" use:enhance>
+            <form class="flex flex-col gap-6 dark:text-slate-50" method="POST" action="?/register" use:enhance={() => {
+                  loading = true;
+                  return async ({ update }) => {
+                      loading = false;
+                      update();
+                  };
+              }}>
               <FloatingTextInput name="full_name" isError={! form?.success} msg={form?.success || form?.errors?.full_name && form?.errors?.full_name[0]} label="Full Name *"/>
 
               <FloatingTextInput name="register-email" type="email" isError={! form?.success} msg={form?.success || form?.errors?.email && form?.errors?.email[0]} label="Email *"/>
@@ -67,7 +82,7 @@
 
               <div class="flex flex-col justify-center gap-6 mt-2 text-xs dark:text-slate-50">
                 <p>By registering, I accept the <a href="#/" class="text-brand-500">Terms</a> and <a href="#/" class="text-brand-500">Privacy Policy</a> of this site.</p>
-                <PrimaryBtn data={{ innerText: 'Sign Up', }} />
+                <PrimaryBtn label='Sign Up' {loading}/>
               </div>
             </form>
 
