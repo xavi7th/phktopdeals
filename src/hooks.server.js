@@ -11,8 +11,9 @@ import { api } from '$lib/helpers';
 import scp from 'set-cookie-parser';
 import { dev } from "$app/environment";
 import { redirect } from '@sveltejs/kit';
-import { sequence } from '@sveltejs/kit/hooks';
 import { env } from '$env/dynamic/public';
+import { sequence } from '@sveltejs/kit/hooks';
+import { VITE_SESSION_NAME } from '$env/static/private';
 import { handleDeviecDetector } from 'sveltekit-device-detector';
 
 /** @type {import('@sveltejs/kit').Handle} */
@@ -34,7 +35,7 @@ async function logger({event, resolve}){
 /** @type {import('@sveltejs/kit').Handle} */
 async function getUserDetails({event, resolve}){
   const cookies = parse(event.request.headers.get('cookie') || '')
-	event.locals.session = cookies[import.meta.env.VITE_SESSION_NAME]
+	event.locals.session = cookies[VITE_SESSION_NAME]
   event.locals.user = {}
 
   // console.log({reqUrl: event.url.pathname, user: event.locals?.user, gettingDetails: event.locals.session && ! event.locals?.user && ! event.route.id?.includes('api/home') && ! event.request.url.includes('assets')});

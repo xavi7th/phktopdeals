@@ -9,7 +9,7 @@ export async function load () {
       icon: 'homeSVG',
     },
     {
-      name: 'Product',
+      name: 'All Products',
       uri: '/admin/product',
       icon: 'productSVG',
     },
