@@ -7,7 +7,7 @@
 	import { bell, checkMarkFilledAlt, exclamationFilled, infoFilled, x, xFilled } from './iconPaths';
   import { fade, fly } from "svelte/transition";
 
-  export let type = 'grey', msg = 'A toast message is required', dismissable = true, positioned = true, toastId = 'toast-' + crypto.randomUUID().replaceAll('-', '').substring(0, 10);
+  export let type = 'grey', msg = 'A toast message is required', dismissable = true, positioned = true, toastId = 'toast-' + crypto.randomUUID().replaceAll('-', '').substring(0, 10), timeout = 5000;
 
   /** @type {Object<string, Object<string, string>}*/
   let toastClasses = {
@@ -44,7 +44,7 @@
 
     setTimeout(() => {
       showToast = false;
-    }, 5000);
+    }, timeout);
 
   });
 </script>
