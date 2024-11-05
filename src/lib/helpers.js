@@ -247,7 +247,7 @@ import { env } from '$env/dynamic/public';
  *
  * @returns {Promise<Response|undefined>}
  */
-export async function api({toBaseDomain, resource, event, method, data, logResponse, toJSON = true}) {
+export async function api({toBaseDomain, resource, event, method, data, logResponse = false, toJSON = true}) {
 	const base = env.PUBLIC_VITE_BASE_DOMAIN
 	const baseApi = env.PUBLIC_VITE_BASE_API
 	let fullurl = toBaseDomain ? base : baseApi

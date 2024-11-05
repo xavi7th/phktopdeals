@@ -11,8 +11,9 @@ import { api } from '$lib/helpers';
 import scp from 'set-cookie-parser';
 import { dev } from "$app/environment";
 import { redirect } from '@sveltejs/kit';
-import { sequence } from '@sveltejs/kit/hooks';
 import { env } from '$env/dynamic/public';
+import { sequence } from '@sveltejs/kit/hooks';
+import { VITE_SESSION_NAME } from '$env/static/private';
 import { handleDeviecDetector } from 'sveltekit-device-detector';
 
 /** @type {import('@sveltejs/kit').Handle} */
@@ -34,11 +35,12 @@ async function logger({event, resolve}){
 /** @type {import('@sveltejs/kit').Handle} */
 async function getUserDetails({event, resolve}){
   const cookies = parse(event.request.headers.get('cookie') || '')
-	event.locals.session = cookies[import.meta.env.VITE_SESSION_NAME]
+	event.locals.session = cookies[VITE_SESSION_NAME]
   event.locals.user = {}
 
   // console.log({reqUrl: event.url.pathname, user: event.locals?.user, gettingDetails: event.locals.session && ! event.locals?.user && ! event.route.id?.includes('api/home') && ! event.request.url.includes('assets')});
   if (event.locals.session && ! Object.entries(event.locals?.user).length && ! event.route.id?.includes('api/home') && ! event.request.url.includes('assets')) {
+
 		const getUserDetails = await api({
 			method: 'get',
 			resource: 'user',
@@ -150,14 +152,22 @@ export const handleFetch = async ({request, fetch, event}) => {
 }
 
 /** @type {import('@sveltejs/kit').HandleServerError} */
-export const handleError = ({event, error}) => {
-  if ( ! event.request.url.includes('assets')) {
-    console.log('------------SERVER ERROR-----------');
-    console.error({event, error});
+export const handleError = ({event, error, message, status}) => {
+  console.log('------------SERVER ERROR-----------');
+  console.error({
+    error,
+    event: {
+      url: event.url.href,
+      locals: JSON.stringify(event.locals, null, 4),
+    },
+    message,
+    status
+  });
 
+  if ( ! event.url.pathname.includes('assets')) {
     return {
-      message: error,
-      code: error?.code ?? 500,
+      message,
+      code: status ?? 500,
     }
   }
 }

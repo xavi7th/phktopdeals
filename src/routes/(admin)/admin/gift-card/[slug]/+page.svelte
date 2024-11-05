@@ -1,7 +1,7 @@
 <script>
 	import { search } from '$lib/Components/iconPaths';
 	import SvgIcon from '$lib/Components/SvgIcon.svelte';
-	import ProductListings from '../ProductListings.svelte';
+	import ProductListings from '../../ProductListings.svelte';
 
   /** @type {import('./$types').PageData} */
   export let data
@@ -38,8 +38,7 @@
               </div>
             </div>
 
-            <ProductListings {products} {meta}  basePageUrl="/admin/product"/>
-
+            <ProductListings {products} {meta}  basePageUrl="/admin/gift-card"/>
           </div>
         </div>
       </div>

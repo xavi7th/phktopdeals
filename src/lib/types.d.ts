@@ -61,12 +61,20 @@ export type ProductPriceTag = {
   /** a percentage that determines how much markup will be to the total purchase as business profit */
   commission: number,
 }
+export type ProductBrand = {
+  id: string,
+  name: string,
+  name_slug: string,
+}
 export type Product = {
   id: string;
   url: string,
-  product_name: string
-  product_type: string
-  product_type_slug: string
+  brand_id: string,
+  brand?: ProductBrand,
+  regions: array<string>,
+  product_name: string,
+  product_type: string,
+  product_type_slug: string,
   product_image_url: string,
   product_category: array<string>,
   /** All currencies will be set in dollars. We can implement a site-wide converter later OR we can have a field that specifies currencies (more difficult) */

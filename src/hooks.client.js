@@ -6,14 +6,18 @@
  * So this is more like a controller in Laravel that is responsible for receiving the request, forwarding it to processors and then sending it back to the browsr
  */
 
+import { dev } from '$app/environment';
+
 /** @type {import('@sveltejs/kit').HandleClientError} */
-export const handleError = ({event, error}) => {
-  console.log('------------CLIENT ERROR-----------');
-  console.error({event, error});
-  if ( ! event.request.url.includes('assets')) {
+export const handleError = ({event, error, message, status}) => {
+  if (dev) {
+    console.log('------------CLIENT ROUTING ERROR-----------');
+    console.error({event, error, message, status});
+  }
+  if ( ! event.url.pathname.includes('assets')) {
     return {
-      message: 'Oops',
-      code: error?.code ?? 500,
+      message: message ?? 'Oops',
+      code: status ?? 500,
     }
   }
 }
