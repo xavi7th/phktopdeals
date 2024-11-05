@@ -1,14 +1,32 @@
-import type { RequestEvent } from '@sveltejs/kit';
+import type { Cookies, RequestEvent } from '@sveltejs/kit';
 import type { HTMLAttributes } from 'svelte/elements';
 
-export interface ApiParams {
+export type ApiParams = {
 	method: string;
-	event?: RequestEvent;
+	event: RequestEvent;
 	resource?: string;
   /** Indicates whether to append the base url to the supplied resource url */
   toBaseDomain?: boolean;
+  toJSON?: boolean;
   logResponse?: boolean;
-	data?: Record<string, unknown> | null;
+	data?: Record<string, unknown> | FormData | array | object | null;
+}
+export type ApiHeaders = {
+  'accept': 'application/json' | 'plain/text';
+  'accept-encoding': string;
+  'content-type'?: 'application/json' | 'plain/text';
+  'accept-language': string;
+  'connection': string;
+  'cookie': string;
+  'host': string;
+  'referer': string;
+  'origin': string;
+  'x-xsrf-token': string;
+  'sec-ch-ua': string;
+  'sec-ch-ua-mobile': string;
+  'sec-ch-ua-platform': string;
+  'user-agent': string;
+  'x-sveltekit-action'?: boolean|string;
 }
 export type MediaHandler = {
   isDesktop: boolean,
@@ -43,21 +61,29 @@ export type ProductPriceTag = {
   /** a percentage that determines how much markup will be to the total purchase as business profit */
   commission: number,
 }
+export type ProductBrand = {
+  id: string,
+  name: string,
+  name_slug: string,
+}
 export type Product = {
-  name: string
-  product_type: string
+  id: string;
   url: string,
-  imgUrl: string,
-  country: string,
-  brand: string,
-  categories: array<string>,
+  brand_id: string,
+  brand?: ProductBrand,
+  regions: array<string>,
+  product_name: string,
+  product_type: string,
+  product_type_slug: string,
+  product_image_url: string,
+  product_category: array<string>,
   /** All currencies will be set in dollars. We can implement a site-wide converter later OR we can have a field that specifies currencies (more difficult) */
-  price_tags: ProductPriceTag,
+  product_price: ProductPriceTag,
   /** Percent off or false. If there is a discount display like this 9.5U will get you $10 (Assuming a 5% discount) */
-  discount: number,
+  percentage_discount: number,
   /** Number of days left for discount to expire. */
-  discount_until: number,
-  faq: string,
+  discount_until: Date,
+  faqs: string|undefined,
 }
 export type AppUser = {
   full_name: string;

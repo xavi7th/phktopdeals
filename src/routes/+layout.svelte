@@ -1,12 +1,22 @@
 <script>
+	import { onMount } from 'svelte';
   import { page } from "$app/stores";
+	import { pageMounted } from '$stores';
 	import { afterNavigate } from '$app/navigation';
 
 	import '../app.scss';
 
 	afterNavigate(() => {
-		window.HSStaticMethods.autoInit();
+		try {
+      window.HSStaticMethods.autoInit();
+    } catch (e) {
+      console.error('HSStaticMethods initialisation failed!');
+    }
 	});
+
+  onMount(() => {
+    $pageMounted = true;
+  })
 </script>
 
 

@@ -1,15 +1,17 @@
 <script>
+	import { navigating } from '$app/stores';
 	import Header from '$partials/admin/Header.svelte';
 	import { open } from '$lib/Components/iconPaths.js';
 	import SvgIcon from '$lib/Components/SvgIcon.svelte';
 	import Sidebar from '$partials/admin/Sidebar.svelte';
+	import PageSkeleton from '$lib/Components/PageSkeleton.svelte';
 
   export let data;
 
   const { admin_routes } = data;
 </script>
 
-<section class="bg-gray-50 dark:bg-neutral-900">
+<section class="dark:bg-neutral-900">
   <Header />
 
   <div class="sticky top-0 inset-x-0 z-20 bg-white border-y px-4 sm:px-6 lg:px-8 lg:hidden dark:bg-neutral-800 dark:border-neutral-700">
@@ -27,8 +29,14 @@
     </div>
   </div>
 
-  <Sidebar {admin_routes}/>
+  <div class="grid grid-cols-5 relative">
+    <Sidebar {admin_routes}/>
 
-  <slot></slot>
+    {#if $navigating}
+      <PageSkeleton />
+    {:else}
+      <slot></slot>
+    {/if}
+  </div>
 
 </section>

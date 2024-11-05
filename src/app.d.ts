@@ -6,16 +6,28 @@ import type { DevicePayload } from 'sveltekit-device-detector';
 // for information about these interfaces
 declare global {
 	namespace App {
-		// interface Error {}
+		interface Error {
+      code: number,
+      message: string | array,
+    }
 		interface Locals {
-      user: AppUser | undefined;
+      user: AppUser | {};
       session: string | undefined;
       deviceType: DevicePayload;
       deviceName?: string;
     }
 		interface PageData {
-      deviceType: DevicePayload;
+      deviceType?: DevicePayload;
       deviceName?: string;
+    }
+		interface ActionData {
+      message: string
+    }
+    namespace Superforms {
+      type Message = {
+        type: 'grey' | 'success' | 'info' | 'error' | 'warning' | 'white',
+        msg: string
+      }
     }
 		// interface PageState {}
 		// interface Platform {}

@@ -860,7 +860,6 @@ export const plusIcon = `
 export const minusIcon = `
   <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M5 12h14"></path>
-    <path d="M12 5v14"></path>
   </svg>
 `
 
@@ -926,6 +925,28 @@ export const usersSVG = `
     <circle cx="9" cy="7" r="4" />
     <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
     <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+  </svg>
+`
+
+export const spinnerSVG = `
+  <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M12 2A10 10 0 1 0 22 12A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8A8 8 0 0 1 12 20Z" opacity=".5"></path>
+    <path fill="currentColor" d="M20 12h2A10 10 0 0 0 12 2V4A8 8 0 0 1 20 12Z"><animateTransform attributeName="transform" dur="1s" from="0 12 12" repeatCount="indefinite" to="360 12 12" type="rotate"></animateTransform></path>
+  </svg>
+`
+
+
+export const animatedDotsSVG = `
+  <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+    <circle cx="18" cy="12" r="0" fill="currentColor">
+      <animate attributeName="r" begin=".67" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"></animate>
+    </circle>
+    <circle cx="12" cy="12" r="0" fill="currentColor">
+      <animate attributeName="r" begin=".33" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"></animate>
+    </circle>
+    <circle cx="6" cy="12" r="0" fill="currentColor">
+      <animate attributeName="r" begin="0" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"></animate>
+    </circle>
   </svg>
 `
 
@@ -1054,4 +1075,84 @@ export const open = `
 export const plus = `
   <path d="M5 12h14" />
   <path d="M12 5v14" />
+`
+
+export const leftAngle = `
+  <path d="m15 18-6-6 6-6" />
+`
+
+export const rightAngle = `
+  <path d="m9 18 6-6-6-6" />
+`
+
+export const boldIcon = `
+  <path d="M14 12a4 4 0 0 0 0-8H6v8"></path>
+  <path d="M15 20a4 4 0 0 0 0-8H6v8Z"></path>
+`
+
+export const italicsIcon = `
+  <line x1="19" x2="10" y1="4" y2="4"></line>
+  <line x1="14" x2="5" y1="20" y2="20"></line>
+  <line x1="15" x2="9" y1="4" y2="20"></line>
+`
+export const underlineIcon = `
+  <path d="M6 4v6a6 6 0 0 0 12 0V4"></path>
+  <line x1="4" x2="20" y1="20" y2="20"></line>
+`
+
+export const strikethroughIcon = `
+  <path d="M16 4H9a3 3 0 0 0-2.83 4"></path>
+  <path d="M14 12a4 4 0 0 1 0 8H6"></path>
+  <line x1="4" x2="20" y1="12" y2="12"></line>
+`
+
+export const chainLinkIcon = `
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+`
+
+export const cancelChainLinkIcon = `
+  <path d="M15.625 12.775L13.85 11H15q.425 0 .713.288T16 12q0 .25-.1.45t-.275.325M20.5 21.9q-.275.275-.7.275t-.7-.275l-17-17q-.275-.275-.275-.7t.275-.7t.7-.275t.7.275l17 17q.275.275.275.7t-.275.7M7 17q-2.075 0-3.537-1.463T2 12q0-1.725 1.05-3.075t2.7-1.775L7.6 9H7q-1.25 0-2.125.875T4 12t.875 2.125T7 15h3q.425 0 .713.288T11 16t-.288.713T10 17zm2-4q-.425 0-.712-.288T8 12t.288-.712T9 11h.625l1.975 2zm9.5 2.8q-.225-.35-.162-.75t.412-.625q.575-.425.913-1.05T20 12q0-1.25-.875-2.125T17 9h-3q-.425 0-.712-.288T13 8t.288-.712T14 7h3q2.075 0 3.538 1.463T22 12q0 1.225-.562 2.288t-1.563 1.762q-.35.225-.75.163T18.5 15.8"/>
+`
+
+export const numberedBulletsIcon = `
+  <line x1="10" x2="21" y1="6" y2="6"></line>
+  <line x1="10" x2="21" y1="12" y2="12"></line>
+  <line x1="10" x2="21" y1="18" y2="18"></line>
+  <path d="M4 6h1v4"></path>
+  <path d="M4 10h2"></path>
+  <path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"></path>
+`
+
+export const bulletPointsIcon = `
+  <line x1="8" x2="21" y1="6" y2="6"></line>
+  <line x1="8" x2="21" y1="12" y2="12"></line>
+  <line x1="8" x2="21" y1="18" y2="18"></line>
+  <line x1="3" x2="3.01" y1="6" y2="6"></line>
+  <line x1="3" x2="3.01" y1="12" y2="12"></line>
+  <line x1="3" x2="3.01" y1="18" y2="18"></line>
+`
+
+export const blockquotesIcon = `
+  <path d="M17 6H3"></path>
+  <path d="M21 12H8"></path>
+  <path d="M21 18H8"></path>
+  <path d="M3 12v6"></path>
+`
+
+export const codesIcon = `
+  <path d="m18 16 4-4-4-4"></path>
+  <path d="m6 8-4 4 4 4"></path>
+  <path d="m14.5 4-5 16"></path>
+`
+
+export const undoIcon = `
+  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9h13a5 5 0 0 1 0 10H7M3 9l4-4M3 9l4 4"/>
+`
+
+export const redoIcon = `
+  <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2">
+    <path d="M20 9H8a5 5 0 0 0-5 5v0a5 5 0 0 0 5 5h9" />
+    <path stroke-linejoin="round" d="m17 5l4 4l-4 4" />
+  </g>
 `

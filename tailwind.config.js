@@ -2,8 +2,9 @@
 export default {
   darkMode: 'selector',
 	content: [
-    './node_modules/preline/preline.js',
     './src/**/*.{html,js,svelte,ts}',
+    './node_modules/preline/preline.js',
+    './node_modules/stwui/**/*.{svelte,js,ts,html}'
   ],
 
   theme: {
@@ -19,6 +20,10 @@ export default {
       center: true,
     },
     extend: {
+      transitionProperty: {
+        'size': 'height, width, margin, padding, border-width',
+        'spacing': 'margin, pading, gap',
+      },
       colors: {
         'brand': {
           50: '#fefae8',
@@ -36,10 +41,10 @@ export default {
       }
     }
   },
-
 	plugins: [
     require('@tailwindcss/typography'),
     require('@tailwindcss/forms'),
     require('preline/plugin'),
+    require('stwui/plugin')
   ]
 };

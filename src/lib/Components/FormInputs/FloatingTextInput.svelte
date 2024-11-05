@@ -11,17 +11,19 @@
 	import SvgIcon from '../SvgIcon.svelte';
 	import FormMessage from '$lib/Components/FormMessage.svelte';
 
-  export let name = 'input-' + crypto.randomUUID().replaceAll('-', '').substring(0, 10), msg = '', isError = true, label = '', placeholder = ' ', gray = false, togglePw = undefined, strongPw = undefined;
+  export let name = 'input-' + crypto.randomUUID().replaceAll('-', '').substring(0, 10), isError = true, label = '', placeholder = ' ', gray = false, togglePw = undefined, strongPw = undefined, value = '';
+  /** @type {string[]|undefined} */
+  export let msg = [];
 </script>
 
 <div class="relative flex-1">
-  <input {name} id="{name}" {placeholder} {...$$restProps}
+  <input {name} id="{name}" {placeholder} {...$$restProps} bind:value
       class="peer p-4 block w-full border-gray-200 rounded-lg text-sm placeholder:text-transparent focus:border-brand-500/50 focus:ring-brand-500/50
       disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400
       dark:focus:ring-neutral-600 focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2
-      {gray ? 'bg-gray-100 dark:!bg-neutral-800' : ''} { !msg && gray ? 'border-transparent dark:border-transparent' : ''}
-      {msg && isError ? 'border-red-500 focus:border-red-500 focus:ring-red-500 dark:bg-red-900/20' : ''}
-      {msg && ! isError ? 'border-teal-500 focus:border-teal-500 focus:ring-teal-500 dark:bg-teal-900/20' : ''}">
+      {gray ? 'bg-gray-100 dark:!bg-neutral-800' : ''} { !msg?.toString() && gray ? 'border-transparent dark:border-transparent' : ''}
+      {msg?.toString() && isError ? 'border-red-500 focus:border-red-500 focus:ring-red-500 dark:bg-red-900/20' : ''}
+      {msg?.toString() && ! isError ? 'border-teal-500 focus:border-teal-500 focus:ring-teal-500 dark:bg-teal-900/20' : ''}">
 
   <label for="{name}"
       class="absolute top-0 start-0 p-4 h-full text-sm truncate pointer-events-none transition ease-in-out duration-100 border border-transparent origin-[0_0]
@@ -31,12 +33,12 @@
 
   {#if togglePw}
     <button type="button" data-hs-toggle-password={`{"target": ${togglePw} }`}
-        class="absolute top-0 {msg ? 'bottom-7' : 'bottom-0'} end-0 flex items-center z-20 px-3 cursor-pointer text-gray-400 rounded-e-md focus:outline-none focus:text-blue-600 dark:text-neutral-600 dark:focus:text-blue-500">
-      <SvgIcon class="shrink-0 size-3.5 {msg ? 'text-red-500' : ''}" svgHeight={24} stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" slot={eyeOpen}/>
+        class="absolute top-0 {msg?.toString() ? 'bottom-7' : 'bottom-0'} end-0 flex items-center z-20 px-3 cursor-pointer text-gray-400 rounded-e-md focus:outline-none focus:text-blue-600 dark:text-neutral-600 dark:focus:text-blue-500">
+      <SvgIcon class="shrink-0 size-3.5 {msg?.toString() ? 'text-red-500' : ''}" svgHeight={24} stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" slot={eyeOpen}/>
     </button>
   {/if}
 
-  {#if msg}
+  {#if msg?.toString()}
     <FormMessage type="{isError ? 'error' : 'success'}" {msg}/>
   {/if}
 
