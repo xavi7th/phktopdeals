@@ -1,24 +1,28 @@
 import { type } from 'arktype';
 
 export const giftCardSchema = type({
-  product_name: type("string>1").describe("not be empty"),
+  product_name: type("string>1").describe("provided"),
   product_type: ["string>1", "@", "selected"], //optional syntax
-  product_image: "File?",
+  product_image: type("File?").describe('provided').optional(),
+  brand_id: type("string>1").describe("provided"),
   product_category: ["string[]>1", "@", "2 and above"],
+  regions: ["string[]>1", "@", "selected"],
   product_min_price: "number>=0",
   percentage_discount: "0<=number<100",
-  purchase_commission: "0<number<100",
+  purchase_commission: type("0<number<100").describe("at least 0.5"),
   variable_denomination: "boolean?",
   'price_denominations?': "number[]",
   "discount_until?": "Date|null",
-  faqs: type("string").describe("not be empty"),
+  faqs: type("string").describe("provided"),
 });
 
 export const giftCardDefaults = {
   product_name: '',
-  product_type: '',
+  product_type: 'gift card',
+  brand_id: null,
   product_image: null,
   product_category: [''],
+  regions: [''],
   price_denominations: [0],
   product_min_price: 0,
   percentage_discount: 0,

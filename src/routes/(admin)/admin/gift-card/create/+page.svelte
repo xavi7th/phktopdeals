@@ -21,7 +21,7 @@
     timeoutMs: 8000,
   });
 
-  $: ( { types, categories } = data ) ;
+  $: ( { brands, regions, categories, } = data ) ;
 </script>
 
 {#if $message}
@@ -50,7 +50,12 @@
         </div>
 
         <div class="col-span-12">
-          <FloatingSelectInput class="flex-1" name="product_type" label="Product Type" bind:value={$formData.product_type} options={types?.data || []} isError={ !! $errors.product_type} msg={$errors.product_type}/>
+          <input name="product_type" class="hidden" placeholder="Product Type" value="Gift Card" readonly/>
+          <FloatingSelectInput class="flex-1" name="brand_id" label="Product Brand" bind:value={$formData.brand_id} isError={ !! $errors.brand_id} msg={$errors.brand_id}>
+            {#each brands || [] as brand}
+              <option value={brand.id}>{brand.name}</option>
+            {/each}
+          </FloatingSelectInput>
         </div>
 
         <div class="col-span-12">
@@ -59,8 +64,8 @@
 
         <div class="col-span-12 flex gap-x-2">
           <FloatingSelectTagAltInput class="flex-1" name="product_category" label="product category" bind:value={$formData.product_category} isError={ !! $errors.product_category} msg={$errors.product_category?._errors} multiple>
-            {#each categories?.data || [] as item}
-              <option value={item}>{item}</option>
+            {#each categories || [] as cat}
+              <option value={cat}>{cat}</option>
             {/each}
           </FloatingSelectTagAltInput>
         </div>
@@ -69,6 +74,14 @@
 
         <div class="col-span-12">
           <FloatingSelectTagInput name="price_denominations" label="Available Card Denominations (optional)"  bind:value={$formData.price_denominations} options={[1, 5, 10, 15, 20, 50, 100, 200, 250, 500, 1000]} isError={ !! $errors.price_denominations} msg={$errors.price_denominations}/>
+        </div>
+
+        <div class="col-span-12 flex gap-x-2">
+          <FloatingSelectTagAltInput class="flex-1" name="regions" label="applicable regions" bind:value={$formData.regions} isError={ !! $errors.regions} msg={$errors.regions?._errors} multiple>
+            {#each regions || [] as region}
+              <option value={region.code}>{region.country}</option>
+            {/each}
+          </FloatingSelectTagAltInput>
         </div>
 
         <div class="col-span-12">

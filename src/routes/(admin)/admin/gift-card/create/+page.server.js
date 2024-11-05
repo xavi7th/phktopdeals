@@ -7,12 +7,11 @@ import { message, superValidate, fail, setError } from 'sveltekit-superforms';
 export async function load(event) {
   const form = await superValidate(arktype(giftCardSchema, { defaults: giftCardDefaults }));
 
-  const fetchProductTypes = async () => {
+  const fetchProductBrands = async () => {
     const res = await api({
 			method: 'get',
-			resource: 'product-types',
+			resource: 'product-brands',
       event,
-      logResponse: true,
 		});
 
     return res?.json();
@@ -23,23 +22,40 @@ export async function load(event) {
 			method: 'get',
 			resource: 'product-categories',
       event,
-      logResponse: true,
 		});
 
     return res?.json();
   }
 
+  const fetchRegions = async () => {
+    const res = await api({
+			method: 'get',
+			resource: 'regions',
+      event,
+		});
 
-	const [types, categories] = await Promise.all([
-	  fetchProductTypes(),
+    return res?.json();
+  }
+
+	const [categoriesData, brandsData, regionsData] = await Promise.all([
 	  fetchCategories(),
+    fetchProductBrands(),
+	  fetchRegions(),
 	]);
 
   event.setHeaders({
     'Cache-Control': 'public, max-age=604800',
   });
 
-  return { form, types, categories }
+  return {
+    form,
+    /** @type {string[]} */
+    categories: categoriesData.data,
+    /** @type {import('$lib/types').ProductBrand[] } */
+    brands: brandsData.data,
+    /** @type {import('$lib/types').ProductRegions[]} } */
+    regions: regionsData.data,
+  }
 }
 
 /** @satisfies {import('./$types').Actions} */
@@ -61,7 +77,7 @@ export async function load(event) {
 
     const res = await api({
 			method: 'post',
-			resource: 'product-brands',
+			resource: 'products',
 			data: formData,
       event,
       toJSON: false,

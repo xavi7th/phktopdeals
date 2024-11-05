@@ -11,7 +11,7 @@
   /** @type {string|string[]|undefined} */
   export let msg = [];
 
-  /** @type { string[] }*/
+  /** @type { (string[]|number[]) }*/
   export let value = [];
 
   /** @type {string[] | Object.<string, string>} */

@@ -98,3 +98,8 @@ export type AdminNavMenuItem = {
   icon: string;
   iconAttributes?: HTMLAttributes;
 }
+export type ProductRegions = {
+  country: string,
+  code: string,
+  phone_code: string,
+}
