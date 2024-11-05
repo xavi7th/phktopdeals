@@ -63,7 +63,7 @@
         {#if user?.full_name}
           <a class="hidden sm:block mr-1 inline-flex items-center gap-x-3 sm:rounded-full bg-gray-800 px-5 py-3 text-xs font-bold tracking-tighter text-white  hover:bg-gray-900 focus:bg-gray-900 focus:outline-none dark:bg-white dark:text-neutral-800 dark:hover:text-white" href="/logout" data-sveltekit-reload>Logout</a>
         {:else}
-          <a class="hidden sm:block mr-1 inline-flex items-center gap-x-3 sm:rounded-full bg-brand-600 px-5 py-3 text-xs font-bold tracking-tighter text-white  hover:bg-brand-900 focus:bg-brand-900 focus:outline-none dark:bg-white dark:text-neutral-800 dark:hover:text-white" href="/login">Login</a>
+          <a class="hidden sm:block mr-1 inline-flex items-center gap-x-3 sm:rounded-full bg-brand-600 px-5 py-3 text-xs font-bold tracking-tighter text-white  hover:bg-brand-900 focus:bg-brand-900 focus:outline-none dark:bg-white dark:text-brand-600 dark:hover:text-white" href="/login">Login</a>
           <a class="hidden sm:block mr-1 inline-flex items-center gap-x-3 sm:rounded-full bg-gray-800 px-5 py-3 text-xs font-bold tracking-tighter text-white  hover:bg-gray-900 focus:bg-gray-900 focus:outline-none dark:bg-white dark:text-neutral-800 dark:hover:text-white" href="/login#register">Sign Up</a>
         {/if}
       </div>
