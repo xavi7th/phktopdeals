@@ -17,6 +17,14 @@
     }`;
 
 	let count = 0, selectedDenomination = 'btn-0';
+
+  /** @type {import('./$types').PageData} */
+  export let data;
+
+  $: ({product} = data);
+
+  $: console.log(product);
+
 </script>
 
 <div class="container px-4 py-28 lg:py-40">

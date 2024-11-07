@@ -1,6 +1,6 @@
 <script>
 	import Sidebar from '$partials/gift-cards/Sidebar.svelte';
-	import { favoriteIcon, maximiseIcon } from '$lib/Components/iconPaths';
+	import { favoriteIcon, maximizeIcon } from '$lib/Components/iconPaths';
   import { percentageCalculation } from '$lib/helpers';
 
   export let data;
@@ -32,7 +32,7 @@
               </div>
 
               <div class="flex flex-col space-y-2 absolute group-hover:right-4 -right-10 top-20 transition-all duration-300 ease-in-out">
-                <a href="#"><span class="w-10 h-10 flex justify-center items-center bg-gray-100/80 hover:bg-brand-200/80 rounded">{@html maximiseIcon }</span></a>
+                <a href="#"><span class="w-10 h-10 flex justify-center items-center bg-gray-100/80 hover:bg-brand-200/80 rounded">{@html maximizeIcon }</span></a>
                 <a href="#"><span class="w-10 h-10 flex justify-center items-center bg-gray-100/80 hover:bg-brand-200/80 rounded">{@html favoriteIcon }</span></a>
               </div>
 

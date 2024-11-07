@@ -45,11 +45,13 @@ export type NavData = {
   url: string
 }
 export type ProdSummary = {
+  id: string,
   name: string,
-  url: string,
-  imgUrl: string,
-  country: string,
+  name_slug: string,
+  img_url: string,
+  regions: string,
   min_price: number,
+  percentage_discount: number,
 }
 export type ProductPriceTag = {
   /** Minumum manual amount purchaseable */

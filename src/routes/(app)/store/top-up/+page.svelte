@@ -4,7 +4,7 @@
 	import SvgIcon from '$lib/Components/SvgIcon.svelte';
     import HowItWorks from '$partials/home/HowItWorks.svelte';
 	import SectionTitle from '$partials/SectionTitle.svelte';
-    import { favoriteIcon, maximiseIcon } from '$lib/Components/iconPaths';
+    import { favoriteIcon, maximizeIcon } from '$lib/Components/iconPaths';
 
     import Mobile from '$lib/images/icons/mobile.svg'
     import Global from '$lib/images/icons/global.svg'
@@ -156,17 +156,17 @@
                         <div class="w-full lg:flex lg:space-x-3 pt-40">
                             <div class="flex-1">
                                 <div class="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 grid-cols-2 xl:gap-3 gap-5 mb-8">
-                        
+
                                 {#each Array(10) as item}
                                 <div class="group relative flex flex-col overflow-hidden rounded-2xl bg-white shadow transition hover:-translate-y-1 hover:translate-x-1 hover:scale-[1.025] hover:shadow-sm hover:drop-shadow-xl dark:border-neutral-700 dark:bg-neutral-700/30 dark:shadow-neutral-700/70">
                                     <img class="h-auto w-full rounded-xl" src="{item.imgUrl}" alt="prod-thumb"/>
-                          
+
                                     <div class="relative flex-1 px-4 py-2 md:px-5">
                                       <h3 class="text-lg font-bold text-gray-800 dark:text-white">
                                         {item.name}
                                       </h3>
                                     </div>
-                          
+
                                     <div class="flex items-end gap-1.5 transition-colors duration-300 bg-[#FFDA1C] hover:shadow-md shadow-[#FFDA1C] rounded-b-xl py-3 px-4 md:py-4 md:px-5 dark:border-brand-700 mt-1 text-sm text-black dark:text-brand-50 hover:text-white">
                                       <div class="flex flex-col gap-1 w-4/5">
                                           <span class="text-md text-black">Amount</span>
@@ -178,14 +178,14 @@
                                     </div>
                                   </div>
                                 {/each}
-                        
+
                                 </div>
                             </div>
                         </div>
-                    
+
                     </div>
                     </div>
-                
+
                 {:else if selectedTopUp == 'Television'}
                     <div class="px-2 pt-0 sm:px-10 md:px-20">
                         <div class="border-4 rounded-xl border-[#FFDA1C] mt-20">
@@ -250,17 +250,17 @@
         <div class="row">
             <section class="mt-6 flex w-full flex-auto flex-col px-2 pt-0 sm:px-10 md:px-20">
             <HowItWorks />
-    
+
             <div class="mb-3 flex justify-end mr-4">
                 <a class="bg-brand hover:bg-brand-400 rounded-xl px-5 py-3" href="/installation-guide">
                 Installation Guide
                 </a>
             </div>
-    
+
             <div class="mx-12 mt-20">
                 <SectionTitle title="Related Questions" sectionClass="ml-0 !w-1/3" svgClass="!w-1/2 !stroke-brand-500"/>
-    
-    
+
+
                 <div class="w-full bg-white rounded-lg shadow-md dark:bg-neutral-800">
                 <div class="hs-accordion-group" data-hs-accordion-always-open>
                     <div class="hs-accordion active bg-white p-5 border -mt-px first:rounded-t-lg last:rounded-b-lg dark:bg-neutral-800 dark:border-neutral-700" id="hs-basic-with-title-and-arrow-stretched-heading-one">
@@ -279,7 +279,7 @@
                         </p>
                     </div>
                     </div>
-    
+
                     <div class="hs-accordion bg-white p-5 border -mt-px first:rounded-t-lg last:rounded-b-lg dark:bg-neutral-800 dark:border-neutral-700" id="hs-basic-with-title-and-arrow-stretched-heading-two">
                     <button class="hs-accordion-toggle hs-accordion-active:text-blue-600 py-3 inline-flex items-center justify-between gap-x-3 w-full font-semibold text-start text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:hs-accordion-active:text-blue-500 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:outline-none dark:focus:text-neutral-400" aria-expanded="false" aria-controls="hs-basic-with-title-and-arrow-stretched-collapse-two">
                         Accordion #2
@@ -296,7 +296,7 @@
                         </p>
                     </div>
                     </div>
-    
+
                     <div class="hs-accordion bg-white p-5 border -mt-px first:rounded-t-lg last:rounded-b-lg dark:bg-neutral-800 dark:border-neutral-700" id="hs-basic-with-title-and-arrow-stretched-heading-three">
                     <button class="hs-accordion-toggle hs-accordion-active:text-blue-600 py-3 inline-flex items-center justify-between gap-x-3 w-full font-semibold text-start text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:hs-accordion-active:text-blue-500 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:outline-none dark:focus:text-neutral-400" aria-expanded="false" aria-controls="hs-basic-with-title-and-arrow-stretched-collapse-three">
                         Accordion #3
@@ -315,9 +315,9 @@
                     </div>
                 </div>
                 </div>
-    
+
             </div>
-    
+
             </section>
         </div>
     </section>

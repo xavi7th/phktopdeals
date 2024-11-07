@@ -1,6 +1,6 @@
 <script>
   import SearchBar from '$partials/games/SearchBar.svelte';
-	import { favoriteIcon, maximiseIcon } from '$lib/Components/iconPaths';
+	import { favoriteIcon, maximizeIcon } from '$lib/Components/iconPaths';
 	import FeaturedCategories from '$partials/games/FeaturedCategories.svelte';
 
   export let data;
@@ -17,7 +17,7 @@
 
       {#each games.list as item, index}
         <div class="group overflow-hidden relative flex flex-col bg-white shadow rounded-xl dark:bg-neutral-700/30 dark:border-neutral-700 dark:shadow-neutral-700/70 transition hover:drop-shadow-xl hover:shadow-sm hover:-translate-y-1 hover:translate-x-1 hover:scale-[1.025]">
-          
+
           <img class="w-full h-auto rounded-xl" src={item.imgUrl} alt="hero-img-thumb" />
 
           <div class="px-4 md:px-5 py-2 md:py-3 flex-1 relative min-h-28">
@@ -34,7 +34,7 @@
           </div>
 
           <div class="flex flex-col space-y-2 absolute group-hover:right-4 -right-10 top-20 transition-all duration-300 ease-in-out">
-            <a href="#"><span class="w-10 h-10 flex justify-center items-center bg-gray-100/80 hover:bg-brand-200/80 rounded">{@html maximiseIcon }</span></a>
+            <a href="#"><span class="w-10 h-10 flex justify-center items-center bg-gray-100/80 hover:bg-brand-200/80 rounded">{@html maximizeIcon }</span></a>
             <a href="#"><span class="w-10 h-10 flex justify-center items-center bg-gray-100/80 hover:bg-brand-200/80 rounded">{@html favoriteIcon }</span></a>
           </div>
 

@@ -1,7 +1,7 @@
 <script>
-	import { Splide, SplideSlide } from '@splidejs/svelte-splide';
-	import { favoriteIcon, maximiseIcon } from '$lib/Components/iconPaths';
 	import { toCurrency } from '$lib/helpers';
+	import { Splide, SplideSlide } from '@splidejs/svelte-splide';
+	import { favoriteIcon, maximizeIcon } from '$lib/Components/iconPaths';
 
 	const splideCarousel = {
 		label: 'List Of Items In Carousel',
@@ -12,7 +12,7 @@
 		arrows: true,
 		pagination: false,
 		rewind: false,
-    lazyLoad:"nearby",
+    lazyLoad: "nearby",
 		breakpoints: {
 			1200: {
 				perPage: 4
@@ -45,15 +45,15 @@
 					</div>
 
 					<div class="absolute -right-10 top-20 flex flex-col space-y-2 transition-all duration-300 ease-in-out group-hover:right-4">
-						<a href="#">
-              <span class="flex h-10 w-10 items-center justify-center rounded bg-gray-100/80 hover:bg-brand-200/80">{@html maximiseIcon}</span>
+						<a href={`store/${product.name_slug}_${product.id}`}>
+              <span class="flex h-10 w-10 items-center justify-center rounded bg-gray-100/80 hover:bg-brand-200/80">{@html maximizeIcon}</span>
             </a>
-						<a href="#">
+						<a href="#/">
               <span	class="flex h-10 w-10 items-center justify-center rounded bg-gray-100/80 hover:bg-brand-200/80"	>{@html favoriteIcon}</span>
             </a>
 					</div>
 
-					<a href={product.url} class="mt-1 rounded-b-xl border-t font-bold text-center text-balance bg-brand px-4 py-3 text-sm text-black transition-colors duration-300 hover:bg-brand-500 hover:text-white md:px-5 md:py-4 dark:border-brand-700 dark:bg-brand-900 dark:text-brand-50">
+					<a href={`store/${product.name_slug}_${product.id}`} class="mt-1 rounded-b-xl border-t font-bold text-center text-balance bg-brand px-4 py-3 text-sm text-black transition-colors duration-300 hover:bg-brand-500 hover:text-white md:px-5 md:py-4 dark:border-brand-700 dark:bg-brand-900 dark:text-brand-50">
 						BUY NOW from {toCurrency(product.min_price)}
 					</a>
 				</div>
