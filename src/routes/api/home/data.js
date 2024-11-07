@@ -11,21 +11,21 @@ export const countries = [
   'Nigeria', 'USA', 'China', 'UAE', 'Australia', 'UK', 'Norway', 'Global' //All Countries. Global tags will always be queried with any other country
 ]
 
-export const product_types = [
+export const main_nav = [
   {
-    type: 'Gift Cards',
+    name: 'Gift Cards',
     url: '/store/gift-cards'
   },
   {
-    type: 'Games',
+    name: 'Games',
     url: '/store/games'
   },
   {
-    type: 'eSim',
+    name: 'eSim',
     url: '/store/e-sims'
   },
   {
-    type: 'Top Up',
+    name: 'Top Up',
     url: '/store/top-up'
   },
 ]

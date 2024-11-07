@@ -1,11 +1,14 @@
 import { json } from "@sveltejs/kit";
-import { sections, product_types, filters } from "./data.js";
+import { main_nav } from "./data.js";
 
 /** @type {import('./$types').RequestHandler} */
-export function GET() {
+export function GET({setHeaders}) {
+
+  setHeaders({
+    'Cache-Control': 'max-age=604800, stale-while-revalidate=86400, immutable',
+  })
+
   return json({
-    sections,
-    filters,
-    main_nav: JSON.parse(JSON.stringify(product_types).replace(/type/g, 'name')),
+    main_nav,
   });
 }

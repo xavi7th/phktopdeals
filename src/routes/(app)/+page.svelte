@@ -8,9 +8,9 @@
   /** @type {import('./$types').PageData} */
   export let data;
 
-  $: ({sections, filters} = data);
-
+  $: ({sections} = data);
 </script>
+
 <main class="flex flex-col flex-auto">
   <Hero />
 

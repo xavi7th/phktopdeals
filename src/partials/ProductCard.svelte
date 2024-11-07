@@ -36,7 +36,7 @@
 		{#each products as product}
 			<SplideSlide>
 				<div class="group relative flex flex-col overflow-hidden rounded-2xl bg-white shadow transition hover:-translate-y-1 hover:translate-x-1 hover:scale-[1.025] hover:shadow-sm hover:drop-shadow-xl dark:border-neutral-700 dark:bg-neutral-700/30 dark:shadow-neutral-700/70">
-          <img class="h-auto w-full rounded-xl" data-splide-lazy="{product.imgUrl}" alt="prod-thumb"/>
+          <img class="h-[296px] w-[237px] rounded-xl" data-splide-lazy="{product.img_url}" alt="prod-thumb"/>
 
 					<div class="relative flex-1 px-4 py-2 md:px-5">
 						<h3 class="text-lg font-bold text-gray-800 dark:text-white">
