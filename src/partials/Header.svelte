@@ -47,7 +47,8 @@
       {#if user?.full_name}
         <a href="/logout" data-sveltekit-reload class="mr-1 inline-flex items-center gap-x-3 rounded-full bg-gray-800 px-5 py-3 text-xs font-medium text-white hover:bg-gray-900 focus:bg-gray-900 focus:outline-none dark:bg-white dark:text-neutral-800">Logout</a>
       {:else}
-        <a href="/login" class="mr-1 inline-flex items-center gap-x-3 rounded-full bg-gray-800 px-5 py-3 text-xs font-medium text-white hover:bg-gray-900 focus:bg-gray-900 focus:outline-none dark:bg-white dark:text-neutral-800">Sign In</a>
+        <a href="/login" class="inline-flex mr-1 items-center gap-x-3 rounded-full bg-brand-800 px-5 py-3 text-xs font-medium text-white hover:bg-brand-900 focus:bg-brand-900 focus:outline-none dark:bg-brand-700 dark:text-white">Login</a>
+        <a href="/login#register" class="inline-flex sm:hidden mr-1 items-center gap-x-3 rounded-full bg-gray-800 px-5 py-3 text-xs font-bold tracking-tighter text-white  hover:bg-gray-900 focus:bg-gray-900 focus:outline-none dark:bg-white dark:text-brand-700 dark:hover:text-white">Sign Up</a>
       {/if}
     </div>
 
@@ -58,7 +59,7 @@
     >
       <div class="flex flex-col sm:gap-5 sm:flex-row sm:items-center divide-y sm:divide-y-0">
         {#each main_nav as nav_item}
-          <a class="p-3.5 border-gray-400/60 font-bold tracking-tighter text-gray-600 hover:text-gray-400 focus:text-gray-400 focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500" href="{nav_item.url}" aria-current="{$page.url.pathname.includes(nav_item.url) ? 'page' : undefined}">{nav_item.name}</a>
+          <a class="p-3.5 border-gray-400/60 font-bold tracking-tighter text-gray-600 hover:text-gray-400 focus:text-gray-400 focus:outline-none dark:text-neutral-700 dark:hover:text-neutral-900 dark:focus:text-neutral-900 dark:font-semibold" href="{nav_item.url}" aria-current="{$page.url.pathname.includes(nav_item.url) ? 'page' : undefined}">{nav_item.name}</a>
         {/each}
         {#if user?.full_name}
           <a class="hidden sm:block mr-1 inline-flex items-center gap-x-3 sm:rounded-full bg-gray-800 px-5 py-3 text-xs font-bold tracking-tighter text-white  hover:bg-gray-900 focus:bg-gray-900 focus:outline-none dark:bg-white dark:text-neutral-800 dark:hover:text-white" href="/logout" data-sveltekit-reload>Logout</a>
