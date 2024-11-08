@@ -12,7 +12,7 @@ export const giftCardSchema = type({
   purchase_commission: type("0<number<100").describe("at least 0.5"),
   variable_denomination: "boolean?",
   'price_denominations?': "number[]",
-  "discount_until?": "Date|null",
+  "discount_until?": "string|null|undefined",
   faqs: type("string").describe("provided"),
 });
 

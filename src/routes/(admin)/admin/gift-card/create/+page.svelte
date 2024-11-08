@@ -28,7 +28,7 @@
 </script>
 
 {#if $message}
-  <div class="fixed top-24 end-3 space-y-3">
+  <div class="fixed top-24 z-50 end-3 space-y-3">
     <Toast positioned={false} type={$message.type} msg={$message.msg}/>
   </div>
 {/if}
@@ -77,18 +77,18 @@
           </FloatingSelectTagAltInput>
         </div>
 
-        <h2 class="col-span-12 py-3 flex items-center font-semibold text-lg text-gray-800  before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6 dark:text-neutral-200 dark:before:border-neutral-600 dark:after:border-neutral-600">Pricing</h2>
-
-        <div class="col-span-12">
-          <FloatingSelectTagInput name="price_denominations" label="Available Card Denominations (optional)"  bind:value={$formData.price_denominations} options={[1, 5, 10, 15, 20, 50, 100, 200, 250, 500, 1000]} isError={ !! $errors.price_denominations} msg={$errors.price_denominations}/>
-        </div>
-
         <div class="col-span-12 flex gap-x-2">
           <FloatingSelectTagAltInput class="flex-1" name="regions" label="applicable regions" bind:value={$formData.regions} isError={ !! $errors.regions} msg={$errors.regions?._errors} multiple>
             {#each regions || [] as region}
               <option value={region.code}>{region.country}</option>
             {/each}
           </FloatingSelectTagAltInput>
+        </div>
+
+        <h2 class="col-span-12 py-3 flex items-center font-semibold text-lg text-gray-800  before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6 dark:text-neutral-200 dark:before:border-neutral-600 dark:after:border-neutral-600">Pricing</h2>
+
+        <div class="col-span-12">
+          <FloatingSelectTagInput name="price_denominations" label="Available Card Denominations (optional)"  bind:value={$formData.price_denominations} options={[1, 5, 10, 15, 20, 50, 100, 200, 250, 500, 1000]} isError={ !! $errors.price_denominations} msg={$errors.price_denominations}/>
         </div>
 
         <div class="col-span-12">
@@ -111,7 +111,7 @@
 
         {#if $formData.percentage_discount > 0}
           <div class="col-span-12">
-            <FloatingDateInput name="discount_until" label="Discount Valid Until (optional)" bind:value={$formData.discount_until} msg={$errors?.product_name?.[0]}/>
+            <FloatingDateInput name="discount_until" min={Date()} label="Discount Valid Until (optional)" bind:value={$formData.discount_until} msg={$errors?.discount_until?.[0]}/>
           </div>
         {/if}
 

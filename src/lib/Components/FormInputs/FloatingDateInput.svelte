@@ -6,16 +6,16 @@
                 msg={form?.success || form?.errors?.password_confirmation && form?.errors?.password_confirmation[0]} label="Confirm Password *"
                 togglePw='["#password-confirmation", "#hs-floating-input-passowrd-value"]'/> -->
 <script>
-	import { cn } from '$lib/helpers';
-import DatePicker from 'stwui/date-picker';
 	import { onMount } from 'svelte';
+	import { cn } from '$lib/helpers';
+  import DatePicker from 'stwui/date-picker';
 
-  export let name = 'input-' + crypto.randomUUID().replaceAll('-', '').substring(0, 10), format = 'MMMM D, YYYY', label = '', inputClases = '';
+  export let name = 'input-' + crypto.randomUUID().replaceAll('-', '').substring(0, 10), format = 'MMMM D, YYYY', label = '', inputClases = '', min = undefined;
 
-  /** @type {string|string[]|undefined} */
-  export let msg = [];
+  /** @type {string|undefined} */
+  export let msg = undefined;
 
-  /** @type {Date|undefined} */
+  /** @type {string|null} */
   export let value;
 
   let elem;
@@ -30,7 +30,7 @@ import DatePicker from 'stwui/date-picker';
 </script>
 
 <div class="relative">
-  <DatePicker {name} bind:value label="Date" error={msg} {format}>
+  <DatePicker {name} bind:value label="Date" error={msg} {format} {min}>
     <DatePicker.Label slot="label" class="absolute z-10 top-0 start-0 p-4 h-full truncate pointer-events-none border border-transparent text-xs capitalize -translate-y-2 text-gray-500 dark:text-neutral-500">{label}</DatePicker.Label>
   </DatePicker>
 </div>
