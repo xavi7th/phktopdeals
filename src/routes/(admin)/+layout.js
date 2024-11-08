@@ -14,6 +14,11 @@ export async function load () {
       icon: 'productSVG',
     },
     {
+      name: 'Brands',
+      uri: '/admin/brands',
+      icon: 'eSimSVG',
+    },
+    {
       name: 'E-Sim',
       uri: '/admin/e-sim',
       icon: 'eSimSVG',

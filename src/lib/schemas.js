@@ -52,6 +52,14 @@ export const eSimDefaults = {
   cost: 0,
 };
 
+export const brandSchema = type({
+  name: type("string>1").describe("not be empty"),
+});
+
+export const brandDefaults = {
+  name: '',
+};
+
 export const gameSchema = type({
   product_name: type("string>1").describe("not be empty"),
   product_type: ["string>1", "@", "selected"], //optional syntax
