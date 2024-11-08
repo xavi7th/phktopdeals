@@ -22,8 +22,9 @@
   export let data;
 
   $: ({product} = data);
+  $: selectedDenominationAmount = product?.product_price?.denominations.length ? product.product_price.denominations[0] : 0;
 
-  $: console.log(product);
+  $: console.log(product.product_price.denominations[0]);
 
 </script>
 
@@ -31,9 +32,9 @@
 	<main class="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2">
 		<div class="w-full pr-20">
 			<div class="">
-				<enhanced:img
+				<img
 					class="h-auto w-full rounded-xl"
-					src="$lib/images/games-6.avif?aspect=400:320&fit=cover"
+					src={product.product_image_url}
 					alt="hero-img-thumb"
 				/>
 			</div>
@@ -42,7 +43,7 @@
 			<div class="w-full">
 				<div>
 					<div class="title text-black dark:text-white" style="font-size: 40px; font-weight: bold;">
-						The Title
+						{product.product_name}
 					</div>
 				</div>
 			</div>
@@ -68,7 +69,7 @@
 									Quantity
 								</span>
 								<span class="block text-xs text-gray-500 dark:text-neutral-400">
-									{toCurrency(count * 5)} total
+									{toCurrency(count * selectedDenominationAmount)} total
 								</span>
 							</div>
 							<div class="flex items-center gap-x-1.5">
@@ -76,11 +77,11 @@
 									type="button"
 									class="inline-flex size-6 items-center justify-center gap-x-2 rounded-md border border-brand-200 bg-white text-sm font-medium text-brand-800 shadow-sm hover:bg-brand-50 focus:bg-brand-50 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
 									tabindex="-1"
-									aria-label="Decrease"
 									disabled={count <= 0}
+									aria-label="Decrease"
 									on:click={() => count--}
 								>
-									{@html plusIcon}
+									{@html minusIcon}
 								</button>
 								<input
 									class="w-6 border-0 bg-transparent p-0 text-center text-gray-800 focus:ring-0 dark:text-white [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
@@ -96,7 +97,7 @@
 									aria-label="Increase"
 									on:click={() => count++}
 								>
-									{@html minusIcon}
+									{@html plusIcon}
 								</button>
 							</div>
 						</div>
@@ -109,16 +110,16 @@
 					<h3 class="text-xl font-medium">Choose a Denomination</h3>
 				</div>
 				<div class="grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-4">
-					{#each Array(10) as item, idx}
+					{#each product.product_price.denominations as item, idx}
 						<button
 							type="button"
-							class="group relative flex h-[6vw] items-center justify-center rounded-lg border border-transparent bg-brand font-medium text-brand-800 hover:bg-brand-700 hover:text-brand-50 focus:bg-brand-700 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-              class:selected={selectedDenomination == `btn-${idx}`}
-              on:click={() => { selectedDenomination = `btn-${idx}`; } }
+							class="group relative flex h-[6vw] items-center justify-center rounded-lg border border-transparent bg-brand font-medium text-brand-800 hover:bg-brand-700 hover:text-brand-50 focus:bg-brand-700 focus:text-brand-50 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+              				class:selected={selectedDenomination == `btn-${idx}`}
+             				on:click={() => { selectedDenomination = `btn-${idx}`, selectedDenominationAmount = item; } }
 						>
-							{toCurrency(10 * (item + 1))}
+							{toCurrency(item)}
 							<span
-								class="invisible absolute left-0 top-0 flex h-7 w-7 items-center justify-center rounded-ee-2xl rounded-ss-md bg-white group-hover:text-brand-600 group-[.selected]:visible"
+								class="invisible absolute left-0 top-0 flex h-7 w-7 items-center justify-center rounded-ee-2xl rounded-ss-md bg-white text-brand-600 group-[.selected]:visible"
 								>{@html checkPlus}</span
 							>
 						</button>
@@ -175,7 +176,7 @@
 						class="mt-10 inline-flex items-center rounded-lg border border-transparent bg-brand px-10 py-1.5 font-medium text-brand-800 hover:bg-brand-700 hover:text-brand-50 focus:bg-brand-700 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
 						style="justify-content: center;"
 					>
-						Buy Now $ 4,000
+						Buy Now {toCurrency(selectedDenominationAmount * count)}
 					</button>
 				</div>
 			</div>
@@ -194,67 +195,7 @@
 							></div>
 						</div>
 					</div>
-					<div>
-						<div>
-							<div class="question-item space-y-4">
-								<!-- <h3 class="mb-4">Product Description</h3> -->
-								<p>
-									Amazon.com Gift Cards* never expire and can be redeemed towards millions of items
-									at www.amazon.com
-								</p>
-								<h3>Redemption</h3>
-								<p>To redeem your gift card, follow these steps:</p>
-								<p>
-									1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Visit <a
-										href="https://panel.ezpaypin.com/www.amazon.com/redeem"
-										rel="noopener noreferrer"
-										target="_blank"
-										style="color: rgb(3, 155, 229);">www.amazon.com/redeem</a
-									>
-								</p>
-								<p>
-									2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enter the Claim Code when prompted.
-								</p>
-								<p>
-									3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gift card funds will be applied
-									automatically to eligible orders during the checkout process.
-								</p>
-								<p>
-									4.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;You must pay for any remaining balance
-									on your order with another payment method.
-								</p>
-								<p>&nbsp;</p>
-								<p>
-									Your gift card claim code may also be entered when prompted during checkout. To
-									redeem your gift card using the <a
-										href="https://www.amazon.com/"
-										rel="noopener noreferrer"
-										target="_blank"
-										style="color: rgb(3, 155, 229);">Amazon.com</a
-									> 1-Click® service, first add the gift card funds to Your Account.
-								</p>
-								<p>
-									If you have questions about redeeming your gift card, please visit <a
-										href="https://panel.ezpaypin.com/www.amazon.com/gc-redeem"
-										rel="noopener noreferrer"
-										target="_blank"
-										style="color: rgb(3, 155, 229);">www.amazon.com/gc-redeem</a
-									>.
-								</p>
-								<h3>Terms and Conditions</h3>
-								<p>Restrictions apply, see amazon.com/gc-legal</p>
-								<h3>Legal Disclaimer</h3>
-								<p>
-									Restrictions apply, see <a
-										href="https://panel.ezpaypin.com/amazon.com/gc-legal"
-										rel="noopener noreferrer"
-										target="_blank"
-										style="color: rgb(3, 155, 229);">amazon.com/gc-legal</a
-									>
-								</p>
-							</div>
-						</div>
-					</div>
+					{@html product.faqs}
 				</div>
 			</div>
 		</div>
