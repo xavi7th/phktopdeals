@@ -23,7 +23,7 @@ export async function load(event) {
   });
 
   return {
-    /** @type { import('$lib/types').Product[] } */
+    /** @type { import('$lib/types').Product } */
     product: details.data,
   }
 }

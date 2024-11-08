@@ -14,25 +14,27 @@
 <main class="flex flex-col flex-auto">
   <Hero />
 
-  {#each Object.entries(sections.top) as [sectionTitle, content]}
-    <ProductSection {sectionTitle} {content} />
-  {/each}
-
-  <Services {services}/>
-
-  {#each Object.entries(sections.misc) as [sectionTitle, content], idx}
-    {#if idx <= 2}
+  {#if sections && Object.entries(sections)}
+    {#each Object.entries(sections.top) as [sectionTitle, content]}
       <ProductSection {sectionTitle} {content} />
-    {/if}
-  {/each}
+    {/each}
 
-  <HowItWorks />
+    <Services {services}/>
 
-  {#each Object.entries(sections.misc) as [sectionTitle, content], idx}
-    {#if idx > 2}
-      <ProductSection {sectionTitle} {content} />
-    {/if}
-  {/each}
+    {#each Object.entries(sections.misc) as [sectionTitle, content], idx}
+      {#if idx <= 2}
+        <ProductSection {sectionTitle} {content} />
+      {/if}
+    {/each}
+
+    <HowItWorks />
+
+    {#each Object.entries(sections.misc) as [sectionTitle, content], idx}
+      {#if idx > 2}
+        <ProductSection {sectionTitle} {content} />
+      {/if}
+    {/each}
+  {/if}
 
   <section class="w-full mt-32">
     <div class="container-fluid lg:container">
