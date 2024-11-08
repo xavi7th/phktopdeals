@@ -39,6 +39,16 @@ export type Service = {
   icon: string,
   url: string,
   isPopular: boolean,
+  isMobileHidden: boolean,
+}
+export type PageSection = {
+  top: Object<string, PageSectionContent>[],
+  misc: Object<string, PageSectionContent>[],
+}
+export type PageSectionContent = {
+  url: string,
+  desc: string,
+  items: ProdSummary[],
 }
 export type NavData = {
   name: string,

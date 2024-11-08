@@ -3,7 +3,7 @@ import { api } from '$lib/helpers';
 /** @type {import('./$types').PageServerLoad} */
 export async function load ( event ) {
 
-  const fetchSections = async () => {
+  const fetchPageData = async () => {
     const res = await api( {
       method: 'get',
       resource: '',
@@ -13,8 +13,8 @@ export async function load ( event ) {
     return res?.json();
   }
 
-  const [sectionsData] = await Promise.all( [
-    fetchSections(),
+  const [pageData] = await Promise.all( [
+    fetchPageData(),
   ] );
 
   event.setHeaders({
@@ -22,7 +22,9 @@ export async function load ( event ) {
   });
 
   return {
-    /** @type { import('$lib/types').Product[] } */
-    sections: sectionsData.data,
+    /** @type { import('$lib/types').PageSection } */
+    sections: pageData.data.sections,
+    /** @type {import('$lib/types').Service[]} */
+    services: pageData.data.services,
   }
 }

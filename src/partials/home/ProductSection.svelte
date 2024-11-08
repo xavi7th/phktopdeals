@@ -2,7 +2,9 @@
     import SvgIcon from '$lib/Components/SvgIcon.svelte';
     import ProductCard from '$partials/ProductCard.svelte';
 
-    export let sectionTitle, content;
+    export let sectionTitle='';
+    /** @type {import('$lib/types').PageSectionContent} */
+    export let content;
 </script>
 
 {#if content.items?.length}

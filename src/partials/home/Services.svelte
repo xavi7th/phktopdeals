@@ -1,49 +1,6 @@
 <script>
-  import { eSimIcon, gamesIcon, giftCardIcon, softwareIcon, topUpIcon } from "$lib/Components/iconPaths";
-
   /** @type {import('$lib/types').Service[]} */
-  let services = [
-    {
-      title: 'Top Up',
-      desc: 'Shop with cryptos online! Recharge utilities and mobile balances using cryptocurrencies. Available in 165+ countries',
-      cta: 'Top Up Now',
-      icon: topUpIcon,
-      url: '/shop',
-      isPopular: false,
-    },
-    {
-      title: 'eSims',
-      desc: 'Explore our diverse range of eSIMs - local, global, and regional packages, all at the most competitive prices',
-      cta: 'Learn More',
-      icon: eSimIcon,
-      url: '/shop',
-      isPopular: false,
-    },
-    {
-      title: 'Gift Cards',
-      desc: 'Explore a vast selection of everyday vouchers. Experience the ease and security of online shopping with cryptos',
-      cta: 'Discover Products',
-      icon: giftCardIcon,
-      url: '/shop',
-      isPopular: true,
-    },
-    {
-      title: 'Games',
-      desc: 'Instantly buy games with cryptocurrency (Steam, PlayStation, Nintendo, Xbox, etc). Online shop with Binance Pay is now supported in our store',
-      cta: 'Buy Now',
-      icon: gamesIcon,
-      url: '/shop',
-      isPopular: false,
-    },
-    {
-      title: 'Softwares',
-      desc: 'Unlock a vast software range for Windows, Mac, and Linux using cryptos. Online shop with Coinbase now supported',
-      cta: 'Learn More',
-      icon: softwareIcon,
-      url: '/shop',
-      isPopular: false,
-    },
-  ]
+  export let services = []
 </script>
 
 <section class="services max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
@@ -68,7 +25,7 @@
   <div class="mt-24 grid sm:grid-cols-2 lg:grid-cols-5 gap-4 lg:items-center">
 
     {#each services as service}
-      <div class="service-card flex flex-col text-center rounded-2xl p-8 bg-gradient-to-b from-brand-200 {service.isPopular ? 'border-2 dark:border-brand-700 border-brand-600 shadow-xl' : 'border border-gray-200 dark:border-neutral-800 shadow-md'}">
+      <div class="service-card flex flex-col text-center rounded-2xl p-8 bg-gradient-to-b from-brand-200 {service.isMobileHidden ? 'hidden lg:block' : ''} {service.isPopular ? 'border-2 dark:border-brand-700 border-brand-600 shadow-xl' : 'border border-gray-200 dark:border-neutral-800 shadow-md'}">
 
         {#if service.isPopular}
           <p class="mb-3">
@@ -81,7 +38,7 @@
         <p class="mt-7 text-xs text-gray-500 dark:text-neutral-500 line-clamp-4 hover:line-clamp-none"> {service.desc}</p>
 
         <a class="rounded-full mt-5 py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium border shadow-sm disabled:opacity-50 disabled:pointer-events-none focus:outline-none
-        {service.isPopular ? 'border-transparent bg-brand-600 text-white hover:bg-brand-700 focus:bg-brand-700'
+            {service.isPopular ? 'border-transparent bg-brand-600 text-white hover:bg-brand-700 focus:bg-brand-700'
             : 'text-gray-800 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800 border-gray-200 dark:border-neutral-700 bg-gray-200 focus:bg-gray-50 hover:bg-gray-50 dark:bg-transparent'}" href={service.url}>
           {service.cta}
         </a>
