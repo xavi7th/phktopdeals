@@ -1,4 +1,5 @@
 <script>
+	import FloatingNumericTextInput from '$lib/Components/FormInputs/FloatingNumericTextInput.svelte';
 	import { checkPlus, minusIcon, plusIcon } from '$lib/Components/iconPaths';
 	import { toCurrency } from '$lib/helpers';
 
@@ -24,33 +25,38 @@
   $: ({product} = data);
   $: selectedDenominationAmount = product?.product_price?.denominations.length ? product.product_price.denominations[0] : 0;
 
-  $: console.log(product.product_price.denominations[0]);
-
 </script>
 
 <div class="container px-4 py-28 lg:py-40">
 	<main class="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2">
-		<div class="w-full pr-20">
-			<div class="">
+		<div class="w-full md:pr-20 md:block hidden text-white">
+			<div class="h-full">
 				<img
-					class="h-auto w-full rounded-xl"
+					class="w-full rounded-xl"
 					src={product.product_image_url}
 					alt="hero-img-thumb"
 				/>
 			</div>
 		</div>
 		<div>
-			<div class="w-full">
-				<div>
-					<div class="title text-black dark:text-white" style="font-size: 40px; font-weight: bold;">
+			<div class="grid grid-cols-12 gap-5 items-center w-full overflow-hidden">
+				<div class="md:hidden block max-h-[170px] col-span-3 mb-[30px]">
+					<img
+						class="w-full rounded-xl"
+						src={product.product_image_url}
+						alt="hero-img-thumb"
+					/>
+				</div>
+				<div class="col-span-9">
+					<div class="title text-black dark:text-white md:text-[38px] sm:text-[30px] text-[20px]" style="font-weight: bold;">
 						{product.product_name}
 					</div>
 				</div>
 			</div>
-			<div class="mt-5 rounded-lg bg-brand-100 p-4">
+			<div class="mt-5 rounded-xl dark:text-white bg-brand-100 dark:bg-brand-900 py-[30px] md:px-[30px] px-[20px] overflow-hidden">
 				<div class="flex flex-col gap-2 sm:gap-4">
 					<div
-						class="flex items-center rounded-lg border border-solid border-gray-200 bg-white pl-4 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400"
+						class="flex items-center rounded-lg border border-solid border-gray-200 bg-white pl-4 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 overflow-hidden"
 					>
 						<p class="shrink-0">Email Address :</p>
 						<input
@@ -60,60 +66,19 @@
 						/>
 					</div>
 
-					<div
-						class="rounded-lg border border-gray-200 bg-white px-3 py-2 dark:border-neutral-700 dark:bg-neutral-900"
-					>
-						<div class="flex w-full items-center justify-between gap-x-3">
-							<div>
-								<span class="block text-sm font-medium text-gray-800 dark:text-white">
-									Quantity
-								</span>
-								<span class="block text-xs text-gray-500 dark:text-neutral-400">
-									{toCurrency(count * selectedDenominationAmount)} total
-								</span>
-							</div>
-							<div class="flex items-center gap-x-1.5">
-								<button
-									type="button"
-									class="inline-flex size-6 items-center justify-center gap-x-2 rounded-md border border-brand-200 bg-white text-sm font-medium text-brand-800 shadow-sm hover:bg-brand-50 focus:bg-brand-50 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
-									tabindex="-1"
-									disabled={count <= 0}
-									aria-label="Decrease"
-									on:click={() => count--}
-								>
-									{@html minusIcon}
-								</button>
-								<input
-									class="w-6 border-0 bg-transparent p-0 text-center text-gray-800 focus:ring-0 dark:text-white [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-									style="-moz-appearance: textfield;"
-									type="number"
-									aria-roledescription="Number field"
-									bind:value={count}
-								/>
-								<button
-									type="button"
-									class="inline-flex size-6 items-center justify-center gap-x-2 rounded-md border border-brand-200 bg-white text-sm font-medium text-brand-800 shadow-sm hover:bg-brand-50 focus:bg-brand-50 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
-									tabindex="-1"
-									aria-label="Increase"
-									on:click={() => count++}
-								>
-									{@html plusIcon}
-								</button>
-							</div>
-						</div>
-					</div>
+					<FloatingNumericTextInput name="quantity" label="Quantity" placeholder={`${toCurrency(selectedDenominationAmount)} per Quantity`} />
 				</div>
 			</div>
 
-			<div class="mt-5 rounded-t-lg bg-brand-100 p-4">
+			<div class="mt-5 rounded-xl dark:text-white bg-brand-100 dark:bg-brand-900 py-[30px] md:px-[30px] px-[20px] overflow-hidden">
 				<div class="py-4">
-					<h3 class="text-xl font-medium">Choose a Denomination</h3>
+					<h3 class="md:text-xl text-[18px] font-medium">Choose a Denomination</h3>
 				</div>
 				<div class="grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-4">
 					{#each product.product_price.denominations as item, idx}
 						<button
 							type="button"
-							class="group relative flex h-[6vw] items-center justify-center rounded-lg border border-transparent bg-brand font-medium text-brand-800 hover:bg-brand-700 hover:text-brand-50 focus:bg-brand-700 focus:text-brand-50 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+							class="group relative flex py-5 items-center justify-center rounded-lg border border-transparent bg-brand font-medium text-brand-800 hover:bg-brand-700 hover:text-brand-50 focus:bg-brand-700 focus:text-brand-50 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
               				class:selected={selectedDenomination == `btn-${idx}`}
              				on:click={() => { selectedDenomination = `btn-${idx}`, selectedDenominationAmount = item; } }
 						>
@@ -127,9 +92,9 @@
 				</div>
 			</div>
 
-			<div class="mt-5 flex flex-col items-center gap-3 bg-brand-100 p-4">
-				<div class="flex w-full items-center justify-around">
-					<p class="shrink-0">Payment Method:</p>
+			<div class="mt-5 flex rounded-xl flex-col items-center gap-3 dark:text-white bg-brand-100 dark:bg-brand-900 py-[30px] md:px-[30px] px-[18px] overflow-hidden">
+				<div class="flex w-full items-center justify-between">
+					<h2 class="shrink-0 md:text-xl text-[18px]">Payment Method:</h2>
 					<select id="platform-select" data-hs-select={platformSelectOptions} class="hidden grow">
 						<option value="">Choose</option>
 						<option
@@ -166,7 +131,7 @@
 					</select>
 				</div>
 
-				<div class="flex flex-col items-center justify-center gap-3 p-4">
+				<div class="flex flex-col items-center justify-center gap-3">
 					<p class="text-left">
 						The platform does not support single brushing or rebates. Please be cautious of fraud
 						and do not fill in other people's top-up accounts to prevent scams.
@@ -182,13 +147,13 @@
 			</div>
 		</div>
 
-		<div class="col-span-1 rounded-lg bg-brand-100 p-4 md:col-span-2">
-			<div>
+		<div class="col-span-1 rounded-xl dark:text-white bg-brand-100 dark:bg-brand-900 p-4 md:col-span-2 py-[30px] md:px-[30px] px-[20px] overflow-hidden">
+			<div class="overflow-hidden">
 				<div>
 					<div>
 						<div>
 							<div class="py-4">
-								<h2 class="text-2xl font-bold">Product Description</h2>
+								<h2 class="md:text-xl text-[18px]">Product Description</h2>
 							</div>
 							<div
 								style="transform: translateX(165px) translateX(-50%); transition-duration: 0.3s;"

@@ -25,7 +25,7 @@
         {msg?.toString() && ! isError ? 'border-teal-500 focus:border-teal-500 focus:ring-teal-500 dark:bg-teal-900/20' : ''}">
     <div class="w-full flex justify-between items-center gap-x-3">
 
-      <div>
+      <div class="truncate">
         <span class="block font-medium text-sm text-gray-800 dark:text-white">
           {label}
         </span>
