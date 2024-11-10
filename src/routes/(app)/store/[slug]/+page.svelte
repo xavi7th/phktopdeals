@@ -53,7 +53,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="mt-5 rounded-xl dark:text-white bg-brand-100 dark:bg-brand-900 py-[30px] md:px-[30px] px-[20px] overflow-hidden">
+			<div class="mt-5 rounded-xl dark:text-white bg-brand-200 dark:bg-brand-900 py-[30px] md:px-[30px] px-[20px] overflow-hidden">
 				<div class="flex flex-col gap-2 sm:gap-4">
 					<div
 						class="flex items-center rounded-lg border border-solid border-gray-200 bg-white pl-4 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 overflow-hidden"
@@ -70,7 +70,7 @@
 				</div>
 			</div>
 
-			<div class="mt-5 rounded-xl dark:text-white bg-brand-100 dark:bg-brand-900 py-[30px] md:px-[30px] px-[20px] overflow-hidden">
+			<div class="mt-5 rounded-xl dark:text-white bg-brand-200 dark:bg-brand-900 py-[30px] md:px-[30px] px-[20px] overflow-hidden">
 				<div class="py-4">
 					<h3 class="md:text-xl text-[18px] font-medium">Choose a Denomination</h3>
 				</div>
@@ -92,7 +92,7 @@
 				</div>
 			</div>
 
-			<div class="mt-5 flex rounded-xl flex-col items-center gap-3 dark:text-white bg-brand-100 dark:bg-brand-900 py-[30px] md:px-[30px] px-[18px] overflow-hidden">
+			<div class="mt-5 flex rounded-xl flex-col items-center gap-3 dark:text-white bg-brand-200 dark:bg-brand-900 py-[30px] md:px-[30px] px-[18px] overflow-hidden">
 				<div class="flex w-full items-center justify-between">
 					<h2 class="shrink-0 md:text-xl text-[18px]">Payment Method:</h2>
 					<select id="platform-select" data-hs-select={platformSelectOptions} class="hidden grow">
@@ -147,7 +147,7 @@
 			</div>
 		</div>
 
-		<div class="col-span-1 rounded-xl dark:text-white bg-brand-100 dark:bg-brand-900 p-4 md:col-span-2 py-[30px] md:px-[30px] px-[20px] overflow-hidden">
+		<div class="col-span-1 rounded-xl dark:text-white bg-brand-200 dark:bg-brand-900 p-4 md:col-span-2 py-[30px] md:px-[30px] px-[20px] overflow-hidden">
 			<div class="overflow-hidden">
 				<div>
 					<div>
