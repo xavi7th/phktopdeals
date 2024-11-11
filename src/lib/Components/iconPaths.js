@@ -962,6 +962,12 @@ export const exclamationCircle = `
   <line x1="12" x2="12.01" y1="16" y2="16"></line>
 `
 
+export const xCircle = `
+  <circle cx="12" cy="12" r="10"></circle>
+  <path d="m15 9-6 6"></path>
+  <path d="m9 9 6 6"></path>
+`
+
 export const exclamationFilled = `
   <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"></path>
 `
