@@ -50,14 +50,21 @@ export const actions = {
       return fail( response?.status || 500, { message: response?.statusText || 'An error occurred while processing your request' } );
     }
 
-    if ( response?.status == 200 || response?.status == 201 || response?.status == 205 ) {
+    /**
+     * @hack user was already logged in, logout so they can retry again since we cannot determine if this is a user or an admin
+     */
+    if ( response?.status == 205 ) {
+      redirect( 302, '/logout' )
+    }
+
+    if ( response?.status == 200 || response?.status == 201 ) {
       event.locals.user = ( await response?.json() )?.user;
 
       if ( event?.locals?.user?.is_admin ) {
         redirect( 302, '/admin/dashboard' )
       }
 
-      throw redirect( 302, '/user/settings' )
+      redirect( 302, '/user/settings')
     }
   },
 

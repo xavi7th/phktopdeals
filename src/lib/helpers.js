@@ -290,7 +290,7 @@ export async function api({toBaseDomain, resource, event, method, data, logRespo
   if(logResponse){
     console.error('--------------- API Response: ');
     let spyResponse = await response?.clone();
-    console.error({status: spyResponse?.status, body: spyResponse?.status==204 ? null : await spyResponse?.json()}, '\n\n')
+    console.error({status: spyResponse?.status, body: [205, 204].includes(spyResponse?.status) ? null : await spyResponse?.json()}, '\n\n')
   }
 
 	return response;

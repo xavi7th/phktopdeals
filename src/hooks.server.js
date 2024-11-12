@@ -49,7 +49,7 @@ async function getUserDetails({event, resolve}){
 
     if (getUserDetails?.status == 200) {
       //TODO: Set a localStorage with key user and expiration time for 5mins. If that key is present, no need to getUserDetails. @see https://www.sohamkamani.com/javascript/localstorage-with-ttl-expiry/
-      event.locals.user = await getUserDetails?.json() //use this to determine auth on frontend. Before accessing auth routes if this is null redirect to login page
+      event.locals.user = (await getUserDetails?.json())?.data || {} //use this to determine auth on frontend. Before accessing auth routes if this is null redirect to login page
     }
 	}
 
