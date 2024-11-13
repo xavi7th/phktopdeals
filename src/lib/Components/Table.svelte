@@ -1,5 +1,5 @@
 <script>
-    let regionSelectOptions = `{
+	let regionSelectOptions = `{
     "hasSearch": false,
     "searchPlaceholder": "Search...",
     "searchClasses": "block text-sm border-gray-200 rounded-lg focus:border-brand-500 focus:ring-brand-500 before:absolute before:inset-0 before:z-[1] dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 py-2 px-3",
@@ -14,117 +14,61 @@
   }`;
 </script>
 
-<div class="sm:mx-10 bg-white dark:bg-[#404040] mt-7 rounded-xl shadow-lg overflow-hidden">
-    <div class="flex sm:flex-row flex-col gap-5 items-center sm:px-10 px-5 py-7 pb-9 border-b border-[#00000020]">
-        <div class="flex sm:w-[280px] w-full">
-            <input type="date" name="" id="" class="block w-full border rounded-xl">
-        </div>
-        <div class="flex sm:w-[280px] w-full">
-            <input type="date" name="" id="" class="block w-full border rounded-xl">
-        </div>
-        <div class="flex h-full sm:w-auto w-full">
-            <button type="button" class="flex items-center justify-center gap-2 p-2 py-2.5 px-5 border rounded-xl h-full text-sm text-[#FFDA1C] hover:bg-[#FFDA1C10] sm:w-auto w-full">
-                <svg xmlns="http://www.w3.org/2000/svg" width="1.3em" height="1.3em" viewBox="0 0 15 15"><path fill="none" stroke="#FFDA1C" d="m8.5 8.5l2 2M7 9.5a2.5 2.5 0 1 1 0-5a2.5 2.5 0 0 1 0 5Zm.5 5a7 7 0 1 1 0-14a7 7 0 0 1 0 14Z"></path></svg>
-                Search
-            </button>
-        </div>
-    </div>
-    <div class="flex gap-7 sm:px-10 px-5 items-center py-3 border-b border-[#00000020] text-slate-800 dark:text-slate-100">
-        <p class="text-xs">Items per page</p>
-        <div class="flex w-[70px]">
-            <!-- <input type="text" name="" id="" class="block w-full border rounded-xl text-center"> -->
-            <select id="region-select" data-hs-select={regionSelectOptions} class="hidden" value="10">
-                <option value="10">10</option>
-                <option value="20">20</option>
-              </select>
-        </div>
-        <p class="text-xs">0 of 0</p>
-        <div class="flex gap-5">
-
-        </div>
-    </div>
-    <div class="overflow-auto">
-        <table class="w-full min-w-[700px] text-center">
-            <tr class="h-14 text-slate-800 dark:text-slate-100">
-                <th>S/N</th>
-                <th>Order Number</th>
-                <th>Amount Paid</th>
-                <th>Tax</th>
-                <th>Total</th>
-                <th>Balance</th>
-            </tr>
-            <tr class="h-14 border-y border-[#00000020] text-slate-800 dark:text-slate-100">
-                <td>1</td>
-                <td>#re135</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-            </tr>
-            <tr class="h-14 border-y border-[#00000020] text-slate-800 dark:text-slate-100">
-                <td>1</td>
-                <td>#re135</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-            </tr>
-            <tr class="h-14 border-y border-[#00000020] text-slate-800 dark:text-slate-100">
-                <td>1</td>
-                <td>#re135</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-            </tr>
-            <tr class="h-14 border-y border-[#00000020] text-slate-800 dark:text-slate-100">
-                <td>1</td>
-                <td>#re135</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-            </tr>
-            <tr class="h-14 border-y border-[#00000020] text-slate-800 dark:text-slate-100">
-                <td>1</td>
-                <td>#re135</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-            </tr>
-            <tr class="h-14 border-y border-[#00000020] text-slate-800 dark:text-slate-100">
-                <td>1</td>
-                <td>#re135</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-            </tr>
-            <tr class="h-14 border-y border-[#00000020] text-slate-800 dark:text-slate-100">
-                <td>1</td>
-                <td>#re135</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-            </tr>
-            <tr class="h-14 border-y border-[#00000020] text-slate-800 dark:text-slate-100">
-                <td>1</td>
-                <td>#re135</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-            </tr>
-            <tr class="h-14 text-slate-800 dark:text-slate-100">
-                <td>1</td>
-                <td>#re135</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-            </tr>
-        </table>
-    </div>
+<div class="mt-7 overflow-hidden rounded-xl bg-white shadow-lg sm:mx-10 dark:bg-[#404040]">
+	<div class="flex flex-col items-center gap-5 border-b border-[#00000020] px-5 py-7 pb-9 sm:flex-row sm:px-10">
+		<div class="flex w-full sm:w-[280px]">
+			<input type="date" name="" id="" class="block w-full rounded-xl border" />
+		</div>
+		<div class="flex w-full sm:w-[280px]">
+			<input type="date" name="" id="" class="block w-full rounded-xl border" />
+		</div>
+		<div class="flex h-full w-full sm:w-auto">
+			<button type="button" class="flex h-full w-full items-center justify-center gap-2 rounded-xl border p-2 px-5 py-2.5 text-sm text-brand-700 hover:bg-brand-200 sm:w-auto">
+				<svg xmlns="http://www.w3.org/2000/svg" width="1.3em" height="1.3em" viewBox="0 0 15 15" stroke="currentColor">
+          <path fill="none" d="m8.5 8.5l2 2M7 9.5a2.5 2.5 0 1 1 0-5a2.5 2.5 0 0 1 0 5Zm.5 5a7 7 0 1 1 0-14a7 7 0 0 1 0 14Z"></path>
+        </svg>
+				Search
+			</button>
+		</div>
+	</div>
+	<div class="flex items-center gap-7 border-b border-[#00000020] px-5 py-3 text-slate-800 sm:px-10 dark:text-slate-100">
+		<p class="text-xs">Items per page</p>
+		<div class="flex w-[70px]">
+			<!-- <input type="text" name="" id="" class="block w-full border rounded-xl text-center"> -->
+			<select id="region-select" data-hs-select={regionSelectOptions} class="hidden" value="10">
+				<option value="10">10</option>
+				<option value="20">20</option>
+			</select>
+		</div>
+		<p class="text-xs">0 of 0</p>
+		<div class="flex gap-5"></div>
+	</div>
+	<div class="overflow-auto">
+		<table class="w-full min-w-[700px] text-center">
+			<thead class="h-14 text-slate-800 dark:text-slate-100">
+				<th>S/N</th>
+				<th>Order Number</th>
+				<th>Amount Paid</th>
+				<th>Tax</th>
+				<th>Total</th>
+				<th>Balance</th>
+			</thead>
+			<tfoot class="h-14 text-slate-800 dark:text-slate-100">
+				<th>S/N</th>
+				<th>Order Number</th>
+				<th>Amount Paid</th>
+				<th>Tax</th>
+				<th>Total</th>
+				<th>Balance</th>
+			</tfoot>
+			<tr class="h-14 border-y border-[#00000020] text-slate-800 dark:text-slate-100">
+				<td>1</td>
+				<td>#re135</td>
+				<td>1</td>
+				<td>1</td>
+				<td>1</td>
+				<td>1</td>
+			</tr>
+		</table>
+	</div>
 </div>

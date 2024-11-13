@@ -1,4 +1,4 @@
-<section class="pb-28 lg:py-[130px] w-full px-2">
+<section class="col-span-5 mx-auto min-w-[70%] px-4 py-16 sm:px-6 lg:col-span-4 lg:col-start-2 lg:px-8 lg:py-32">
     <div class="sm:mx-10 bg-white dark:bg-[#404040] rounded-xl shadow-lg p-8 px-8">
         <div class="flex justify-between border-b py-2 text-slate-800 dark:text-slate-200">
             <p>Wishlist</p>

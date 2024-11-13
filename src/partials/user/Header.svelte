@@ -30,7 +30,9 @@
 
           <button type="button" class="relative mr-6 inline-flex size-[46px] items-center justify-center rounded-lg text-sm font-semibold text-gray-800 shadow-sm hover:bg-white/75 focus:bg-white/75 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:bg-neutral-900 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800" >
             <SvgIcon class="shrink-0 size-4" svgHeight={24} minHeight="65%" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" slot={bell}/>
-            <span class="absolute end-0 top-0 inline-flex items-center rounded-full bg-red-500 px-1.5 py-0.5 text-xs font-medium text-white">0</span>
+            <span class="absolute end-0 top-0 inline-flex items-center rounded-full px-1.5 py-0.5 text-xs font-medium text-white {user.notification_count > 0 ? 'bg-red-500' : 'bg-gray-700'}">
+              {user.notification_count || 0}
+            </span>
           </button>
 
           <div class="hs-dropdown [--placement:bottom-right] relative inline-flex">
