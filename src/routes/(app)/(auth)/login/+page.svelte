@@ -1,19 +1,25 @@
 <script>
   import { page } from '$app/stores';
   import { enhance } from '$app/forms';
+	import { browser } from '$app/environment';
 	import Toast from '$lib/Components/Toast.svelte';
-	import FloatingTextInput from '$lib/Components/FormInputs/FloatingTextInput.svelte';
 	import PrimaryBtn from '$lib/Components/PrimaryBtn.svelte';
+	import FloatingTextInput from '$lib/Components/FormInputs/FloatingTextInput.svelte';
 
   /** @type {import('./$types').ActionData} */
 	export let form;
 
+  /** @type {import('./$types').PageData} */
+	export let data;
+
   let loading = false;
+
+  $: showRegister = browser && window.location.hash === '#register';
 </script>
 
-{#if form?.message}
+{#if form?.message || data.message}
   <div class="fixed top-24 end-3 space-y-3">
-    <Toast positioned={false} type="error" msg={form?.message} />
+    <Toast positioned={false} type="{data.message ? 'success' : 'error'}" msg={form?.body ?? form?.message ?? data.message} />
   </div>
 {/if}
 
@@ -23,16 +29,16 @@
 
       <!-- svelte-ignore a11y-no-noninteractive-element-to-interactive-role -->
       <nav class="relative z-0 flex border rounded-xl overflow-hidden dark:border-neutral-700" aria-label="Tabs" role="tablist" aria-orientation="horizontal">
-        <button type="button" class="hs-tab-active:border-b-brand-600 hs-tab-active:text-gray-900 dark:hs-tab-active:text-white relative dark:hs-tab-active:border-b-brand-600 min-w-0 flex-1 bg-white first:border-s-0 border-s border-b-2 py-4 px-4 text-gray-500 hover:text-gray-700 overflow-hidden hover:bg-gray-50 focus:z-10 focus:outline-none focus:text-brand-600 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-l-neutral-700 dark:border-b-neutral-700 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-400 text-center text-xl font-semibold tracking-tight" class:active={$page.url.hash !== '#register'} id="bar-with-underline-item-1" aria-selected="{$page.url.hash !== '#register'}" data-hs-tab="#bar-with-underline-1" aria-controls="bar-with-underline-1" role="tab">
+        <a href="/login" class="hs-tab-active:border-b-brand-600 hs-tab-active:text-gray-900 dark:hs-tab-active:text-white relative dark:hs-tab-active:border-b-brand-600 min-w-0 flex-1 bg-white first:border-s-0 border-s border-b-2 py-4 px-4 text-gray-500 hover:text-gray-700 overflow-hidden hover:bg-gray-50 focus:z-10 focus:outline-none focus:text-brand-600 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-l-neutral-700 dark:border-b-neutral-700 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-400 text-center text-xl font-semibold tracking-tight" class:active={ ! showRegister} id="bar-with-underline-item-1" aria-selected="{ ! showRegister}" data-hs-tab="#bar-with-underline-1" aria-controls="bar-with-underline-1" role="tab">
           Sign In
-        </button>
-        <button type="button" class="hs-tab-active:border-b-brand-600 hs-tab-active:text-gray-900 dark:hs-tab-active:text-white relative dark:hs-tab-active:border-b-brand-600 min-w-0 flex-1 bg-white first:border-s-0 border-s border-b-2 py-4 px-4 text-gray-500 hover:text-gray-700 overflow-hidden hover:bg-gray-50 focus:z-10 focus:outline-none focus:text-brand-600 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-l-neutral-700 dark:border-b-neutral-700 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-400 text-xl font-semibold tracking-tight" class:active={$page.url.hash === '#register'} id="bar-with-underline-item-2" aria-selected="{$page.url.hash === '#register'}" data-hs-tab="#bar-with-underline-2" aria-controls="bar-with-underline-2" role="tab">
+        </a>
+        <a href="/login#register" class="hs-tab-active:border-b-brand-600 hs-tab-active:text-gray-900 dark:hs-tab-active:text-white relative dark:hs-tab-active:border-b-brand-600 min-w-0 flex-1 bg-white first:border-s-0 border-s border-b-2 py-4 px-4 text-center text-gray-500 hover:text-gray-700 overflow-hidden hover:bg-gray-50 focus:z-10 focus:outline-none focus:text-brand-600 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-l-neutral-700 dark:border-b-neutral-700 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-400 text-xl font-semibold tracking-tight" class:active={showRegister} id="bar-with-underline-item-2" aria-selected="{showRegister}" data-hs-tab="#bar-with-underline-2" aria-controls="bar-with-underline-2" role="tab">
           Register
-        </button>
+        </a>
       </nav>
 
       <div class="mt-3">
-        <div id="bar-with-underline-1" class:hidden={$page.url.hash === '#register'} role="tabpanel" aria-labelledby="bar-with-underline-item-1">
+        <div id="bar-with-underline-1" class:hidden={showRegister} role="tabpanel" aria-labelledby="bar-with-underline-item-1">
           <div class="w-full p-12 sm:w-[500px]">
 
             <form class="flex flex-col" method="POST" action="?/login" use:enhance={() => {
@@ -61,7 +67,7 @@
           </div>
         </div>
 
-        <div id="bar-with-underline-2" class:hidden={$page.url.hash !== '#register'} role="tabpanel" aria-labelledby="bar-with-underline-item-2">
+        <div id="bar-with-underline-2" class:hidden={ !showRegister } role="tabpanel" aria-labelledby="bar-with-underline-item-2">
           <div class="sm:w-[500px] w-full p-12">
             <form class="flex flex-col gap-6 dark:text-slate-50" method="POST" action="?/register" use:enhance={() => {
                   loading = true;

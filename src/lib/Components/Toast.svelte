@@ -2,10 +2,10 @@
 <!-- <Toast positioned={false} type="error" msg={form?.message}/> <Toast dismissable={false} msg="Consider yourself notified about this matter"/> -->
 
 <script>
+  import { onMount } from 'svelte';
+  import { fly } from "svelte/transition";
   import SvgIcon from '$lib/Components/SvgIcon.svelte';
-	import { onMount } from 'svelte';
 	import { bell, checkMarkFilledAlt, exclamationFilled, infoFilled, x, xFilled } from './iconPaths';
-  import { fade, fly } from "svelte/transition";
 
   export let type = 'grey', msg = 'A toast message is required', dismissable = true, positioned = true, toastId = 'toast-' + crypto.randomUUID().replaceAll('-', '').substring(0, 10), timeout = 5000;
 
@@ -40,17 +40,27 @@
 
   let showToast = msg ? true : false;
 
-  onMount(() => {
+  function calculateTimeout(msg = '') {
+    const maxTimeout = 10 * 60 * 1000;
+    const timeoutPerChar = 50; // adjust this value to change the timeout increment per character
 
+    const msgLength = msg.toString().length;
+    timeout = Math.min(maxTimeout, Math.max(timeout, msgLength * timeoutPerChar));
+
+    return timeout;
+  }
+
+
+  onMount(() => {
     setTimeout(() => {
       showToast = false;
-    }, timeout);
+    }, calculateTimeout(msg));
 
   });
 </script>
 
 {#if showToast}
-  <div class="toast {positioned ? 'fixed z-50 top-24 end-3 transition duration-300' : ''}" in:fly={{ x: 50, duration: 2000 }} out:fly={{ x: 50, duration: 1000 }}>
+  <div class="toast max-h-[50vh] overflow-scroll {positioned ? 'fixed z-50 top-24 end-3 transition duration-300' : ''}" in:fly={{ x: 50, duration: 2000 }} out:fly={{ x: 50, duration: 1000 }}>
     <div id="{toastId}" class="hs-removing:translate-x-5 hs-removing:opacity-0 transition duration-300 max-w-xs rounded-xl shadow-lg {toastClasses[`${type}`]?.bg}" role="alert" tabindex="-1" aria-labelledby="{toastId}-label">
       <div class="flex p-4">
         <div class="shrink-0 self-center">
@@ -68,7 +78,7 @@
         </div>
 
         <div class="ms-3 me-3">
-          <p id="{toastId}-label" class="text-sm">{msg}</p>
+          <p id="{toastId}-label" class="text-sm">{@html msg}</p>
         </div>
 
         {#if dismissable}
