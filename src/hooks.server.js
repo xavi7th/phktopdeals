@@ -77,7 +77,7 @@ function authorize({event, resolve}){
     if (event?.locals?.user?.is_admin) {
       redirect(303, '/admin/dashboard')
     }
-    redirect(303, '/user/settings')
+    redirect(303, '/user/order')
   }
 
   /**

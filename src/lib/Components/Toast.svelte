@@ -57,7 +57,7 @@
           {#if type == 'info'}
             <SvgIcon class="shrink-0 size-4 text-blue-500 mt-0.5" svgHeight={16} fill="currentColor" slot={infoFilled}/>
           {:else if  type == 'success'}
-            <SvgIcon class="shrink-0 size-4 text-teal-500 mt-0.5" svgHeight={16} fill="currentColor" slot={checkMarkFilledAlt}/>
+            <SvgIcon class="shrink-0 size-4 text-teal-500 mt-0.5" svgHeight={16} fill="none" slot={checkMarkFilledAlt}/>
           {:else if  type == 'error'}
             <SvgIcon class="shrink-0 size-4 text-red-500" svgHeight={16} fill="none" slot={xFilled}/>
           {:else if  type == 'warning'}

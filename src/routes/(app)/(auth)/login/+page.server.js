@@ -64,7 +64,7 @@ export const actions = {
         redirect( 302, '/admin/dashboard' )
       }
 
-      redirect( 302, '/user/settings')
+      redirect( 302, '/user/order')
     }
   },
 
@@ -99,7 +99,7 @@ export const actions = {
     }
 
     if ( response?.status == 201 ) {
-      throw redirect( 302, '/user/settings' )
+      throw redirect( 302, '/user/order' )
     }
   },
 }

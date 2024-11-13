@@ -1,5 +1,27 @@
 import { type } from 'arktype';
 
+export const AppUserSchema = type({
+  full_name: type("string>3").describe("provided"),
+  email: type("string.email").describe("provided"),
+  "phone?": "string|null",
+  "avatar?": type("File|null|undefined").describe('provided').optional(),
+  "avatar_url?": "string|null",
+  is_active: "boolean",
+  "is_admin?": "boolean",
+  "is_verified?": "boolean",
+});
+
+export const AppUserDefaults = {
+  full_name: '',
+  email: '',
+  phone: '',
+  avatar: null,
+  avatar_url: '',
+  is_active: false,
+  is_admin: false,
+  is_verified: false,
+};
+
 export const giftCardSchema = type({
   product_name: type("string>1").describe("provided"),
   product_type: ["string>1", "@", "selected"], //optional syntax

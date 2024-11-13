@@ -101,12 +101,15 @@ export type AppUser = {
   full_name: string;
   email: string;
   phone?: string;
+  avatar_url?: string;
   is_active: boolean;
   is_admin?: boolean;
+  is_verified?: boolean;
 }
 export type AdminNavMenuItem = {
   name: string;
   uri: string;
+  description?: string;
   icon: string;
   iconAttributes?: HTMLAttributes;
 }

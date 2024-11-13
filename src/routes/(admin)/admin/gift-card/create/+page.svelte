@@ -60,7 +60,7 @@
             {/each}
           </FloatingSelectInput>
 
-          <button type="button" class="shrink-0 w-24 py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-brand-600 text-white hover:bg-brand-700 focus:outline-none focus:bg-brand-700 disabled:opacity-50 disabled:pointer-events-none"aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-static-create-modal" data-hs-overlay="#hs-static-create-modal"  on:click={() => title = 'Manage Type'}>
+          <button type="button" class="shrink-0 w-24 py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-brand-600 text-white hover:bg-brand-700 focus:outline-none focus:bg-brand-700 disabled:opacity-50 disabled:pointer-events-none" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-static-create-modal" data-hs-overlay="#hs-static-create-modal"  on:click={() => title = 'Manage Type'}>
             Create
           </button>
         </div>
