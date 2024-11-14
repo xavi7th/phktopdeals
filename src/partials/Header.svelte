@@ -1,9 +1,28 @@
 <script>
   import { page } from '$app/stores';
 	import Logo from '$lib/Components/Logo.svelte';
+	import SvgIcon from '$lib/Components/SvgIcon.svelte';
+	import { breadcrumb, crescentMoon, sunRays, x } from '$lib/Components/iconPaths';
 
   /** @type {import('$lib/types').NavData[]} */
-  export let main_nav;
+  const main_nav = [
+    {
+      name: 'Gift Cards',
+      url: '/store/products/gift-cards'
+    },
+    {
+      name: 'Games',
+      url: '/store/products/games'
+    },
+    {
+      name: 'eSim',
+      url: '/store/products/e-sims'
+    },
+    {
+      name: 'Top Up',
+      url: '/store/products/top-up'
+    },
+  ]
 
  $: ({ user } = $page.data)
 </script>
@@ -22,26 +41,8 @@
         aria-label="Toggle navigation"
         data-hs-collapse="#hs-navbar-alignment"
       >
-        <svg class="size-4 shrink-0 hs-collapse-open:hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="3" x2="21" y1="6" y2="6" />
-          <line x1="3" x2="21" y1="12" y2="12" />
-          <line x1="3" x2="21" y1="18" y2="18" />
-        </svg>
-        <svg
-          class="hidden size-4 shrink-0 hs-collapse-open:block"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path d="M18 6 6 18" />
-          <path d="m6 6 12 12" />
-        </svg>
+        <SvgIcon class="shrink-0 size-4 hs-collapse-open:hidden" slot={breadcrumb}/>
+        <SvgIcon class="shrink-0 size-4 hs-collapse-open:block hidden" slot={x}/>
         <span class="sr-only">Toggle</span>
       </button>
       {#if user?.full_name}
@@ -57,7 +58,7 @@
       class="hs-collapse hidden grow basis-full space-x-0.5 overflow-hidden rounded-0 sm:rounded-full border border-gray-200 transition-all duration-300 sm:order-2 sm:block sm:grow-0 sm:basis-auto dark:border-white/20 bg-gray-200"
       aria-labelledby="hs-navbar-alignment-collapse"
     >
-      <div class="flex flex-col sm:gap-5 sm:flex-row sm:items-center divide-y sm:divide-y-0">
+      <div class="flex items-center justify-evenly sm:gap-5 sm:flex-row sm:items-center divide-y sm:divide-y-0">
         {#each main_nav as nav_item}
           <a class="p-3.5 border-gray-400/60 font-bold tracking-tighter text-gray-600 hover:text-gray-400 focus:text-gray-400 focus:outline-none dark:text-neutral-700 dark:hover:text-neutral-900 dark:focus:text-neutral-900 dark:font-semibold" href="{nav_item.url}" aria-current="{$page.url.pathname.includes(nav_item.url) ? 'page' : undefined}">{nav_item.name}</a>
         {/each}
@@ -70,48 +71,25 @@
       </div>
     </div>
 
-    <div class="hidden items-center rounded-full border border-gray-200 p-0.5 sm:order-3 sm:flex dark:border-white/20 bg-gray-200">
+    <div class="hidden items-center rounded-full border border-gray-200 p-0.5 sm:order-3 sm:flex dark:border-white/20 bg-gray-200 dark:bg-neutral-800">
       <button
         type="button"
-        class="hs-dark-mode inline-flex items-center justify-center size-[46px] rounded-full font-medium text-gray-800 hover:bg-white/75 focus:bg-white/75 focus:outline-none hs-dark-mode-active:hidden dark:text-neutral-200 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800 ml-6"
+        class="hs-dark-mode size-11 rounded-full font-medium text-gray-800 hover:bg-white/75 focus:bg-white/75 focus:outline-none hs-dark-mode-active:hidden dark:text-neutral-200 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
         data-hs-theme-click-value="dark"
       >
         <span class="group inline-flex size-9 shrink-0 items-center justify-center">
-          <svg class="size-4 shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
-          </svg>
+          <SvgIcon class="shrink-0 size-4" slot={crescentMoon}/>
         </span>
       </button>
 
       <button
         type="button"
-        class="hs-dark-mode hidden rounded-full font-medium text-gray-800 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none hs-dark-mode-active:block dark:text-neutral-200 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800 ml-6"
+        class="hs-dark-mode size-11 hidden rounded-full font-medium text-gray-800 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none hs-dark-mode-active:block dark:text-neutral-200 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
         data-hs-theme-click-value="light"
       >
         <span class="group inline-flex size-9 shrink-0 items-center justify-center">
-          <svg class="size-4 shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="4"></circle>
-            <path d="M12 2v2"></path>
-            <path d="M12 20v2"></path>
-            <path d="m4.93 4.93 1.41 1.41"></path>
-            <path d="m17.66 17.66 1.41 1.41"></path>
-            <path d="M2 12h2"></path>
-            <path d="M20 12h2"></path>
-            <path d="m6.34 17.66-1.41 1.41"></path>
-            <path d="m19.07 4.93-1.41 1.41"></path>
-          </svg>
+          <SvgIcon class="shrink-0 size-4" slot={sunRays}/>
         </span>
-      </button>
-
-      <button
-        type="button"
-        class="relative mr-6 inline-flex size-[46px] items-center justify-center rounded-lg text-sm font-semibold text-gray-800 shadow-sm hover:bg-white/75 focus:bg-white/75 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:bg-neutral-900 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
-      >
-        <svg class="size-5 shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
-          <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
-        </svg>
-        <span class="absolute end-0 top-0 inline-flex -translate-y-1/2 translate-x-1/2 transform items-center rounded-full bg-red-500 px-1.5 py-0.5 text-xs font-medium text-white">99+</span>
       </button>
     </div>
   </nav>

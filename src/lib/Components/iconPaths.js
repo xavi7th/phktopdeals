@@ -1023,6 +1023,12 @@ export const bell = `
   <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
 `
 
+export const breadcrumb = `
+  <line x1="3" x2="21" y1="6" y2="6" />
+  <line x1="3" x2="21" y1="12" y2="12" />
+  <line x1="3" x2="21" y1="18" y2="18" />
+`
+
 export const exclamationCircle = `
   <circle cx="12" cy="12" r="10"></circle>
   <line x1="12" x2="12" y1="8" y2="12"></line>

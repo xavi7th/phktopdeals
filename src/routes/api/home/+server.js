@@ -1,5 +1,4 @@
 import { json } from "@sveltejs/kit";
-import { main_nav } from "./data.js";
 
 /** @type {import('./$types').RequestHandler} */
 export function GET({setHeaders}) {
@@ -9,6 +8,6 @@ export function GET({setHeaders}) {
   })
 
   return json({
-    main_nav,
+    foo: 'bar'
   });
 }
