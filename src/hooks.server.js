@@ -152,7 +152,7 @@ export const handleFetch = async ({request, fetch, event}) => {
 }
 
 /** @type {import('@sveltejs/kit').HandleServerError} */
-export const handleError = ({event, error, message, status}) => {
+export const handleError = async ({event, error, message, status}) => {
 
   if ( ! event.url.pathname.includes('assets')) {
     console.log('------------SERVER ERROR-----------');

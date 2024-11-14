@@ -238,6 +238,7 @@ export const getFirstElement = (str, elem = 'p') => {
   return ''
 }
 
+import { error } from '@sveltejs/kit';
 import { env } from '$env/dynamic/public';
 
 /**
@@ -247,7 +248,7 @@ import { env } from '$env/dynamic/public';
  *
  * @returns {Promise<Response|undefined>}
  */
-export async function api({toBaseDomain, resource, event, method, data, logResponse = false, toJSON = true}) {
+export async function api({toBaseDomain, resource, event, method, data, logResponse = true, toJSON = true}) {
 	const base = env.PUBLIC_VITE_BASE_DOMAIN
 	const baseApi = env.PUBLIC_VITE_BASE_API
 	let fullurl = toBaseDomain ? base : baseApi
@@ -289,8 +290,14 @@ export async function api({toBaseDomain, resource, event, method, data, logRespo
 
   if(logResponse){
     console.error('--------------- API Response: ');
-    let spyResponse = await response?.clone();
-    console.error({status: spyResponse?.status, body: [205, 204].includes(spyResponse?.status) ? null : await spyResponse?.text()}, '\n\n')
+
+    const rsp = await response?.clone();
+
+    if (rsp?.status === 500) {
+      error(423, await rsp?.text());
+    }
+
+    console.error({status: rsp?.status, body: [205, 204].includes(rsp?.status) ? null : await rsp?.text()}, '\n\n')
   }
 
 	return response;
