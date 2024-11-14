@@ -38,12 +38,13 @@ export const toCurrency = ( amount, currencySymbol = '$' ) => {
 export const percentageCalculation = (amount = 0, commission = 0, discount = 0) => {
   let amount_to_pay;
 
-  if(discount){
-    const discount_percent = amount - ((amount*discount) / 100);
+  if( discount ){
+    const discount_percent = Number(amount) - ((amount*discount) / 100);
     amount_to_pay = discount_percent - ((discount_percent*commission) / 100);
-  }else{
-    amount_to_pay = amount + ((amount*commission) / 100);
+  } else {
+    amount_to_pay = Number(amount) + ((amount*commission) / 100);
   }
+
   return toCurrency(amount_to_pay);
 }
 

@@ -14,19 +14,19 @@ export const countries = [
 export const main_nav = [
   {
     name: 'Gift Cards',
-    url: '/store/gift-cards'
+    url: '/store/products/gift-cards'
   },
   {
     name: 'Games',
-    url: '/store/games'
+    url: '/store/products/games'
   },
   {
     name: 'eSim',
-    url: '/store/e-sims'
+    url: '/store/products/e-sims'
   },
   {
     name: 'Top Up',
-    url: '/store/top-up'
+    url: '/store/products/top-up'
   },
 ]
 

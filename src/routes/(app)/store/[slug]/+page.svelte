@@ -1,5 +1,5 @@
 <script>
-	import { toCurrency } from '$lib/helpers';
+	import { percentageCalculation } from '$lib/helpers';
   import { checkPlus } from '$lib/Components/iconPaths';
 	import FloatingNumericTextInput from '$lib/Components/FormInputs/FloatingNumericTextInput.svelte';
 
@@ -25,6 +25,11 @@
   $: ({product} = data);
   $: selectedDenominationAmount = product?.product_price?.denominations?.length ? product.product_price.denominations[0] : 0;
 </script>
+
+<svelte:head>
+  <title>Purchase {product?.product_name} | PHKHotDeals</title>
+  <meta name="description" content="Purchase {product.product_name} from PHKHot Deals at very discounted prices. Blazing fast transactions and discreet are assured.">
+</svelte:head>
 
 <div class="container px-4 py-28 lg:py-40">
 	<main class="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -68,7 +73,7 @@
 						/>
 					</div>
 
-					<FloatingNumericTextInput name="quantity" label="Quantity" size="p-3" min={1} placeholder={`${toCurrency(selectedDenominationAmount)} per Quantity`} bind:value={selectedQuantity}/>
+					<FloatingNumericTextInput name="quantity" label="Quantity" size="p-3" min={1} placeholder={`${ percentageCalculation(selectedDenominationAmount, product.product_price.commission, product.percentage_discount) } per Quantity`} bind:value={selectedQuantity}/>
 				</div>
 			</div>
 
@@ -78,14 +83,14 @@
         </div>
         <h3 class="text-xl md:text-2xl pb-6 font-medium">Choose a Denomination</h3>
 				<div class="grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-4">
-					{#each product?.product_price?.denominations?.sort((a, b) => a - b) || [] as item, idx}
+					{#each product?.product_price?.denominations?.sort((a, b) => a - b) || [] as amount, idx}
 						<button
 							type="button"
 							class="group relative flex py-5 items-center justify-center rounded-lg border border-transparent bg-brand font-medium text-brand-800 hover:bg-brand-700 hover:text-brand-50 focus:bg-brand-700 focus:text-brand-50 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
               				class:selected={selectedDenomination == `btn-${idx}`}
-             				on:click={() => { selectedDenomination = `btn-${idx}`, selectedDenominationAmount = item; } }
+             				on:click={() => { selectedDenomination = `btn-${idx}`, selectedDenominationAmount = amount; } }
 						>
-							{toCurrency(item)}
+							{ percentageCalculation(amount, product.product_price.commission, product.percentage_discount) }
 							<span
 								class="invisible absolute left-0 top-0 flex h-7 w-7 items-center justify-center rounded-ee-2xl rounded-ss-md bg-white text-brand-600 group-[.selected]:visible"
 								>{@html checkPlus}</span
@@ -157,10 +162,9 @@
         <div class="flex flex-col items-center justify-center gap-3">
           <button
             type="button"
-            class="mt-10 inline-flex items-center rounded-lg border border-transparent bg-black px-10 py-4 font-medium text-white hover:bg-gray-700 hover:text-neutral-50 focus:bg-gray-700 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-            style="justify-content: center;"
+            class="mt-10 inline-flex items-center justify-center rounded-lg border border-transparent bg-black px-10 py-4 font-medium text-white hover:bg-gray-700 hover:text-neutral-50 focus:bg-gray-700 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
           >
-            Buy Now {toCurrency(selectedDenominationAmount * selectedQuantity)}
+            Buy Now { percentageCalculation(selectedDenominationAmount * selectedQuantity, product.product_price.commission, product.percentage_discount) }
           </button>
         </div>
       </div>
