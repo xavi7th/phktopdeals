@@ -22,7 +22,23 @@ export const AppUserDefaults = {
   is_verified: false,
 };
 
-export const giftCardSchema = type({
+export const PurchaseItemSchema = type({
+  product_id: type("string>4").describe("valid"),
+  email: type("string.email|undefined").describe("provided"),
+  quantity: "number>=1",
+  unit_price: "number>0",
+  payment_method: "'crypto'|'bank payment'",
+});
+
+export const PurchaseItemDefaults = {
+  product_id: null,
+  email: undefined,
+  quantity: 1,
+  unit_price: 0,
+  payment_method: null,
+};
+
+export const GiftCardSchema = type({
   product_name: type("string>1").describe("provided"),
   product_type: ["string>1", "@", "selected"], //optional syntax
   product_image: type("File?").describe('provided').optional(),
@@ -38,7 +54,7 @@ export const giftCardSchema = type({
   faqs: type("string").describe("provided"),
 });
 
-export const giftCardDefaults = {
+export const GiftCardDefaults = {
   product_name: '',
   product_type: 'gift card',
   brand_id: null,

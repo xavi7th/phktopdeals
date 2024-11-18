@@ -11,7 +11,7 @@
 	import SvgIcon from '../SvgIcon.svelte';
 	import FormMessage from '$lib/Components/FormMessage.svelte';
 
-  export let name = 'input-' + crypto.randomUUID().replaceAll('-', '').substring(0, 10), isError = true, label = '', placeholder = ' ', gray = false, togglePw = undefined, strongPw = undefined, value = '';
+  export let name = 'input-' + crypto.randomUUID().replaceAll('-', '').substring(0, 10), isError = true, label = '', placeholder = ' ', gray = false, togglePw = undefined, strongPw = undefined, value = undefined;
   /** @type {string[]|undefined} */
   export let msg = [];
 </script>
@@ -29,7 +29,9 @@
       class="absolute top-0 start-0 p-4 h-full text-sm truncate pointer-events-none transition ease-in-out duration-100 border border-transparent origin-[0_0]
       peer-disabled:opacity-50 peer-disabled:pointer-events-none peer-focus:scale-90 peer-focus:translate-x-0.5 peer-focus:-translate-y-1.5 peer-focus:text-gray-500
       dark:peer-focus:text-neutral-500 peer-[:not(:placeholder-shown)]:scale-90 peer-[:not(:placeholder-shown)]:translate-x-0.5 peer-[:not(:placeholder-shown)]:-translate-y-1.5
-      peer-[:not(:placeholder-shown)]:text-gray-500 dark:peer-[:not(:placeholder-shown)]:text-neutral-500 dark:text-neutral-500">{label}</label>
+      peer-[:not(:placeholder-shown)]:text-gray-500 dark:peer-[:not(:placeholder-shown)]:text-neutral-500 dark:text-neutral-500">
+          {label} <span class="text-gray-400">{placeholder}</span>
+  </label>
 
   {#if togglePw}
     <button type="button" data-hs-toggle-password={`{"target": ${togglePw} }`}

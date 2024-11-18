@@ -118,3 +118,10 @@ export type ProductRegions = {
   code: string,
   phone_code: string,
 }
+export type PurchaseItem = {
+  product_id: string,
+  email: string,
+  quantity: number,
+  unit_price: number,
+  payment_method: number,
+}
