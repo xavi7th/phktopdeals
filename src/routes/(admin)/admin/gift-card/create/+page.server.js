@@ -72,7 +72,7 @@ export async function load(event) {
     const formData = new FormData();
 
     for(let dt of Object.entries(form.data)){
-      if (dt[0] == 'discount_until') {
+      if (dt[0] == 'discount_until' && dt[1]) {
         formData.append(dt[0], new Date(dt[1]).toDateString());
         continue;
       }
