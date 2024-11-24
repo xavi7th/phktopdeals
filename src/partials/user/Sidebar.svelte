@@ -30,7 +30,7 @@
         <ul class="flex flex-col space-y-1">
           {#each user_routes as route}
             <li>
-              <a href={route.uri} class="flex gap-4 p-2 py-3.5 hover:opacity-85 rounded-[1rem]" class:bg-neutral-700={$page.url.pathname == route.uri}  class:text-brand-100={$page.url.pathname == route.uri}>
+              <a data-sveltekit-reload={route.reload} href={route.uri} class="flex gap-4 p-2 py-3.5 hover:opacity-85 rounded-[1rem]" class:bg-neutral-700={$page.url.pathname == route.uri}  class:text-brand-100={$page.url.pathname == route.uri}>
                 <div class="bg-brand-900 text-brand-300 dark:bg-[#4e4e4e] size-12 rounded-full grid place-content-center shrink-0">
                     {@html icons[route.icon]}
                 </div>

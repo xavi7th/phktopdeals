@@ -22,6 +22,16 @@ export const AppUserDefaults = {
   is_verified: false,
 };
 
+export const TopUpAccountSchema = type({
+  payment_method: "'btc'|'ltc'|'usdttrc20'|'bank payment'",
+  amount: "number>0",
+});
+
+export const TopUpAccountDefaults = {
+  payment_method: null,
+  amount: 0,
+};
+
 export const PurchaseItemSchema = type({
   product_id: type("string>4").describe("valid"),
   email: type("string.email|undefined").describe("provided"),
@@ -49,7 +59,7 @@ export const GiftCardSchema = type({
   percentage_discount: "0<=number<100",
   purchase_commission: type("0<number<100").describe("at least 0.5"),
   variable_denomination: "boolean?",
-  'price_denominations?': "number[]",
+  'price_denominations?': "string[]",
   "discount_until?": "string|null|undefined",
   faqs: type("string").describe("provided"),
 });
@@ -61,7 +71,7 @@ export const GiftCardDefaults = {
   product_image: null,
   product_category: [''],
   regions: [''],
-  price_denominations: [0],
+  price_denominations: [''],
   product_min_price: 0,
   percentage_discount: 0,
   purchase_commission: 5,

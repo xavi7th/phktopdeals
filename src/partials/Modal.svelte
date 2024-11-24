@@ -1,5 +1,16 @@
 <script>
+	import { onMount } from 'svelte';
+  // import { pageMounted } from '$stores';
+
   export let title = '', name = 'modal-' + crypto.randomUUID().replaceAll('-', '').substring(0, 10);
+
+  onMount(() => {
+  //   if ($pageMounted) {
+  //     new window.HSOverlay(document.querySelector(`#${name}`));
+  //     elem = window.HSOverlay.getInstance(`#${name}`);
+  //   }
+    return () => window.HSOverlay.close(`#${name}`);
+  })
 </script>
 
 <div id="{name}" class="hs-overlay [--overlay-backdrop:static] hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto pointer-events-none" role="dialog" tabindex="-1" aria-labelledby="{name}-label" data-hs-overlay-keyboard="false">
@@ -17,7 +28,7 @@
           </svg>
         </button>
       </div>
-      <div class="p-4 overflow-y-auto">
+      <div class="p-4">
         <slot name="content" />
       </div>
       <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-neutral-700">

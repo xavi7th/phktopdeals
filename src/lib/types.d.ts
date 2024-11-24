@@ -105,13 +105,14 @@ export type AppUser = {
   is_active: boolean;
   is_admin?: boolean;
   is_verified?: boolean;
-}
+} | {};
 export type AdminNavMenuItem = {
   name: string;
   uri: string;
   description?: string;
   icon: string;
   iconAttributes?: HTMLAttributes;
+  reload: boolean; //Should this menu item reload the page
 }
 export type ProductRegions = {
   country: string,
@@ -124,4 +125,12 @@ export type PurchaseItem = {
   quantity: number,
   unit_price: number,
   payment_method: number,
+}
+export type NowCryptoCurrency = {
+  ["btc"|"ltc"|"usdttrc20"]: {
+    currency_from: string,
+    currency_to: string,
+    min_amount: number,
+    fiat_equivalent: number
+  }
 }

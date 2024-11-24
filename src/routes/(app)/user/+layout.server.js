@@ -8,12 +8,14 @@ export async function load ( { locals } ) {
         description: 'View and track your purchases',
         uri: '/user/order',
         icon: 'shoppingBagSVG',
+        reload: false,
     },
     {
         name: 'Wallet',
         description: 'Monitor your transactions',
         uri: '/user/wallet',
         icon: 'walletSVG',
+        reload: true,
     },
     // {
     //     name: 'Wishlists',
@@ -50,6 +52,7 @@ export async function load ( { locals } ) {
         description: 'Personalize your preferences',
         uri: '/user/settings',
         icon: 'gearsSVG',
+        reload: false,
     },
   ]
 

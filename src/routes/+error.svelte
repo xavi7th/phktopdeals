@@ -11,7 +11,7 @@
     let tape__left = document.getElementById("caution__tape__left")
     let body = document.querySelector("body")
     let ERROR = document.querySelector(".caution__tape .ERROR")
-    let body_Width = body.clientWidth
+    let body_Width = body?.clientWidth || 300
 
     body?.classList.add('error-page')
 
@@ -40,7 +40,10 @@
 
 {#if $page.status === 423}
   <main class="flex flex-col gap-y-2 item-center justify-center">
-    {@html $page.error?.message}
+    <h1 style="margin-top: 2em; text-align: center;">OUR UPSTREAM SERVER HAD AN ERROR</h1>
+    <pre>
+      {@html $page.error?.message}
+    </pre>
   </main>
 {:else}
   <main class="main">

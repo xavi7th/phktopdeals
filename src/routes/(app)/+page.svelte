@@ -19,15 +19,11 @@
       <ProductSection {sectionTitle} {content} />
     {/each}
 
-    <Services {services}/>
-
     {#each Object.entries(sections.misc) as [sectionTitle, content], idx}
       {#if idx <= 2}
         <ProductSection {sectionTitle} {content} />
       {/if}
     {/each}
-
-    <HowItWorks />
 
     {#each Object.entries(sections.misc) as [sectionTitle, content], idx}
       {#if idx > 2}
@@ -35,6 +31,9 @@
       {/if}
     {/each}
   {/if}
+
+  <Services {services}/>
+
 
   <section class="w-full mt-32">
     <div class="container-fluid lg:container">
@@ -54,6 +53,7 @@
     </div>
   </section>
 
+  <HowItWorks />
 
   <OurPartners />
 </main>
