@@ -93,9 +93,9 @@
       </button>
 
       {#if user?.full_name}
-        <button class="size-11 inline-flex justify-center items-center gap-x-2 ml-2 bg-gray-100 dark:bg-black rounded-full border border-transparent focus:outline-none disabled:opacity-50 disabled:pointer-events-none">
+        <a href={user.is_admin ? '/admin/dashboard' : '/user/order'} class="size-11 inline-flex justify-center items-center gap-x-2 ml-2 bg-gray-100 dark:bg-black rounded-full border border-transparent focus:outline-none disabled:opacity-50 disabled:pointer-events-none">
           <img class="shrink-0 size-10 rounded-full" src="{user.avatar_url}" alt="Avatar">
-        </button>
+        </a>
       {/if}
     </div>
   </nav>

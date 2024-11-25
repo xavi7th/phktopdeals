@@ -1,7 +1,7 @@
 <script>
   import { page } from '$app/stores';
 	import Logo from '$lib/Components/Logo.svelte';
-	import { shoppingBagSVG, walletSVG, heartSVG, shareSVG, creditCardSVG, dollarCircleSVG, shieldTickSVG, gearsSVG } from '$lib/Components/iconPaths';
+	import { shoppingBagSVG, walletSVG, heartSVG, shareSVG, creditCardSVG, dollarCircleSVG, shieldTickSVG, gearsSVG, giftCardSVGAlt, eSimSVG, topUpSVGAlt } from '$lib/Components/iconPaths';
 
   /** @type {Object<string, string>}*/
   let icons = {
@@ -13,6 +13,9 @@
     dollarCircleSVG,
     shieldTickSVG,
     gearsSVG,
+    giftCardSVGAlt,
+    eSimSVG,
+    topUpSVGAlt,
   }
 
   /** @type {import('$lib/types').AdminNavMenuItem[]} */

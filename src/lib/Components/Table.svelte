@@ -2,7 +2,7 @@
 	import SvgIcon from './SvgIcon.svelte';
 	import { upDownAngleIcon } from './iconPaths';
 
-  export let tCaption = undefined;
+  export let tCaption = 'Table Caption ';
   export let tDescription = undefined;
   /** @type {number | undefined} */
   export let totalDataCount = undefined;

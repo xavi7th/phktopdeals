@@ -48,6 +48,27 @@ export async function load ( { locals } ) {
     //     icon: 'shieldTickSVG',
     // },
     {
+        name: 'Gift Cards',
+        description: 'Variety of Gift Cards',
+        uri: '/store/products/gift-card',
+        icon: 'giftCardSVGAlt',
+        reload: true,
+    },
+    {
+        name: 'eSims',
+        description: 'Purchase your global e-sims',
+        uri: '/user/products/e-sim',
+        icon: 'eSimSVG',
+        reload: true,
+    },
+    {
+        name: 'Top Up',
+        description: 'Purchase your top up cards',
+        uri: '/user/products/top-up',
+        icon: 'topUpSVGAlt',
+        reload: true,
+    },
+    {
         name: 'Settings',
         description: 'Personalize your preferences',
         uri: '/user/settings',
