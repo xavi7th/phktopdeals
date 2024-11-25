@@ -1048,8 +1048,13 @@ export const exclamationFilled = `
 export const checkMarkFilled = `
   <polyline points="20 6 9 17 4 12"></polyline>
 `
-export const checkMarkFilledAlt = `
+
+export const checkMarkCircle = `
   <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"></path>
+`
+
+export const checkMarkFilledAlt = `
+  <path fill="currentColor" stroke="none" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
 `
 
 export const eyeOpen = `
@@ -1235,4 +1240,9 @@ export const redoIcon = `
     <path d="M20 9H8a5 5 0 0 0-5 5v0a5 5 0 0 0 5 5h9" />
     <path stroke-linejoin="round" d="m17 5l4 4l-4 4" />
   </g>
+`
+
+export const upDownAngleIcon = `
+  <path d="m7 15 5 5 5-5"></path>
+  <path d="m7 9 5-5 5 5"></path>
 `

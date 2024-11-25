@@ -26,9 +26,20 @@ export async function load(event) {
     return res?.json();
   }
 
-  const [currencies, details] = await Promise.all( [
+  const fetchTopUpTransactions = async () => {
+    const res = await api( {
+      method: 'get',
+      resource: 'user-transactions/top-up',
+      event,
+      logResponse: true,
+    } );
+    return res?.json();
+  }
+
+  const [currencies, details, transactions] = await Promise.all( [
     fetchAvailableCryptoCurrencies(),
     fetchWalletBalance(),
+    fetchTopUpTransactions(),
   ] );
 
   event.setHeaders({
@@ -39,7 +50,8 @@ export async function load(event) {
     form,
     /** @type { import('$lib/types').NowCryptoCurrency[] } */
     currencies: currencies.data,
-    wallet_balance: details.data?.wallet_balance
+    wallet_balance: details.data?.wallet_balance,
+    transactions: transactions.data,
   }
 }
 
