@@ -34,11 +34,13 @@ export async function load ( event ) {
 export const actions = {
 
   /** @param {import('@sveltejs/kit').RequestEvent} event */
-  default: async ( event ) => {
+  delete: async ( event ) => {
+
+    const formData = await event.request.formData();
+
     const res = await api( {
-      method: 'post',
-      resource: 'gift-cards',
-      data: [],
+      method: 'delete',
+      resource: 'products/'+formData.get('uuid'),
       event,
     } );
 

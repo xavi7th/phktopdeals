@@ -51,7 +51,7 @@ export const PurchaseItemDefaults = {
 export const GiftCardSchema = type({
   product_name: type("string>1").describe("provided"),
   product_type: ["string>1", "@", "selected"], //optional syntax
-  product_image: type("File?").describe('provided').optional(),
+  product_image: type("File | null").describe('provided').optional(),
   brand_id: type("string>1").describe("provided"),
   product_category: ["string[]>1", "@", "2 and above"],
   regions: ["string[]>1", "@", "selected"],
@@ -105,6 +105,16 @@ export const brandSchema = type({
 });
 
 export const brandDefaults = {
+  name: '',
+};
+
+export const brandEditSchema = type({
+  uuid: type("string>1").describe("not be empty"),
+  name: type("string>1").describe("not be empty"),
+});
+
+export const brandEditDefault = {
+  uuid: '',
   name: '',
 };
 

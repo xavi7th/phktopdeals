@@ -80,6 +80,17 @@
             </span>
           </div>
         </td>
+        <td class="size-px whitespace-nowrap">
+          <div class="px-6 py-1.5 flex gap-3">
+            <a class="inline-flex items-center gap-x-1 text-sm text-brand-600 decoration-2 hover:underline focus:outline-none focus:underline font-medium dark:text-brand-500" href={basePageUrl+'/'+card.id}>
+              Edit
+            </a>
+            <form action="?/delete" method="POST" class="inline-flex items-center gap-x-1 text-sm text-red-600 decoration-2 hover:underline focus:outline-none focus:underline font-medium dark:text-red-500">
+              <input type="text" class="hidden" name="uuid" value={card.id}>
+              <button type="submit" class="bg-transparent p-0 m-0 border-0 shadow-none">Delete</button>
+            </form>
+          </div>
+        </td>
       </tr>
     {:else}
       <tr>
