@@ -2,10 +2,6 @@ import { api } from '$lib/helpers';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load(event) {
-
-  console.log(event.params);
-
-
   const fetchProducts = async () => {
     const res = await api({
 			method: 'get',
