@@ -67,8 +67,6 @@ export async function load(event) {
     'Cache-Control': 'no-cache',
   });
 
-  console.log(productData.data);
-
   const form = await superValidate(productData.data, arktype(GiftCardSchema, { defaults: GiftCardDefaults }));
 
   // form.data = productData.data
@@ -218,8 +216,6 @@ export const actions = {
     if ( ! res?.ok) {
       return message(form, {type: 'error', msg: res?.statusText || 'An error occured while processing your request'}, {status: res?.status || 429});
     }
-
-    console.log(formData.get('uuid'));
 
     return message(form, {type: 'success', msg: 'Brand was Updated successfully!'});
   },

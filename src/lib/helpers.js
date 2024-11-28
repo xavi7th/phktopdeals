@@ -27,7 +27,6 @@ export const getErrorString = errors => {
  */
 export const toCurrency = ( amount, currencySymbol = '$' ) => {
   if ( isNaN(amount) ) {
-    console.log(amount);
     return 'Invalid Amount';
   }
 

@@ -22,8 +22,6 @@ export async function load(event) {
     fetchProductBrands(),
 	]);
 
-  console.log(cardsData);
-
   event.setHeaders({
     'Cache-Control': 'public, max-age=604800',
   });
