@@ -159,7 +159,7 @@ export async function api({toBaseDomain, resource, event, method, data, logRespo
   if(logResponse){
     console.log('--------------- API Response: ');
     let spyResponse = await response?.clone();
-    console.log({status: spyResponse?.status, body: spyResponse?.status==204 ? null : await spyResponse?.json()}, '\n\n')
+    console.log({status: spyResponse?.status, body: [205, 204].includes(spyResponse?.status) ? null : await spyResponse?.json()}, '\n\n')
   }
 
 	return response;
@@ -269,7 +269,7 @@ function authorize({event, resolve}){
   }
 
   if (event.route.id?.includes('(auth)') && event.locals?.user?.name) {
-    redirect(303, '/user/settings')
+    redirect(303, '/user/order')
   }
 
   return resolve(event);
@@ -426,7 +426,7 @@ export const actions = {
     }
 
 		if (response?.status == 200 || response?.status == 201) {
-			throw redirect(302, '/user/settings')
+			throw redirect(302, '/user/order')
 		}
 	},
 }

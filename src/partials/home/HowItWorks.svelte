@@ -1,30 +1,5 @@
 <script>
-
 	import SvgIcon from '$lib/Components/SvgIcon.svelte';
-
-  let steps = [
-    {
-      title: "Browse our catalog",
-      desc: 'Select a product from our catalog; gift vouchers, top-up, games, eSIMs and software',
-      iconUrl: "$lib/images/steps/step-1-browse.png?enhance",
-    },
-    {
-      title: "Add product to cart",
-      desc: 'Add your selected products to the cart and get it ready for checkout.',
-      iconUrl: "$lib/images/steps/step-1-browse.png?enhance",
-    },
-    {
-      title: "Pay with Cryptos",
-      desc: 'Pay with bitcoin and other 90 different cryptos, or with Binance Pay and Gate.io',
-      iconUrl: "$lib/images/steps/step-1-browse.png?enhance",
-    },
-    {
-      title: "That’s it, Order processed!",
-      desc: 'Your order will be processed once your payment is confirmed',
-      iconUrl: "$lib/images/steps/step-1-browse.png?enhance",
-    }
-  ]
-
 </script>
 
 <section class="w-full mt-20">
@@ -43,28 +18,6 @@
 
       <ul class="relative flex sm:flex-row  sm:flex-nowrap flex-wrap gap-x-2 items-start sm:max-w-screen-md mx-auto">
 
-        <!-- {#each steps as step}
-          <li class="flex flex-col group mb-2">
-            <div class="flex items-center gap-x-2 shrink basis-0 flex-1">
-              <div class="min-w-7 min-h-7 inline-flex justify-center items-center text-xs align-middle">
-                <img class="shrink-0 size-20 rounded-md" src="{step.iconUrl}" alt="{step.title} icon" />
-              </div>
-              <div class="w-full h-px flex-1 border border-double border-brand-200 group-last:hidden"></div>
-            </div>
-
-            <div class="max-w-xs flex flex-col dark:bg-neutral-900">
-              <div class="py-5 pr-6">
-                <h3 class="text-md font-bold text-gray-600 dark:text-white">
-                  {step.title}
-                </h3>
-                <p class="mt-2 text-gray-500 dark:text-neutral-400 text-sm">
-                  {step.desc}
-                </p>
-              </div>
-            </div>
-          </li>
-        {/each} -->
-
         <li class="flex flex-col group mb-2">
           <div class="flex items-center gap-x-2 shrink basis-0 flex-1">
             <div class="min-w-7 min-h-7 inline-flex justify-center items-center text-xs align-middle">
@@ -76,10 +29,10 @@
           <div class="max-w-xs flex flex-col dark:bg-neutral-900">
             <div class="py-5 pr-6">
               <h3 class="text-md font-bold text-gray-600 dark:text-white">
-                Browse our catalog
+                Fund your account
               </h3>
               <p class="mt-2 text-gray-500 dark:text-neutral-400 text-sm">
-                Select a product from our catalog; gift vouchers, top-up, games, eSIMs and software.
+                From your dashboard select add funds to top up your wallet balance using either Bitcoin, LiteCoin, USDT or your Debit Card
               </p>
             </div>
           </div>
@@ -96,10 +49,10 @@
           <div class="max-w-xs flex flex-col dark:bg-neutral-900">
             <div class="py-5 pr-6">
               <h3 class="text-md font-bold text-gray-600 dark:text-white">
-                Add product to cart
+                Browse our Catalog
               </h3>
               <p class="mt-2 text-gray-500 dark:text-neutral-400 text-sm">
-                Add your selected products to the cart and get it ready for checkout.
+                Select a product from our catalog and you will be taken to the product details page to process your order.
               </p>
             </div>
           </div>
@@ -116,10 +69,10 @@
           <div class="max-w-xs flex flex-col dark:bg-neutral-900">
             <div class="py-5 pr-6">
               <h3 class="text-md font-bold text-gray-600 dark:text-white">
-                Pay with Cryptos
+                Pay with Wallet
               </h3>
               <p class="mt-2 text-gray-500 dark:text-neutral-400 text-sm">
-                Pay with bitcoin and other 90 different cryptos, or with Binance Pay and Gate.io
+                Fill in the details of your purchase and accept the payment from your wallet.
               </p>
             </div>
           </div>
@@ -139,7 +92,7 @@
                 That’s it, Order processed!
               </h3>
               <p class="mt-2 text-gray-500 dark:text-neutral-400 text-sm">
-                Your order will be processed once your payment is confirmed
+                Your order will be processed immediately and you will be notified via email with your order details.
               </p>
             </div>
           </div>

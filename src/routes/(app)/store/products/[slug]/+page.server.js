@@ -2,19 +2,19 @@ import { api } from '$lib/helpers';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load ( event ) {
+  console.log(event.params.slug);
 
-  const fetchPageData = async () => {
+  const fetchGiftCards = async () => {
     const res = await api( {
       method: 'get',
-      resource: '',
+      resource: 'store/' + event.params.slug,
       event,
     } );
-
     return res?.json();
   }
 
-  const [pageData] = await Promise.all( [
-    fetchPageData(),
+  const [cardsData] = await Promise.all( [
+    fetchGiftCards(),
   ] );
 
   event.setHeaders({
@@ -22,9 +22,9 @@ export async function load ( event ) {
   });
 
   return {
-    /** @type { import('$lib/types').PageSection } */
-    sections: pageData.data.sections,
-    /** @type {import('$lib/types').Service[]} */
-    services: pageData.data.services,
+    /** @type { import('$lib/types').ProdSummary[] } */
+    cards: cardsData.data,
+    meta: cardsData.metadata,
+    category: event.params.slug
   }
 }

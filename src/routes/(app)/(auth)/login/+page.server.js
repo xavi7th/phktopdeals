@@ -16,7 +16,9 @@ export async function load ( event ) {
     'Cache-Control': 'max-age=604800, stale-while-revalidate=86400, immutable',
   } );
 
-  return {}
+  return {
+    message: event.url.searchParams.has( 'verification' ) ? 'Your email account has been verified.' : undefined,
+  }
 }
 
 /** @satisfies {import('./$types').Actions} */
@@ -50,14 +52,21 @@ export const actions = {
       return fail( response?.status || 500, { message: response?.statusText || 'An error occurred while processing your request' } );
     }
 
-    if ( response?.status == 200 || response?.status == 201 || response?.status == 205 ) {
+    /**
+     * @hack user was already logged in, logout so they can retry again since we cannot determine if this is a user or an admin
+     */
+    if ( response?.status == 205 ) {
+      redirect( 302, '/logout' )
+    }
+
+    if ( response?.status == 200 || response?.status == 201 ) {
       event.locals.user = ( await response?.json() )?.user;
 
       if ( event?.locals?.user?.is_admin ) {
         redirect( 302, '/admin/dashboard' )
       }
 
-      throw redirect( 302, '/user/settings' )
+      redirect( 302, '/user/order')
     }
   },
 
@@ -88,11 +97,11 @@ export const actions = {
     }
 
     if ( !response?.ok ) {
-      return fail( response?.status || 500, { message: response?.statusText || 'An error occured while processing your request' } );
+      return fail( response?.status || 500, { message: response?.statusText || 'An error occurred while processing your request', body: await response?.text() } );
     }
 
     if ( response?.status == 201 ) {
-      throw redirect( 302, '/user/settings' )
+      throw redirect( 302, '/user/order' )
     }
   },
 }

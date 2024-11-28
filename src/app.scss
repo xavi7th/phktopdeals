@@ -1,6 +1,6 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import '@splidejs/svelte-splide/css';
+@use 'tailwindcss/base' as *;
+@use 'tailwindcss/components' as *;
+@use '@splidejs/svelte-splide/css' as *;
 
 @layer components {
   .text-title {

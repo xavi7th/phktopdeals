@@ -1,4 +1,4 @@
-<section class="pb-28 lg:py-[130px] w-full px-2">
+<section class="col-span-5 mx-auto min-w-[70%] px-4 py-16 sm:px-6 lg:col-span-4 lg:col-start-2 lg:px-8 lg:py-20">
     <div class="sm:mx-10 bg-white dark:bg-[#404040] rounded-xl shadow-lg p-10">
         <h1 class="text-2xl font-extrabold text-slate-800 dark:text-slate-200">Bulk Order</h1>
         <span class="text-sm text-slate-700 dark:text-slate-300">Download, list, and upload your bulk order—all in a snap!</span>
@@ -25,5 +25,5 @@
                 <p class="text-[#713f12] dark:text-[#FFDA1C] text-sm">Please do not do any changes in the excel title, Else your data might not be submitted.</p>
             </div>
         </div>
-    </div> 
+    </div>
 </section>

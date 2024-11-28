@@ -1,11 +1,11 @@
 import { api } from '$lib/helpers';
 import { arktype } from 'sveltekit-superforms/adapters';
-import { giftCardDefaults , giftCardSchema} from '$lib/schemas';
+import { GiftCardDefaults , GiftCardSchema} from '$lib/schemas';
 import { message, superValidate, fail, setError } from 'sveltekit-superforms';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load(event) {
-  const form = await superValidate(arktype(giftCardSchema, { defaults: giftCardDefaults }));
+  const form = await superValidate(arktype(GiftCardSchema, { defaults: GiftCardDefaults }));
 
   const fetchProductBrands = async () => {
     const res = await api({
@@ -63,7 +63,7 @@ export async function load(event) {
 
   /** @param {import('@sveltejs/kit').RequestEvent} event */
 	default: async (event) => {
-    const form = await superValidate(event, arktype(giftCardSchema, { defaults: giftCardDefaults }));
+    const form = await superValidate(event, arktype(GiftCardSchema, { defaults: GiftCardDefaults }));
 
     if (!form.valid) {
       return fail(422, { form });
@@ -72,6 +72,11 @@ export async function load(event) {
     const formData = new FormData();
 
     for(let dt of Object.entries(form.data)){
+      if (dt[0] == 'discount_until' && dt[1]) {
+        formData.append(dt[0], new Date(dt[1]).toDateString());
+        continue;
+      }
+
       formData.append(dt[0], dt[1]);
     }
 

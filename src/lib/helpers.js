@@ -38,12 +38,13 @@ export const toCurrency = ( amount, currencySymbol = '$' ) => {
 export const percentageCalculation = (amount = 0, commission = 0, discount = 0) => {
   let amount_to_pay;
 
-  if(discount){
-    const discount_percent = amount - ((amount*discount) / 100);
+  if( discount ){
+    const discount_percent = Number(amount) - ((amount*discount) / 100);
     amount_to_pay = discount_percent - ((discount_percent*commission) / 100);
-  }else{
-    amount_to_pay = amount + ((amount*commission) / 100);
+  } else {
+    amount_to_pay = Number(amount) + ((amount*commission) / 100);
   }
+
   return toCurrency(amount_to_pay);
 }
 
@@ -238,6 +239,7 @@ export const getFirstElement = (str, elem = 'p') => {
   return ''
 }
 
+import { error } from '@sveltejs/kit';
 import { env } from '$env/dynamic/public';
 
 /**
@@ -289,8 +291,14 @@ export async function api({toBaseDomain, resource, event, method, data, logRespo
 
   if(logResponse){
     console.error('--------------- API Response: ');
-    let spyResponse = await response?.clone();
-    console.error({status: spyResponse?.status, body: spyResponse?.status==204 ? null : await spyResponse?.json()}, '\n\n')
+
+    const rsp = await response?.clone();
+
+    if (rsp?.status === 500) {
+      error(423, await rsp?.text());
+    }
+
+    console.error({status: rsp?.status, body: [205, 204].includes(rsp?.status) ? null : await rsp?.text()}, '\n\n')
   }
 
 	return response;

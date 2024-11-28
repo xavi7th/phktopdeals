@@ -14,7 +14,7 @@
   }`;
 </script>
 
-<section class="pb-28 lg:py-[130px] w-full px-2">
+<section class="col-span-5 mx-auto min-w-[70%] px-4 py-16 sm:px-6 lg:col-span-4 lg:col-start-2 lg:px-8 lg:py-20">
     <div class="sm:mx-10 bg-white dark:bg-[#404040] mb-28 rounded-xl shadow-lg p-10 px-4">
         <h1 class="text-2xl font-extrabold text-slate-900 dark:text-slate-100">Verify Account</h1>
         <div class="flex justify-between items-center gap-4 md:px-6 mt-10 text-slate-800 dark:text-slate-200">

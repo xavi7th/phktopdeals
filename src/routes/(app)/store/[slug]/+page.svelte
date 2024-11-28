@@ -1,55 +1,76 @@
 <script>
-	import { checkPlus, minusIcon, plusIcon } from '$lib/Components/iconPaths';
-	import { toCurrency } from '$lib/helpers';
+  import { dev } from '$app/environment';
+	import { slide } from 'svelte/transition';
+	import Toast from '$lib/Components/Toast.svelte';
+	import { percentageCalculation } from '$lib/helpers';
+  import { checkPlus } from '$lib/Components/iconPaths';
+	import SuperDebug, { superForm } from 'sveltekit-superforms';
+	import LoadingButton from '$lib/Components/FormInputs/LoadingButton.svelte';
+	import FloatingTextInput from '$lib/Components/FormInputs/FloatingTextInput.svelte';
+	import FloatingNumericTextInput from '$lib/Components/FormInputs/FloatingNumericTextInput.svelte';
+	import FloatingSearchableSelectInput from '$lib/Components/FormInputs/FloatingSearchableSelectInput.svelte';
 
-	let platformSelectOptions = `{
-        "hasSearch": true,
-        "searchPlaceholder": "Search...",
-        "searchClasses": "block w-full text-sm border-gray-200 rounded-lg focus:border-brand-500 focus:ring-brand-500 before:absolute before:inset-0 before:z-[1] dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 py-2 px-3",
-        "searchWrapperClasses": "bg-white p-2 -mx-1 sticky top-0 dark:bg-neutral-900",
-        "placeholder": "Select Platform ...",
-        "toggleTag": "<button type='button' aria-expanded='false'><span class='me-2' data-icon></span><span class='text-gray-800 dark:text-neutral-200' data-title></span></button>",
-        "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-3 ps-4 pe-9 flex gap-x-2 text-nowrap w-full lg:w-72 flex-initial cursor-pointer bg-white border border-gray-200 rounded-lg text-start text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-neutral-600 focus:border-brand-500",
-        "dropdownClasses": "mt-2 max-h-72 pb-1 px-1 space-y-0.5 z-20 w-full bg-white border border-gray-200 rounded-lg overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 dark:bg-neutral-900 dark:border-neutral-700",
-        "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-lg focus:outline-none focus:bg-gray-100 dark:bg-neutral-900 dark:hover:bg-neutral-800 dark:text-neutral-200 dark:focus:bg-neutral-800",
-        "optionTemplate": "<div><div class='flex items-center'><div class='me-2' data-icon></div><div class='text-gray-800 dark:text-neutral-200' data-title></div></div></div>",
-        "extraMarkup": "<div class='absolute top-1/2 end-3 -translate-y-1/2'><svg class='shrink-0 size-3.5 text-gray-500 dark:text-neutral-500' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m7 15 5 5 5-5'/><path d='m7 9 5-5 5 5'/></svg></div>"
-    }`;
-
-	let count = 0, selectedDenomination = 'btn-0';
+	let selectedDenomination = 'btn-0';
 
   /** @type {import('./$types').PageData} */
   export let data;
 
-  $: ({product} = data);
+  const { form, errors, message, delayed, submitting, timeout, enhance } = superForm(data.form, {
+    delayMs: 500,
+    timeoutMs: 8000,
+  });
 
-  $: console.log(product);
+  $: ({product, user} = data);
+
+  $: $form.unit_price = product?.product_price?.denominations?.length ? Number(product.product_price.denominations[0]) : 0;
+  $: $form.product_id = product?.id;
+  $: $form.email = user?.email;
 
 </script>
 
+<svelte:head>
+  <title>Purchase {product?.product_name} | PHKHotDeals</title>
+  <meta name="description" content="Purchase {product.product_name} from PHKHot Deals at very discounted prices. Blazing fast transactions and discreet are assured.">
+</svelte:head>
+
+
+{#if $message}
+  <div class="fixed top-24 z-50 end-3 space-y-3">
+    <Toast positioned={false} type={$message.type} msg={$message.msg}/>
+  </div>
+{/if}
+
 <div class="container px-4 py-28 lg:py-40">
+
+  <div class="max-w-md fixed left-0 bottom-0 z-[60]">
+    <SuperDebug data={{$message, $form, $errors}} label="My form data" collapsible={true} display={dev} />
+  </div>
+
 	<main class="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2">
-		<div class="w-full pr-20">
-			<div class="">
-				<enhanced:img
-					class="h-auto w-full rounded-xl"
-					src="$lib/images/games-6.avif?aspect=400:320&fit=cover"
-					alt="hero-img-thumb"
-				/>
+		<div class="w-full md:pr-20 md:block hidden text-white">
+			<div class="h-full">
+				<img class="w-full rounded-xl" src={product.product_image_url} alt="hero-img-thumb"/>
 			</div>
 		</div>
 		<div>
-			<div class="w-full">
-				<div>
-					<div class="title text-black dark:text-white" style="font-size: 40px; font-weight: bold;">
-						The Title
+			<div class="grid grid-cols-12 gap-5 items-center w-full overflow-hidden">
+				<div class="md:hidden block max-h-[170px] col-span-3 mb-[30px]">
+					<img class="w-full rounded-xl" src={product.product_image_url} alt="hero-img-thumb"/>
+				</div>
+				<div class="col-span-9">
+					<div class="title text-black dark:text-white md:text-[38px] sm:text-[30px] text-[20px]" style="font-weight: bold;">
+						{product.product_name} <span class="text-base">({product.brand?.name})</span>
 					</div>
 				</div>
 			</div>
-			<div class="mt-5 rounded-lg bg-brand-100 p-4">
+
+      <div class="relative mt-5 rounded-xl rounded-ss-3xl dark:text-white bg-brand-200 dark:bg-brand-900 md:px-10 pt-20 pb-8 overflow-hidden">
+        <div class="payment-steps-id rounded-ee-[2rem] rounded-ss-3xl bg-brand-800 absolute top-0 left-0 text-center">
+          <span class="text-white font-bold md:font-extrabold">1</span>
+        </div>
 				<div class="flex flex-col gap-2 sm:gap-4">
 					<div
-						class="flex items-center rounded-lg border border-solid border-gray-200 bg-white pl-4 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400"
+						class="flex items-center rounded-lg border border-solid border-gray-200 bg-white p-3 pl-4 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 overflow-hidden"
 					>
 						<p class="shrink-0">Email Address :</p>
 						<input
@@ -59,204 +80,120 @@
 						/>
 					</div>
 
-					<div
-						class="rounded-lg border border-gray-200 bg-white px-3 py-2 dark:border-neutral-700 dark:bg-neutral-900"
-					>
-						<div class="flex w-full items-center justify-between gap-x-3">
-							<div>
-								<span class="block text-sm font-medium text-gray-800 dark:text-white">
-									Quantity
-								</span>
-								<span class="block text-xs text-gray-500 dark:text-neutral-400">
-									{toCurrency(count * 5)} total
-								</span>
-							</div>
-							<div class="flex items-center gap-x-1.5">
-								<button
-									type="button"
-									class="inline-flex size-6 items-center justify-center gap-x-2 rounded-md border border-brand-200 bg-white text-sm font-medium text-brand-800 shadow-sm hover:bg-brand-50 focus:bg-brand-50 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
-									tabindex="-1"
-									aria-label="Decrease"
-									disabled={count <= 0}
-									on:click={() => count--}
-								>
-									{@html plusIcon}
-								</button>
-								<input
-									class="w-6 border-0 bg-transparent p-0 text-center text-gray-800 focus:ring-0 dark:text-white [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-									style="-moz-appearance: textfield;"
-									type="number"
-									aria-roledescription="Number field"
-									bind:value={count}
-								/>
-								<button
-									type="button"
-									class="inline-flex size-6 items-center justify-center gap-x-2 rounded-md border border-brand-200 bg-white text-sm font-medium text-brand-800 shadow-sm hover:bg-brand-50 focus:bg-brand-50 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
-									tabindex="-1"
-									aria-label="Increase"
-									on:click={() => count++}
-								>
-									{@html minusIcon}
-								</button>
-							</div>
-						</div>
-					</div>
+					<FloatingNumericTextInput name="quantity" label="Quantity" size="p-3" min={1} placeholder={`${ percentageCalculation(selectedDenominationAmount, product.product_price.commission, product.percentage_discount) } per Quantity`} bind:value={selectedQuantity}/>
 				</div>
 			</div>
 
-			<div class="mt-5 rounded-t-lg bg-brand-100 p-4">
-				<div class="py-4">
-					<h3 class="text-xl font-medium">Choose a Denomination</h3>
-				</div>
+			<div class="relative mt-5 rounded-xl rounded-ss-3xl dark:text-white bg-brand-200 dark:bg-brand-900 md:px-10 pt-20 pb-8 overflow-hidden">
+        <div class="payment-steps-id rounded-ee-[2rem] rounded-ss-3xl bg-brand-800 absolute top-0 left-0 text-center">
+          <span class="text-white font-bold md:font-extrabold">2</span>
+        </div>
+        <h3 class="text-xl md:text-2xl pb-6 font-medium">Choose a Denomination</h3>
 				<div class="grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-4">
-					{#each Array(10) as item, idx}
+					{#each product?.product_price?.denominations?.sort((a, b) => a - b) || [] as amount, idx}
 						<button
 							type="button"
-							class="group relative flex h-[6vw] items-center justify-center rounded-lg border border-transparent bg-brand font-medium text-brand-800 hover:bg-brand-700 hover:text-brand-50 focus:bg-brand-700 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+							class="group relative flex py-5 items-center justify-center rounded-lg border border-transparent bg-brand font-medium text-brand-800 hover:bg-brand-700 hover:text-brand-50 focus:bg-brand-700 focus:text-brand-50 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
               class:selected={selectedDenomination == `btn-${idx}`}
-              on:click={() => { selectedDenomination = `btn-${idx}`; } }
+              on:click={() => { selectedDenomination = `btn-${idx}`, $form.unit_price = Number(amount) || 0; } }
 						>
-							{toCurrency(10 * (item + 1))}
-							<span
-								class="invisible absolute left-0 top-0 flex h-7 w-7 items-center justify-center rounded-ee-2xl rounded-ss-md bg-white group-hover:text-brand-600 group-[.selected]:visible"
-								>{@html checkPlus}</span
-							>
+							{ percentageCalculation(amount, product.product_price.commission, product.percentage_discount) }
+							<span class="invisible absolute left-0 top-0 flex h-7 w-7 items-center justify-center rounded-ee-2xl rounded-ss-md bg-white text-brand-600 group-[.selected]:visible">
+                {@html checkPlus}
+              </span>
 						</button>
 					{/each}
 				</div>
 			</div>
 
-			<div class="mt-5 flex flex-col items-center gap-3 bg-brand-100 p-4">
-				<div class="flex w-full items-center justify-around">
-					<p class="shrink-0">Payment Method:</p>
-					<select id="platform-select" data-hs-select={platformSelectOptions} class="hidden grow">
-						<option value="">Choose</option>
-						<option
-							value="AF"
-							data-hs-select-option={`{"icon": "<img class='inline-block size-4 rounded-full' src='https://cdn.pixabay.com/photo/2021/04/30/16/47/binance-logo-6219389_1280.png' alt='Af' />"}`}
-							selected
-						>
-							Binance
-						</option>
-						<option
-							value="AX"
-							data-hs-select-option={`{"icon": "<img class='inline-block size-4 rounded-full' src='../assets/vendor/svg-country-flags/png100px/ax.png' alt='AI' />"}`}
-						>
-							EA Games
-						</option>
-						<option
-							value="AL"
-							data-hs-select-option={`{"icon": "<img class='inline-block size-4 rounded-full' src='../assets/vendor/svg-country-flags/png100px/al.png' alt='Al' />"}`}
-						>
-							Battle.net
-						</option>
-						<option
-							value="DZ"
-							data-hs-select-option={`{"icon": "<img class='inline-block size-4 rounded-full' src='../assets/vendor/svg-country-flags/png100px/dz.png' alt='Alg' />"}`}
-						>
-							Ubisoft
-						</option>
-						<option
-							value="AS"
-							data-hs-select-option={`{"icon": "<img class='inline-block size-4 rounded-full' src='../assets/vendor/svg-country-flags/png100px/as.png' alt='AS' />"}`}
-						>
-							American Samoa
-						</option>
-					</select>
-				</div>
+			<div class="relative mt-5 rounded-xl rounded-ss-3xl dark:text-white bg-brand-200 dark:bg-brand-900 md:px-10 pt-20 pb-8 overflow-hidden">
+        <div class="payment-steps-id rounded-ee-[2rem] rounded-ss-3xl bg-brand-800 absolute top-0 left-0 text-center">
+          <span class="text-white font-bold md:font-extrabold">2</span>
+        </div>
+				<div class="flex flex-col gap-2 sm:gap-4">
+          {#if ! user?.email}
+            <FloatingTextInput name="email" type="email" label="Email Address :" placeholder="Value will be sent to this email address" bind:value={$form.email} msg={$errors.email}/>
+          {/if}
 
-				<div class="flex flex-col items-center justify-center gap-3 p-4">
-					<p class="text-left">
-						The platform does not support single brushing or rebates. Please be cautious of fraud
-						and do not fill in other people's top-up accounts to prevent scams.
-					</p>
-					<button
-						type="button"
-						class="mt-10 inline-flex items-center rounded-lg border border-transparent bg-brand px-10 py-1.5 font-medium text-brand-800 hover:bg-brand-700 hover:text-brand-50 focus:bg-brand-700 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-						style="justify-content: center;"
-					>
-						Buy Now $ 4,000
-					</button>
+					<FloatingNumericTextInput name="quantity" label="Quantity" size="p-3" min={1} placeholder={`${ percentageCalculation($form.unit_price, product.product_price.commission, product.percentage_discount) } per Quantity`} bind:value={$form.quantity} isError={ !! $errors.quantity} msg={$errors.quantity}/>
 				</div>
 			</div>
+
+			<div class="relative mt-5 rounded-xl rounded-ss-3xl dark:text-white bg-brand-200 dark:bg-brand-900 md:px-10 pt-20 pb-8">
+        <div class="payment-steps-id rounded-ee-[2rem] rounded-ss-3xl bg-brand-800 absolute top-0 left-0 text-center">
+          <span class="text-white font-bold md:font-extrabold">3</span>
+        </div>
+				<div class="flex flex-col w-full gap-8 justify-between">
+					<h3 class="text-xl md:text-2xl font-medium">Select Payment Method</h3>
+
+          <FloatingSearchableSelectInput label="Product Type" options={['Crypto']} bind:value={$form.payment_method} hasSearch={false}/>
+
+          <div class="text-sm text-red-800 p-4 dark:text-red-500" role="alert" tabindex="-1" aria-labelledby="hs-with-list-label">
+            <div class="ms-4">
+              <h3 class="text-sm font-semibold">
+                NOTE:
+              </h3>
+              <p class="mt-2 text-sm text-red-700 dark:text-red-400">
+                This platform does not support single brushing or rebates. Please be cautious of fraud and do not fill in other people's top-up accounts to prevent being scammed.
+              </p>
+            </div>
+          </div>
+				</div>
+      </div>
+
+
+      {#if $form.payment_method}
+        <div class="relative mt-5 rounded-xl rounded-ss-3xl dark:text-white bg-brand-200 dark:bg-brand-900 md:px-10 py-8 overflow-hidden" transition:slide={{duration: 500}}>
+          <div class="payment-steps-id rounded-ee-[2rem] rounded-ss-3xl bg-brand-800 absolute top-0 left-0 text-center">
+            <span class="text-white font-bold md:font-extrabold">4</span>
+          </div>
+          <div class="relative min-h-24 flex justify-center items-center">
+            {#if $form.payment_method === 'crypto'}
+              <div class="absolute shrink-0 flex flex-col items-center justify-center gap-3" transition:slide={{ duration: 900 }}>
+                <LoadingButton class="mt-10 bg-black px-10 py-4 font-medium hover:bg-gray-700 hover:text-neutral-50 focus:bg-gray-700" {timeout} {delayed} {submitting}>
+                  Pay with Crypto { percentageCalculation($form.unit_price * $form.quantity, product.product_price.commission, product.percentage_discount) }
+                </LoadingButton>
+              </div>
+            {:else if $form.payment_method === 'bank payment'}
+              <div class="absolute shrink-0 flex flex-col items-center justify-center gap-3" transition:slide={{ duration: 900 }}>
+                <LoadingButton class="mt-10 bg-black px-10 py-4 font-medium hover:bg-gray-700 hover:text-neutral-50 focus:bg-gray-700" {timeout} {delayed} {submitting}>
+                  Pay with Bank Transfer { percentageCalculation($form.unit_price * $form.quantity, product.product_price.commission, product.percentage_discount) }
+                </LoadingButton>
+              </div>
+            {/if}
+          </div>
+        </div>
+      {/if}
+
 		</div>
 
-		<div class="col-span-1 rounded-lg bg-brand-100 p-4 md:col-span-2">
-			<div>
+		<div class="col-span-1 rounded-xl dark:text-white bg-brand-200 dark:bg-brand-900 p-4 md:col-span-2 py-[30px] md:px-[30px] px-[20px] overflow-hidden">
+			<div class="overflow-hidden">
 				<div>
 					<div>
 						<div>
 							<div class="py-4">
-								<h2 class="text-2xl font-bold">Product Description</h2>
+								<h3 class="text-xl md:text-2xl pb-6 font-medium">Product Description / FAQs</h3>
 							</div>
-							<div
-								style="transform: translateX(165px) translateX(-50%); transition-duration: 0.3s;"
-							></div>
+							<div style="transform: translateX(165px) translateX(-50%); transition-duration: 0.3s;"></div>
 						</div>
 					</div>
-					<div>
-						<div>
-							<div class="question-item space-y-4">
-								<!-- <h3 class="mb-4">Product Description</h3> -->
-								<p>
-									Amazon.com Gift Cards* never expire and can be redeemed towards millions of items
-									at www.amazon.com
-								</p>
-								<h3>Redemption</h3>
-								<p>To redeem your gift card, follow these steps:</p>
-								<p>
-									1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Visit <a
-										href="https://panel.ezpaypin.com/www.amazon.com/redeem"
-										rel="noopener noreferrer"
-										target="_blank"
-										style="color: rgb(3, 155, 229);">www.amazon.com/redeem</a
-									>
-								</p>
-								<p>
-									2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enter the Claim Code when prompted.
-								</p>
-								<p>
-									3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gift card funds will be applied
-									automatically to eligible orders during the checkout process.
-								</p>
-								<p>
-									4.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;You must pay for any remaining balance
-									on your order with another payment method.
-								</p>
-								<p>&nbsp;</p>
-								<p>
-									Your gift card claim code may also be entered when prompted during checkout. To
-									redeem your gift card using the <a
-										href="https://www.amazon.com/"
-										rel="noopener noreferrer"
-										target="_blank"
-										style="color: rgb(3, 155, 229);">Amazon.com</a
-									> 1-Click® service, first add the gift card funds to Your Account.
-								</p>
-								<p>
-									If you have questions about redeeming your gift card, please visit <a
-										href="https://panel.ezpaypin.com/www.amazon.com/gc-redeem"
-										rel="noopener noreferrer"
-										target="_blank"
-										style="color: rgb(3, 155, 229);">www.amazon.com/gc-redeem</a
-									>.
-								</p>
-								<h3>Terms and Conditions</h3>
-								<p>Restrictions apply, see amazon.com/gc-legal</p>
-								<h3>Legal Disclaimer</h3>
-								<p>
-									Restrictions apply, see <a
-										href="https://panel.ezpaypin.com/amazon.com/gc-legal"
-										rel="noopener noreferrer"
-										target="_blank"
-										style="color: rgb(3, 155, 229);">amazon.com/gc-legal</a
-									>
-								</p>
-							</div>
-						</div>
-					</div>
+
+					{@html product.faqs}
 				</div>
 			</div>
 		</div>
 	</main>
 </div>
+
+<style lang="scss">
+  .payment-steps-id {
+    width: clamp(50px, 10vw, 75px);
+    height: clamp(50px, 10vw, 65px);
+
+    span{
+      font-size: clamp(20px, 4.8vw, 48px);
+      line-height: clamp(47px, 10vw, 60px);
+    }
+  }
+</style>

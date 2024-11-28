@@ -19,6 +19,7 @@ declare global {
 		interface PageData {
       deviceType?: DevicePayload;
       deviceName?: string;
+      message?: string;
     }
 		interface ActionData {
       message: string

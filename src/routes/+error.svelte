@@ -1,16 +1,17 @@
 <script>
-  import { page } from '$app/stores'
 	import { onMount } from 'svelte';
+  import { page } from '$app/stores'
 
   // $: console. log ('page', $page);
 
   onMount(() => {
+    if ($page.status === 423) return;
     let PAGE_NOT_FOUND = document.querySelector(".caution__tape .PAGE_NOT_FOUND")
     let tape__center = document.getElementById("caution__tape__center")
     let tape__left = document.getElementById("caution__tape__left")
     let body = document.querySelector("body")
     let ERROR = document.querySelector(".caution__tape .ERROR")
-    let body_Width = body.clientWidth
+    let body_Width = body?.clientWidth || 300
 
     body?.classList.add('error-page')
 
@@ -37,26 +38,35 @@
   })
 </script>
 
-<main class="main">
-  <h1 class="font-bold">{ ($page.status + '').split('').shift() }</h1>
-  <h1 class="X">
-      <span class="caution__tape text"></span>
-      <span class="caution__tape text"></span>
-  </h1>
-  <h1 class="font-bold">{ ($page.status + '').split('').pop() }</h1>
+{#if $page.status === 423}
+  <main class="flex flex-col gap-y-2 item-center justify-center">
+    <h1 style="margin-top: 2em; text-align: center;">OUR UPSTREAM SERVER HAD AN ERROR</h1>
+    <pre>
+      {@html $page.error?.message}
+    </pre>
+  </main>
+{:else}
+  <main class="main">
+    <h1 class="font-bold">{ ($page.status + '').split('').shift() }</h1>
+    <h1 class="X">
+        <span class="caution__tape text"></span>
+        <span class="caution__tape text"></span>
+    </h1>
+    <h1 class="font-bold">{ ($page.status + '').split('').pop() }</h1>
 
-</main>
-<section class="background relative">
-  <a data-sveltekit-reload class="absolute top-[20rem] left-[37vw] sm:left-[42.5vw] bg-gray-900 hover:bg-brand-100 border-2 border-md border-gray-900 text-white hover:text-black font-bold py-4 px-8 transition capitalize rounded-xl" href="/" aria-label="go back home" title="go back home">
-    go back home
-  </a>
-  <div id="caution__tape__left" class="caution__tape left">
-      <p class="ERROR">Oops!</p>
-  </div>
-  <div id="caution__tape__center" class="caution__tape center">
-      <p class="PAGE_NOT_FOUND">{ $page.error?.message }!</p>
-  </div>
-</section>
+  </main>
+  <section class="background relative">
+    <a data-sveltekit-reload class="absolute top-[20rem] left-[37vw] sm:left-[42.5vw] bg-gray-900 hover:bg-brand-100 border-2 border-md border-gray-900 text-white hover:text-black font-bold py-4 px-8 transition capitalize rounded-xl" href="/" aria-label="go back home" title="go back home">
+      go back home
+    </a>
+    <div id="caution__tape__left" class="caution__tape left">
+        <p class="ERROR">Oops!</p>
+    </div>
+    <div id="caution__tape__center" class="caution__tape center">
+        <p class="PAGE_NOT_FOUND">{ $page.error?.message }!</p>
+    </div>
+  </section>
+{/if}
 
 <style lang="scss">
 :global{

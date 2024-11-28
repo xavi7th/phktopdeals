@@ -1,0 +1,85 @@
+/** @type {import('./$types').LayoutServerLoad} */
+export async function load ( { locals } ) {
+
+  /** @type { import('$lib/types').AdminNavMenuItem[] } */
+  const user_routes = [
+    {
+        name: 'My Order',
+        description: 'View and track your purchases',
+        uri: '/user/order',
+        icon: 'shoppingBagSVG',
+        reload: false,
+    },
+    {
+        name: 'Wallet',
+        description: 'Monitor your transactions',
+        uri: '/user/wallet',
+        icon: 'walletSVG',
+        reload: true,
+    },
+    // {
+    //     name: 'Wishlists',
+    //     description: 'Track your desired items',
+    //     uri: '/user/wishlist',
+    //     icon: 'heartSVG',
+    // },
+    // {
+    //     name: 'Referrals',
+    //     description: 'Invite friends and track rewards',
+    //     uri: '/user/referrals',
+    //     icon: 'shareSVG',
+    // },
+    // {
+    //     name: 'Redeem Balance Card',
+    //     description: 'Top-up your balance wallet',
+    //     uri: '/user/wishlist',
+    //     icon: 'creditCardSVG',
+    // },
+    // {
+    //     name: 'Bulk Order',
+    //     description: 'Quick Bulk Purchase Submission',
+    //     uri: '/user/bulk-order',
+    //     icon: 'dollarCircleSVG',
+    // },
+    // {
+    //     name: 'Verify Account',
+    //     description: 'Submit for unrestricted shopping',
+    //     uri: '/user/verify-account',
+    //     icon: 'shieldTickSVG',
+    // },
+    {
+        name: 'Gift Cards',
+        description: 'Variety of Gift Cards',
+        uri: '/store/products/gift-card',
+        icon: 'giftCardSVGAlt',
+        reload: true,
+    },
+    {
+        name: 'eSims',
+        description: 'Purchase your global e-sims',
+        uri: '/user/products/e-sim',
+        icon: 'eSimSVG',
+        reload: true,
+    },
+    {
+        name: 'Top Up',
+        description: 'Purchase your top up cards',
+        uri: '/user/products/top-up',
+        icon: 'topUpSVGAlt',
+        reload: true,
+    },
+    {
+        name: 'Settings',
+        description: 'Personalize your preferences',
+        uri: '/user/settings',
+        icon: 'gearsSVG',
+        reload: false,
+    },
+  ]
+
+  return {
+    /** @type { import('$lib/types').AppUser } */
+    user: locals.user,
+    user_routes
+   };
+}

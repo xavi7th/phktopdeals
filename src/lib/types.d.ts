@@ -39,6 +39,16 @@ export type Service = {
   icon: string,
   url: string,
   isPopular: boolean,
+  isMobileHidden: boolean,
+}
+export type PageSection = {
+  top: Object<string, PageSectionContent>[],
+  misc: Object<string, PageSectionContent>[],
+}
+export type PageSectionContent = {
+  url: string,
+  desc: string,
+  items: ProdSummary[],
 }
 export type NavData = {
   name: string,
@@ -91,17 +101,36 @@ export type AppUser = {
   full_name: string;
   email: string;
   phone?: string;
+  avatar_url?: string;
   is_active: boolean;
   is_admin?: boolean;
-}
+  is_verified?: boolean;
+} | {};
 export type AdminNavMenuItem = {
   name: string;
   uri: string;
+  description?: string;
   icon: string;
   iconAttributes?: HTMLAttributes;
+  reload: boolean; //Should this menu item reload the page
 }
 export type ProductRegions = {
   country: string,
   code: string,
   phone_code: string,
+}
+export type PurchaseItem = {
+  product_id: string,
+  email: string,
+  quantity: number,
+  unit_price: number,
+  payment_method: number,
+}
+export type NowCryptoCurrency = {
+  ["btc"|"ltc"|"usdttrc20"]: {
+    currency_from: string,
+    currency_to: string,
+    min_amount: number,
+    fiat_equivalent: number
+  }
 }

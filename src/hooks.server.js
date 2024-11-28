@@ -49,7 +49,7 @@ async function getUserDetails({event, resolve}){
 
     if (getUserDetails?.status == 200) {
       //TODO: Set a localStorage with key user and expiration time for 5mins. If that key is present, no need to getUserDetails. @see https://www.sohamkamani.com/javascript/localstorage-with-ttl-expiry/
-      event.locals.user = await getUserDetails?.json() //use this to determine auth on frontend. Before accessing auth routes if this is null redirect to login page
+      event.locals.user = (await getUserDetails?.json())?.data || {} //use this to determine auth on frontend. Before accessing auth routes if this is null redirect to login page
     }
 	}
 
@@ -77,7 +77,7 @@ function authorize({event, resolve}){
     if (event?.locals?.user?.is_admin) {
       redirect(303, '/admin/dashboard')
     }
-    redirect(303, '/user/settings')
+    redirect(303, '/user/order')
   }
 
   /**
@@ -152,7 +152,7 @@ export const handleFetch = async ({request, fetch, event}) => {
 }
 
 /** @type {import('@sveltejs/kit').HandleServerError} */
-export const handleError = ({event, error, message, status}) => {
+export const handleError = async ({event, error, message, status}) => {
 
   if ( ! event.url.pathname.includes('assets')) {
     console.log('------------SERVER ERROR-----------');
