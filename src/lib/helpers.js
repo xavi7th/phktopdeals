@@ -271,8 +271,6 @@ export async function api({toBaseDomain, resource, event, method, data, logRespo
     'x-sveltekit-action': event.cookies.get('x-sveltekit-action') || false,
   };
 
-  console.log(data, 'red');
-
   if (toJSON) {
     headers['content-type'] = 'application/json';
   }
