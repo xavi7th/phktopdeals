@@ -1,6 +1,6 @@
 import { api } from '$lib/helpers';
 import { arktype } from 'sveltekit-superforms/adapters';
-import { GiftCardDefaults , GiftCardSchema, brandSchema, brandDefaults, brandEditSchema, brandEditDefault} from '$lib/schemas';
+import { gameSchema , gameDefaults, brandSchema, brandDefaults, brandEditSchema, brandEditDefault} from '$lib/schemas';
 import { message, superValidate, fail, setError } from 'sveltekit-superforms';
 
 /** @type {import('./$types').PageServerLoad} */
@@ -12,7 +12,7 @@ export async function load(event) {
   const fetchProduct = async () => {
     const res = await api({
       method: 'get',
-			resource: 'products/'+event.params.slug,
+			resource: 'games/'+event.params.slug,
       event,
 		});
     
@@ -39,6 +39,17 @@ export async function load(event) {
     return res?.json();
   }
 
+  const fetchProductTypes = async () => {
+    const res = await api({
+			method: 'get',
+			resource: 'product-types',
+      event,
+      logResponse: true,
+		});
+
+    return res?.json();
+  }
+
   const fetchRegions = async () => {
     const res = await api({
 			method: 'get',
@@ -50,10 +61,11 @@ export async function load(event) {
   }
 
   event.depends('brandlist');
-	const [productData, categoriesData, brandsData, regionsData] = await Promise.all([
+	const [productData, categoriesData, brandsData, types, regionsData] = await Promise.all([
     fetchProduct(),
 	  fetchCategories(),
     fetchProductBrands(),
+    fetchProductTypes(),
 	  fetchRegions(),
 	]);
 
@@ -67,13 +79,14 @@ export async function load(event) {
     'Cache-Control': 'no-cache',
   });
 
-  const form = await superValidate(productData.data, arktype(GiftCardSchema, { defaults: GiftCardDefaults }));
+  const form = await superValidate(productData.data, arktype(gameSchema, { defaults: gameDefaults }));
 
   // form.data = productData.data
 
   return {
     form,
     brandForm,
+    types,
     /** @type {string[]} */
     categories: categoriesData.data,
     /** @type {import('$lib/types').ProductBrand[] } */
@@ -86,7 +99,7 @@ export async function load(event) {
 /** @satisfies {import('./$types').Actions} */
 export const actions = {
   edit: async (event) => {
-    const form = await superValidate(event, arktype(GiftCardSchema, { defaults: GiftCardDefaults }));
+    const form = await superValidate(event, arktype(gameSchema, { defaults: gameDefaults }));
 
     if (!form.valid) {
       return fail(422, { form });
@@ -130,10 +143,10 @@ export const actions = {
 		}
 
     if ( ! res?.ok) {
-      return message(form, {type: 'error', msg: res?.statusText || 'An error occured while processing your request'}, {status: res?.status || 429});
+      return message(form, {type: 'error', msg: res?.statusText || 'An error occurred while processing your request'}, {status: res?.status || 429});
     }
 
-		return message(form, {type: 'success', msg: 'Gift Card Updated successfully!'});
+		return message(form, {type: 'success', msg: 'Product Updated successfully!'});
 	},
   /** @param {import('@sveltejs/kit').RequestEvent} event */
   createBrand: async (event) => {
@@ -232,7 +245,7 @@ export const actions = {
       return message(form, {type: 'error', msg: res?.statusText || 'An error occured while processing your request'}, {status: res?.status || 429});
     }
 
-		return message(form, {type: 'success', msg: 'Brand was Updated successfully!'});
+		return message(form, {type: 'success', msg: 'Brand Updated successfully!'});
 	},
 
   /** @param {import('@sveltejs/kit').RequestEvent} event */
@@ -268,6 +281,6 @@ export const actions = {
       return message(form, {type: 'error', msg: res?.statusText || 'An error occured while processing your request'}, {status: res?.status || 429});
     }
 
-    return message(form, {type: 'success', msg: 'Brand was Updated successfully!'});
+    return message(form, {type: 'success', msg: 'Brand deleted successfully!'});
   },
 }

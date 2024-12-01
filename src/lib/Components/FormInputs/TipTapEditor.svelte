@@ -259,7 +259,7 @@
   {/if}
 </div>
 
-<style global>
+<style global lang="scss">
 	.ProseMirror:focus {
 		outline: none;
 	}
@@ -267,6 +267,10 @@
 	.tiptap ul p,
 	.tiptap ol p {
 		display: inline;
+	}
+
+	.tiptap p {
+		@apply text-neutral-400
 	}
 
 	.tiptap p.is-editor-empty:first-child::before {

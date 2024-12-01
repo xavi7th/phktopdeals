@@ -33,27 +33,27 @@ export async function load(event) {
 
 /** @satisfies {import('./$types').Actions} */
  export const actions = {
-
   /** @param {import('@sveltejs/kit').RequestEvent} event */
-	default: async (event) => {
+  delete: async ( event ) => {
 
-    const res = await api({
-			method: 'post',
-			resource: 'games',
-			data: [],
+    const formData = await event.request.formData();
+
+    const res = await api( {
+      method: 'delete',
+      resource: 'games/'+formData.get('uuid'),
       event,
-		});
+    } );
 
-    if (res?.status == 422) {
+    if ( res?.status == 422 ) {
       let errRes = await res.json();
 
-      return fail(res?.status || 400, {type: 'error', msg: 'There are errors in your form! Check them and try again.', errors: errRes.errors});
-		}
-
-    if ( ! res?.ok) {
-      return fail(res?.status || 500, {message: res?.statusText || 'An error occurred while processing your request'});
+      return fail( res?.status || 400, { type: 'error', msg: 'There are errors in your form! Check them and try again.', errors: errRes.errors } );
     }
 
-		return {type: 'success', msg: 'Card created successfully!'};
-	},
+    if ( !res?.ok ) {
+      return fail( res?.status || 500, { message: res?.statusText || 'An error occurred while processing your request' } );
+    }
+
+    return { type: 'success', msg: 'Product deleted successfully!' };
+  },
 }

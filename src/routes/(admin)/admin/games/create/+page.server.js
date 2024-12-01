@@ -60,7 +60,7 @@ export async function load(event) {
     }
 
     const res = await api({
-			method: 'post',
+			method: 'POST',
 			resource: 'games',
 			data: formData,
       event,
@@ -89,6 +89,6 @@ export async function load(event) {
       return message(form, {type: 'error', msg: res?.statusText || 'An error occured while processing your request'}, {status: res?.status || 429});
     }
 
-		return message(form, {type: 'success', msg: 'Card created successfully!'});
+		return message(form, {type: 'success', msg: 'Product created successfully!'});
 	},
 }
