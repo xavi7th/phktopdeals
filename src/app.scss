@@ -1,22 +1,37 @@
-@use 'tailwindcss/base' as *;
-@use 'tailwindcss/components' as *;
-@use '@splidejs/svelte-splide/css' as *;
+@use "tailwindcss/base" as *;
+@use "tailwindcss/components" as *;
+@use "@splidejs/svelte-splide/css" as *;
 
 @layer components {
   .text-title {
-    @apply text-2xl font-bold capitalize md:text-4xl md:leading-tight dark:text-brand-500/80 text-brand-900/70;
+    @apply text-2xl font-bold capitalize text-brand-900/70 md:text-4xl md:leading-tight dark:text-brand-500/80;
   }
 }
 
-@import 'tailwindcss/utilities';
+@tailwind utilities;
 
 body,
 .dark,
 .light {
   --tw-text-opacity: 1;
   --tw-bg-opacity: 1;
-  background-color:rgba(245, 245, 245 , var(--tw-bg-opacity));
+  background-color: rgba(245, 245, 245, var(--tw-bg-opacity));
 
-  font-family: "Exo 2", Tajawal, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial,
-                Noto Sans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji";
+  font-family:
+    "Exo 2",
+    Tajawal,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    Segoe UI,
+    Roboto,
+    Helvetica Neue,
+    Arial,
+    Noto Sans,
+    sans-serif,
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
+    Segoe UI Symbol,
+    "Noto Color Emoji";
 }

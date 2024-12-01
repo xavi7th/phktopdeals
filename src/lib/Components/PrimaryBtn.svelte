@@ -1,10 +1,16 @@
 <script>
-	import { spinnerSVG } from './iconPaths';
+  import { spinnerSVG } from "./iconPaths";
 
-    export let label='', loading=false;
+  export let label = "",
+    loading = false;
 </script>
 
-<button class="flex justify-center items-center bg-brand-400 hover:bg-brand-500 dark:bg-brand-700 dark:hover:bg-brand-600 dark:text-black rounded-full px-5 py-3 text-sm disabled:opacity-50 disabled:cursor-not-allowed" disabled={loading}>
-    <span class="inline-flex mr-2">{label} </span>
-    {#if loading} {@html spinnerSVG} {/if}
+<button
+  class="flex items-center justify-center rounded-full bg-brand-400 px-5 py-3 text-sm hover:bg-brand-500 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-brand-700 dark:text-black dark:hover:bg-brand-600"
+  disabled={loading}
+>
+  <span class="mr-2 inline-flex">{label}</span>
+  {#if loading}
+    {@html spinnerSVG}
+  {/if}
 </button>

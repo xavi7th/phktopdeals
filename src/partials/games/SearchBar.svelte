@@ -1,5 +1,5 @@
 <script>
-	import { onMount } from 'svelte';
+  import { onMount } from "svelte";
 
   let regionSelectOptions = `{
     "hasSearch": true,
@@ -29,8 +29,8 @@
   }`;
 
   onMount(() => {
-    const regionSelectEl = document.querySelector('#region-select');
-    const platformSelectEl = document.querySelector('#platform-select');
+    const regionSelectEl = document.querySelector("#region-select");
+    const platformSelectEl = document.querySelector("#platform-select");
 
     try {
       const regionSelect = window.HSSelect.getInstance(regionSelectEl);
@@ -41,40 +41,43 @@
       platformSelect?.destroy();
       new window.HSSelect(regionSelectEl);
       new window.HSSelect(platformSelectEl);
-
     } catch (error) {
-      console.log('Not initialised', error);
+      console.log("Not initialised", error);
     }
-
-  })
+  });
 </script>
 
-<div class="flex flex-col lg:flex-row w-full gap-y-3 lg:gap-y-0 lg:space-x-3 lg:col-span-4 col-span-2 mb-4">
+<div class="col-span-2 mb-4 flex w-full flex-col gap-y-3 lg:col-span-4 lg:flex-row lg:gap-y-0 lg:space-x-3">
   <select id="region-select" data-hs-select={regionSelectOptions} class="hidden">
     <option value="">Choose</option>
-    <option value="AF" data-hs-select-option='{`{"icon": "<img class='inline-block size-4 rounded-full' src='../assets/vendor/svg-country-flags/png100px/af.png' alt='Af' />"}`}'>
-      Afghanistan
-    </option>
-    <option value="AX" data-hs-select-option='{`{"icon": "<img class='inline-block size-4 rounded-full' src='../assets/vendor/svg-country-flags/png100px/ax.png' alt='AI' />"}`}'>
-      Aland Islands
-    </option>
-    <option value="AL" data-hs-select-option='{`{"icon": "<img class='inline-block size-4 rounded-full' src='../assets/vendor/svg-country-flags/png100px/al.png' alt='Al' />"}`}'>
-      Albania
-    </option>
-    <option value="DZ" data-hs-select-option='{`{"icon": "<img class='inline-block size-4 rounded-full' src='../assets/vendor/svg-country-flags/png100px/dz.png' alt='Alg' />"}`}'>
-      Algeria
-    </option>
-    <option value="AS" data-hs-select-option='{`{"icon": "<img class='inline-block size-4 rounded-full' src='../assets/vendor/svg-country-flags/png100px/as.png' alt='AS' />"}`}'>
-      American Samoa
-    </option>
+    <option value="AF" data-hs-select-option={`{"icon": "<img class='inline-block size-4 rounded-full' src='../assets/vendor/svg-country-flags/png100px/af.png' alt='Af' />"}`}>Afghanistan</option>
+    <option value="AX" data-hs-select-option={`{"icon": "<img class='inline-block size-4 rounded-full' src='../assets/vendor/svg-country-flags/png100px/ax.png' alt='AI' />"}`}>Aland Islands</option>
+    <option value="AL" data-hs-select-option={`{"icon": "<img class='inline-block size-4 rounded-full' src='../assets/vendor/svg-country-flags/png100px/al.png' alt='Al' />"}`}>Albania</option>
+    <option value="DZ" data-hs-select-option={`{"icon": "<img class='inline-block size-4 rounded-full' src='../assets/vendor/svg-country-flags/png100px/dz.png' alt='Alg' />"}`}>Algeria</option>
+    <option value="AS" data-hs-select-option={`{"icon": "<img class='inline-block size-4 rounded-full' src='../assets/vendor/svg-country-flags/png100px/as.png' alt='AS' />"}`}>American Samoa</option>
   </select>
 
-  <div class="space-y-3 relative w-full">
-    <input type="text" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-brand-500 focus:ring-brand-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="Search products">
+  <div class="relative w-full space-y-3">
+    <input
+      type="text"
+      class="block w-full rounded-lg border-gray-200 px-4 py-3 text-sm focus:border-brand-500 focus:ring-brand-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+      placeholder="Search products"
+    />
 
-    <div class="absolute inset-y-0 end-0 !mt-0 flex items-center pointer-events-none pe-4 peer-disabled:opacity-50 peer-disabled:pointer-events-none">
-      <svg class="shrink-0 size-4 text-gray-500 dark:text-neutral-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+    <div class="pointer-events-none absolute inset-y-0 end-0 !mt-0 flex items-center pe-4 peer-disabled:pointer-events-none peer-disabled:opacity-50">
+      <svg
+        class="size-4 shrink-0 text-gray-500 dark:text-neutral-500"
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        stroke-width="2"
+        stroke="currentColor"
+        fill="none"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
         <path d="M11.36 20.213l-2.36 .787v-8.5l-4.48 -4.928a2 2 0 0 1 -.52 -1.345v-2.227h16v2.172a2 2 0 0 1 -.586 1.414l-4.414 4.414" />
         <path d="M18 18m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
         <path d="M20.2 20.2l1.8 1.8" />
@@ -84,24 +87,16 @@
 
   <select id="platform-select" data-hs-select={platformSelectOptions} class="hidden">
     <option value="">Choose</option>
-    <option value="AF" data-hs-select-option='{`{"icon": "<img class='inline-block size-4 rounded-full' src='../assets/vendor/svg-country-flags/png100px/af.png' alt='Af' />"}`}'>
-      Steam
-    </option>
-    <option value="AX" data-hs-select-option='{`{"icon": "<img class='inline-block size-4 rounded-full' src='../assets/vendor/svg-country-flags/png100px/ax.png' alt='AI' />"}`}'>
-      EA Games
-    </option>
-    <option value="AL" data-hs-select-option='{`{"icon": "<img class='inline-block size-4 rounded-full' src='../assets/vendor/svg-country-flags/png100px/al.png' alt='Al' />"}`}'>
-      Battle.net
-    </option>
-    <option value="DZ" data-hs-select-option='{`{"icon": "<img class='inline-block size-4 rounded-full' src='../assets/vendor/svg-country-flags/png100px/dz.png' alt='Alg' />"}`}'>
-      Ubisoft
-    </option>
-    <option value="AS" data-hs-select-option='{`{"icon": "<img class='inline-block size-4 rounded-full' src='../assets/vendor/svg-country-flags/png100px/as.png' alt='AS' />"}`}'>
-      American Samoa
-    </option>
+    <option value="AF" data-hs-select-option={`{"icon": "<img class='inline-block size-4 rounded-full' src='../assets/vendor/svg-country-flags/png100px/af.png' alt='Af' />"}`}>Steam</option>
+    <option value="AX" data-hs-select-option={`{"icon": "<img class='inline-block size-4 rounded-full' src='../assets/vendor/svg-country-flags/png100px/ax.png' alt='AI' />"}`}>EA Games</option>
+    <option value="AL" data-hs-select-option={`{"icon": "<img class='inline-block size-4 rounded-full' src='../assets/vendor/svg-country-flags/png100px/al.png' alt='Al' />"}`}>Battle.net</option>
+    <option value="DZ" data-hs-select-option={`{"icon": "<img class='inline-block size-4 rounded-full' src='../assets/vendor/svg-country-flags/png100px/dz.png' alt='Alg' />"}`}>Ubisoft</option>
+    <option value="AS" data-hs-select-option={`{"icon": "<img class='inline-block size-4 rounded-full' src='../assets/vendor/svg-country-flags/png100px/as.png' alt='AS' />"}`}>American Samoa</option>
   </select>
 
-  <button class="py-3 px-8 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 text-gray-700 hover:border-gray-300 hover:text-gray-500 focus:outline-none focus:border-gray-300 focus:text-gray-500 disabled:opacity-50 disabled:pointer-events-none dark:border-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-300 dark:hover:border-neutral-300">
+  <button
+    class="inline-flex items-center gap-x-2 rounded-lg border border-gray-200 px-8 py-3 text-sm font-medium text-gray-700 hover:border-gray-300 hover:text-gray-500 focus:border-gray-300 focus:text-gray-500 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:text-neutral-400 dark:hover:border-neutral-300 dark:hover:text-neutral-300"
+  >
     Reset
   </button>
 </div>

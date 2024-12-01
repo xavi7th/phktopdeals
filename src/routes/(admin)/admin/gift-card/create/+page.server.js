@@ -1,7 +1,7 @@
-import { api } from '$lib/helpers';
-import { arktype } from 'sveltekit-superforms/adapters';
-import { GiftCardDefaults , GiftCardSchema} from '$lib/schemas';
-import { message, superValidate, fail, setError } from 'sveltekit-superforms';
+import { api } from "$lib/helpers";
+import { arktype } from "sveltekit-superforms/adapters";
+import { GiftCardDefaults, GiftCardSchema } from "$lib/schemas";
+import { message, superValidate, fail, setError } from "sveltekit-superforms";
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load(event) {
@@ -9,42 +9,38 @@ export async function load(event) {
 
   const fetchProductBrands = async () => {
     const res = await api({
-			method: 'get',
-			resource: 'product-brands',
+      method: "get",
+      resource: "product-brands",
       event,
-		});
+    });
 
     return res?.json();
-  }
+  };
 
   const fetchCategories = async () => {
     const res = await api({
-			method: 'get',
-			resource: 'product-categories',
+      method: "get",
+      resource: "product-categories",
       event,
-		});
+    });
 
     return res?.json();
-  }
+  };
 
   const fetchRegions = async () => {
     const res = await api({
-			method: 'get',
-			resource: 'regions',
+      method: "get",
+      resource: "regions",
       event,
-		});
+    });
 
     return res?.json();
-  }
+  };
 
-	const [categoriesData, brandsData, regionsData] = await Promise.all([
-	  fetchCategories(),
-    fetchProductBrands(),
-	  fetchRegions(),
-	]);
+  const [categoriesData, brandsData, regionsData] = await Promise.all([fetchCategories(), fetchProductBrands(), fetchRegions()]);
 
   event.setHeaders({
-    'Cache-Control': 'public, max-age=604800',
+    "Cache-Control": "public, max-age=604800",
   });
 
   return {
@@ -55,14 +51,13 @@ export async function load(event) {
     brands: brandsData.data,
     /** @type {import('$lib/types').ProductRegions[]} } */
     regions: regionsData.data,
-  }
+  };
 }
 
 /** @satisfies {import('./$types').Actions} */
- export const actions = {
-
+export const actions = {
   /** @param {import('@sveltejs/kit').RequestEvent} event */
-	default: async (event) => {
+  default: async (event) => {
     const form = await superValidate(event, arktype(GiftCardSchema, { defaults: GiftCardDefaults }));
 
     if (!form.valid) {
@@ -71,8 +66,8 @@ export async function load(event) {
 
     const formData = new FormData();
 
-    for(let dt of Object.entries(form.data)){
-      if (dt[0] == 'discount_until' && dt[1]) {
+    for (let dt of Object.entries(form.data)) {
+      if (dt[0] == "discount_until" && dt[1]) {
         formData.append(dt[0], new Date(dt[1]).toDateString());
         continue;
       }
@@ -81,35 +76,35 @@ export async function load(event) {
     }
 
     const res = await api({
-			method: 'post',
-			resource: 'products',
-			data: formData,
+      method: "post",
+      resource: "products",
+      data: formData,
       event,
       toJSON: false,
-		});
+    });
 
     if (res?.status == 422) {
       let errRes = await res.json();
 
-      for(const [fieldName, errs] of Object.entries(errRes.errors)){
-        if (fieldName.includes('.')) {
-          setError(form, fieldName.split('.')[0], errs[0], {
-            overwrite: true
+      for (const [fieldName, errs] of Object.entries(errRes.errors)) {
+        if (fieldName.includes(".")) {
+          setError(form, fieldName.split(".")[0], errs[0], {
+            overwrite: true,
           });
         } else {
           setError(form, fieldName, errs[0], {
-            overwrite: true
+            overwrite: true,
           });
         }
       }
 
-      return message(form, {type: 'error', msg: 'There are errors in your form! Check them and try again.'}, {status: res?.status || 400});
-		}
-
-    if ( ! res?.ok) {
-      return message(form, {type: 'error', msg: res?.statusText || 'An error occured while processing your request'}, {status: res?.status || 429});
+      return message(form, { type: "error", msg: "There are errors in your form! Check them and try again." }, { status: res?.status || 400 });
     }
 
-		return message(form, {type: 'success', msg: 'Card created successfully!'});
-	},
-}
+    if (!res?.ok) {
+      return message(form, { type: "error", msg: res?.statusText || "An error occured while processing your request" }, { status: res?.status || 429 });
+    }
+
+    return message(form, { type: "success", msg: "Card created successfully!" });
+  },
+};

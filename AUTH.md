@@ -1,6 +1,7 @@
 # SvelteKit Laravel SPA and JWT Auth Process
 
 ## MOST IMPORTANT VIDEOS
+
 - [@see https://www.youtube.com/watch?v=ujDnuzi1t1s](https://www.youtube.com/watch?v=ujDnuzi1t1s)
 - [@see https://www.youtube.com/watch?v=gKC7yvllsPE](https://www.youtube.com/watch?v=gKC7yvllsPE)
 - [@see https://www.youtube.com/watch?v=K1Tya6ovVOI](https://www.youtube.com/watch?v=K1Tya6ovVOI)
@@ -12,8 +13,8 @@
 - [@see https://medium.com/@slamtm608/laravel-sanctum-multi-authentication-504b9489a2cc](https://medium.com/@slamtm608/laravel-sanctum-multi-authentication-504b9489a2cc)
 - [@see https://stackoverflow.com/questions/61170647/](https://stackoverflow.com/questions/61170647/laravel-sanctum-can-be-use-multiauth-guard)
 
-
 ## OTHER NECESSARY ONES
+
 - [@see https://www.youtube.com/watch?v=pZdzzKf0h3E](https://www.youtube.com/watch?v=pZdzzKf0h3E)
 - [@see https://www.youtube.com/watch?v=jIzPuM76-nI&list=PLlameCF3cMEssaXOEym93ID7_e6ZDyiGO](https://www.youtube.com/watch?v=jIzPuM76-nI&list=PLlameCF3cMEssaXOEym93ID7_e6ZDyiGO)
 - [@see https://laravel.com/docs/10.x/sanctum#spa-authentication](https://laravel.com/docs/10.x/sanctum#spa-authentication)
@@ -25,8 +26,6 @@
 - [@see https://laracasts.com/discuss/channels/laravel/laravel-sanctum-with-angular-csrf-token-mismatch?page=1&replyId=917041](https://laracasts.com/discuss/channels/laravel/laravel-sanctum-with-angular-csrf-token-mismatch?page=1&replyId=917041)
 - [@see https://brightsec.com/blog/what-is-csrf-token-mismatch-and-6-ways-to-fix-it/#:~:text=Here%20are%20the%20most%20common,will%20result%20in%20a%20mismatch.](https://brightsec.com/blog/what-is-csrf-token-mismatch-and-6-ways-to-fix-it/#:~:text=Here%20are%20the%20most%20common,will%20result%20in%20a%20mismatch.)
 
-
-
 ### NOTE
 
 First of all, to see your request and response headers, Add this to your env files
@@ -37,13 +36,11 @@ LOG_REQUEST_HEADERS=FALSE #add logger(['$response->headers' => $response->header
 
 Then you have to install sanctum if you're on 10 and below 'composer require laravel/sanctum' and publish the config file 'php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"' and run the migrations 'php artisan migrate'
 
-
 There are two ways to authenticate with Sanctum. JWTs and SPA mode. The SPA mode uses the web guard along with api guard. IT does not use JWT token but CSRF cookies. This method is where this issue is most present. This CSRF cookies is where the issues come from.
 
 For this feature, Sanctum does not use tokens of any kind. Instead, Sanctum uses Laravel's built-in cookie based session authentication services. This approach to authentication provides the benefits of CSRF protection, session authentication, as well as protects against leakage of the authentication credentials via XSS.
 
-But your SPA and API must share the same top-level domain. However, they may be placed on different subdomains. Also, you should ensure that you send the Accept: application/json header /* or implement the ForceJSON middleware as shown below */ and either the Referer or Origin header with your request.
-
+But your SPA and API must share the same top-level domain. However, they may be placed on different subdomains. Also, you should ensure that you send the Accept: application/json header /_ or implement the ForceJSON middleware as shown below _/ and either the Referer or Origin header with your request.
 
 ## Steps to implement SPA
 
@@ -87,7 +84,6 @@ return [
 
 3. Apply the "auth:sanctum" guard to your authenticated routes, the "api" guard to ALL your routes
 
-
 4. Make sure your env details are correct and that the relevant fields in auth.php are set
 
 ```env
@@ -97,7 +93,6 @@ AUTH_MODEL='Modules\AppUser\Models\AppUser'
 SANCTUM_STATEFUL_DOMAINS=localhost:5173,localhost #very very very important
 SESSION_DOMAIN=.localhost # this is also very important when you are using subdomains @see https://laravel.com/docs/10.x/sanctum#cors-and-cookies
 ```
-
 
 5. Configure your trusted hosts. @see [configuring-trusted-hosts](https://laravel.com/docs/10.x/requests#configuring-trusted-hosts)
 
@@ -124,7 +119,7 @@ VITE_LOGOUT_PATH="/auth/logout/"
 ```js
 //helpers.js
 
-import { PUBLIC_VITE_BASE_API, PUBLIC_VITE_BASE_DOMAIN } from '$env/static/public';
+import { PUBLIC_VITE_BASE_API, PUBLIC_VITE_BASE_DOMAIN } from "$env/static/public";
 
 /**
  * Custom function to set API headers and make API calls
@@ -133,90 +128,91 @@ import { PUBLIC_VITE_BASE_API, PUBLIC_VITE_BASE_DOMAIN } from '$env/static/publi
  *
  * @returns {Promise<Response> | undefined}
  */
-export async function api({toBaseDomain, resource, event, method, data, logResponse}) {
-	const base = PUBLIC_VITE_BASE_DOMAIN
-	const baseApi = PUBLIC_VITE_BASE_API
-	let fullurl = toBaseDomain ? base : baseApi
+export async function api({ toBaseDomain, resource, event, method, data, logResponse }) {
+  const base = PUBLIC_VITE_BASE_DOMAIN;
+  const baseApi = PUBLIC_VITE_BASE_API;
+  let fullurl = toBaseDomain ? base : baseApi;
 
-	if (resource) {
-		fullurl += resource
-	}
-
-  console.log('--------------- API Request: ' + method.toUpperCase() + ' ' + fullurl);
-
-	const response = await event?.fetch(fullurl, {
-		method: method,
-		headers: {
-			'content-type': 'application/json',
-			'accept': 'application/json',
-			'cookie': event.request?.headers?.get('cookie') || '',
-			'referer': event.request?.headers?.get('referer') || '',
-      'x-xsrf-token': event.cookies.get('XSRF-TOKEN') || '',
-		},
-		body: data && JSON.stringify(data),
-	});
-
-  if(logResponse){
-    console.log('--------------- API Response: ');
-    let spyResponse = await response?.clone();
-    console.log({status: spyResponse?.status, body: [205, 204].includes(spyResponse?.status) ? null : await spyResponse?.json()}, '\n\n')
+  if (resource) {
+    fullurl += resource;
   }
 
-	return response;
+  console.log("--------------- API Request: " + method.toUpperCase() + " " + fullurl);
+
+  const response = await event?.fetch(fullurl, {
+    method: method,
+    headers: {
+      "content-type": "application/json",
+      accept: "application/json",
+      cookie: event.request?.headers?.get("cookie") || "",
+      referer: event.request?.headers?.get("referer") || "",
+      "x-xsrf-token": event.cookies.get("XSRF-TOKEN") || "",
+    },
+    body: data && JSON.stringify(data),
+  });
+
+  if (logResponse) {
+    console.log("--------------- API Response: ");
+    let spyResponse = await response?.clone();
+    console.log({ status: spyResponse?.status, body: [205, 204].includes(spyResponse?.status) ? null : await spyResponse?.json() }, "\n\n");
+  }
+
+  return response;
 }
 ```
 
 ```js
 //hooks.server.js file
 
-import { parse } from 'cookie';
-import { api } from '$lib/helpers';
-import scp from 'set-cookie-parser';
+import { parse } from "cookie";
+import { api } from "$lib/helpers";
+import scp from "set-cookie-parser";
 import { dev } from "$app/environment";
-import { redirect } from '@sveltejs/kit';
-import { sequence } from '@sveltejs/kit/hooks';
-import { handleDeviecDetector } from 'sveltekit-device-detector';
+import { redirect } from "@sveltejs/kit";
+import { sequence } from "@sveltejs/kit/hooks";
+import { handleDeviecDetector } from "sveltekit-device-detector";
 
 /** @type {import('@sveltejs/kit').Handle} */
-async function logger({event, resolve}){
+async function logger({ event, resolve }) {
   const start_time = Date.now();
 
   //Await here. Run other hooks AND LOAD FUNCTIONS then come back here to continue
-  const response = await resolve(event)
+  const response = await resolve(event);
 
-  if ( dev && ! event.request.url.includes('assets') ) {
+  if (dev && !event.request.url.includes("assets")) {
     console.log(`
       INTERNAL REQUEST: ${Date.now() - start_time}ms ${event.locals.deviceName} ${event.request.method} ${event.url.pathname}
-    `)
+    `);
   }
 
   return response;
 }
 
 /** @type {import('@sveltejs/kit').Handle} */
-async function setCsrf({event, resolve}){
-	const cookies = parse(event.request.headers.get('cookie') || '')
-	event.locals.session = cookies[import.meta.env.VITE_SESSION_NAME]
+async function setCsrf({ event, resolve }) {
+  const cookies = parse(event.request.headers.get("cookie") || "");
+  event.locals.session = cookies[import.meta.env.VITE_SESSION_NAME];
 
-	if (!event.locals.session && ! event.route.id?.includes('http://')) { //fire this ONLY on requests that hit our back end. Dont use this on requests that hit internal routes
+  if (!event.locals.session && !event.route.id?.includes("http://")) {
+    //fire this ONLY on requests that hit our back end. Dont use this on requests that hit internal routes
     await api({
-      method: 'get',
-			resource: 'sanctum/csrf-cookie',
+      method: "get",
+      resource: "sanctum/csrf-cookie",
       toBaseDomain: true,
       event,
-		});
-	}
+    });
+  }
 
   return resolve(event);
 }
 
 /** @type {import('@sveltejs/kit').Handle} */
-async function addSecurityHeaders({event, resolve}){
-
-	const securityHeaders = { //@see https://edoverflow.com/2023/sveltekit-security-headers/
-    'Cross-Origin-Embedder-Policy': 'require-corp',
-    'Cross-Origin-Opener-Policy': 'same-origin',
-    'Cross-Origin-Resource-Policy': 'same-origin',
+async function addSecurityHeaders({ event, resolve }) {
+  const securityHeaders = {
+    //@see https://edoverflow.com/2023/sveltekit-security-headers/
+    "Cross-Origin-Embedder-Policy": "require-corp",
+    "Cross-Origin-Opener-Policy": "same-origin",
+    "Cross-Origin-Resource-Policy": "same-origin",
     // 'Content-Security-Policy': 'script-src \'self\' \'nonce-Y70QFNhAVmer2wdobT8YoQ==\'',
     // 'Referrer-Policy': 'no-referrer',
     // 'Strict-transport-security': 'max-age=15552000; includeSubDomains',
@@ -224,96 +220,91 @@ async function addSecurityHeaders({event, resolve}){
     // 'X-DNS-Prefetch-Control': 'off',
     // 'X-Download-Options': 'noopen',
     // 'X-Permitted-Cross-Domain-Policies': 'none',
-    'X-Frame-Options': 'SAMEORIGIN',
-    'X-XSS-Protection': '0',
-  }
+    "X-Frame-Options": "SAMEORIGIN",
+    "X-XSS-Protection": "0",
+  };
 
   const response = await resolve(event);
 
-  Object.entries(securityHeaders).forEach(
-      ([header, value]) => response.headers.set(header, value)
-  );
+  Object.entries(securityHeaders).forEach(([header, value]) => response.headers.set(header, value));
 
   return response;
 }
 
 /** @type {import('@sveltejs/kit').Handle} */
-async function getUserDetails({event, resolve}){
-  if ( ! event.locals?.user?.name && ! event.route.id?.includes('api/home') && ! event.request.url.includes('assets')) {
-		const getUserDetails = await api({
-			method: 'get',
-			resource: 'user',
-			event,
-		});
+async function getUserDetails({ event, resolve }) {
+  if (!event.locals?.user?.name && !event.route.id?.includes("api/home") && !event.request.url.includes("assets")) {
+    const getUserDetails = await api({
+      method: "get",
+      resource: "user",
+      event,
+    });
 
-    event.locals.user = await getUserDetails?.json() //use this to determine auth on frontend. Before accessing auth routes if this is null redirect to login page
-	}
+    event.locals.user = await getUserDetails?.json(); //use this to determine auth on frontend. Before accessing auth routes if this is null redirect to login page
+  }
 
   event.locals.deviceName = event.locals.deviceType.isDesktop
-                              ? `${event.locals.deviceType?.mobileVendor || ''} ${event.locals.deviceType?.mobileModel || ''}`
-                              : `${event.locals.deviceType?.mobileVendor || ''} ${event.locals.deviceType?.mobileModel || ''} ${event.locals.deviceType?.osVersion || ''}`;
+    ? `${event.locals.deviceType?.mobileVendor || ""} ${event.locals.deviceType?.mobileModel || ""}`
+    : `${event.locals.deviceType?.mobileVendor || ""} ${event.locals.deviceType?.mobileModel || ""} ${event.locals.deviceType?.osVersion || ""}`;
 
   return resolve(event);
 }
 
 /** @type {import('@sveltejs/kit').Handle} */
-function authorize({event, resolve}){
-
-  if ( ! event.request.url.includes('assets')) {
+function authorize({ event, resolve }) {
+  if (!event.request.url.includes("assets")) {
     console.log(`--------------AUTHORIZING ${event.request.url}---------------`);
-    console.log({user: event.locals?.user?.name});
+    console.log({ user: event.locals?.user?.name });
   }
 
-  if (event.url.pathname.startsWith('/user') && ! event.locals?.user?.name) {
-    redirect(303, '/login') //303 will always redirect with GET, 307 will redirect with the original request method, while 302 is just 303 made popular
+  if (event.url.pathname.startsWith("/user") && !event.locals?.user?.name) {
+    redirect(303, "/login"); //303 will always redirect with GET, 307 will redirect with the original request method, while 302 is just 303 made popular
   }
 
-  if (event.route.id?.includes('(auth)') && event.locals?.user?.name) {
-    redirect(303, '/user/order')
+  if (event.route.id?.includes("(auth)") && event.locals?.user?.name) {
+    redirect(303, "/user/order");
   }
 
   return resolve(event);
 }
 
 /** @type {import('@sveltejs/kit').HandleFetch} */
-export const handleFetch = async ({request, fetch, event}) => {
-
+export const handleFetch = async ({ request, fetch, event }) => {
   console.log(`--------------FETCHING ${request.url}---------------`);
 
   const response = await fetch(request);
 
   /** @type {CookieSerializeOptions[]} */
-  let cookies = scp.parse(response)
+  let cookies = scp.parse(response);
 
   if (cookies.length) {
-    cookies.forEach(cookie => {
+    cookies.forEach((cookie) => {
       event.cookies.set(cookie.name, cookie.value, {
         ...cookie,
         sameSite: cookie.sameSite,
         secure: !dev,
       });
-    })
+    });
   }
 
-  return response
-}
+  return response;
+};
 
 /** @type {import('@sveltejs/kit').HandleServerError} */
-export const handleError = ({event, error}) => {
-  if ( ! event.request.url.includes('assets')) {
-    console.log('error', error);
+export const handleError = ({ event, error }) => {
+  if (!event.request.url.includes("assets")) {
+    console.log("error", error);
 
     return {
-      message: 'Oops',
+      message: "Oops",
       code: error?.code ?? 500,
-    }
+    };
   }
-}
+};
 
 /** @type {import('@sveltejs/kit').Handle} */
-export const handle = sequence(handleDeviecDetector({}),logger, setCsrf, getUserDetails, authorize, addSecurityHeaders);
+export const handle = sequence(handleDeviecDetector({}), logger, setCsrf, getUserDetails, authorize, addSecurityHeaders);
 ```
-
 
 9. If you want to use this app for API only add a `ForceJSON` middleware to `'protected $middleware'` group in your Laravel App.
 
@@ -346,46 +337,46 @@ class ForceJSON
 
 ```ts
 //$lib/types.d.ts
-import type { RequestEvent } from '@sveltejs/kit';
+import type { RequestEvent } from "@sveltejs/kit";
 
 export interface ApiParams {
-	method: string;
-	event?: RequestEvent;
-	resource?: string;
+  method: string;
+  event?: RequestEvent;
+  resource?: string;
   /** Indicates whether to append the base url to the supplied resource url */
   toBaseDomain?: boolean;
   logResponse?: boolean;
-	data?: Record<string, unknown> | null;
+  data?: Record<string, unknown> | null;
 }
 export type MediaHandler = {
-  isDesktop: boolean,
-  isMobile: boolean,
-}
+  isDesktop: boolean;
+  isMobile: boolean;
+};
 
-OR
+OR;
 
 //app.d.ts @see https://kit.svelte.dev/docs/types#app
 
-import type { AppUser } from '$lib/types';
-import type { DevicePayload } from 'sveltekit-device-detector';
+import type { AppUser } from "$lib/types";
+import type { DevicePayload } from "sveltekit-device-detector";
 
 // for information about these interfaces
 declare global {
-	namespace App {
-		// interface Error {}
-		interface Locals {
+  namespace App {
+    // interface Error {}
+    interface Locals {
       user: AppUser | undefined;
       session: string | undefined;
       deviceType: DevicePayload;
       deviceName?: string;
     }
-		interface PageData {
+    interface PageData {
       deviceType: DevicePayload;
       deviceName?: string;
     }
-		// interface PageState {}
-		// interface Platform {}
-	}
+    // interface PageState {}
+    // interface Platform {}
+  }
 }
 
 export {};
@@ -395,60 +386,56 @@ export {};
 
 ```js
 // logic/+page.server.js
-import { api } from '$lib/helpers';
-import { redirect, fail } from '@sveltejs/kit';
+import { api } from "$lib/helpers";
+import { redirect, fail } from "@sveltejs/kit";
 
 /** @type {import('./$types').Actions} */
 export const actions = {
-
   /** @param {import('@sveltejs/kit').RequestEvent} event */
-	default: async (event) => {
-		const form = await event.request.formData();
+  default: async (event) => {
+    const form = await event.request.formData();
 
-		const response = await api({
-			method: 'post',
-			resource: 'login',
-			data: {
-				'email': form.has('email') ? form.get('email') : undefined,
-				'password': form.has('password') ? form.get('password') : undefined,
-				'remember': form.has('rememberme') ? form.get('rememberme') : false,
-        'device_name': event.locals.deviceName,
-			},
+    const response = await api({
+      method: "post",
+      resource: "login",
+      data: {
+        email: form.has("email") ? form.get("email") : undefined,
+        password: form.has("password") ? form.get("password") : undefined,
+        remember: form.has("rememberme") ? form.get("rememberme") : false,
+        device_name: event.locals.deviceName,
+      },
       event,
-		});
+    });
 
-		if (response?.status == 422) {
-			return fail(response?.status || 400, await response?.json());
-		}
-
-    if ( ! response?.ok) {
-      return fail(response?.status || 500, {message: response?.statusText || 'An error occured while processing your request'});
+    if (response?.status == 422) {
+      return fail(response?.status || 400, await response?.json());
     }
 
-		if (response?.status == 200 || response?.status == 201) {
-			throw redirect(302, '/user/order')
-		}
-	},
-}
+    if (!response?.ok) {
+      return fail(response?.status || 500, { message: response?.statusText || "An error occured while processing your request" });
+    }
+
+    if (response?.status == 200 || response?.status == 201) {
+      throw redirect(302, "/user/order");
+    }
+  },
+};
 ```
 
 <br>
 <br>
 
-
 ## Steps to implement JWTs for Mobile Apps
-
 
 - [@see https://www.youtube.com/watch?v=jIzPuM76-nI&list=PLlameCF3cMEssaXOEym93ID7_e6ZDyiGO](https://www.youtube.com/watch?v=jIzPuM76-nI&list=PLlameCF3cMEssaXOEym93ID7_e6ZDyiGO)
 - [@see https://laravel.com/docs/10.x/sanctum#issuing-mobile-api-tokens](https://laravel.com/docs/10.x/sanctum#issuing-mobile-api-tokens)
-
 
 In this method, you will get JWT tokens (from your login routes) that will be used with `Bearer Auth` headers
 
 1. ALL Your routes MUST implement the `'api'` guard, protected routes should implement the `'auth:sanctum'` guard, and any routes MUST NOT implement `'web'` guard.
 
 2. In `app/Http/Kernel.php`, this line under api `'\Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,'` MUST be commented out.
-    - **NOTE:** If you have to use both SPA and JWT sanctum authentications together, Create a new moddleware that extends Sanctum's `'EnsureFrontendRequestsAreStateful::class'` like this.
+   - **NOTE:** If you have to use both SPA and JWT sanctum authentications together, Create a new moddleware that extends Sanctum's `'EnsureFrontendRequestsAreStateful::class'` like this.
 
 ```php
 namespace App\Http\Middleware;
@@ -490,7 +477,6 @@ and then use this class instead in the api key of `'Kernel.php'`
 ],
 ```
 
-
 1. Setup your Login POST route something like this
 
 ```php
@@ -511,7 +497,7 @@ and then use this class instead in the api key of `'Kernel.php'`
     return ['token' => $user->createToken($request->device_name)->plainTextToken];
 ```
 
- These tokens are saved in the database and are accessible via `$user->tokens()` relationship from the `'HasApiTokens'` trait.
+These tokens are saved in the database and are accessible via `$user->tokens()` relationship from the `'HasApiTokens'` trait.
 
 4. When the mobile application uses the token to make an API request to your application, it should pass the token in the Authorization header as a `Bearer Token`.
 
@@ -521,13 +507,12 @@ and then use this class instead in the api key of `'Kernel.php'`
 
 7. You can give tokens abilities. `@see https://laravel.com/docs/10.x/sanctum#token-abilities` and also use these abilities for auth guarding `@see https://medium.com/@slamtm608/laravel-sanctum-multi-authentication-504b9489a2cc`
 
-3. Token expiration configurations `@see https://laravel.com/docs/10.x/sanctum#token-expiration`
+8. Token expiration configurations `@see https://laravel.com/docs/10.x/sanctum#token-expiration`
 
-4. Cleaning up expired tokens: `$schedule->command('sanctum:prune-expired --hours=24')->daily();`
+9. Cleaning up expired tokens: `$schedule->command('sanctum:prune-expired --hours=24')->daily();`
 
 <br>
 <br>
-
 
 ## Steps to Implement Multi Auth with Sanctum
 
@@ -541,7 +526,6 @@ and then use this class instead in the api key of `'Kernel.php'`
 ### Approach 2
 
 The link above is one possible implementation that is easy to wire up, but I went for a different approach
-
 
 1. Add this to your guards array
 
@@ -563,7 +547,6 @@ The link above is one possible implementation that is easy to wire up, but I wen
 
 and `AUTH_ADMIN_MODEL='Modules\SuperAdmin\Models\SuperAdmin'` to your env
 
-
 3. In sanctum.php add `"admin"` to your guards array. It should now look something like this
 
 ```php
@@ -572,7 +555,7 @@ and `AUTH_ADMIN_MODEL='Modules\SuperAdmin\Models\SuperAdmin'` to your env
 
 4. Make sure your SuperAdmin model has `'HasApiTokens'` trait added to it
 
-5. Your `RedirectIfAuthenticated`'s middleware  `handle()` method should acknowledge previous auth
+5. Your `RedirectIfAuthenticated`'s middleware `handle()` method should acknowledge previous auth
 
 ```php
 foreach ($guards as $guard) {
@@ -582,14 +565,12 @@ foreach ($guards as $guard) {
 }
 ```
 
-
 6. Add 2 new middlewares to your Kernel.php
 
 ```php
 'admins' => \Modules\SuperAdmin\Http\Middleware\AdminsOnly::class,
 'users' => \Modules\AppUser\Http\Middleware\AppUsersOnly::class,
 ```
-
 
 ```php
 
@@ -616,7 +597,6 @@ class AdminsOnly
 }
 ```
 
-
 ```php
 
 namespace Modules\AppUser\Http\Middleware;
@@ -641,8 +621,6 @@ class AppUsersOnly
   }
 }
 ```
-
-
 
 7. Your AuthService should be like this
 
@@ -821,7 +799,6 @@ class AuthService
 }
 ```
 
-
 1. And your LoginController should be
 
 ```php
@@ -875,7 +852,6 @@ class AuthenticatedSessionController extends Controller
   }
 }
 ```
-
 
 9. Your Routes should have your middlewares applied like this
 

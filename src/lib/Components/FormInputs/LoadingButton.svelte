@@ -7,21 +7,38 @@
 </LoadingButton> -->
 
 <script>
-	import { cn } from '$lib/helpers';
-	import { readable } from 'svelte/store';
-  import { animatedDotsSVG, spinnerSVG } from '../iconPaths';
+  import { cn } from "$lib/helpers";
+  import { readable } from "svelte/store";
+  import { animatedDotsSVG, spinnerSVG } from "../iconPaths";
 
   export { className as class };
-  export let timeout = readable(false), delayed = readable(false), submitting = readable(false), label = '';
+  export let timeout = readable(false),
+    delayed = readable(false),
+    submitting = readable(false),
+    disabled = false,
+    label = "";
 
-  let className = '';
+  let className = "";
 </script>
 
-<button {...$$restProps} class={cn('w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-brand-600 text-white hover:bg-brand-700 focus:outline-none focus:bg-brand-700 disabled:opacity-50 disabled:pointer-events-none', className)} disabled={$submitting}>
+<button
+  {...$$restProps}
+  class={cn(
+    "inline-flex w-full items-center justify-center gap-x-2 rounded-lg border border-transparent bg-brand-600 px-4 py-3 text-sm font-medium text-white hover:bg-brand-700 focus:bg-brand-700 focus:outline-none disabled:pointer-events-none disabled:opacity-50",
+    className,
+  )}
+  disabled={$submitting || disabled}
+>
   {#if $timeout}
     Still Loading {@html animatedDotsSVG}
   {:else}
-    {#if label} {label} {:else} <slot /> {/if}
-    {#if $delayed} {@html spinnerSVG} {/if}
+    {#if label}
+      {label}
+    {:else}
+      <slot />
+    {/if}
+    {#if $delayed}
+      {@html spinnerSVG}
+    {/if}
   {/if}
 </button>

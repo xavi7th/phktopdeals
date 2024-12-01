@@ -1,35 +1,40 @@
 <script>
-  import { page } from '$app/stores'
+  import { page } from "$app/stores";
 
-  $: console. log ('page', $page);
+  $: console.log("page", $page);
 </script>
 
 <main class="error-page py-40">
-	<div class="container flex flex-col items-center text-center gap-y-16">
-		<div class="eyes flex justify-center gap-0.5">
-			<div class="eye w-20 h-20 bg-yellow-500 dark:bg-brand rounded-[50%] grid place-items-center">
-				<div class="w-6 h-6 bg-gray-700 rounded-[50%] eye-pupil pupil-left"></div>
-			</div>
-			<div class="eye w-20 h-20 bg-yellow-500 dark:bg-brand rounded-[50%] grid place-items-center">
-				<div class="w-6 h-6 bg-gray-700 rounded-[50%] eye-pupil pupil-right"></div>
-			</div>
-		</div>
+  <div class="container flex flex-col items-center gap-y-16 text-center">
+    <div class="eyes flex justify-center gap-0.5">
+      <div class="eye grid h-20 w-20 place-items-center rounded-[50%] bg-yellow-500 dark:bg-brand">
+        <div class="eye-pupil pupil-left h-6 w-6 rounded-[50%] bg-gray-700"></div>
+      </div>
+      <div class="eye grid h-20 w-20 place-items-center rounded-[50%] bg-yellow-500 dark:bg-brand">
+        <div class="eye-pupil pupil-right h-6 w-6 rounded-[50%] bg-gray-700"></div>
+      </div>
+    </div>
 
-		<div>
-			<h1 class="capitalise text-4xl font-semibold text-yellow-500 dark:text-brand">
+    <div>
+      <h1 class="capitalise text-4xl font-semibold text-yellow-500 dark:text-brand">
         {#if $page.status == 404}
           Looks like you're lost
         {:else}
           {$page.error?.message}
         {/if}
       </h1>
-			<p class="mt-2.5 text-md text-black dark:text-white">{$page.status} error</p>
-		</div>
+      <p class="text-md mt-2.5 text-black dark:text-white">{$page.status} error</p>
+    </div>
 
-		<a class="cta hover:bg-brand-400 border-2 border-sm border-brand-400 text-black hover:text-white hover:font-semibold dark:text-white py-4 px-8 border-md shadow-md shadow-brand-500 transition capitalize rounded-xl" href="/" aria-label="back to home" title="back to home">
+    <a
+      class="cta border-sm border-md rounded-xl border-2 border-brand-400 px-8 py-4 capitalize text-black shadow-md shadow-brand-500 transition hover:bg-brand-400 hover:font-semibold hover:text-white dark:text-white"
+      href="/"
+      aria-label="back to home"
+      title="back to home"
+    >
       back to home
     </a>
-	</div>
+  </div>
 </main>
 
 <style lang="scss">
@@ -37,11 +42,11 @@
     box-shadow: 0 7px 0 -2px $themePrimary;
   }
 
-  .eye-pupil{
+  .eye-pupil {
     animation: movePupil 2s infinite ease-in-out;
     transform-origin: center center;
 
-    &.pupil-right{
+    &.pupil-right {
       // To reverse the animation of the right eye, uncomment this.
       // animation-direction: reverse;
     }

@@ -1,21 +1,20 @@
 /** @type {import('./$types').LayoutServerLoad} */
-export async function load ( { locals } ) {
-
+export async function load({ locals }) {
   /** @type { import('$lib/types').AdminNavMenuItem[] } */
   const user_routes = [
     {
-        name: 'My Order',
-        description: 'View and track your purchases',
-        uri: '/user/order',
-        icon: 'shoppingBagSVG',
-        reload: false,
+      name: "My Order",
+      description: "View and track your purchases",
+      uri: "/user/order",
+      icon: "shoppingBagSVG",
+      reload: false,
     },
     {
-        name: 'Wallet',
-        description: 'Monitor your transactions',
-        uri: '/user/wallet',
-        icon: 'walletSVG',
-        reload: true,
+      name: "Wallet",
+      description: "Monitor your transactions",
+      uri: "/user/wallet",
+      icon: "walletSVG",
+      reload: true,
     },
     // {
     //     name: 'Wishlists',
@@ -48,38 +47,38 @@ export async function load ( { locals } ) {
     //     icon: 'shieldTickSVG',
     // },
     {
-        name: 'Gift Cards',
-        description: 'Variety of Gift Cards',
-        uri: '/store/products/gift-card',
-        icon: 'giftCardSVGAlt',
-        reload: true,
+      name: "Gift Cards",
+      description: "Variety of Gift Cards",
+      uri: "/store/products/gift-card",
+      icon: "giftCardSVGAlt",
+      reload: true,
     },
     {
-        name: 'eSims',
-        description: 'Purchase your global e-sims',
-        uri: '/user/products/e-sim',
-        icon: 'eSimSVG',
-        reload: true,
+      name: "eSims",
+      description: "Purchase your global e-sims",
+      uri: "/store/products/eSims",
+      icon: "eSimSVG",
+      reload: true,
     },
     {
-        name: 'Top Up',
-        description: 'Purchase your top up cards',
-        uri: '/user/products/top-up',
-        icon: 'topUpSVGAlt',
-        reload: true,
+      name: "Top Up",
+      description: "Purchase your top up cards",
+      uri: "/store/products/top-up",
+      icon: "topUpSVGAlt",
+      reload: true,
     },
     {
-        name: 'Settings',
-        description: 'Personalize your preferences',
-        uri: '/user/settings',
-        icon: 'gearsSVG',
-        reload: false,
+      name: "Settings",
+      description: "Personalize your preferences",
+      uri: "/user/settings",
+      icon: "gearsSVG",
+      reload: false,
     },
-  ]
+  ];
 
   return {
     /** @type { import('$lib/types').AppUser } */
     user: locals.user,
-    user_routes
-   };
+    user_routes,
+  };
 }

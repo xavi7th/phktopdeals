@@ -1,10 +1,10 @@
-import { type } from 'arktype';
+import { type } from "arktype";
 
 export const AppUserSchema = type({
   full_name: type("string>3").describe("provided"),
   email: type("string.email").describe("provided"),
   "phone?": "string|null",
-  "avatar?": type("File|null|undefined").describe('provided').optional(),
+  "avatar?": type("File|null|undefined").describe("provided").optional(),
   "avatar_url?": "string|null",
   is_active: "boolean",
   "is_admin?": "boolean",
@@ -12,11 +12,11 @@ export const AppUserSchema = type({
 });
 
 export const AppUserDefaults = {
-  full_name: '',
-  email: '',
-  phone: '',
+  full_name: "",
+  email: "",
+  phone: "",
   avatar: null,
-  avatar_url: '',
+  avatar_url: "",
   is_active: false,
   is_admin: false,
   is_verified: false,
@@ -51,7 +51,7 @@ export const PurchaseItemDefaults = {
 export const GiftCardSchema = type({
   product_name: type("string>1").describe("provided"),
   product_type: ["string>1", "@", "selected"], //optional syntax
-  product_image: type("File | null").describe('provided').optional(),
+  product_image: type("File | null").describe("provided").optional(),
   brand_id: type("string>1").describe("provided"),
   product_category: ["string[]>1", "@", "2 and above"],
   regions: ["string[]>1", "@", "selected"],
@@ -59,25 +59,25 @@ export const GiftCardSchema = type({
   percentage_discount: "0<=number<100",
   purchase_commission: type("0<number<100").describe("at least 0.5"),
   variable_denomination: "boolean?",
-  'price_denominations?': "string[]",
+  "price_denominations?": "string[]",
   "discount_until?": "string|null|undefined",
   faqs: type("string").describe("provided"),
 });
 
 export const GiftCardDefaults = {
-  product_name: '',
-  product_type: 'gift card',
+  product_name: "",
+  product_type: "gift card",
   brand_id: null,
   product_image: null,
-  product_category: [''],
-  regions: [''],
-  price_denominations: [''],
+  product_category: [""],
+  regions: [""],
+  price_denominations: [""],
   product_min_price: 0,
   percentage_discount: 0,
   purchase_commission: 5,
   variable_denomination: false,
   discount_until: null,
-  faqs: undefined
+  faqs: undefined,
 };
 
 export const eSimSchema = type({
@@ -91,11 +91,11 @@ export const eSimSchema = type({
 });
 
 export const eSimDefaults = {
-  product_coverage: '',
-  product_name: '',
-  product_type: '', //optional syntax
+  product_coverage: "",
+  product_name: "",
+  product_type: "", //optional syntax
   product_image: null,
-  data_amount: '',
+  data_amount: "",
   validity: null,
   cost: 0,
 };
@@ -105,7 +105,7 @@ export const brandSchema = type({
 });
 
 export const brandDefaults = {
-  name: '',
+  name: "",
 };
 
 export const brandEditSchema = type({
@@ -114,8 +114,8 @@ export const brandEditSchema = type({
 });
 
 export const brandEditDefault = {
-  uuid: '',
-  name: '',
+  uuid: "",
+  name: "",
 };
 
 export const gameSchema = type({
@@ -132,16 +132,16 @@ export const gameSchema = type({
 });
 
 export const gameDefaults = {
-  product_name: '',
-  product_type: '',
+  product_name: "",
+  product_type: "",
   product_image: null,
-  product_category: [''], // games category is different it should be steam, apple or google
+  product_category: [""], // games category is different it should be steam, apple or google
   product_price: 0,
   percentage_discount: 0,
   purchase_commission: 5,
   variable_denomination: false,
   discount_until: null,
-  faqs: undefined
+  faqs: undefined,
 };
 
 export const topUpSchema = type({
@@ -153,21 +153,21 @@ export const topUpSchema = type({
   percentage_discount: "0<=number<100",
   purchase_commission: "0<number<100",
   variable_denomination: "boolean?",
-  'price_denominations?': "number[]", // how are we going to get the price discount select?
+  "price_denominations?": "number[]", // how are we going to get the price discount select?
   "discount_until?": "Date|null",
   faqs: type("string").describe("not be empty"),
 });
 
 export const topUpDefaults = {
-  product_name: '',
-  product_type: '',
+  product_name: "",
+  product_type: "",
   product_image: null,
-  product_category: [''],
+  product_category: [""],
   price_denominations: [0],
   product_min_price: 0,
   percentage_discount: 0,
   purchase_commission: 5,
   variable_denomination: false,
   discount_until: null,
-  faqs: undefined
+  faqs: undefined,
 };

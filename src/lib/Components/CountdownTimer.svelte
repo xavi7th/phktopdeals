@@ -1,81 +1,77 @@
 <script>
-	import { cn } from '$lib/helpers';
-	import { fly } from 'svelte/transition';
-	import { onDestroy, onMount } from 'svelte';
+  import { cn } from "$lib/helpers";
+  import { fly } from "svelte/transition";
+  import { onDestroy, onMount } from "svelte";
 
-	export { className as class };
+  export { className as class };
 
-	export let hideZeroValues = false, // toggles whether to display 0d 0h 05m or just the 05m
+  export let hideZeroValues = false, // toggles whether to display 0d 0h 05m or just the 05m
     /** @type {string|number} */
     date = new Date().getTime() + 10000, // example Jan 5, 2030 15:37:25 or epoch timestamp
-		hideOnFinish = false, // remove the displayText when it finishes
-		invisible = false, // Make the timer run without any visual display on the page
-		singleCharacterTimer = true, // changes the displays to be 5m or 5 minutes
-    timerClasses = 'font-bold text-xl',
-		onFinish = () => console.log('-----===== Timer Ended! =====------');
+    hideOnFinish = false, // remove the displayText when it finishes
+    invisible = false, // Make the timer run without any visual display on the page
+    singleCharacterTimer = true, // changes the displays to be 5m or 5 minutes
+    timerClasses = "font-bold text-xl",
+    onFinish = () => console.log("-----===== Timer Ended! =====------");
 
-	let className = '',
-		displayText = '',
-		/** @type {number|undefined} */
-		intervalId = undefined,
+  let className = "",
+    displayText = "",
+    /** @type {number|undefined} */
+    intervalId = undefined,
     countDownEpoch = 0;
 
-	function resetInterval() {
-    displayText = '';
-		if (intervalId) {
-			clearInterval(intervalId);
-			intervalId = undefined;
-		}
-	}
+  function resetInterval() {
+    displayText = "";
+    if (intervalId) {
+      clearInterval(intervalId);
+      intervalId = undefined;
+    }
+  }
 
-	function tick() {
+  function tick() {
     let now = new Date().getTime(); // Get current epoch time
-		let distance = countDownEpoch - now; // Find the distance between now and the count down date
-		let seconds = Math.floor((distance / 1000) % 60);
-		let minutes = Math.floor((distance / (1000 * 60)) % 60);
-		let hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
-		let days = Math.floor(distance / (1000 * 60 * 60) / 24);
+    let distance = countDownEpoch - now; // Find the distance between now and the count down date
+    let seconds = Math.floor((distance / 1000) % 60);
+    let minutes = Math.floor((distance / (1000 * 60)) % 60);
+    let hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
+    let days = Math.floor(distance / (1000 * 60 * 60) / 24);
 
-		displayText = '';
+    displayText = "";
 
-		if (hideZeroValues) {
-			if (days > 0)
-				displayText += ` ${days > 9 ? '' : 0}${days}${singleCharacterTimer ? 'd' : days > 1 ? ' days' : ' day'}`;
-			if (hours > 0)
-				displayText += ` ${hours > 9 ? '' : 0}${hours}${singleCharacterTimer ? 'h' : hours > 1 ? ' hours' : ' hour'}`;
-			if (minutes > 0)
-				displayText += ` ${minutes > 9 ? '' : 0}${minutes}${singleCharacterTimer ? 'm' : minutes > 1 ? ' minutes' : ' minute'}`;
-			if (seconds >= 0)
-				displayText += ` ${seconds > 9 ? '' : 0}${seconds}${singleCharacterTimer ? 's' : seconds > 1 ? ' seconds' : ' second'}`;
-		} else {
-			displayText = ` ${days > 9 ? '' : 0}${days}${singleCharacterTimer ? 'd' : days > 1 ? ' days' : ' day'}
-               ${hours > 9 ? '' : 0}${hours}${singleCharacterTimer ? 'h' : hours > 1 ? ' hours' : ' hour'}
-               ${minutes > 9 ? '' : 0}${minutes}${singleCharacterTimer ? 'm' : minutes > 1 ? ' minutes' : ' minute'}
-               ${seconds > 9 ? '' : 0}${seconds}${singleCharacterTimer ? 's' : seconds > 1 ? ' seconds' : ' second'}`;
-		}
+    if (hideZeroValues) {
+      if (days > 0) displayText += ` ${days > 9 ? "" : 0}${days}${singleCharacterTimer ? "d" : days > 1 ? " days" : " day"}`;
+      if (hours > 0) displayText += ` ${hours > 9 ? "" : 0}${hours}${singleCharacterTimer ? "h" : hours > 1 ? " hours" : " hour"}`;
+      if (minutes > 0) displayText += ` ${minutes > 9 ? "" : 0}${minutes}${singleCharacterTimer ? "m" : minutes > 1 ? " minutes" : " minute"}`;
+      if (seconds >= 0) displayText += ` ${seconds > 9 ? "" : 0}${seconds}${singleCharacterTimer ? "s" : seconds > 1 ? " seconds" : " second"}`;
+    } else {
+      displayText = ` ${days > 9 ? "" : 0}${days}${singleCharacterTimer ? "d" : days > 1 ? " days" : " day"}
+               ${hours > 9 ? "" : 0}${hours}${singleCharacterTimer ? "h" : hours > 1 ? " hours" : " hour"}
+               ${minutes > 9 ? "" : 0}${minutes}${singleCharacterTimer ? "m" : minutes > 1 ? " minutes" : " minute"}
+               ${seconds > 9 ? "" : 0}${seconds}${singleCharacterTimer ? "s" : seconds > 1 ? " seconds" : " second"}`;
+    }
 
     if (distance <= 0) {
-			resetInterval();
+      resetInterval();
 
-			if (! hideOnFinish && ! $$slots.contentAfterCountdown) {
-				displayText = '00 s';
-			}
+      if (!hideOnFinish && !$$slots.contentAfterCountdown) {
+        displayText = "00 s";
+      }
 
-			onFinish();
+      onFinish();
       countDownEpoch = -1;
-			// $emit('timer-stopped', { intervalId: intervalId, distance: distance });
-		}
-	}
+      // $emit('timer-stopped', { intervalId: intervalId, distance: distance });
+    }
+  }
 
-	onMount(() => {
+  onMount(() => {
     countDownEpoch = new Date(date).getTime();
 
-		resetInterval();
+    resetInterval();
 
-		intervalId = setInterval(tick, 1000);
-	});
+    intervalId = setInterval(tick, 1000);
+  });
 
-	onDestroy(() => resetInterval());
+  onDestroy(() => resetInterval());
 </script>
 
 <!-- EXAMPLE USAGE -->
@@ -95,25 +91,22 @@
 <!-- TODO: Implement minutes and seconds only counter eg 73 minutes 59 seconds -->
 <!-- TODO: Implement hours, minutes and seconds only counter eg 27 hours 59 minutes 59 seconds -->
 
-<div class={cn('relative min-h-6 text-center', className)} class:hidden={invisible}>
-	{#if displayText}
-		<p class="mb-0 whitespace-nowrap" in:fly={{ y: 10, duration: 500 }} out:fly={{ y: -30, duration: 400 }}>
-			<slot name="beforeDisplayText" />
+<div class={cn("relative min-h-6 text-center", className)} class:hidden={invisible}>
+  {#if displayText}
+    <p class="mb-0 whitespace-nowrap" in:fly={{ y: 10, duration: 500 }} out:fly={{ y: -30, duration: 400 }}>
+      <slot name="beforeDisplayText" />
 
-			<span class="{timerClasses}">{displayText}</span>
+      <span class={timerClasses}>{displayText}</span>
 
-			<slot name="afterDisplayText" />
-		</p>
+      <slot name="afterDisplayText" />
+    </p>
 
-		<slot />
-	{/if}
+    <slot />
+  {/if}
 
-	{#if $$slots.contentAfterCountdown && countDownEpoch == -1}
-		<p class="mb-0 whitespace-nowrap"
-			in:fly={{ x: -20, duration: 600, delay: 500 }}
-			out:fly={{ x: 30, duration: 500 }}
-		>
-			<slot name="contentAfterCountdown" />
-		</p>
-	{/if}
+  {#if $$slots.contentAfterCountdown && countDownEpoch == -1}
+    <p class="mb-0 whitespace-nowrap" in:fly={{ x: -20, duration: 600, delay: 500 }} out:fly={{ x: 30, duration: 500 }}>
+      <slot name="contentAfterCountdown" />
+    </p>
+  {/if}
 </div>

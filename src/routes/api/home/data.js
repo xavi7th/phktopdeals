@@ -1,16 +1,17 @@
 export const prod_desc = {
-  name: 'Assassin\'s Creed Brotherhood PC Ubisoft Connect CD Key',
-  product_type: 'Games',
-  url: '/store/gift-cards/itunes-card',
-  imgUrl: 'https://static.kinguin.net/media/images/products/_AssassinsCreedBrotherhood111.jpg',
-  country: 'US', //, 'Global', 'Global Except Latin America'
-  brand: 'Amazon', //Rewarble,
-  categories: ['entertainment', 'games', 'software'],
-  price_tags: { // All currencies will be set in dollars. We can implement a site-wide converter later OR we can have a field that specifies currencies (more difficult)
+  name: "Assassin's Creed Brotherhood PC Ubisoft Connect CD Key",
+  product_type: "Games",
+  url: "/store/gift-cards/itunes-card",
+  imgUrl: "https://static.kinguin.net/media/images/products/_AssassinsCreedBrotherhood111.jpg",
+  country: "US", //, 'Global', 'Global Except Latin America'
+  brand: "Amazon", //Rewarble,
+  categories: ["entertainment", "games", "software"],
+  price_tags: {
+    // All currencies will be set in dollars. We can implement a site-wide converter later OR we can have a field that specifies currencies (more difficult)
     min: 14.02,
-    denominations: [14.02, 22.40, 37, 55.30],
+    denominations: [14.02, 22.4, 37, 55.3],
     flexible: true, //determines whether they will be able to enter their own price. On create there will be a checkbox that determines if others will be added or not.
-    commission: 5 // a percentage that determines how much markup will be to the total purchase as business profit
+    commission: 5, // a percentage that determines how much markup will be to the total purchase as business profit
   },
   discount: 5, //percent off or false. If there is a discount display like this 9.5U will get you $10 (Assuming a 5% discount)
   discount_until: 3, //Number of days left for discount to expire. This may not be sent to front end. discount becomes false after this date. Those that match today come under today's deals

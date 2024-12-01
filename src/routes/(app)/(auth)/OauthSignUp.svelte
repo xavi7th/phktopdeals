@@ -1,6 +1,6 @@
 <script>
-	import SvgIcon from '$lib/Components/SvgIcon.svelte';
-	import { atSign, faceBookFilled, googleColored } from '$lib/Components/iconPaths';
+  import SvgIcon from "$lib/Components/SvgIcon.svelte";
+  import { atSign, faceBookFilled, googleColored } from "$lib/Components/iconPaths";
 
   export let register = false;
 </script>
@@ -18,12 +18,12 @@
   </a> -->
 
   <button type="button" class="relative flex h-[38px] items-center justify-center gap-1.5 rounded-full border dark:border-0 dark:bg-white/20">
-    <SvgIcon class="size-[1.2em]" svgHeight={128} slot={googleColored}/>
+    <SvgIcon class="size-[1.2em]" svgHeight={128} slot={googleColored} />
     <span class="rounded-sm text-sm dark:text-slate-50">Sign in with Google</span>
   </button>
 
   <button type="button" class="relative flex h-[38px] items-center justify-center gap-1.5 rounded-full border dark:border-0 dark:bg-white/20">
-    <SvgIcon class="size-[1.5em]" svgHeight={24} slot={faceBookFilled}/>
+    <SvgIcon class="size-[1.5em]" svgHeight={24} slot={faceBookFilled} />
     <span class="rounded-sm text-sm dark:text-slate-50">Sign in with Facebook</span>
   </button>
 </div>
