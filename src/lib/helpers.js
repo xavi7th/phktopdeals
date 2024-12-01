@@ -20,12 +20,12 @@ export const getErrorString = (errors) => {
 };
 
 /**
- * @param {number} amount The number to convert to currency
+ * @param {number | string} amount The number to convert to currency
  * @param {string} currencySymbol The currency symbol to use. Default Naira
  * @returns {string}
  */
 export const toCurrency = (amount, currencySymbol = "$") => {
-  if (isNaN(amount)) {
+  if (isNaN(Number(amount))) {
     return "Invalid Amount";
   }
 

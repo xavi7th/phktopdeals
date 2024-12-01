@@ -29,7 +29,7 @@ export const TopUpAccountSchema = type({
 
 export const TopUpAccountDefaults = {
   payment_method: null,
-  amount: 0,
+  amount: 20,
 };
 
 export const PurchaseItemSchema = type({

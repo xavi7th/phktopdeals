@@ -28,8 +28,6 @@
       class: "bg-red-100 text-red-800 dark:bg-red-500/10 dark:text-red-500",
     },
   };
-
-  $: console.log(transactions);
 </script>
 
 <svelte:head>
