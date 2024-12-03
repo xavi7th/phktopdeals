@@ -41,8 +41,8 @@
             class="relative mr-6 inline-flex size-[46px] items-center justify-center rounded-lg text-sm font-semibold text-gray-800 shadow-sm hover:bg-white/75 focus:bg-white/75 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:bg-neutral-900 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
           >
             <SvgIcon class="size-4 shrink-0" svgHeight={24} minHeight="65%" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" slot={bell} />
-            <span class="absolute end-0 top-0 inline-flex items-center rounded-full px-1.5 py-0.5 text-xs font-medium text-white {user.notification_count > 0 ? 'bg-red-500' : 'bg-gray-700'}">
-              {user.notification_count || 0}
+            <span class="absolute end-0 top-0 inline-flex items-center rounded-full px-1.5 py-0.5 text-xs font-medium text-white {user?.notification_count > 0 ? 'bg-red-500' : 'bg-gray-700'}">
+              {user?.notification_count || 0}
             </span>
           </button>
 
@@ -55,7 +55,7 @@
               aria-expanded="false"
               aria-label="Dropdown"
             >
-              <img class="size-[38px] shrink-0 rounded-full" src={user.avatar_url} alt="Avatar" />
+              <img class="size-[38px] shrink-0 rounded-full" src={user?.avatar_url} alt="Avatar" />
             </button>
 
             <div
@@ -66,7 +66,7 @@
             >
               <div class="rounded-t-lg bg-gray-100 px-5 py-3 dark:bg-neutral-700">
                 <p class="text-sm text-gray-500 dark:text-neutral-500">Signed in as</p>
-                <p class="text-sm font-medium text-gray-800 dark:text-neutral-200">{user.full_name}</p>
+                <p class="text-sm font-medium text-gray-800 dark:text-neutral-200">{user?.full_name}</p>
               </div>
               <div class="space-y-0.5 p-1.5">
                 <!-- <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700 dark:focus:text-neutral-300" href="#">

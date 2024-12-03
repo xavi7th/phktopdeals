@@ -32,7 +32,7 @@ export async function load(event) {
   return {
     amount: event.url.searchParams.get("amount"),
     currency: event.url.searchParams.get("currency"),
-    user: event.locals.user,
+    user: event.locals.session.data?.user,
     details: details.data,
     qrCode: await generateQR(details.data?.pay_address || "invalid address"),
   };

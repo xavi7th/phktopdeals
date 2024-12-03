@@ -2,13 +2,13 @@
   import { dev } from "$app/environment";
   import { slide } from "svelte/transition";
   import Toast from "$lib/Components/Toast.svelte";
-  import { percentageCalculation, toCurrency } from "$lib/helpers";
   import { checkPlus } from "$lib/Components/iconPaths";
   import SuperDebug, { superForm } from "sveltekit-superforms";
+  import { percentageCalculation, toCurrency } from "$lib/helpers";
+  import ProcessInvoicePurchase from "./ProcessInvoicePurchase.svelte";
   import LoadingButton from "$lib/Components/FormInputs/LoadingButton.svelte";
   import FloatingTextInput from "$lib/Components/FormInputs/FloatingTextInput.svelte";
   import FloatingNumericTextInput from "$lib/Components/FormInputs/FloatingNumericTextInput.svelte";
-  import FloatingSearchableSelectInput from "$lib/Components/FormInputs/FloatingSearchableSelectInput.svelte";
 
   let selectedDenomination = "btn-0";
 
@@ -26,8 +26,6 @@
   $: $form.product_id = product?.id;
   $: $form.email = user?.email;
   $: totalPurchaseAmount = percentageCalculation($form.unit_price * $form.quantity, product.product_price.commission, product.percentage_discount, true);
-
-  $: console.log({ user, product, totalPurchaseAmount });
 </script>
 
 <svelte:head>
@@ -78,8 +76,7 @@
               class:selected={selectedDenomination == `btn-${idx}`}
               on:click={() => {
                 (selectedDenomination = `btn-${idx}`), ($form.unit_price = Number(amount) || 0);
-              }}
-            >
+              }}>
               {percentageCalculation(amount, product.product_price.commission, product.percentage_discount)}
               <span class="invisible absolute left-0 top-0 flex h-7 w-7 items-center justify-center rounded-ee-2xl rounded-ss-md bg-white text-brand-600 group-[.selected]:visible">
                 {@html checkPlus}
@@ -103,11 +100,10 @@
             label="Quantity"
             size="p-3"
             min={1}
-            placeholder={`${percentageCalculation($form.unit_price, product.product_price.commission, product.percentage_discount)} per Quantity`}
+            placeholder={`${toCurrency(totalPurchaseAmount)} per Quantity`}
             bind:value={$form.quantity}
             isError={!!$errors.quantity}
-            msg={$errors.quantity}
-          />
+            msg={$errors.quantity}/>
         </div>
       </div>
 
@@ -117,9 +113,21 @@
         </div>
         <div class="relative flex min-h-24 items-center justify-center">
           <div class="absolute flex shrink-0 flex-col items-center justify-center gap-3" transition:slide={{ duration: 900 }}>
-            <LoadingButton class="mt-10 bg-black px-10 py-4 font-medium hover:bg-gray-700 hover:text-neutral-50 focus:bg-gray-700" {timeout} {delayed} {submitting} disabled={totalPurchaseAmount > user?.wallet_balance}>
+            <LoadingButton
+              class="mt-10 bg-black px-10 py-4 font-medium hover:bg-gray-700 hover:text-neutral-50 focus:bg-gray-700"
+              {timeout}
+              {delayed}
+              {submitting}
+              disabled={totalPurchaseAmount > user?.wallet_balance || totalPurchaseAmount <= 0}
+              aria-haspopup="dialog"
+              aria-expanded="false"
+              aria-controls="process-invoice-purchase-modal"
+              data-hs-overlay="#process-invoice-purchase-modal">
               Pay with Wallet Funds {toCurrency(totalPurchaseAmount)}
             </LoadingButton>
+
+            <ProcessInvoicePurchase data={$form} {totalPurchaseAmount} />
+
             {#if totalPurchaseAmount > user?.wallet_balance}
               <span class="pb-6 text-end text-sm font-medium text-red-700">You have exceeded your wallet balance of {toCurrency(user?.wallet_balance)}</span>
             {/if}

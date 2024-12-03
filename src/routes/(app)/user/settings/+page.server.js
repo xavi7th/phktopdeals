@@ -6,7 +6,7 @@ import { message, superValidate, fail, setError } from "sveltekit-superforms";
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load(event) {
-  const form = await superValidate(event.locals.user, arktype(AppUserSchema, { defaults: event.locals.user }));
+  const form = await superValidate(event.locals.session.data?.user, arktype(AppUserSchema, { defaults: event.locals.session.data?.user }));
 
   event.setHeaders({
     "Cache-Control": "public, max-age=604800, stale-while-revalidate=86400",
@@ -15,7 +15,7 @@ export async function load(event) {
   return {
     form,
     /** @type { import('$lib/types').AppUser } */
-    user: event.locals.user,
+    user: event.locals.session.data?.user,
   };
 }
 
@@ -67,7 +67,7 @@ export const actions = {
       return message(form, { type: "error", msg: res?.statusText || "An error occurred while processing your request" }, { status: res?.status || 429 });
     }
 
-    event.locals.user = (await res.json()).data;
+    await event.locals.session.update(async ({ user }) => ({ user: (await res?.json()?.data) || {} }));
 
     return message(form, { type: "success", msg: "Profile updated successfully!" });
   },
@@ -97,7 +97,7 @@ export const actions = {
     });
 
     //Pre populate the form data with user details
-    form.data = { ...form.data, ...event.locals.user };
+    form.data = { ...form.data, ...event.locals.session.data?.user };
 
     if (res?.status == 422) {
       let errRes = await res.json();

@@ -1,7 +1,14 @@
 // See https://kit.svelte.dev/docs/types#app
 
 import type { AppUser } from "$lib/types";
+import type { Session } from "svelte-kit-cookie-session";
 import type { DevicePayload } from "sveltekit-device-detector";
+
+type SessionData = {
+  user: AppUser;
+  recently_purchased: boolean;
+  api_session: string | undefined;
+};
 
 // for information about these interfaces
 declare global {
@@ -12,14 +19,15 @@ declare global {
     }
     interface Locals {
       user: AppUser | {};
-      session: string | undefined;
       deviceType: DevicePayload;
       deviceName?: string;
+      session: Session<SessionData>;
     }
     interface PageData {
       deviceType?: DevicePayload;
       deviceName?: string;
       message?: string;
+      session: SessionData;
     }
     interface ActionData {
       message: string;

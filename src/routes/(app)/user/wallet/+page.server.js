@@ -11,7 +11,7 @@ export async function load(event) {
   const fetchAvailableCryptoCurrencies = async () => {
     const res = await api({
       method: "get",
-      resource: "purchase-invoices/available-currencies",
+      resource: "user-transactions/available-currencies",
       event,
     });
     return res?.json();

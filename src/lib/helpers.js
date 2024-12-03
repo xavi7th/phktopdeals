@@ -5,18 +5,30 @@
  * @returns {String}
  */
 export const getErrorString = (errors) => {
-  if (_.isString(errors)) {
-    var errs = errors;
-  } else if (_.size(errors) == 1) {
-    var errs = _.reduce(errors, function (val, n) {
-      return val.join("<br>") + "<br>" + n;
-    });
+  let errs;
+  if (typeof errors === "string") {
+    errs = errors;
+  } else if (Object.keys(errors).length === 1) {
+    errs = Object.values(errors)
+      .flat()
+      .filter(Boolean)
+      .map((err) => `<li>${err}</li>`)
+      .join("");
   } else {
-    var errs = _.reduce(errors, function (val, n) {
-      return (_.isString(val) ? val : val.join("<br>")) + "<br>" + n;
-    });
+    errs = Object.values(errors)
+      .filter(Boolean)
+      .reduce((val, n) => {
+        return (
+          (Array.isArray(val)
+            ? val
+                .filter(Boolean)
+                .map((err) => `<li>${err}</li>`)
+                .join("")
+            : `<li>${val}</li>`) + `<li>${n}</li>`
+        );
+      }, "");
   }
-  return errs;
+  return errs.replaceAll("_", " ");
 };
 
 /**
@@ -242,7 +254,7 @@ import { env } from "$env/dynamic/public";
  *
  * @returns {Promise<Response|undefined>}
  */
-export async function api({ toBaseDomain, resource, event, method, data, logResponse = false, toJSON = true }) {
+export async function api({ toBaseDomain, resource, event, method, data, logResponse = true, toJSON = true }) {
   const base = env.PUBLIC_VITE_BASE_DOMAIN;
   const baseApi = env.PUBLIC_VITE_BASE_API;
   let fullurl = toBaseDomain ? base : baseApi;

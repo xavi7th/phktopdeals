@@ -28,6 +28,11 @@
     className,
   )}
   disabled={$submitting || disabled}
+  on:click
+  on:mouseover
+  on:mouseleave
+  on:focus
+  on:blur
 >
   {#if $timeout}
     Still Loading {@html animatedDotsSVG}

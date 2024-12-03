@@ -37,7 +37,7 @@ export const PurchaseItemSchema = type({
   email: type("string.email|undefined").describe("provided"),
   quantity: "number>=1",
   unit_price: "number>0",
-  payment_method: "'crypto'|'bank payment'",
+  payment_method: "'crypto'|'bank payment'|null",
 });
 
 export const PurchaseItemDefaults = {

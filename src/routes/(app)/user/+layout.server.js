@@ -78,7 +78,7 @@ export async function load({ locals }) {
 
   return {
     /** @type { import('$lib/types').AppUser } */
-    user: locals.user,
+    user: locals.session.data?.user || {},
     user_routes,
   };
 }

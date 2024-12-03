@@ -67,7 +67,7 @@
           placeholder="Amount to top (Minimum: ${minAmount})"
           bind:value={$form.amount}
           isError={!!$errors.amount}
-          msg={$errors.amount} />
+          msg={$errors.amount}/>
       </form>
     </div>
   </div>
@@ -76,7 +76,7 @@
     form="payment-method-form"
     class="w-auto bg-black px-3 py-2 font-medium transition-opacity duration-300 hover:bg-gray-700 hover:text-neutral-50 focus:bg-gray-700 {$form.payment_method
       ? 'opacity-50'
-      : 'pointer-events-none opacity-0 hidden'} {$form.amount < minAmount || $form.amount <= 0 ? 'pointer-events-none' : 'opacity-100'}"
+      : 'pointer-events-none hidden opacity-0'} {$form.amount < minAmount || $form.amount <= 0 ? 'pointer-events-none' : 'opacity-100'}"
     {timeout}
     {delayed}
     {submitting}

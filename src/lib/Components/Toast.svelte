@@ -1,6 +1,14 @@
 <!-- Example Usage -->
 <!-- <Toast positioned={false} type="error" msg={form?.message}/> <Toast dismissable={false} msg="Consider yourself notified about this matter"/> -->
 
+<!-- <Toast positioned={false} type={$message.type} msg={$message.msg} >
+  <ul class="ml-4 list-disc text-xs">
+    <li>This transaction is irreversible.</li>
+    <li>The funds will be deducted immediately from your balance.</li>
+    <li>Please ensure you have sufficient funds in your account before proceeding.</li>
+  </ul>
+</Toast> -->
+
 <script>
   import { onMount } from "svelte";
   import { fly } from "svelte/transition";
@@ -14,7 +22,7 @@
     toastId = "toast-" + crypto.randomUUID().replaceAll("-", "").substring(0, 10),
     timeout = 5000;
 
-  /** @type {Object<string, Object<string, string>}*/
+  /** @type {Object<string, Object<string, string>>} */
   let toastClasses = {
     grey: {
       bg: "bg-gray-200 border border-gray-300 text-sm text-gray-800 rounded-lg dark:bg-white/10 dark:border-white/20 dark:text-white",
@@ -43,7 +51,9 @@
     },
   };
 
-  let showToast = msg ? true : false;
+  let showToast = msg ? true : false,
+    /** @type {HTMLElement} */
+    toastContentContainer;
 
   function calculateTimeout(msg = "") {
     const maxTimeout = 10 * 60 * 1000;
@@ -58,7 +68,7 @@
   onMount(() => {
     setTimeout(() => {
       showToast = false;
-    }, calculateTimeout(msg));
+    }, calculateTimeout(toastContentContainer.innerText));
   });
 </script>
 
@@ -86,8 +96,9 @@
           {/if}
         </div>
 
-        <div class="me-3 ms-3">
-          <p id="{toastId}-label" class="text-sm">{@html msg}</p>
+        <div bind:this={toastContentContainer} class="me-3 ms-3">
+          <p id="{toastId}-label" class="mb-4 text-sm">{@html msg}</p>
+          <slot />
         </div>
 
         {#if dismissable}

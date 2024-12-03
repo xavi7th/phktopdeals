@@ -59,9 +59,9 @@ export const actions = {
     }
 
     if (response?.status == 200 || response?.status == 201) {
-      event.locals.user = (await response?.json())?.user;
+      await event.locals.session.update(async ({ user }) => ({ user: (await response?.json()?.user) || {} }));
 
-      if (event?.locals?.user?.is_admin) {
+      if (event.locals.session.data?.user?.is_admin) {
         redirect(302, "/admin/dashboard");
       }
 

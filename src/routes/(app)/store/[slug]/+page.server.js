@@ -1,8 +1,8 @@
 import { api } from "$lib/helpers";
+import { error, redirect } from "@sveltejs/kit";
 import { arktype } from "sveltekit-superforms/adapters";
 import { PurchaseItemDefaults, PurchaseItemSchema } from "$lib/schemas";
-import { message, superValidate, fail, setError } from "sveltekit-superforms";
-import { error } from "@sveltejs/kit";
+import { message, setError, superValidate } from "sveltekit-superforms";
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load(event) {
@@ -32,62 +32,51 @@ export async function load(event) {
     form,
     /** @type { import('$lib/types').Product } */
     product: details.data,
-    user: event.locals.user,
+    user: event.locals.session.data?.user,
   };
 }
 
-// /** @satisfies {import('./$types').Actions} */
-//  export const actions = {
+/** @satisfies {import('./$types').Actions} */
+export const actions = {
+  /** @param {import('@sveltejs/kit').RequestEvent} event */
+  default: async (event) => {
+    const form = await superValidate(event, arktype(PurchaseItemSchema, { defaults: PurchaseItemDefaults }));
 
-//   /** @param {import('@sveltejs/kit').RequestEvent} event */
-// 	default: async (event) => {
-//     const form = await superValidate(event, arktype(PurchaseItemSchema, { defaults: PurchaseItemDefaults }));
+    if (!form.valid) {
+      return message(form, { type: "error", msg: "There are errors in your form." }, { status: 422 });
+    }
 
-//     if (!form.valid) {
-//       return fail(422, { form });
-//     }
+    const res = await api({
+      method: "post",
+      resource: "purchase-invoices",
+      data: form.data,
+      event,
+    });
 
-//     const formData = new FormData();
+    if (res?.status == 422) {
+      let errRes = await res.json();
 
-//     for(let dt of Object.entries(form.data)){
-//       if (dt[0] == 'discount_until') {
-//         formData.append(dt[0], new Date(dt[1]).toDateString());
-//         continue;
-//       }
+      for (const [fieldName, errs] of Object.entries(errRes.errors)) {
+        if (fieldName.includes(".")) {
+          setError(form, fieldName.split(".")[0], errs[0], {
+            overwrite: true,
+          });
+        } else {
+          setError(form, fieldName, errs[0], {
+            overwrite: true,
+          });
+        }
+      }
 
-//       formData.append(dt[0], dt[1]);
-//     }
+      return message(form, { type: "error", msg: "There are errors in your form." }, { status: res?.status || 400 });
+    }
 
-//     const res = await api({
-// 			method: 'post',
-// 			resource: 'products',
-// 			data: formData,
-//       event,
-//       toJSON: false,
-// 		});
+    if (!res?.ok) {
+      return message(form, { type: "error", msg: res?.statusText || "An error occurred while processing your request" }, { status: res?.status || 429 });
+    }
 
-//     if (res?.status == 422) {
-//       let errRes = await res.json();
+    await event.locals.session.update(async ({ recently_purchased }) => ({ recently_purchased: await res.json() }));
 
-//       for(const [fieldName, errs] of Object.entries(errRes.errors)){
-//         if (fieldName.includes('.')) {
-//           setError(form, fieldName.split('.')[0], errs[0], {
-//             overwrite: true
-//           });
-//         } else {
-//           setError(form, fieldName, errs[0], {
-//             overwrite: true
-//           });
-//         }
-//       }
-
-//       return message(form, {type: 'error', msg: 'There are errors in your form! Check them and try again.'}, {status: res?.status || 400});
-// 		}
-
-//     if ( ! res?.ok) {
-//       return message(form, {type: 'error', msg: res?.statusText || 'An error occured while processing your request'}, {status: res?.status || 429});
-//     }
-
-// 		return message(form, {type: 'success', msg: 'Card created successfully!'});
-// 	},
-// }
+    return redirect(303, "/store/successful");
+  },
+};
