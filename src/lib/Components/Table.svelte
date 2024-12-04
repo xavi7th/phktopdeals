@@ -83,8 +83,7 @@
       <div class="relative flex w-[70px]">
         <select
           class="relative flex w-full flex-initial cursor-pointer gap-x-2 text-nowrap rounded-lg border border-gray-200 bg-white bg-none py-3 pe-9 ps-4 text-start text-sm focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500 lg:w-20 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-neutral-600"
-          bind:value={itemsPerPage}
-        >
+          bind:value={itemsPerPage}>
           <option value={15}>15</option>
           <option value={25}>25</option>
           <option value={50}>50</option>

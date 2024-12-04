@@ -76,8 +76,7 @@
             <span
               class="inline-flex items-center gap-x-1 px-1.5 py-1 text-xs font-medium {card.percentage_discount
                 ? 'bg-teal-100 text-teal-800 dark:bg-teal-500/10 dark:text-teal-500'
-                : 'bg-gray-100 text-gray-800 dark:bg-gray-500/10 dark:text-gray-500'} rounded-full"
-            >
+                : 'bg-gray-100 text-gray-800 dark:bg-gray-500/10 dark:text-gray-500'} rounded-full">
               <svg class="size-2.5" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
               </svg>
@@ -131,8 +130,7 @@
         href={`${basePageUrl}/${meta.prev_page_cursor || "#"}`}
         class="inline-flex items-center gap-x-2 rounded-lg border border-gray-200 bg-white px-2 py-1.5 text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-50 focus:bg-gray-50 focus:outline-none dark:border-neutral-700 dark:bg-transparent dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800 {!meta.prev_page_cursor
           ? 'pointer-events-none opacity-50'
-          : ''}"
-      >
+          : ''}">
         <SvgIcon class="size-4 shrink-0" slot={leftAngle} />
         Prev
       </a>
@@ -141,8 +139,7 @@
         href={`${basePageUrl}/${meta.next_page_cursor || "#"}`}
         class="inline-flex items-center gap-x-2 rounded-lg border border-gray-200 bg-white px-2 py-1.5 text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-50 focus:bg-gray-50 focus:outline-none dark:border-neutral-700 dark:bg-transparent dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800 {!meta.next_page_cursor
           ? 'pointer-events-none opacity-50'
-          : ''}"
-      >
+          : ''}">
         Next
         <SvgIcon class="size-4 shrink-0" slot={rightAngle} />
       </a>

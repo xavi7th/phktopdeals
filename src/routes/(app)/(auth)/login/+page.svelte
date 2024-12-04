@@ -36,8 +36,7 @@
           aria-selected={!showRegister}
           data-hs-tab="#bar-with-underline-1"
           aria-controls="bar-with-underline-1"
-          role="tab"
-        >
+          role="tab">
           Sign In
         </a>
         <a
@@ -48,8 +47,7 @@
           aria-selected={showRegister}
           data-hs-tab="#bar-with-underline-2"
           aria-controls="bar-with-underline-2"
-          role="tab"
-        >
+          role="tab">
           Register
         </a>
       </nav>
@@ -67,8 +65,7 @@
                   loading = false;
                   update();
                 };
-              }}
-            >
+              }}>
               <div class="space-y-8">
                 <FloatingTextInput name="login-email" isError={!form?.success} msg={form?.success || (form?.errors?.email && form?.errors?.email[0])} label="Email" />
                 <FloatingTextInput
@@ -77,8 +74,7 @@
                   isError={!form?.success}
                   msg={form?.success || (form?.errors?.password && form?.errors?.password[0])}
                   label="Password"
-                  togglePw={`"#login-password"`}
-                />
+                  togglePw={`"#login-password"`} />
               </div>
 
               <div class="mt-6 flex flex-col justify-center gap-6 text-sm">
@@ -107,8 +103,7 @@
                   loading = false;
                   update();
                 };
-              }}
-            >
+              }}>
               <FloatingTextInput name="full_name" isError={!form?.success} msg={form?.success || (form?.errors?.full_name && form?.errors?.full_name[0])} label="Full Name *" />
 
               <FloatingTextInput name="register-email" type="email" isError={!form?.success} msg={form?.success || (form?.errors?.email && form?.errors?.email[0])} label="Email *" />
@@ -121,8 +116,7 @@
                   strongPw
                   msg={form?.success || (form?.errors?.password && form?.errors?.password[0])}
                   label="Password *"
-                  togglePw={`["#password_confirmation", "#register-password"]`}
-                />
+                  togglePw={`["#password_confirmation", "#register-password"]`} />
               </div>
 
               <FloatingTextInput
@@ -131,8 +125,7 @@
                 isError={!form?.success}
                 msg={form?.success || (form?.errors?.password_confirmation && form?.errors?.password_confirmation[0])}
                 label="Confirm Password *"
-                togglePw={`["#password_confirmation", "#register-password"]`}
-              />
+                togglePw={`["#password_confirmation", "#register-password"]`} />
 
               <div class="mt-2 flex flex-col justify-center gap-6 text-xs dark:text-slate-50">
                 <p>

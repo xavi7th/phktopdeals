@@ -65,8 +65,7 @@
         {gray ? 'bg-gray-100 dark:!bg-neutral-800' : ''} {!msg?.toString() && gray ? 'border-transparent dark:border-transparent' : ''}
         {msg?.toString() && isError ? 'border-red-500 focus:border-red-500 focus:ring-red-500 dark:bg-red-900/20' : ''}
         {msg?.toString() && !isError ? 'border-teal-500 focus:border-teal-500 focus:ring-teal-500 dark:bg-teal-900/20' : ''}"
-    {...$$restProps}
-  >
+    {...$$restProps}>
     <option value={undefined}>Select {label}</option>
 
     {#if isObject(options) && Object.entries(options).length > 0}

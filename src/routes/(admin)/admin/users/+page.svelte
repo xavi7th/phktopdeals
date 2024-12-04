@@ -16,8 +16,7 @@
                   <input
                     type="checkbox"
                     class="shrink-0 rounded border-gray-300 text-brand-600 focus:ring-brand-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-600 dark:bg-neutral-800 dark:checked:border-brand-500 dark:checked:bg-brand-500 dark:focus:ring-offset-gray-800"
-                    id="hs-at-with-checkboxes-main"
-                  />
+                    id="hs-at-with-checkboxes-main" />
                   <span class="sr-only">Checkbox</span>
                 </label>
               </th>
@@ -57,8 +56,7 @@
                     <input
                       type="checkbox"
                       class="shrink-0 rounded border-gray-300 text-brand-600 focus:ring-brand-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-600 dark:bg-neutral-800 dark:checked:border-brand-500 dark:checked:bg-brand-500 dark:focus:ring-offset-gray-800"
-                      id="hs-at-with-checkboxes-1"
-                    />
+                      id="hs-at-with-checkboxes-1" />
                     <span class="sr-only">Checkbox</span>
                   </label>
                 </div>
@@ -69,8 +67,7 @@
                     <img
                       class="inline-block size-[38px] rounded-full"
                       src="https://images.unsplash.com/photo-1531927557220-a9e23c1e4794?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=320&h=320&q=80"
-                      alt="Avatar"
-                    />
+                      alt="Avatar" />
                     <div class="grow">
                       <span class="block text-sm font-semibold text-gray-800 dark:text-neutral-200">Product Name</span>
                       <span class="block text-sm text-gray-500 dark:text-neutral-500">Product Type</span>
@@ -120,8 +117,7 @@
             <div class="inline-flex gap-x-2">
               <button
                 type="button"
-                class="inline-flex items-center gap-x-2 rounded-lg border border-gray-200 bg-white px-2 py-1.5 text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-50 focus:bg-gray-50 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-transparent dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
-              >
+                class="inline-flex items-center gap-x-2 rounded-lg border border-gray-200 bg-white px-2 py-1.5 text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-50 focus:bg-gray-50 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-transparent dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
                 <svg
                   class="size-4 shrink-0"
                   xmlns="http://www.w3.org/2000/svg"
@@ -132,8 +128,7 @@
                   stroke="currentColor"
                   stroke-width="2"
                   stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
+                  stroke-linejoin="round">
                   <path d="m15 18-6-6 6-6" />
                 </svg>
                 Prev
@@ -141,8 +136,7 @@
 
               <button
                 type="button"
-                class="inline-flex items-center gap-x-2 rounded-lg border border-gray-200 bg-white px-2 py-1.5 text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-50 focus:bg-gray-50 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-transparent dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
-              >
+                class="inline-flex items-center gap-x-2 rounded-lg border border-gray-200 bg-white px-2 py-1.5 text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-50 focus:bg-gray-50 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-transparent dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">
                 Next
                 <svg
                   class="size-4 shrink-0"
@@ -154,8 +148,7 @@
                   stroke="currentColor"
                   stroke-width="2"
                   stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
+                  stroke-linejoin="round">
                   <path d="m9 18 6-6-6-6" />
                 </svg>
               </button>

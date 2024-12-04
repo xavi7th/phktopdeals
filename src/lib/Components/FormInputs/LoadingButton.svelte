@@ -32,8 +32,7 @@
   on:mouseover
   on:mouseleave
   on:focus
-  on:blur
->
+  on:blur>
   {#if $timeout}
     Still Loading {@html animatedDotsSVG}
   {:else}

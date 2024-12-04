@@ -8,8 +8,7 @@
 
 <section
   class="hero min-h-[95dvh] bg-gray-100 lg:min-h-[85dvh]"
-  style="background-image: url('https://images.unsplash.com/photo-1659710173823-b4362e0ab9c7?q=80&w=1920&h=800&fit=crop'); background-size: cover; background-position: center;"
->
+  style="background-image: url('https://images.unsplash.com/photo-1659710173823-b4362e0ab9c7?q=80&w=1920&h=800&fit=crop'); background-size: cover; background-position: center;">
   <div class="container-fluid hero-content mx-auto h-fit px-4 pb-10">
     <div class="w-full">
       <div class="flex max-w-screen-sm flex-col md:w-4/5">
@@ -42,8 +41,7 @@
                 id="hs-search-box-with-loading-5"
                 name="hs-search-box-with-loading-5"
                 class="block w-full rounded-s-lg border-gray-200 px-4 py-3 ps-11 text-sm shadow-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-                placeholder="Input search"
-              />
+                placeholder="Input search" />
               <div class="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-4">
                 <svg
                   class="size-4 shrink-0 text-gray-400 dark:text-neutral-500"
@@ -55,8 +53,7 @@
                   stroke="currentColor"
                   stroke-width="2"
                   stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
+                  stroke-linejoin="round">
                   <circle cx="11" cy="11" r="8"></circle>
                   <path d="m21 21-4.3-4.3"></path>
                 </svg>
@@ -65,8 +62,7 @@
                 type="button"
                 class="inline-flex items-center justify-center gap-x-2 text-nowrap rounded-e-md border border-transparent bg-brand-400
                             px-4 py-3 text-sm font-semibold text-gray-800 hover:bg-brand-500
-                            focus:bg-brand-500 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-              >
+                            focus:bg-brand-500 focus:outline-none disabled:pointer-events-none disabled:opacity-50">
                 Start Shopping
                 {#if isLoading}
                   <span class="inline-block size-4 animate-spin rounded-full border-[3px] border-current border-t-transparent text-white" role="status" aria-label="loading">
@@ -83,8 +79,7 @@
         {#each shuffle(["Restaurants", "Groceries", "Games", "Softwares", "Subscriptions", "VISA Cards"]).slice(0, 3) as item}
           <a
             class="mr-1 inline-flex items-center gap-x-3 rounded-full bg-white px-5 py-3 text-xs font-semibold text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none dark:bg-gray-900 dark:text-neutral-50"
-            href="#"
-          >
+            href="#">
             {item}
           </a>
         {/each}
@@ -156,8 +151,7 @@
 
               <button
                 type="button"
-                class="hs-carousel-prev hs-carousel:disabled:opacity-50 absolute inset-y-0 start-0 inline-flex h-full w-[46px] items-center justify-center rounded-s-lg text-gray-800 hover:bg-gray-800/10 focus:bg-gray-800/10 focus:outline-none disabled:pointer-events-none dark:text-white dark:hover:bg-white/10 dark:focus:bg-white/10"
-              >
+                class="hs-carousel-prev hs-carousel:disabled:opacity-50 absolute inset-y-0 start-0 inline-flex h-full w-[46px] items-center justify-center rounded-s-lg text-gray-800 hover:bg-gray-800/10 focus:bg-gray-800/10 focus:outline-none disabled:pointer-events-none dark:text-white dark:hover:bg-white/10 dark:focus:bg-white/10">
                 <span class="text-2xl" aria-hidden="true">
                   <svg
                     class="size-5 shrink-0"
@@ -169,8 +163,7 @@
                     stroke="currentColor"
                     stroke-width="2"
                     stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
+                    stroke-linejoin="round">
                     <path d="m15 18-6-6 6-6"></path>
                   </svg>
                 </span>
@@ -178,8 +171,7 @@
               </button>
               <button
                 type="button"
-                class="hs-carousel-next hs-carousel:disabled:opacity-50 absolute inset-y-0 end-0 inline-flex h-full w-[46px] items-center justify-center rounded-e-lg text-gray-800 hover:bg-gray-800/10 focus:bg-gray-800/10 focus:outline-none disabled:pointer-events-none dark:text-white dark:hover:bg-white/10 dark:focus:bg-white/10"
-              >
+                class="hs-carousel-next hs-carousel:disabled:opacity-50 absolute inset-y-0 end-0 inline-flex h-full w-[46px] items-center justify-center rounded-e-lg text-gray-800 hover:bg-gray-800/10 focus:bg-gray-800/10 focus:outline-none disabled:pointer-events-none dark:text-white dark:hover:bg-white/10 dark:focus:bg-white/10">
                 <span class="sr-only">Next</span>
                 <span class="text-2xl" aria-hidden="true">
                   <svg
@@ -192,8 +184,7 @@
                     stroke="currentColor"
                     stroke-width="2"
                     stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
+                    stroke-linejoin="round">
                     <path d="m9 18 6-6-6-6"></path>
                   </svg>
                 </span>
@@ -202,8 +193,8 @@
               <div class="hs-carousel-pagination absolute bottom-3 end-0 start-0 flex justify-center space-x-2">
                 {#each Array(8) as n}
                   <span
-                    class="size-3 cursor-pointer rounded-full border border-gray-400 hs-carousel-active:border-blue-700 hs-carousel-active:bg-blue-700 dark:border-neutral-600 dark:hs-carousel-active:border-blue-500 dark:hs-carousel-active:bg-blue-500"
-                  ></span>
+                    class="size-3 cursor-pointer rounded-full border border-gray-400 hs-carousel-active:border-blue-700 hs-carousel-active:bg-blue-700 dark:border-neutral-600 dark:hs-carousel-active:border-blue-500 dark:hs-carousel-active:bg-blue-500">
+                  </span>
                 {/each}
               </div>
             </div>

@@ -133,8 +133,7 @@
           on:click|preventDefault|stopPropagation={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
           class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold hover:bg-gray-100 focus:bg-gray-100 focus:outline-none
                     disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700
-                    {editor.isActive('heading', { level: 1 }) ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}"
-        >
+                    {editor.isActive('heading', { level: 1 }) ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}">
           H1
         </button>
 
@@ -142,8 +141,7 @@
           on:click|preventDefault|stopPropagation={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
           class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold hover:bg-gray-100 focus:bg-gray-100 focus:outline-none
                     disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700
-                    {editor.isActive('heading', { level: 2 }) ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}"
-        >
+                    {editor.isActive('heading', { level: 2 }) ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}">
           H2
         </button>
 
@@ -151,8 +149,7 @@
           on:click|preventDefault|stopPropagation={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
           class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold hover:bg-gray-100 focus:bg-gray-100 focus:outline-none
                     disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700
-                    {editor.isActive('heading', { level: 3 }) ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}"
-        >
+                    {editor.isActive('heading', { level: 3 }) ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}">
           H3
         </button>
 
@@ -160,8 +157,7 @@
           on:click|preventDefault|stopPropagation={() => editor.chain().focus().setParagraph().run()}
           class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold hover:bg-gray-100 focus:bg-gray-100 focus:outline-none
                     disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700
-                    {editor.isActive('paragraph') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}"
-        >
+                    {editor.isActive('paragraph') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}">
           P
         </button>
 
@@ -169,8 +165,7 @@
           on:click|preventDefault|stopPropagation={() => editor.chain().focus().setBold().run()}
           class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold hover:bg-gray-100 focus:bg-gray-100 focus:outline-none
                     disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700
-                    {editor.isActive('bold') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}"
-        >
+                    {editor.isActive('bold') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}">
           <SvgIcon class="size-4 shrink-0" slot={boldIcon} />
         </button>
 
@@ -178,8 +173,7 @@
           on:click|preventDefault|stopPropagation={() => editor.chain().focus().toggleItalic().run()}
           class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none
                       disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700
-                      {editor.isActive('italic') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}"
-        >
+                      {editor.isActive('italic') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}">
           <SvgIcon class="size-4 shrink-0" slot={italicsIcon} />
         </button>
 
@@ -187,8 +181,7 @@
           on:click|preventDefault|stopPropagation={() => editor.chain().focus().toggleUnderline().run()}
           class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none
                       disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700
-                      {editor.isActive('underline') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}"
-        >
+                      {editor.isActive('underline') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}">
           <SvgIcon class="size-4 shrink-0" slot={underlineIcon} />
         </button>
 
@@ -196,8 +189,7 @@
           on:click|preventDefault|stopPropagation={() => editor.chain().focus().toggleStrike().run()}
           class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none
                       disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700
-                      {editor.isActive('strike') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}"
-        >
+                      {editor.isActive('strike') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}">
           <SvgIcon class="size-4 shrink-0" slot={strikethroughIcon} />
         </button>
 
@@ -205,8 +197,7 @@
           on:click|preventDefault|stopPropagation={setLink}
           class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none
                       disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700
-                      {editor.isActive('bold') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}"
-        >
+                      {editor.isActive('bold') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}">
           <SvgIcon class="size-4 shrink-0" slot={chainLinkIcon} />
         </button>
 
@@ -215,8 +206,7 @@
           disabled={!editor.can().unsetLink()}
           class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none
                       disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700
-                      {editor.isActive('bold') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}"
-        >
+                      {editor.isActive('bold') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}">
           <SvgIcon class="size-4 shrink-0" slot={cancelChainLinkIcon} />
         </button>
 
@@ -224,8 +214,7 @@
           on:click|preventDefault|stopPropagation={() => editor.chain().focus().toggleOrderedList().run()}
           class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none
                       disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700
-                      {editor.isActive('orderedList') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}"
-        >
+                      {editor.isActive('orderedList') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}">
           <SvgIcon class="size-4 shrink-0" slot={numberedBulletsIcon} />
         </button>
 
@@ -233,8 +222,7 @@
           on:click|preventDefault|stopPropagation={() => editor.chain().focus().toggleBulletList().run()}
           class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none
                       disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700
-                      {editor.isActive('bulletList') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}"
-        >
+                      {editor.isActive('bulletList') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}">
           <SvgIcon class="size-4 shrink-0" slot={bulletPointsIcon} />
         </button>
 
@@ -242,8 +230,7 @@
           on:click|preventDefault|stopPropagation={() => editor.chain().focus().toggleBlockquote().run()}
           class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none
                       disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700
-                      {editor.isActive('blockquote') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}"
-        >
+                      {editor.isActive('blockquote') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}">
           <SvgIcon class="size-4 shrink-0" slot={blockquotesIcon} />
         </button>
 
@@ -251,8 +238,7 @@
           on:click|preventDefault|stopPropagation={() => editor.chain().focus().toggleCodeBlock().run()}
           class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none
                       disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700
-                      {editor.isActive('codeBlock') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}"
-        >
+                      {editor.isActive('codeBlock') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}">
           <SvgIcon class="size-4 shrink-0" slot={codesIcon} />
         </button>
 
@@ -260,16 +246,14 @@
           on:click|preventDefault|stopPropagation={() => editor.chain().focus().undo().run()}
           disabled={!editor.can().undo()}
           class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none
-                      disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
-        >
+                      disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">
           <SvgIcon class="size-4 shrink-0" slot={undoIcon} />
         </button>
         <button
           on:click|preventDefault|stopPropagation={() => editor.chain().focus().redo().run()}
           disabled={!editor.can().redo()}
           class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none
-                      disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
-        >
+                      disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">
           <SvgIcon class="size-4 shrink-0" slot={redoIcon} />
         </button>
       </div>

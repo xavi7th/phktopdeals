@@ -103,7 +103,7 @@
             placeholder={`${toCurrency(totalPurchaseAmount)} per Quantity`}
             bind:value={$form.quantity}
             isError={!!$errors.quantity}
-            msg={$errors.quantity}/>
+            msg={$errors.quantity} />
         </div>
       </div>
 

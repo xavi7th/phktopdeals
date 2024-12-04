@@ -48,8 +48,7 @@
   stroke-width={strokeWidth}
   {...props}
   style="--min-height:{minHeight}"
-  on:click
->
+  on:click>
   <slot />
 
   {#if !Object.entries($$slots).length}

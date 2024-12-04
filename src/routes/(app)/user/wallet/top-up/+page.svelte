@@ -111,8 +111,7 @@
           data-sveltekit-reload
           href="/user/wallet"
           class="inline-flex text-nowrap rounded-md border border-transparent bg-red-600 px-4 py-2.5 text-sm font-bold uppercase text-white shadow-md hover:bg-red-500 focus:bg-red-500"
-          on:click={() => evtSrc.close()}
-        >
+          on:click={() => evtSrc.close()}>
           Cancel this Transaction
         </a>
       </div>

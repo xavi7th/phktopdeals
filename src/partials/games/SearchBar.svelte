@@ -61,8 +61,7 @@
     <input
       type="text"
       class="block w-full rounded-lg border-gray-200 px-4 py-3 text-sm focus:border-brand-500 focus:ring-brand-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-      placeholder="Search products"
-    />
+      placeholder="Search products" />
 
     <div class="pointer-events-none absolute inset-y-0 end-0 !mt-0 flex items-center pe-4 peer-disabled:pointer-events-none peer-disabled:opacity-50">
       <svg
@@ -75,8 +74,7 @@
         stroke="currentColor"
         fill="none"
         stroke-linecap="round"
-        stroke-linejoin="round"
-      >
+        stroke-linejoin="round">
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
         <path d="M11.36 20.213l-2.36 .787v-8.5l-4.48 -4.928a2 2 0 0 1 -.52 -1.345v-2.227h16v2.172a2 2 0 0 1 -.586 1.414l-4.414 4.414" />
         <path d="M18 18m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
@@ -95,8 +93,7 @@
   </select>
 
   <button
-    class="inline-flex items-center gap-x-2 rounded-lg border border-gray-200 px-8 py-3 text-sm font-medium text-gray-700 hover:border-gray-300 hover:text-gray-500 focus:border-gray-300 focus:text-gray-500 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:text-neutral-400 dark:hover:border-neutral-300 dark:hover:text-neutral-300"
-  >
+    class="inline-flex items-center gap-x-2 rounded-lg border border-gray-200 px-8 py-3 text-sm font-medium text-gray-700 hover:border-gray-300 hover:text-gray-500 focus:border-gray-300 focus:text-gray-500 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:text-neutral-400 dark:hover:border-neutral-300 dark:hover:text-neutral-300">
     Reset
   </button>
 </div>

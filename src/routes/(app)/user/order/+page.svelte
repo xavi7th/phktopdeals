@@ -53,8 +53,7 @@
     <button
       class="grid place-content-center rounded-xl bg-white p-[16px] text-slate-800 shadow-lg dark:bg-[#404040] dark:text-slate-100"
       class:border-[#FFDA1C]={currentTab === tab.caption}
-      on:click={() => (currentTab = tab.caption)}
-    >
+      on:click={() => (currentTab = tab.caption)}>
       <div class="mx-auto mb-4 grid size-16 place-content-center rounded-full border-[#FFDA1C] bg-[#FFDA1C30]">
         {@html tab.icon}
       </div>

@@ -84,8 +84,7 @@
     <button
       type="submit"
       class="inline-flex w-full items-center justify-center gap-x-2 rounded-lg border border-transparent bg-brand-600 px-4 py-3 text-sm font-medium text-white hover:bg-brand-700 focus:bg-brand-700 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-      disabled={$submitting}
-    >
+      disabled={$submitting}>
       {#if $timeout}
         Still Loading {@html animatedDotsSVG}
       {:else}
@@ -121,14 +120,12 @@
                       aria-haspopup="dialog"
                       aria-expanded="false"
                       aria-controls="hs-static-create-modal"
-                      data-hs-overlay="#hs-static-edit-modal"
-                    >
+                      data-hs-overlay="#hs-static-edit-modal">
                       Edit
                     </button>
                     <button
                       type="button"
-                      class="inline-flex items-center gap-x-2 rounded-lg border border-transparent text-sm font-semibold text-red-600 hover:text-red-800 focus:text-red-800 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:text-red-500 dark:hover:text-red-400 dark:focus:text-brand-400"
-                    >
+                      class="inline-flex items-center gap-x-2 rounded-lg border border-transparent text-sm font-semibold text-red-600 hover:text-red-800 focus:text-red-800 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:text-red-500 dark:hover:text-red-400 dark:focus:text-brand-400">
                       Delete
                     </button>
                   </td>
@@ -149,8 +146,7 @@
         <input
           type="text"
           class="block w-full rounded-lg border-gray-200 px-4 py-3 text-sm focus:border-brand-500 focus:ring-brand-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-          placeholder="Title"
-        />
+          placeholder="Title" />
       </div>
     </div>
   </div>

@@ -26,8 +26,7 @@
       aria-haspopup="dialog"
       aria-expanded="false"
       aria-controls="delete-account"
-      data-hs-overlay="#delete-account"
-    >
+      data-hs-overlay="#delete-account">
       {#if timeout}
         Still Loading {@html animatedDotsSVG}
       {:else}
@@ -58,8 +57,7 @@
         <button
           type="submit"
           class="inline-flex items-center justify-center gap-x-2 text-nowrap rounded-lg border border-transparent bg-red-600 px-3 py-2 text-sm font-medium text-white hover:bg-red-700 focus:bg-red-700 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-          disabled={submitting}
-        >
+          disabled={submitting}>
           {#if timeout}
             Still Loading {@html animatedDotsSVG}
           {:else}

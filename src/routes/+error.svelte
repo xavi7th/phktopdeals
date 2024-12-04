@@ -60,8 +60,7 @@
       class="border-md absolute left-[37vw] top-[20rem] rounded-xl border-2 border-gray-900 bg-gray-900 px-8 py-4 font-bold capitalize text-white transition hover:bg-brand-100 hover:text-black sm:left-[42.5vw]"
       href="/"
       aria-label="go back home"
-      title="go back home"
-    >
+      title="go back home">
       go back home
     </a>
     <div id="caution__tape__left" class="caution__tape left">

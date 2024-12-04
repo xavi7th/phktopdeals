@@ -36,8 +36,7 @@
     {#each products as product}
       <SplideSlide>
         <div
-          class="group relative flex flex-col overflow-hidden rounded-2xl bg-white shadow transition hover:-translate-y-1 hover:translate-x-1 hover:scale-[1.025] hover:shadow-sm hover:drop-shadow-xl dark:border-neutral-700 dark:bg-neutral-700/30 dark:shadow-neutral-700/70"
-        >
+          class="group relative flex flex-col overflow-hidden rounded-2xl bg-white shadow transition hover:-translate-y-1 hover:translate-x-1 hover:scale-[1.025] hover:shadow-sm hover:drop-shadow-xl dark:border-neutral-700 dark:bg-neutral-700/30 dark:shadow-neutral-700/70">
           <img class="h-[296px] w-[237px] rounded-xl" data-splide-lazy={product.img_url} alt="prod-thumb" />
 
           <div class="relative flex-1 px-4 py-2 md:px-5">
@@ -57,8 +56,7 @@
 
           <a
             href={`store/${product.name_slug}_${product.id}`}
-            class="mt-1 text-balance rounded-b-xl border-t bg-brand px-4 py-3 text-center text-sm font-bold text-black transition-colors duration-300 hover:bg-brand-500 hover:text-white md:px-5 md:py-4 dark:border-brand-700 dark:bg-brand-900 dark:text-brand-50"
-          >
+            class="mt-1 text-balance rounded-b-xl border-t bg-brand px-4 py-3 text-center text-sm font-bold text-black transition-colors duration-300 hover:bg-brand-500 hover:text-white md:px-5 md:py-4 dark:border-brand-700 dark:bg-brand-900 dark:text-brand-50">
             BUY NOW from {toCurrency(product.min_price)}
           </a>
         </div>
