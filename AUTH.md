@@ -262,7 +262,7 @@ function authorize({ event, resolve }) {
   }
 
   if (event.route.id?.includes("(auth)") && event.locals?.user?.name) {
-    redirect(303, "/user/order");
+    redirect(303, "/user/orders");
   }
 
   return resolve(event);
@@ -416,7 +416,7 @@ export const actions = {
     }
 
     if (response?.status == 200 || response?.status == 201) {
-      throw redirect(302, "/user/order");
+      throw redirect(302, "/user/orders");
     }
   },
 };

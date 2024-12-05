@@ -10,8 +10,6 @@
    * @param {[cards, category]: [import('$lib/types').ProdSummary[], string]} data
    */
   $: ({ cards, category, meta, baseUrl } = data);
-
-  $: console.log({ cards });
 </script>
 
 <svelte:head>

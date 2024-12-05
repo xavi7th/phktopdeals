@@ -80,6 +80,11 @@
         {/each}
         {#if user?.full_name}
           <a
+            class="mr-1 inline-flex hidden items-center gap-x-3 bg-brand-600 px-5 py-3 text-xs font-bold tracking-tighter text-white hover:bg-brand-900 focus:bg-brand-900 focus:outline-none sm:block sm:rounded-full dark:bg-white dark:text-brand-600 dark:hover:text-white"
+            href="/user/orders">
+            Dashboard
+          </a>
+          <a
             class="mr-1 inline-flex hidden items-center gap-x-3 bg-gray-800 px-5 py-3 text-xs font-bold tracking-tighter text-white hover:bg-gray-900 focus:bg-gray-900 focus:outline-none sm:block sm:rounded-full dark:bg-white dark:text-neutral-800 dark:hover:text-white"
             href="/logout"
             data-sveltekit-reload>
@@ -121,7 +126,7 @@
 
       {#if user?.full_name}
         <a
-          href={user.is_admin ? "/admin/dashboard" : "/user/order"}
+          href={user.is_admin ? "/admin/dashboard" : "/user/orders"}
           class="ml-2 inline-flex size-11 items-center justify-center gap-x-2 rounded-full border border-transparent bg-gray-100 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:bg-black">
           <img class="size-10 shrink-0 rounded-full" src={user.avatar_url} alt="Avatar" />
         </a>

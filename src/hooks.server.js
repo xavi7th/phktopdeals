@@ -86,7 +86,7 @@ function authorize({ event, resolve }) {
     if (event.locals.session.data?.user?.is_admin) {
       redirect(303, "/admin/dashboard");
     }
-    redirect(303, "/user/order");
+    redirect(303, "/store/products");
   }
 
   /**

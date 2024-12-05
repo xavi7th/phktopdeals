@@ -5,7 +5,7 @@ export async function load({ locals }) {
     {
       name: "My Order",
       description: "View and track your purchases",
-      uri: "/user/order",
+      uri: "/user/orders",
       icon: "shoppingBagSVG",
       reload: false,
     },

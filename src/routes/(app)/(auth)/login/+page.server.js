@@ -65,7 +65,7 @@ export const actions = {
         redirect(302, "/admin/dashboard");
       }
 
-      redirect(302, "/store");
+      redirect(302, "/store/products");
     }
   },
 
@@ -100,7 +100,7 @@ export const actions = {
     }
 
     if (response?.status == 201) {
-      throw redirect(302, "/user/order");
+      throw redirect(302, "/store/products");
     }
   },
 };
