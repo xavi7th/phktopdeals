@@ -58,7 +58,7 @@ async function getUserDetails({ event, resolve }) {
 
     if (getUserDetails?.status == 200) {
       //TODO: Set a localStorage with key user and expiration time for 5mins. If that key is present, no need to getUserDetails. @see https://www.sohamkamani.com/javascript/localstorage-with-ttl-expiry/
-      await event.locals.session.update(async ({ user }) => ({ user: (await getUserDetails?.json()?.data) || {} })); //use this to determine auth on frontend. Before accessing auth routes if this is null redirect to login page
+      await event.locals.session.update(async ({ user }) => ({ user: ((await getUserDetails?.json())?.data) || {} })); //use this to determine auth on frontend. Before accessing auth routes if this is null redirect to login page
     }
   }
 
@@ -71,8 +71,6 @@ async function getUserDetails({ event, resolve }) {
 
 /** @type {import('@sveltejs/kit').Handle} */
 function authorize({ event, resolve }) {
-  // console.log('-----------------------_authorize-----------------------', event.locals.session.data?.user);
-
   /**
    * @auth Protect routes that need authentication
    * NOTE: 303 will always redirect with GET, 307 will redirect with the original request method, while 302 is just 303 made popular

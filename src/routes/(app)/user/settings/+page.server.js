@@ -67,7 +67,7 @@ export const actions = {
       return message(form, { type: "error", msg: res?.statusText || "An error occurred while processing your request" }, { status: res?.status || 429 });
     }
 
-    await event.locals.session.update(async ({ user }) => ({ user: (await res?.json()?.data) || {} }));
+    await event.locals.session.update(async ({ user }) => ({ user: ((await res?.json())?.data) || {} }));
 
     return message(form, { type: "success", msg: "Profile updated successfully!" });
   },
