@@ -65,7 +65,7 @@ export const actions = {
         redirect(302, "/admin/dashboard");
       }
 
-      redirect(302, "/user/order");
+      redirect(302, "/store");
     }
   },
 

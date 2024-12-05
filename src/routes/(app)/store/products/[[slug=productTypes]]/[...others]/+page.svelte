@@ -2,14 +2,16 @@
   import SvgIcon from "$lib/Components/SvgIcon.svelte";
   import { percentageCalculation } from "$lib/helpers";
   import Sidebar from "$partials/gift-cards/Sidebar.svelte";
-  import { favoriteIcon, maximizeIcon, rightAngle } from "$lib/Components/iconPaths";
+  import { favoriteIcon, leftAngle, maximizeIcon, rightAngle } from "$lib/Components/iconPaths";
 
   export let data;
 
   /**
    * @param {[cards, category]: [import('$lib/types').ProdSummary[], string]} data
    */
-  $: ({ cards, category } = data);
+  $: ({ cards, category, meta, baseUrl } = data);
+
+  $: console.log({ cards });
 </script>
 
 <svelte:head>
@@ -20,7 +22,8 @@
 <div class="container">
   <div class="row">
     <div class="w-full pt-40 lg:flex lg:space-x-3">
-      <Sidebar />
+      <!-- <Sidebar /> -->
+      <div class="lg:w-1/3"></div>
 
       <main class="flex-1">
         <div class="mb-8 grid grid-cols-1 gap-5 lg:grid-cols-3 xl:gap-3">
@@ -30,7 +33,7 @@
               <img class="h-auto w-full rounded-t-xl" src={product.img_url} alt={product.name} />
 
               <div class="flex-1 px-4 py-2 text-center md:px-5 md:py-3">
-                <h3 class="text-lg font-bold text-gray-800 dark:text-white">{product.name}</h3>
+                <h3 class="text-lg font-bold text-gray-800 dark:text-white">{product.id} - {product.name}</h3>
               </div>
 
               <div class="absolute -right-10 top-20 flex flex-col space-y-2 transition-all duration-300 ease-in-out group-hover:right-4">
@@ -62,6 +65,31 @@
               </div>
             </div>
           {/each}
+        </div>
+
+        <div class="grid gap-3 border-t border-gray-200 px-6 py-4 md:flex md:items-center md:justify-between dark:border-neutral-700">
+          <div></div>
+          <div>
+            <div class="inline-flex gap-x-2">
+              <a
+                href={`${baseUrl}/cursor/${meta.prev_page_cursor || "#"}`}
+                class="inline-flex items-center gap-x-2 rounded-lg border border-gray-200 bg-white px-2 py-1.5 text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-50 focus:bg-gray-50 focus:outline-none dark:border-neutral-700 dark:bg-transparent dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800 {!meta.prev_page_cursor
+                  ? 'pointer-events-none opacity-50'
+                  : ''}">
+                <SvgIcon class="size-4 shrink-0" slot={leftAngle} />
+                Prev
+              </a>
+
+              <a
+                href={`${baseUrl}/cursor/${meta.next_page_cursor || "#"}`}
+                class="inline-flex items-center gap-x-2 rounded-lg border border-gray-200 bg-white px-2 py-1.5 text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-50 focus:bg-gray-50 focus:outline-none dark:border-neutral-700 dark:bg-transparent dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800 {!meta.next_page_cursor
+                  ? 'pointer-events-none opacity-50'
+                  : ''}">
+                Next
+                <SvgIcon class="size-4 shrink-0" slot={rightAngle} />
+              </a>
+            </div>
+          </div>
         </div>
       </main>
     </div>
