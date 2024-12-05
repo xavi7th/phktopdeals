@@ -32,19 +32,12 @@
     <Logo />
 
     <div class="flex items-center gap-x-2 sm:order-4 sm:hidden">
-      <button
-        type="button"
-        class="hs-collapse-toggle relative flex size-7 items-center justify-center gap-x-2 rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:bg-gray-50 focus:outline-none disabled:pointer-events-none disabled:opacity-50 sm:hidden dark:border-neutral-700 dark:bg-transparent dark:text-white dark:hover:bg-white/10 dark:focus:bg-white/10"
-        id="hs-navbar-alignment-collapse"
-        aria-expanded="false"
-        aria-controls="hs-navbar-alignment"
-        aria-label="Toggle navigation"
-        data-hs-collapse="#hs-navbar-alignment">
-        <SvgIcon class="size-4 shrink-0 hs-collapse-open:hidden" slot={breadcrumb} />
-        <SvgIcon class="hidden size-4 shrink-0 hs-collapse-open:block" slot={x} />
-        <span class="sr-only">Toggle</span>
-      </button>
       {#if user?.full_name}
+        <a
+          href="/user/orders"
+          class="mr-1 inline-flex items-center gap-x-3 rounded-full bg-brand-800 px-5 py-3 text-xs font-medium text-white hover:bg-brand-900 focus:bg-brand-900 focus:outline-none dark:bg-brand-700 dark:text-white">
+          Dashboard
+        </a>
         <a
           href="/logout"
           data-sveltekit-reload
@@ -63,11 +56,23 @@
           Sign Up
         </a>
       {/if}
+      <button
+        type="button"
+        class="hs-collapse-toggle relative flex size-7 mr-4 items-center justify-center gap-x-2 rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:bg-gray-50 focus:outline-none disabled:pointer-events-none disabled:opacity-50 sm:hidden dark:border-neutral-700 dark:bg-transparent dark:text-white dark:hover:bg-white/10 dark:focus:bg-white/10"
+        id="hs-navbar-alignment-collapse"
+        aria-expanded="false"
+        aria-controls="hs-navbar-alignment"
+        aria-label="Toggle navigation"
+        data-hs-collapse="#hs-navbar-alignment">
+        <SvgIcon class="size-4 shrink-0 hs-collapse-open:hidden" slot={breadcrumb} />
+        <SvgIcon class="hidden size-4 shrink-0 hs-collapse-open:block" slot={x} />
+        <span class="sr-only">Toggle</span>
+      </button>
     </div>
 
     <div
       id="hs-navbar-alignment"
-      class="hs-collapse rounded-0 hidden grow basis-full space-x-0.5 overflow-hidden border border-gray-200 bg-gray-200 transition-all duration-300 sm:order-2 sm:block sm:grow-0 sm:basis-auto sm:rounded-full dark:border-white/20"
+      class="hs-collapse rounded-0 hidden grow basis-full space-x-0.5 overflow-hidden border mt-2 border-gray-200 bg-gray-200 transition-all duration-300 sm:order-2 sm:block sm:grow-0 sm:basis-auto sm:rounded-full dark:border-white/20"
       aria-labelledby="hs-navbar-alignment-collapse">
       <div class="flex items-center justify-evenly divide-y sm:flex-row sm:items-center sm:gap-5 sm:divide-y-0">
         {#each main_nav as nav_item}

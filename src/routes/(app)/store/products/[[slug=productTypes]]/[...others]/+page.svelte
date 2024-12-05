@@ -24,7 +24,7 @@
       <div class="lg:w-1/3"></div>
 
       <main class="flex-1">
-        <div class="mb-8 grid grid-cols-1 gap-5 lg:grid-cols-3 xl:gap-3">
+        <div class="mb-8 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4 xl:gap-3">
           {#each cards || [] as product}
             <div
               class="group relative flex flex-col overflow-hidden rounded-xl bg-white shadow transition hover:-translate-y-1 hover:translate-x-1 hover:scale-[1.025] hover:shadow-sm hover:drop-shadow-xl dark:border-neutral-700 dark:bg-neutral-700/30 dark:shadow-neutral-700/70">

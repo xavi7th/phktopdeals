@@ -6,10 +6,9 @@
   let isLoading = false;
 </script>
 
-<section
-  class="hero min-h-[95dvh] bg-gray-100 lg:min-h-[85dvh]"
-  style="background-image: url('https://images.unsplash.com/photo-1659710173823-b4362e0ab9c7?q=80&w=1920&h=800&fit=crop'); background-size: cover; background-position: center;">
-  <div class="container-fluid hero-content mx-auto h-fit px-4 pb-10">
+<section class="hero min-h-[95dvh] bg-gray-100 lg:min-h-[85dvh]">
+  <enhanced:img class="h-full w-full rounded-xl absolute hero-bkg-img" src="$lib/images/hero.jpg?enhance&w=1920" alt="hero-img" />
+  <div class="container-fluid hero-content mx-auto h-fit px-4 pb-10 relatize z-20">
     <div class="w-full">
       <div class="flex max-w-screen-sm flex-col md:w-4/5">
         <Typewriter mode="loop" element="h1" --cursor-color="white" --cursor-width="2px" interval={60} wordInterval={2000} unwriteInterval={80}>
@@ -107,43 +106,43 @@
               <div class="hs-carousel relative h-full w-full overflow-hidden rounded-lg bg-white">
                 <div class="hs-carousel-body absolute bottom-0 start-0 top-0 flex h-full flex-nowrap opacity-0 transition-transform duration-700">
                   <div class="hs-carousel-slide h-full">
-                    <a href="/shop" target="_blank">
-                      <enhanced:img class="h-full w-full rounded-xl" src="$lib/images/sliders/hero-slider-2.png?enhance" alt="hero-img-thumb" />
+                    <a href="/store/products">
+                      <enhanced:img class="h-full w-full rounded-xl" src="$lib/images/sliders/hero-slider-2.png?enhance&w=722&h=358" alt="hero-img-thumb" />
                     </a>
                   </div>
                   <div class="hs-carousel-slide">
-                    <a href="/shop" target="_blank">
-                      <enhanced:img class="h-full w-full rounded-xl" src="$lib/images/sliders/hero-slider-1.png?enhance" alt="hero-img-thumb" />
+                    <a href="/store/products">
+                      <enhanced:img class="h-full w-full rounded-xl" src="$lib/images/sliders/hero-slider-1.png?enhance&w=722&h=358" alt="hero-img-thumb" />
                     </a>
                   </div>
                   <div class="hs-carousel-slide">
-                    <a href="/shop" target="_blank">
-                      <enhanced:img class="h-full w-full rounded-xl" src="$lib/images/sliders/hero-slider-2.png?enhance" alt="hero-img-thumb" />
+                    <a href="/store/products">
+                      <enhanced:img class="h-full w-full rounded-xl" src="$lib/images/sliders/hero-slider-3.jpg?enhance&w=722&h=358" alt="hero-img-thumb" />
                     </a>
                   </div>
                   <div class="hs-carousel-slide">
-                    <a href="/shop" target="_blank">
-                      <enhanced:img class="h-full w-full rounded-xl" src="$lib/images/sliders/hero-slider-1.png?enhance" alt="hero-img-thumb" />
+                    <a href="/store/products">
+                      <enhanced:img class="h-full w-full rounded-xl" src="$lib/images/sliders/hero-slider-4.jpg?enhance&w=722&h=358" alt="hero-img-thumb" />
                     </a>
                   </div>
                   <div class="hs-carousel-slide">
-                    <a href="/shop" target="_blank">
-                      <enhanced:img class="h-full w-full rounded-xl" src="$lib/images/sliders/hero-slider-2.png?enhance" alt="hero-img-thumb" />
+                    <a href="/store/products">
+                      <enhanced:img class="h-full w-full rounded-xl" src="$lib/images/sliders/hero-slider-5.jpg?enhance&w=722&h=358" alt="hero-img-thumb" />
                     </a>
                   </div>
                   <div class="hs-carousel-slide">
-                    <a href="/shop" target="_blank">
-                      <enhanced:img class="h-full w-full rounded-xl" src="$lib/images/sliders/hero-slider-1.png?enhance" alt="hero-img-thumb" />
+                    <a href="/store/products">
+                      <enhanced:img class="h-full w-full rounded-xl" src="$lib/images/sliders/hero-slider-6.jpg?enhance&w=722&h=358" alt="hero-img-thumb" />
                     </a>
                   </div>
                   <div class="hs-carousel-slide">
-                    <a href="/shop" target="_blank">
-                      <enhanced:img class="h-full w-full rounded-xl" src="$lib/images/sliders/hero-slider-2.png?enhance" alt="hero-img-thumb" />
+                    <a href="/store/products">
+                      <enhanced:img class="h-full w-full rounded-xl" src="$lib/images/sliders/hero-slider-7.jpg?enhance&w=722&h=358" alt="hero-img-thumb" />
                     </a>
                   </div>
                   <div class="hs-carousel-slide">
-                    <a href="/shop" target="_blank">
-                      <enhanced:img class="h-full w-full rounded-xl" src="$lib/images/sliders/hero-slider-1.png?enhance" alt="hero-img-thumb" />
+                    <a href="/store/products">
+                      <enhanced:img class="h-full w-full rounded-xl" src="$lib/images/sliders/hero-slider-8.jpg?enhance&w=722&h=358" alt="hero-img-thumb" />
                     </a>
                   </div>
                 </div>
@@ -215,15 +214,19 @@
   .hero {
     position: relative;
 
-    &::before {
-      content: "";
-      display: block;
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      width: 100%;
-      background: linear-gradient(100.06deg, #000 65.67%, #ffda1c 150.22%) !important;
-      opacity: 0.75;
+    > :global(picture){
+
+      &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        background: linear-gradient(100.06deg, #000 65.67%, #ffda1c 150.22%) !important;
+        opacity: 0.75;
+        z-index: 10;
+      }
     }
   }
   .hero-content {
@@ -275,7 +278,7 @@
           @media (min-width: 960px) {
             margin-left: 6rem;
             width: 24rem;
-            margin-top: -2rem;
+            margin-top: 2rem;
             margin-bottom: 2rem;
           }
         }
