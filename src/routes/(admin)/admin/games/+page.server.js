@@ -5,24 +5,23 @@ import { fail } from '@sveltejs/kit';
 /** @type {import('./$types').PageServerLoad} */
 export async function load(event) {
 
-  const fetchESimCards = async () => {
+  const fetchGamesCards = async () => {
     const res = await api({
 			method: 'get',
-			resource: 'games',
+			resource: 'products/type/game',
       event,
-      logResponse: true,
 		});
 
     return res?.json();
   }
 
 	const [cardsData] = await Promise.all([
-    fetchESimCards(),
+    fetchGamesCards(),
 	]);
 
-  // event.setHeaders({
-    //   'Cache-Control': 'public, max-age=604800',
-    // });
+  event.setHeaders({
+    'Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400',
+  });
 
     return {
     /** @type { import('$lib/types').Product[] } */
@@ -34,13 +33,13 @@ export async function load(event) {
 /** @satisfies {import('./$types').Actions} */
  export const actions = {
   /** @param {import('@sveltejs/kit').RequestEvent} event */
-  delete: async ( event ) => {
+	delete: async ( event ) => {
 
     const formData = await event.request.formData();
 
     const res = await api( {
-      method: 'delete',
-      resource: 'games/'+formData.get('uuid'),
+      method: 'DELETE',
+      resource: 'products/'+formData.get('product_id'),
       event,
     } );
 
@@ -54,6 +53,6 @@ export async function load(event) {
       return fail( res?.status || 500, { message: res?.statusText || 'An error occurred while processing your request' } );
     }
 
-    return { type: 'success', msg: 'Product deleted successfully!' };
+    return { type: 'success', msg: 'Card deleted successfully!' };
   },
 }

@@ -1,6 +1,6 @@
 import { api } from '$lib/helpers';
 import { arktype } from 'sveltekit-superforms/adapters';
-import { gameDefaults , gameSchema} from '$lib/schemas';
+import { gameSchema , gameDefaults} from '$lib/schemas';
 import { message, superValidate, fail, setError } from 'sveltekit-superforms';
 
 /** @type {import('./$types').PageServerLoad} */
@@ -18,6 +18,16 @@ export async function load(event) {
     return res?.json();
   }
 
+  const fetchProductBrands = async () => {
+    const res = await api({
+			method: 'get',
+			resource: 'product-brands',
+      event,
+		});
+
+    return res?.json();
+  }
+
   const fetchCategories = async () => {
     const res = await api({
 			method: 'get',
@@ -29,17 +39,29 @@ export async function load(event) {
     return res?.json();
   }
 
+  const fetchRegions = async () => {
+    const res = await api({
+			method: 'get',
+			resource: 'regions',
+      event,
+		});
 
-	const [types, categories] = await Promise.all([
+    return res?.json();
+  }
+
+  event.depends('brandlist');
+	const [types, categories, brandsData, regionsData] = await Promise.all([
 	  fetchProductTypes(),
 	  fetchCategories(),
+    fetchProductBrands(),
+	  fetchRegions(),
 	]);
 
   event.setHeaders({
     'Cache-Control': 'public, max-age=604800',
   });
 
-  return { form, types, categories }
+  return { form, types, categories, regions: regionsData.data, brands: brandsData.data, }
 }
 
 /** @satisfies {import('./$types').Actions} */
@@ -56,12 +78,17 @@ export async function load(event) {
     const formData = new FormData();
 
     for(let dt of Object.entries(form.data)){
+      if (dt[0] == 'discount_until' && dt[1]) {
+        formData.append(dt[0], new Date(dt[1]).toDateString());
+        continue;
+      }
+
       formData.append(dt[0], dt[1]);
     }
 
     const res = await api({
 			method: 'POST',
-			resource: 'games',
+			resource: 'products',
 			data: formData,
       event,
       toJSON: false,
@@ -89,6 +116,6 @@ export async function load(event) {
       return message(form, {type: 'error', msg: res?.statusText || 'An error occured while processing your request'}, {status: res?.status || 429});
     }
 
-		return message(form, {type: 'success', msg: 'Product created successfully!'});
+		return message(form, {type: 'success', msg: 'Card created successfully!'});
 	},
 }
