@@ -109,7 +109,7 @@
         <div class="max-w-md fixed left-0 bottom-0 z-[60]">
             <SuperDebug data={{$message, $formData, $errors}} label="My form data" collapsible={true} display={dev} />
         </div>
-        <form method="POST" action={! editContent.id ? "?/createBrand" : "?/editBrand"} use:enhance>
+        <form method="POST" action={! editContent.id ? "/admin/gift-card?/createBrand" : "/admin/gift-card?/editBrand"} use:enhance>
             <div class="flex flex-col">
                 {#if editContent.id}
                     <input type="text" name="uuid" class="hidden" value={editContent.id}>

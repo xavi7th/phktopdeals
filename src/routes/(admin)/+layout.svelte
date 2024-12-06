@@ -5,10 +5,13 @@
 	import SvgIcon from '$lib/Components/SvgIcon.svelte';
 	import Sidebar from '$partials/admin/Sidebar.svelte';
 	import PageSkeleton from '$lib/Components/PageSkeleton.svelte';
+  import Brand from '$partials/brands/BrandModal.svelte';
 
   export let data;
 
-  const { admin_routes } = data;
+  const { admin_routes, brandForm, brands } = data;
+
+  let title = "";
 </script>
 
 <section class="dark:bg-neutral-900">
@@ -40,3 +43,5 @@
   </div>
 
 </section>
+
+<Brand {title} {brands} form={brandForm} />

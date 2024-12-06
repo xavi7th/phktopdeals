@@ -1,5 +1,6 @@
 /** @type {import('./$types').LayoutLoad} */
-export async function load () {
+export async function load ({data}) {
+  const {brandForm, brands} = data;
 
   /** @type { import('$lib/types').AdminNavMenuItem[] } */
   const admin_routes = [
@@ -45,5 +46,5 @@ export async function load () {
     },
   ]
 
-  return { admin_routes };
+  return { admin_routes, brandForm, brands };
 }

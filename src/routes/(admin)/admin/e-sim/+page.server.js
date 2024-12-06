@@ -8,7 +8,7 @@ export async function load(event) {
   const fetchESimCards = async () => {
     const res = await api({
 			method: 'get',
-			resource: 'esims',
+			resource: 'products/type/esim',
       event,
       logResponse: true,
 		});
@@ -20,9 +20,9 @@ export async function load(event) {
     fetchESimCards(),
 	]);
 
-  // event.setHeaders({
-    //   'Cache-Control': 'public, max-age=604800',
-    // });
+  event.setHeaders({
+    'Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400',
+  });
 
     return {
     /** @type { import('$lib/types').Product[] } */
@@ -40,8 +40,8 @@ export async function load(event) {
     const formData = await event.request.formData();
 
     const res = await api( {
-      method: 'delete',
-      resource: 'esim/'+formData.get('uuid'),
+      method: 'DELETE',
+      resource: 'products/'+formData.get('product_id'),
       event,
     } );
 
