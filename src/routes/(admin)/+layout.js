@@ -45,6 +45,12 @@ export async function load() {
       reload: false,
     },
     {
+      name: "Email Templates",
+      uri: "/admin/emails",
+      icon: "topUpSVGAlt",
+      reload: false,
+    },
+    {
       name: "Users",
       uri: "/admin/users",
       icon: "usersSVG",

@@ -75,7 +75,7 @@ export async function load(event) {
 // 		}
 
 //     if ( ! res?.ok) {
-//       return message(form, {type: 'error', msg: res?.statusText || 'An error occured while processing your request'}, {status: res?.status || 429});
+//       return message(form, {type: 'error', msg: res?.statusText || 'An error occurred while processing your request'}, {status: res?.status || 429});
 //     }
 
 // 		return message(form, {type: 'success', msg: 'Card created successfully!'});

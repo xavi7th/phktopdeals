@@ -29,13 +29,20 @@
 	</div> -->
 
   <div class="overflow-auto">
+    {#if tCaption}
+      <caption class="ml-6 inline-flex w-11/12 justify-between pb-8 pt-4 text-start text-xl font-semibold text-gray-600 dark:text-neutral-300">
+        <div class="caption flex-1">
+          <span>{tCaption}</span>
+          {#if tDescription}
+            <p class="text-sm font-light text-gray-400 dark:text-neutral-400">{tDescription}</p>
+          {/if}
+        </div>
+        <div class="table-action shrink-0">
+          <slot name="tableAction" />
+        </div>
+      </caption>
+    {/if}
     <table class="w-full min-w-[700px] text-center">
-      {#if tCaption}
-        <caption class="ml-6 pb-8 pt-4 text-start text-xl font-semibold text-gray-600 dark:text-neutral-300">{tCaption}</caption>
-      {/if}
-      {#if tDescription}
-        <p class="text-sm text-gray-600 dark:text-neutral-400">{tDescription}</p>
-      {/if}
       <thead class="h-14 bg-gray-50 text-slate-800 dark:bg-neutral-700 dark:text-slate-100">
         <slot name="thead">
           <th>S/N</th>
@@ -46,7 +53,7 @@
           <th>Balance</th>
         </slot>
       </thead>
-      <tfoot class="h-14 text-slate-800 dark:text-slate-100">
+      <tfoot class="h-14 bg-gray-50 text-slate-800 dark:bg-neutral-700 dark:text-slate-100">
         <slot name="thead">
           <th>S/N</th>
           <th>Order Number</th>

@@ -45,7 +45,7 @@ export const actions = {
     }
 
     if (!res?.ok) {
-      return fail(res?.status || 500, { message: res?.statusText || "An error occured while processing your request" });
+      return fail(res?.status || 500, { message: res?.statusText || "An error occurred while processing your request" });
     }
 
     return { type: "success", msg: "Card created successfully!" };

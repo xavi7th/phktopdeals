@@ -7,8 +7,8 @@
 </script>
 
 <section class="hero min-h-[95dvh] bg-gray-100 lg:min-h-[85dvh]">
-  <enhanced:img class="h-full w-full rounded-xl absolute hero-bkg-img" src="$lib/images/hero.jpg?enhance&w=1920" alt="hero-img" />
-  <div class="container-fluid hero-content mx-auto h-fit px-4 pb-10 relatize z-20">
+  <enhanced:img class="hero-bkg-img absolute h-full w-full rounded-xl" src="$lib/images/hero.jpg?enhance&w=1920" alt="hero-img" />
+  <div class="container-fluid hero-content relatize z-20 mx-auto h-fit px-4 pb-10">
     <div class="w-full">
       <div class="flex max-w-screen-sm flex-col md:w-4/5">
         <Typewriter mode="loop" element="h1" --cursor-color="white" --cursor-width="2px" interval={60} wordInterval={2000} unwriteInterval={80}>
@@ -214,8 +214,7 @@
   .hero {
     position: relative;
 
-    > :global(picture){
-
+    > :global(picture) {
       &::before {
         content: "";
         display: block;

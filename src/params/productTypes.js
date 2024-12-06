@@ -4,5 +4,5 @@
  * @satisfies {import('@sveltejs/kit').ParamMatcher}
  */
 export function match(param) {
-	return param === 'games' || param === 'eSims' || param === 'gift-cards' || param === 'top-up';
+  return param === "games" || param === "eSims" || param === "gift-cards" || param === "top-up";
 }
