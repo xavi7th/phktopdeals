@@ -3,7 +3,6 @@
   import SvgIcon from "$lib/Components/SvgIcon.svelte";
   import ProductListings from "../ProductListings.svelte";
 
-  /** @type {import('./$types').PageData} */
   export let data;
 
   $: ({ products, meta } = data);

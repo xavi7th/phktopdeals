@@ -3,7 +3,6 @@ import { api } from "$lib/helpers";
 import { arktype } from "sveltekit-superforms/adapters";
 import { message, superValidate, fail, setError } from "sveltekit-superforms";
 
-/** @type {import('./$types').PageServerLoad} */
 export async function load(event) {
   const form = await superValidate(
     arktype(
@@ -22,7 +21,7 @@ export async function load(event) {
       resource: "product-email-templates",
       event,
     });
-    return res?.json();
+    return await res?.json();
   };
 
   const [templates] = await Promise.all([fetchEmailTemplates()]);
@@ -34,9 +33,7 @@ export async function load(event) {
   };
 }
 
-/** @satisfies {import('./$types').Actions} */
 export const actions = {
-  /** @param {import('@sveltejs/kit').RequestEvent} event */
   createEmailTemplate: async (event) => {
     const form = await superValidate(event, arktype(type({ alias: type("string"), instructions: type("string") }), { defaults: { alias: "", instructions: "" } }));
 
@@ -49,7 +46,6 @@ export const actions = {
       resource: "product-email-templates",
       data: form.data,
       event,
-      logResponse: true,
     });
 
     if (res?.status == 422) {
@@ -120,7 +116,7 @@ export const actions = {
     const form = await superValidate(event, arktype(type({ id: type("string>3") }), { defaults: { id: "" } }));
 
     if (!form.valid) {
-      return message(form, { type: "error", msg: "There was an error selecting the form for deletion. Reload the page and try again." }, { status: 422 });
+      return message(form, { type: "error", msg: "There was an error selecting the template for deletion. Reload the page and try again." }, { status: 422 });
     }
 
     const res = await api({
@@ -128,7 +124,6 @@ export const actions = {
       resource: "product-email-templates" + "/" + form.data.id,
       data: form.data,
       event,
-      logResponse: true,
     });
 
     if (res?.status == 422) {

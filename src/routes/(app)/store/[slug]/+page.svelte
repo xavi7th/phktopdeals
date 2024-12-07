@@ -12,7 +12,6 @@
 
   let selectedDenomination = "btn-0";
 
-  /** @type {import('./$types').PageData} */
   export let data;
 
   const { form, errors, message, delayed, submitting, timeout, enhance } = superForm(data.form, {

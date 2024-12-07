@@ -14,7 +14,6 @@
   import FloatingNumericTextInput from "$lib/Components/FormInputs/FloatingNumericTextInput.svelte";
   import FloatingSelectTagAltInput from "$lib/Components/FormInputs/FloatingSelectTagAltInput.svelte";
 
-  /** @type {import('./$types').PageData} */
   export let data;
 
   const {

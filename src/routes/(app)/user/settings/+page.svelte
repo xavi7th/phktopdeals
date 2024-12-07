@@ -7,7 +7,6 @@
   import FloatingTextInput from "$lib/Components/FormInputs/FloatingTextInput.svelte";
   import FloatingFileInput from "$lib/Components/FormInputs/FloatingFileInput.svelte";
 
-  /** @type {import('./$types').PageData} */
   export let data;
 
   const {

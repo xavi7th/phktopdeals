@@ -3,7 +3,6 @@ import { arktype } from "sveltekit-superforms/adapters";
 import { brandDefaults, brandSchema } from "$lib/schemas";
 import { message, superValidate, fail, setError } from "sveltekit-superforms";
 
-/** @type {import('./$types').PageServerLoad} */
 export async function load(event) {
   const form = await superValidate(arktype(brandSchema, { defaults: brandDefaults }));
 
@@ -16,9 +15,7 @@ export async function load(event) {
   };
 }
 
-/** @satisfies {import('./$types').Actions} */
 export const actions = {
-  /** @param {import('@sveltejs/kit').RequestEvent} event */
   create: async (event) => {
     const form = await superValidate(event, arktype(brandSchema, { defaults: brandDefaults }));
 

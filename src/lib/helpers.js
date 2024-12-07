@@ -268,12 +268,12 @@ export async function api({ toBaseDomain, resource, event, method, data, logResp
     host: event.request?.headers?.get("host") || "",
     referer: event.request?.headers?.get("referer") || "",
     origin: event.request?.headers?.get("origin") || "",
-    "x-xsrf-token": event.cookies.get("XSRF-TOKEN") || "",
-    "sec-ch-ua": event.cookies.get("sec-ch-ua") || "",
-    "sec-ch-ua-mobile": event.cookies.get("sec-ch-ua-mobile") || "",
-    "sec-ch-ua-platform": event.cookies.get("sec-ch-ua-platform") || "",
-    "user-agent": event.cookies.get("user-agent") || "",
-    "x-sveltekit-action": event.cookies.get("x-sveltekit-action") || false,
+    "x-xsrf-token": event.cookies?.get("XSRF-TOKEN") || "",
+    "sec-ch-ua": event.cookies?.get("sec-ch-ua") || "",
+    "sec-ch-ua-mobile": event.cookies?.get("sec-ch-ua-mobile") || "",
+    "sec-ch-ua-platform": event.cookies?.get("sec-ch-ua-platform") || "",
+    "user-agent": event.cookies?.get("user-agent") || "",
+    "x-sveltekit-action": event.cookies?.get("x-sveltekit-action") || false,
   };
 
   if (toJSON) {

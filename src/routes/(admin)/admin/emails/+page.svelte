@@ -7,7 +7,6 @@
   import LoadingButton from "$lib/Components/FormInputs/LoadingButton.svelte";
   import FloatingTextInput from "$lib/Components/FormInputs/FloatingTextInput.svelte";
 
-  /** @type {import('./$types').PageData} */
   export let data;
 
   $: ({ templates } = data);
@@ -29,7 +28,7 @@
   </div>
 {/if}
 
-<Table tCaption="List of Email Templates" tDescription="Create email instruction templates that can be applied to vouchers when they are sent." totalDataCount={100}>
+<Table tCaption="List of Email Templates" tDescription="Create email instruction templates that can be applied to vouchers when they are sent.">
   <svelte:fragment slot="tableAction">
     <div>
       <button

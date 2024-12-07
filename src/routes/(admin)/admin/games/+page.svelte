@@ -3,7 +3,6 @@
   import SvgIcon from "$lib/Components/SvgIcon.svelte";
   import { toCurrency } from "$lib/helpers";
 
-  /** @type {import('./$types').PageData} */
   export let data;
 
   $: ({ cards, meta } = data);

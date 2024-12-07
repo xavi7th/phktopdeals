@@ -3,7 +3,6 @@ import { arktype } from "sveltekit-superforms/adapters";
 import { message, superValidate, fail, setError } from "sveltekit-superforms";
 import { GiftCardDefaults, GiftCardSchema, brandSchema, brandDefaults, brandEditSchema, brandEditDefault } from "$lib/schemas";
 
-/** @type {import('./$types').PageServerLoad} */
 export async function load(event) {
   const brandForm = await superValidate(arktype(brandSchema, { defaults: brandDefaults }));
 
@@ -14,7 +13,7 @@ export async function load(event) {
       event,
     });
 
-    return res?.json();
+    return await res?.json();
   };
 
   const fetchProductBrands = async () => {
@@ -24,7 +23,7 @@ export async function load(event) {
       event,
     });
 
-    return res?.json();
+    return await res?.json();
   };
 
   const fetchCategories = async () => {
@@ -34,7 +33,7 @@ export async function load(event) {
       event,
     });
 
-    return res?.json();
+    return await res?.json();
   };
 
   const fetchRegions = async () => {
@@ -44,7 +43,7 @@ export async function load(event) {
       event,
     });
 
-    return res?.json();
+    return await res?.json();
   };
 
   event.depends("brandlist");
@@ -76,9 +75,7 @@ export async function load(event) {
   };
 }
 
-/** @satisfies {import('./$types').Actions} */
 export const actions = {
-  /** @param {import('@sveltejs/kit').RequestEvent} event */
   createBrand: async (event) => {
     const form = await superValidate(event, arktype(brandSchema, { defaults: brandDefaults }));
 
@@ -125,7 +122,6 @@ export const actions = {
     return message(form, { type: "success", msg: "Brand created successfully!" });
   },
 
-  /** @param {import('@sveltejs/kit').RequestEvent} event */
   editBrand: async (event) => {
     const form = await superValidate(event, arktype(brandEditSchema, { defaults: brandEditDefault }));
 
@@ -177,7 +173,6 @@ export const actions = {
     return message(form, { type: "success", msg: "Brand was Updated successfully!" });
   },
 
-  /** @param {import('@sveltejs/kit').RequestEvent} event */
   deleteBrand: async (event) => {
     const form = await superValidate(arktype(brandSchema, { defaults: brandDefaults }));
     const formData = await event.request.formData();

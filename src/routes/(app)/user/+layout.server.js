@@ -1,4 +1,3 @@
-/** @type {import('./$types').LayoutServerLoad} */
 export async function load({ locals }) {
   /** @type { import('$lib/types').AdminNavMenuItem[] } */
   const user_routes = [

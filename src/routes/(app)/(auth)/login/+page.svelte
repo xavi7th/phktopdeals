@@ -1,15 +1,11 @@
 <script>
-  import { page } from "$app/stores";
   import { enhance } from "$app/forms";
   import { browser } from "$app/environment";
   import Toast from "$lib/Components/Toast.svelte";
   import PrimaryBtn from "$lib/Components/PrimaryBtn.svelte";
   import FloatingTextInput from "$lib/Components/FormInputs/FloatingTextInput.svelte";
 
-  /** @type {import('./$types').ActionData} */
   export let form;
-
-  /** @type {import('./$types').PageData} */
   export let data;
 
   let loading = false;

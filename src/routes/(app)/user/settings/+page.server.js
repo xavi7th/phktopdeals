@@ -4,7 +4,6 @@ import { arktype } from "sveltekit-superforms/adapters";
 import { AppUserDefaults, AppUserSchema } from "$lib/schemas";
 import { message, superValidate, fail, setError } from "sveltekit-superforms";
 
-/** @type {import('./$types').PageServerLoad} */
 export async function load(event) {
   const form = await superValidate(event.locals.session.data?.user, arktype(AppUserSchema, { defaults: event.locals.session.data?.user }));
 
@@ -19,9 +18,7 @@ export async function load(event) {
   };
 }
 
-/** @satisfies {import('./$types').Actions} */
 export const actions = {
-  /** @param {import('@sveltejs/kit').RequestEvent} event */
   updateProfile: async (event) => {
     const form = await superValidate(event, arktype(AppUserSchema, { defaults: AppUserDefaults }));
 

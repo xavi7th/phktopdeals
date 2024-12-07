@@ -1,7 +1,6 @@
 import { api } from "$lib/helpers";
 import { redirect, fail } from "@sveltejs/kit";
 
-/** @type {import('./$types').PageServerLoad} */
 export async function load(event) {
   if (!event.locals.session) {
     await api({
@@ -21,9 +20,7 @@ export async function load(event) {
   };
 }
 
-/** @satisfies {import('./$types').Actions} */
 export const actions = {
-  /** @param {import('@sveltejs/kit').RequestEvent} event */
   login: async (event) => {
     const form = await event.request.formData();
 
@@ -69,7 +66,6 @@ export const actions = {
     }
   },
 
-  /** @param {import('@sveltejs/kit').RequestEvent} event */
   register: async (event) => {
     const form = await event.request.formData();
 

@@ -1,4 +1,3 @@
-/** @type {import('./$types').LayoutLoad} */
 export async function load() {
   /** @type { import('$lib/types').AdminNavMenuItem[] } */
   const admin_routes = [
@@ -12,6 +11,12 @@ export async function load() {
       name: "All Products",
       uri: "/admin/product",
       icon: "productSVG",
+      reload: false,
+    },
+    {
+      name: "Voucher Management",
+      uri: "/admin/vouchers",
+      icon: "topUpSVGAlt",
       reload: false,
     },
     {

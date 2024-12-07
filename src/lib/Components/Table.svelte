@@ -102,7 +102,7 @@
         </div>
       </div>
 
-      {#if totalDataCount || itemsPerPage}
+      {#if totalDataCount && itemsPerPage}
         <p class="text-xs">{itemsPerPage} of {totalDataCount}</p>
       {/if}
 

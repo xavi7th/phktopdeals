@@ -32,6 +32,38 @@ export const TopUpAccountDefaults = {
   amount: 20,
 };
 
+export const VoucherCodeSchema = type({
+  "id?": type("string>4 | undefined").describe("valid"),
+  product_id: type("string>4").describe("valid"),
+  "product_email_template_id?": type("string>4 | undefined").describe("valid"),
+  amount: "number>0",
+  code: type("string>=6").describe("at least 6 characters"),
+  "app_user_id?": "string | undefined",
+  "user_transaction_id?": "string | undefined",
+  product_name: "string",
+  product_image_url: "string",
+  "email_template?": "string | undefined",
+  "app_user_name?": "string | undefined",
+  "app_user_email?": "string | undefined",
+  is_sold: "boolean",
+});
+
+export const VoucherCodeDefaults = {
+  id: undefined,
+  product_id: "",
+  amount: 0,
+  code: "",
+  product_email_template_id: undefined,
+  app_user_id: undefined,
+  user_transaction_id: undefined,
+  product_name: "",
+  product_image_url: "",
+  email_template: undefined,
+  app_user_name: undefined,
+  app_user_email: undefined,
+  is_sold: false,
+};
+
 export const PurchaseItemSchema = type({
   product_id: type("string>4").describe("valid"),
   email: type("string.email|undefined").describe("provided"),

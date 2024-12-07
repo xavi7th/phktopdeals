@@ -5,7 +5,6 @@
   import SvgIcon from "$lib/Components/SvgIcon.svelte";
   import { checkMarkFilledAlt, exclamationCircle, xCircle } from "$lib/Components/iconPaths";
 
-  /** @type {import('./$types').PageData} */
   export let data;
 
   $: ({ currencies, wallet_balance, transactions } = data);

@@ -1,6 +1,5 @@
 import { api } from "$lib/helpers";
 
-/** @type {import('./$types').PageServerLoad} */
 export async function load(event) {
   let url = "store";
 
@@ -18,7 +17,7 @@ export async function load(event) {
       resource: url,
       event,
     });
-    return res?.json();
+    return await res?.json();
   };
 
   const [cardsData] = await Promise.all([fetchGiftCards()]);

@@ -4,7 +4,6 @@
   import Toast from "$lib/Components/Toast.svelte";
   import CountdownTimer from "$lib/Components/CountdownTimer.svelte";
 
-  /** @type {import('./$types').PageData} */
   export let data;
 
   /** @type {EventSource} */

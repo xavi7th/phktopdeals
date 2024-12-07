@@ -1,7 +1,7 @@
 <!-- EXAMPLE USAGE -->
 <!-- <FloatingSelectInput label="Product Type" options={['Gift Cards','Games','eSim','Top Up']} bind:value={formData.product_type} msg={form?.success || form?.errors?.product_type && form?.errors?.product_type[0]} hasSearch={false}/> -->
 
-<!-- <FloatingSelectInput label="Product Type" bind:value={formData.product_type} msg={form?.success || form?.errors?.product_type && form?.errors?.product_type[0]} size='py-2 px-3'>
+<!-- <FloatingSelectInput label="Product Type" bind:value={$form.product_type} isError={!!$errors.product_type} msg={$errors.product_type} size='py-2 px-3'>
   {#each ['Gift Cards','Games','eSim','Top Up'] as item}
     <option>{item}</option>
   {/each}

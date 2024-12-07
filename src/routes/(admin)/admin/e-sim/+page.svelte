@@ -1,9 +1,8 @@
 <script>
-  import { leftAngle, plusIcon, rightAngle } from "$lib/Components/iconPaths";
-  import SvgIcon from "$lib/Components/SvgIcon.svelte";
   import { toCurrency } from "$lib/helpers";
+  import SvgIcon from "$lib/Components/SvgIcon.svelte";
+  import { leftAngle, plusIcon, rightAngle } from "$lib/Components/iconPaths";
 
-  /** @type {import('./$types').PageData} */
   export let data;
 
   $: ({ cards, meta } = data);

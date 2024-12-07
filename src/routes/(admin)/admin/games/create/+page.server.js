@@ -3,7 +3,6 @@ import { arktype } from "sveltekit-superforms/adapters";
 import { gameDefaults, gameSchema } from "$lib/schemas";
 import { message, superValidate, fail, setError } from "sveltekit-superforms";
 
-/** @type {import('./$types').PageServerLoad} */
 export async function load(event) {
   const form = await superValidate(arktype(gameSchema, { defaults: gameDefaults }));
 
@@ -15,7 +14,7 @@ export async function load(event) {
       logResponse: true,
     });
 
-    return res?.json();
+    return await res?.json();
   };
 
   const fetchCategories = async () => {
@@ -26,7 +25,7 @@ export async function load(event) {
       logResponse: true,
     });
 
-    return res?.json();
+    return await res?.json();
   };
 
   const [types, categories] = await Promise.all([fetchProductTypes(), fetchCategories()]);
@@ -38,9 +37,7 @@ export async function load(event) {
   return { form, types, categories };
 }
 
-/** @satisfies {import('./$types').Actions} */
 export const actions = {
-  /** @param {import('@sveltejs/kit').RequestEvent} event */
   default: async (event) => {
     const form = await superValidate(event, arktype(gameSchema, { defaults: gameDefaults }));
 

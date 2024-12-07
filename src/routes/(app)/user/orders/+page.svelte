@@ -1,7 +1,6 @@
 <script>
   import Table from "$lib/Components/Table.svelte";
 
-  /** @type {import('./$types').PageData} */
   export let data;
 
   let currentTab = "All Orders";

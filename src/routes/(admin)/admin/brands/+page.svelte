@@ -3,7 +3,6 @@
   import SvgIcon from "$lib/Components/SvgIcon.svelte";
   import { leftAngle, rightAngle } from "$lib/Components/iconPaths";
 
-  /** @type {import('./$types').PageData} */
   export let data;
 
   let basePageUrl = "/admin/brands";

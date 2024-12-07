@@ -3,7 +3,6 @@ import { arktype } from "sveltekit-superforms/adapters";
 import { GiftCardDefaults, GiftCardSchema } from "$lib/schemas";
 import { message, superValidate, fail, setError } from "sveltekit-superforms";
 
-/** @type {import('./$types').PageServerLoad} */
 export async function load(event) {
   const form = await superValidate(arktype(GiftCardSchema, { defaults: GiftCardDefaults }));
 
@@ -14,7 +13,7 @@ export async function load(event) {
       event,
     });
 
-    return res?.json();
+    return await res?.json();
   };
 
   const fetchCategories = async () => {
@@ -24,7 +23,7 @@ export async function load(event) {
       event,
     });
 
-    return res?.json();
+    return await res?.json();
   };
 
   const fetchRegions = async () => {
@@ -34,7 +33,7 @@ export async function load(event) {
       event,
     });
 
-    return res?.json();
+    return await res?.json();
   };
 
   const [categoriesData, brandsData, regionsData] = await Promise.all([fetchCategories(), fetchProductBrands(), fetchRegions()]);
@@ -54,9 +53,7 @@ export async function load(event) {
   };
 }
 
-/** @satisfies {import('./$types').Actions} */
 export const actions = {
-  /** @param {import('@sveltejs/kit').RequestEvent} event */
   default: async (event) => {
     const form = await superValidate(event, arktype(GiftCardSchema, { defaults: GiftCardDefaults }));
 

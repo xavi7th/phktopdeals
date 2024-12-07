@@ -240,7 +240,7 @@ async function getUserDetails({ event, resolve }) {
       event,
     });
 
-    await event.locals.session.update(async ({ user }) => ({ user: ((await getUserDetails?.json())?.data) || {} })); //use this to determine auth on frontend. Before accessing auth routes if this is null redirect to login page
+    await event.locals.session.update(async ({ user }) => ({ user: (await getUserDetails?.json())?.data || {} })); //use this to determine auth on frontend. Before accessing auth routes if this is null redirect to login page
   }
 
   event.locals.deviceName = event.locals.deviceType.isDesktop
