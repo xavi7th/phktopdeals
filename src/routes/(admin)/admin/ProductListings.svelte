@@ -7,6 +7,7 @@
   export let products;
   export let meta = {};
   export let basePageUrl = "";
+  export let hasAction = true;
 </script>
 
 <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
@@ -89,6 +90,7 @@
             </span>
           </div>
         </td>
+        {#if hasAction}
         <td class="size-px whitespace-nowrap">
           <div class="flex gap-3 px-6 py-1.5">
             <a class="inline-flex items-center gap-x-1 text-sm font-medium text-brand-600 decoration-2 hover:underline focus:underline focus:outline-none dark:text-brand-500" href={basePageUrl + "/" + card.id}>Edit</a>
@@ -98,6 +100,7 @@
             </form>
           </div>
         </td>
+        {/if}
       </tr>
     {:else}
       <tr>
