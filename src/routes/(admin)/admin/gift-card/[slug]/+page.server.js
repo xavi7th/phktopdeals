@@ -49,6 +49,7 @@ export async function load(event) {
     return res?.json();
   }
 
+  event.depends('giftcard');
   event.depends('brandlist');
 	const [productData, categoriesData, brandsData, regionsData] = await Promise.all([
     fetchProduct(),

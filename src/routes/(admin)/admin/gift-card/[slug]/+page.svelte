@@ -12,6 +12,7 @@
 	import FloatingSelectTagInput from '$lib/Components/FormInputs/FloatingSelectTagInput.svelte';
 	import FloatingNumericTextInput from '$lib/Components/FormInputs/FloatingNumericTextInput.svelte';
 	import FloatingSelectTagAltInput from '$lib/Components/FormInputs/FloatingSelectTagAltInput.svelte';
+	import { invalidate } from '$app/navigation';
 
   /** @type {import('./$types').PageData} */
   export let data;
@@ -24,6 +25,10 @@
   $: ( { brands, regions, categories, } = data ) ;
 
   let title = "";
+
+  $: if ($message && $message.type == 'success') {
+        invalidate('giftcard');
+    }
 </script>
 
 {#if $message}
