@@ -84,7 +84,7 @@ export const GiftCardSchema = type({
   product_name: type("string>1").describe("provided"),
   product_type: ["string>1", "@", "selected"], //optional syntax
   product_image: type("File | null").describe("provided").optional(),
-  brand_id: type("string>1").describe("provided"),
+  brand_id: type("null | string>1").describe("provided"),
   product_category: ["string[]>1", "@", "2 and above"],
   regions: ["string[]>1", "@", "selected"],
   product_min_price: "number>=0",

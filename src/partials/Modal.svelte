@@ -1,6 +1,6 @@
 <script>
-  import { onMount } from "svelte";
   // import { pageMounted } from '$stores';
+  import { onDestroy, onMount } from "svelte";
   import { createEventDispatcher } from "svelte";
 
   const dispatch = createEventDispatcher();
@@ -11,6 +11,7 @@
   }
 
   export let title = "",
+    actionTitle = "Create",
     name = "modal-" + crypto.randomUUID().replaceAll("-", "").substring(0, 10);
 
   onMount(() => {
@@ -18,7 +19,11 @@
     //     new window.HSOverlay(document.querySelector(`#${name}`));
     //     elem = window.HSOverlay.getInstance(`#${name}`);
     //   }
-    return () => window.HSOverlay.close(`#${name}`);
+    // window.HSStaticMethods.autoInit();
+  });
+
+  onDestroy(() => {
+    typeof window !== "undefined" && window?.HSOverlay?.close(`#${name}`);
   });
 </script>
 
@@ -57,7 +62,7 @@
             type="button"
             class="inline-flex items-center gap-x-2 rounded-lg border border-transparent bg-brand-600 px-3 py-2 text-sm font-medium text-white hover:bg-brand-700 focus:bg-brand-700 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
             on:click={handleClick}>
-            Create
+            {actionTitle}
           </button>
         </slot>
 

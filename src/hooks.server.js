@@ -39,7 +39,6 @@ async function logger({ event, resolve }) {
       INTERNAL REQUEST: ${Date.now() - start_time}ms ${event.locals.deviceName} ${event.request.method} ${event.url.pathname}
     `);
   }
-
   return response;
 }
 
@@ -144,15 +143,20 @@ export const handleFetch = async ({ request, fetch, event }) => {
   /** @type {import('set-cookie-parser').Cookie[]} */
   let cookies = scp.parse(response);
 
-  //This will take care of updating the csrf cookies from our backend for us.
-  if (cookies.length) {
-    cookies.forEach((cookie) => {
-      event.cookies.set(cookie.name, cookie.value, {
-        ...cookie,
-        sameSite: cookie.sameSite,
-        secure: !dev,
+  // using a try catch block because when streaming data from the backend, cookies cannot be set after the response has started streaming and this throws an error
+  try {
+    //This will take care of updating the csrf cookies from our backend for us.
+    if (cookies.length) {
+      cookies.forEach((cookie) => {
+        event.cookies.set(cookie.name, cookie.value, {
+          ...cookie,
+          sameSite: cookie.sameSite,
+          secure: !dev,
+        });
       });
-    });
+    }
+  } catch (error) {
+    // console.log(error);
   }
 
   return response;

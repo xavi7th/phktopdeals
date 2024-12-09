@@ -31,6 +31,6 @@ export async function load(event) {
     cards: cardsData.data,
     meta: cardsData.metadata,
     category: event.params.slug || "all",
-    baseUrl: "/store/products" + (event.params.slug ? "/" + event.params.slug : ""),
+    basePageUrl: "/store/products" + (event.params.slug ? "/" + event.params.slug + "/cursor": ""),
   };
 }

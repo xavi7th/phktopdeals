@@ -1,11 +1,15 @@
 <script>
   import SvgIcon from "./SvgIcon.svelte";
-  import { upDownAngleIcon } from "./iconPaths";
+  import { upDownAngleIcon } from './iconPaths';
+  import PageNavigation from './PageNavigation.svelte';
 
-  export let tCaption = "Table Caption ";
+  export let tCaption;
   export let tDescription = undefined;
   /** @type {number | undefined} */
   export let totalDataCount = undefined;
+
+  /** @type { { basePageUrl: string;  total?: number; items_count?: number; next_page_cursor?: string; prev_page_cursor?: string; } } */
+  export let navData;
 
   let itemsPerPage = 15;
 </script>
@@ -29,19 +33,18 @@
 	</div> -->
 
   <div class="overflow-auto">
-    {#if tCaption}
-      <caption class="ml-6 inline-flex w-11/12 justify-between pb-8 pt-4 text-start text-xl font-semibold text-gray-600 dark:text-neutral-300">
-        <div class="caption flex-1">
-          <span>{tCaption}</span>
-          {#if tDescription}
-            <p class="text-sm font-light text-gray-400 dark:text-neutral-400">{tDescription}</p>
-          {/if}
-        </div>
-        <div class="table-action shrink-0">
-          <slot name="tableAction" />
-        </div>
-      </caption>
-    {/if}
+    <div class="ml-6 inline-flex w-11/12 justify-between pb-8 pt-4 text-start text-xl font-semibold text-gray-600 dark:text-neutral-300">
+      <div class="caption flex-1">
+        <span>{tCaption}</span>
+        {#if tDescription}
+          <p class="text-sm font-light text-gray-400 dark:text-neutral-400">{tDescription}</p>
+        {/if}
+      </div>
+      <div class="table-action shrink-0">
+        <slot name="tableAction" />
+      </div>
+    </div>
+
     <table class="w-full min-w-[700px] text-center">
       <thead class="h-14 bg-gray-50 text-slate-800 dark:bg-neutral-700 dark:text-slate-100">
         <slot name="thead">
@@ -85,9 +88,9 @@
       </tbody>
     </table>
 
-    <div class="mt-4 flex items-center justify-end gap-7 border-t border-gray-300 px-5 py-3 text-slate-800 sm:px-10 dark:text-slate-100">
-      <p class="text-xs">Items per page</p>
-      <div class="relative flex w-[70px]">
+    <div class="mt-4 flex items-center justify-between gap-7 border-t border-gray-300 px-5 py-3 text-slate-800 sm:px-10 dark:text-slate-100">
+      <div class="relative flex items-center gap-x-8">
+        <p class="text-xs">Items per page</p>
         <select
           class="relative flex w-full flex-initial cursor-pointer gap-x-2 text-nowrap rounded-lg border border-gray-200 bg-white bg-none py-3 pe-9 ps-4 text-start text-sm focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500 lg:w-20 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-neutral-600"
           bind:value={itemsPerPage}>
@@ -100,13 +103,17 @@
         <div class="pointer-events-none absolute end-3 top-1/2 -translate-y-1/2">
           <SvgIcon class="size-4 shrink-0" slot={upDownAngleIcon} />
         </div>
+
+        {#if totalDataCount && itemsPerPage}
+          <p class="text-xs">{itemsPerPage} of {totalDataCount}</p>
+        {/if}
       </div>
 
-      {#if totalDataCount && itemsPerPage}
-        <p class="text-xs">{itemsPerPage} of {totalDataCount}</p>
-      {/if}
-
-      <div class="flex gap-5"></div>
+      <div class="flex gap-5">
+        {#if navData}
+          <PageNavigation {navData} />
+        {/if}
+      </div>
     </div>
   </div>
 </div>

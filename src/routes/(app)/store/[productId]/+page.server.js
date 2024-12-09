@@ -10,7 +10,7 @@ export async function load(event) {
   const fetchProductDetails = async () => {
     const res = await api({
       method: "get",
-      resource: "products/" + event.params.slug.split("_")[1],
+      resource: "products/" + event.params.productId.split("_")[1],
       event,
     });
 

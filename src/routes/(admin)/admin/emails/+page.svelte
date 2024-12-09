@@ -202,7 +202,7 @@
   </svelte:fragment>
 </Table>
 
-<Modal title="Select Payment Method" name="manage-email-templates">
+<Modal title="{$form.id ? 'Update' : 'Create'} Email Template" name="manage-email-templates">
   <div slot="content">
     <div class="flex flex-col">
       <form method="POST" action="?/{$form.id ? 'updateEmailTemplate' : 'createEmailTemplate'}" class="space-y-3" use:enhance id="manage-email-templates-form">

@@ -1,5 +1,6 @@
 <!-- EXAMPLE USAGE -->
-<!-- <FloatingSelectInput label="Product Type" options={['Gift Cards','Games','eSim','Top Up']} bind:value={formData.product_type} msg={form?.success || form?.errors?.product_type && form?.errors?.product_type[0]} hasSearch={false}/> -->
+<!-- import FloatingSearchableSelectInput from "$lib/Components/FormInputs/FloatingSearchableSelectInput.svelte"; -->
+<!-- <FloatingSearchableSelectInput name="payment_method" label="Select Payment Method" options={Object.keys(currencies)} bind:value={$form.payment_method} /> -->
 
 <!-- <FloatingSelectInput label="Product Type" bind:value={$form.product_type} isError={!!$errors.product_type} msg={$errors.product_type} size='py-2 px-3'>
   {#each ['Gift Cards','Games','eSim','Top Up'] as item}
@@ -9,7 +10,6 @@
 
 <script>
   import { onMount } from "svelte";
-  import { pageMounted } from "$stores";
   import { isObject } from "$lib/helpers";
   import FormMessage from "../FormMessage.svelte";
 
@@ -18,7 +18,7 @@
     label = "Choose",
     gray = false,
     size = "py-4",
-    value = "",
+    /** @type {string|undefined} */ value = "",
     hasSearch = true;
 
   /** @type {string|string[]|undefined} */
@@ -46,10 +46,7 @@
     }`;
 
   onMount(() => {
-    if ($pageMounted) {
-      new window.HSSelect(document.querySelector(`#${name}`));
-      // elem = window.HSSelect.getInstance(`#${name}`);
-    }
+    window.HSStaticMethods.autoInit();
   });
 </script>
 

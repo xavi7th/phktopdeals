@@ -26,7 +26,6 @@ export async function load(event) {
 }
 
 export const actions = {
-
   default: async (event) => {
     const res = await api({
       method: "post",

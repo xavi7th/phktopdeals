@@ -2,6 +2,7 @@
   import SvgIcon from "$lib/Components/SvgIcon.svelte";
   import { percentageCalculation } from "$lib/helpers";
   import Sidebar from "$partials/gift-cards/Sidebar.svelte";
+  import PageNavigation from '$lib/Components/PageNavigation.svelte';
   import { favoriteIcon, leftAngle, maximizeIcon, rightAngle } from "$lib/Components/iconPaths";
 
   export let data;
@@ -9,7 +10,7 @@
   /**
    * @param {[cards, category]: [import('$lib/types').ProdSummary[], string]} data
    */
-  $: ({ cards, category, meta, baseUrl } = data);
+  $: ({ cards, category, meta, basePageUrl } = data);
 </script>
 
 <svelte:head>
@@ -65,30 +66,7 @@
           {/each}
         </div>
 
-        <div class="grid gap-3 border-t border-gray-200 px-6 py-4 md:flex md:items-center md:justify-between dark:border-neutral-700">
-          <div></div>
-          <div>
-            <div class="inline-flex gap-x-2">
-              <a
-                href={`${baseUrl}/cursor/${meta.prev_page_cursor || "#"}`}
-                class="inline-flex items-center gap-x-2 rounded-lg border border-gray-200 bg-white px-2 py-1.5 text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-50 focus:bg-gray-50 focus:outline-none dark:border-neutral-700 dark:bg-transparent dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800 {!meta.prev_page_cursor
-                  ? 'pointer-events-none opacity-50'
-                  : ''}">
-                <SvgIcon class="size-4 shrink-0" slot={leftAngle} />
-                Prev
-              </a>
-
-              <a
-                href={`${baseUrl}/cursor/${meta.next_page_cursor || "#"}`}
-                class="inline-flex items-center gap-x-2 rounded-lg border border-gray-200 bg-white px-2 py-1.5 text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-50 focus:bg-gray-50 focus:outline-none dark:border-neutral-700 dark:bg-transparent dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800 {!meta.next_page_cursor
-                  ? 'pointer-events-none opacity-50'
-                  : ''}">
-                Next
-                <SvgIcon class="size-4 shrink-0" slot={rightAngle} />
-              </a>
-            </div>
-          </div>
-        </div>
+        <PageNavigation navData={{ ...meta, basePageUrl }} />
       </main>
     </div>
   </div>
