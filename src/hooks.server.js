@@ -39,7 +39,6 @@ async function logger({ event, resolve }) {
       INTERNAL REQUEST: ${Date.now() - start_time}ms ${event.locals.deviceName} ${event.request.method} ${event.url.pathname}
     `);
   }
-
   return response;
 }
 
@@ -58,7 +57,7 @@ async function getUserDetails({ event, resolve }) {
 
     if (getUserDetails?.status == 200) {
       //TODO: Set a localStorage with key user and expiration time for 5mins. If that key is present, no need to getUserDetails. @see https://www.sohamkamani.com/javascript/localstorage-with-ttl-expiry/
-      await event.locals.session.update(async ({ user }) => ({ user: (await getUserDetails?.json()?.data) || {} })); //use this to determine auth on frontend. Before accessing auth routes if this is null redirect to login page
+      await event.locals.session.update(async ({ user }) => ({ user: (await getUserDetails?.json())?.data || {} })); //use this to determine auth on frontend. Before accessing auth routes if this is null redirect to login page
     }
   }
 
@@ -71,8 +70,6 @@ async function getUserDetails({ event, resolve }) {
 
 /** @type {import('@sveltejs/kit').Handle} */
 function authorize({ event, resolve }) {
-  // console.log('-----------------------_authorize-----------------------', event.locals.session.data?.user);
-
   /**
    * @auth Protect routes that need authentication
    * NOTE: 303 will always redirect with GET, 307 will redirect with the original request method, while 302 is just 303 made popular
@@ -88,98 +85,102 @@ function authorize({ event, resolve }) {
     if (event.locals.session.data?.user?.is_admin) {
       redirect(303, "/admin/dashboard");
     }
-    redirect(303, "/user/order");
+    redirect(303, "/store/products");
   }
-
-  /**
+    /**
    * @authorize Protect User routes from admins
    */
-  if (event.url.pathname.startsWith("/user") && event.locals.session.data?.user?.is_admin) {
-    redirect(303, "/admin/dashboard");
+    if (event.url.pathname.startsWith("/user") && event.locals.session.data?.user?.is_admin) {
+      redirect(303, "/admin/dashboard");
+    }
+  
+    /**
+     * @authorize Protect Admin routes
+     */
+    if (event.url.pathname.startsWith("/admin") && !event.locals.session.data?.user?.is_admin) {
+      redirect(303, "/logout");
+    }
+  
+    return resolve(event);
   }
-
-  /**
-   * @authorize Protect Admin routes
-   */
-  if (event.url.pathname.startsWith("/admin") && !event.locals.session.data?.user?.is_admin) {
-    redirect(303, "/logout");
-  }
-
-  return resolve(event);
-}
-
-/** @type {import('@sveltejs/kit').Handle} */
-async function addSecurityHeaders({ event, resolve }) {
-  const securityHeaders = {
-    //@see https://edoverflow.com/2023/sveltekit-security-headers/
-    "Cross-Origin-Embedder-Policy": "credentialless",
-    "Cross-Origin-Opener-Policy": "same-origin",
-    "Cross-Origin-Resource-Policy": "same-origin",
-    // 'Content-Security-Policy': 'script-src \'self\' \'nonce-Y70QFNhAVmer2wdobT8YoQ==\'',
-    // 'Referrer-Policy': 'no-referrer',
-    // 'Strict-transport-security': 'max-age=15552000; includeSubDomains',
-    // 'X-Content-Type-Options': 'nosniff',
-    // 'X-DNS-Prefetch-Control': 'off',
-    // 'X-Download-Options': 'noopen',
-    // 'X-Permitted-Cross-Domain-Policies': 'none',
-    "X-Frame-Options": "SAMEORIGIN",
-    "X-XSS-Protection": "0",
-  };
-  const response = await resolve(event);
-
-  Object.entries(securityHeaders).forEach(([header, value]) => response.headers.set(header, value));
-
-  return response;
-}
-
-/** @type {import('@sveltejs/kit').HandleFetch} */
-export const handleFetch = async ({ request, fetch, event }) => {
-  const response = await fetch(request);
-
-  /**
-   * @crsf Handle expired tokens and csrf expiry
-   */
-  if (response?.status == 419 && event.url.pathname.startsWith(env.PUBLIC_VITE_BASE_API)) {
-    redirect(303, "/logout");
-  }
-
-  /** @type {import('set-cookie-parser').Cookie[]} */
-  let cookies = scp.parse(response);
-
-  //This will take care of updating the csrf cookies from our backend for us.
-  if (cookies.length) {
-    cookies.forEach((cookie) => {
-      event.cookies.set(cookie.name, cookie.value, {
-        ...cookie,
-        sameSite: cookie.sameSite,
-        secure: !dev,
-      });
-    });
-  }
-
-  return response;
-};
-
-/** @type {import('@sveltejs/kit').HandleServerError} */
-export const handleError = async ({ event, error, message, status }) => {
-  if (!event.url.pathname.includes("assets")) {
-    console.log("------------SERVER ERROR-----------");
-    console.error({
-      error,
-      event: {
-        url: event.url.href,
-        locals: JSON.stringify(event.locals, null, 4),
-      },
-      message,
-      status,
-    });
-
-    return {
-      message,
-      code: status ?? 500,
+  
+  /** @type {import('@sveltejs/kit').Handle} */
+  async function addSecurityHeaders({ event, resolve }) {
+    const securityHeaders = {
+      //@see https://edoverflow.com/2023/sveltekit-security-headers/
+      "Cross-Origin-Embedder-Policy": "credentialless",
+      "Cross-Origin-Opener-Policy": "same-origin",
+      "Cross-Origin-Resource-Policy": "same-origin",
+      // 'Content-Security-Policy': 'script-src \'self\' \'nonce-Y70QFNhAVmer2wdobT8YoQ==\'',
+      // 'Referrer-Policy': 'no-referrer',
+      // 'Strict-transport-security': 'max-age=15552000; includeSubDomains',
+      // 'X-Content-Type-Options': 'nosniff',
+      // 'X-DNS-Prefetch-Control': 'off',
+      // 'X-Download-Options': 'noopen',
+      // 'X-Permitted-Cross-Domain-Policies': 'none',
+      "X-Frame-Options": "SAMEORIGIN",
+      "X-XSS-Protection": "0",
     };
+    const response = await resolve(event);
+  
+    Object.entries(securityHeaders).forEach(([header, value]) => response.headers.set(header, value));
+  
+    return response;
   }
-};
-
-/** @type {import('@sveltejs/kit').Handle} */
-export const handle = sequence(sessionHandler, handleDeviecDetector({}), logger, getUserDetails, authorize, addSecurityHeaders);
+  
+  /** @type {import('@sveltejs/kit').HandleFetch} */
+  export const handleFetch = async ({ request, fetch, event }) => {
+    const response = await fetch(request);
+  
+    /**
+     * @crsf Handle expired tokens and csrf expiry
+     */
+    if (response?.status == 419 && event.url.pathname.startsWith(env.PUBLIC_VITE_BASE_API)) {
+      redirect(303, "/logout");
+    }
+  
+    /** @type {import('set-cookie-parser').Cookie[]} */
+    let cookies = scp.parse(response);
+  
+    // using a try catch block because when streaming data from the backend, cookies cannot be set after the response has started streaming and this throws an error
+    try {
+      //This will take care of updating the csrf cookies from our backend for us.
+      if (cookies.length) {
+        cookies.forEach((cookie) => {
+          event.cookies.set(cookie.name, cookie.value, {
+            ...cookie,
+            sameSite: cookie.sameSite,
+            secure: !dev,
+          });
+        });
+      }
+    } catch (error) {
+      // console.log(error);
+    }
+  
+    return response;
+  };
+  
+  /** @type {import('@sveltejs/kit').HandleServerError} */
+  export const handleError = async ({ event, error, message, status }) => {
+    if (!event.url.pathname.includes("assets")) {
+      console.log("------------SERVER ERROR-----------");
+      console.error({
+        error,
+        event: {
+          url: event.url.href,
+          locals: JSON.stringify(event.locals, null, 4),
+        },
+        message,
+        status,
+      });
+  
+      return {
+        message,
+        code: status ?? 500,
+      };
+    }
+  };
+  
+  /** @type {import('@sveltejs/kit').Handle} */
+  export const handle = sequence(sessionHandler, handleDeviecDetector({}), logger, getUserDetails, authorize, addSecurityHeaders);
