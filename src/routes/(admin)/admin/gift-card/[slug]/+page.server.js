@@ -67,6 +67,8 @@ export async function load(event) {
     'Cache-Control': 'no-cache',
   });
 
+  productData.data['price_denominations'] = productData.data.product_price.denominations;
+
   const form = await superValidate(productData.data, arktype(GiftCardSchema, { defaults: GiftCardDefaults }));
 
   // form.data = productData.data
@@ -85,57 +87,56 @@ export async function load(event) {
 
 /** @satisfies {import('./$types').Actions} */
 export const actions = {
+  /** @param {import('@sveltejs/kit').RequestEvent} event */
   edit: async (event) => {
-    const form = await superValidate(event, arktype(GiftCardSchema, { defaults: GiftCardDefaults }));
+    const form = await superValidate( event, arktype( GiftCardSchema, { defaults: GiftCardDefaults } ) );
 
-    if (!form.valid) {
-      return fail(422, { form });
+    if ( !form.valid ) {
+      return fail( 422, { form } );
     }
 
     const formData = new FormData();
 
-    for(let dt of Object.entries(form.data)){
-      if (dt[0] == 'discount_until' && dt[1]) {
-        formData.append(dt[0], new Date(dt[1]).toDateString());
-        continue;
-      }
-
-      formData.append(dt[0], dt[1]);
+    for ( let dt of Object.entries( form.data ) ) {
+      formData.append( dt[0], dt[1] );
     }
 
-    const res = await api({
-			method: 'PUT',
-			resource: 'products/'+event.params.slug,
-			data: form.data,
+    formData.append( '_method', 'PUT' );
+
+    const res = await api( {
+      method: 'post',
+      resource: 'products/'+event.params.slug,
+      data: formData,
       event,
       toJSON: false,
-		});
+    } );
 
-    if (res?.status == 422) {
+    if ( res?.status == 422 ) {
       let errRes = await res.json();
 
-      for(const [fieldName, errs] of Object.entries(errRes.errors)){
-        if (fieldName.includes('.')) {
-          setError(form, fieldName.split('.')[0], errs[0], {
+      for ( const [fieldName, errs] of Object.entries( errRes.errors ) ) {
+        if ( fieldName.includes( '.' ) ) {
+          setError( form, fieldName.split( '.' )[0], errs[0], {
             overwrite: true
-          });
+          } );
         } else {
-          setError(form, fieldName, errs[0], {
+          setError( form, fieldName, errs[0], {
             overwrite: true
-          });
+          } );
         }
       }
 
-      return message(form, {type: 'error', msg: 'There are errors in your form! Check them and try again.'}, {status: res?.status || 400});
-		}
-
-    if ( ! res?.ok) {
-      return message(form, {type: 'error', msg: res?.statusText || 'An error occurred while processing your request'}, {status: res?.status || 429});
+      return message( form, { type: 'error', msg: 'There are errors in your form! Check them and try again.' }, { status: res?.status || 400 } );
     }
 
-		return message(form, {type: 'success', msg: 'Product Updated successfully!'});
+    if ( !res?.ok ) {
+      return message( form, { type: 'error', msg: res?.statusText || 'An error occurred while processing your request' }, { status: res?.status || 429 } );
+    }
+
+    event.locals.user = ( await res.json() ).data;
+
+    return message( form, { type: 'success', msg: 'Product updated successfully!' } );
 	},
-  /** @param {import('@sveltejs/kit').RequestEvent} event */
   createBrand: async (event) => {
     const form = await superValidate(event, arktype(brandSchema, { defaults: brandDefaults }));
 
@@ -228,7 +229,7 @@ export const actions = {
 		}
 
     if ( ! res?.ok) {
-      return message(form, {type: 'error', msg: res?.statusText || 'An error occurred while processing your request'}, {status: res?.status || 429});
+      return message(form, {type: 'error', msg: res?.statusText || 'An error occured while processing your request'}, {status: res?.status || 429});
     }
 
 		return message(form, {type: 'success', msg: 'Brand was Updated successfully!'});
@@ -264,9 +265,9 @@ export const actions = {
 		}
 
     if ( ! res?.ok) {
-      return message(form, {type: 'error', msg: res?.statusText || 'An error occurred while processing your request'}, {status: res?.status || 429});
+      return message(form, {type: 'error', msg: res?.statusText || 'An error occured while processing your request'}, {status: res?.status || 429});
     }
 
-    return message(form, {type: 'success', msg: 'Brand deleted successfully!'});
+    return message(form, {type: 'success', msg: 'Brand was Updated successfully!'});
   },
 }

@@ -12,7 +12,6 @@
 	import FloatingSelectTagInput from '$lib/Components/FormInputs/FloatingSelectTagInput.svelte';
 	import FloatingNumericTextInput from '$lib/Components/FormInputs/FloatingNumericTextInput.svelte';
 	import FloatingSelectTagAltInput from '$lib/Components/FormInputs/FloatingSelectTagAltInput.svelte';
-	import Brand from '$partials/brands/BrandModal.svelte';
 
   /** @type {import('./$types').PageData} */
   export let data;
@@ -44,7 +43,7 @@
       <div class="grid grid-cols-12 gap-y-8 py-8 first:pt-0 last:pb-0 border-t first:border-transparent border-gray-200 dark:border-neutral-700 dark:first:border-transparent">
         <div class="col-span-12">
           <h2 class="text-lg font-semibold text-gray-800 dark:text-neutral-200">
-            Gift Card Management
+            Gift Cards
           </h2>
         </div>
 
@@ -60,7 +59,7 @@
             {/each}
           </FloatingSelectInput>
 
-          <button type="button" class="w-40 py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-brand-600 text-white hover:bg-brand-700 focus:outline-none focus:bg-brand-700 disabled:opacity-50 disabled:pointer-events-none"aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-static-list-modal" data-hs-overlay="#hs-static-list-modal" on:click={() => title = 'Manage Type'}>
+          <button type="button" class="w-40 py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-brand-600 text-white hover:bg-brand-700 focus:outline-none focus:bg-brand-700 disabled:opacity-50 disabled:pointer-events-none"aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-static-list-modal" data-hs-overlay="#hs-static-list-modal">
             Manage
           </button>
         </div>
@@ -110,7 +109,7 @@
         </div>
 
         {#if $formData.percentage_discount > 0}
-          <div class="col-span-12">
+          <div class="col-span-12 text-neutral-400">
             <FloatingDateInput name="discount_until" min={Date()} label="Discount Valid Until (optional)" bind:value={$formData.discount_until} msg={$errors?.discount_until?.[0]}/>
           </div>
         {/if}
@@ -131,5 +130,3 @@
     </form>
   </div>
 </div>
-
-<Brand {title} {brands} form={data.brandForm} />
