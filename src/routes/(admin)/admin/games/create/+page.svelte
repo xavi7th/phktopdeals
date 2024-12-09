@@ -42,7 +42,7 @@
       <div class="grid grid-cols-12 gap-y-8 py-8 first:pt-0 last:pb-0 border-t first:border-transparent border-gray-200 dark:border-neutral-700 dark:first:border-transparent">
         <div class="col-span-12">
           <h2 class="text-lg font-semibold text-gray-800 dark:text-neutral-200">
-            E-sim Management
+            Game Management
           </h2>
         </div>
 

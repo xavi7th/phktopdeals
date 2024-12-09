@@ -27,7 +27,9 @@
   let title = "";
 
   $: if ($message && $message.type == 'success') {
-    invalidate('games');
+    setTimeout(() => {
+      invalidate('games');
+    }, 3000)
   }
 </script>
 
