@@ -27,7 +27,9 @@
   let title = "";
 
   $: if ($message && $message.type == 'success') {
-    invalidate('esim');
+    setTimeout(() => {
+      invalidate('esim');
+    }, 3000)
   }
 </script>
 
