@@ -12,6 +12,7 @@
 	import FloatingSelectTagInput from '$lib/Components/FormInputs/FloatingSelectTagInput.svelte';
 	import FloatingNumericTextInput from '$lib/Components/FormInputs/FloatingNumericTextInput.svelte';
 	import FloatingSelectTagAltInput from '$lib/Components/FormInputs/FloatingSelectTagAltInput.svelte';
+  import { invalidate } from '$app/navigation';
 
   /** @type {import('./$types').PageData} */
   export let data;
@@ -23,6 +24,11 @@
 
   $: ( { brands, regions, categories, } = data ) ;
 
+  let title = "";
+
+  $: if ($message && $message.type == 'success') {
+    invalidate('topup');
+  }
 </script>
 
 {#if $message}
@@ -38,7 +44,7 @@
   </div>
 
   <div class="bg-white rounded-xl shadow p-4 sm:p-7 dark:bg-neutral-900">
-    <form method="POST" enctype="multipart/form-data" use:enhance>
+    <form method="POST" action="?/edit" enctype="multipart/form-data" use:enhance>
       <div class="grid grid-cols-12 gap-y-8 py-8 first:pt-0 last:pb-0 border-t first:border-transparent border-gray-200 dark:border-neutral-700 dark:first:border-transparent">
         <div class="col-span-12">
           <h2 class="text-lg font-semibold text-gray-800 dark:text-neutral-200">
@@ -69,7 +75,7 @@
 
         <div class="col-span-12 flex gap-x-2">
           <FloatingSelectTagAltInput class="flex-1" name="product_category" label="product category" bind:value={$formData.product_category} isError={ !! $errors.product_category} msg={$errors.product_category?._errors} multiple>
-            {#each categories.data || [] as cat}
+            {#each categories || [] as cat}
               <option value={cat}>{cat}</option>
             {/each}
           </FloatingSelectTagAltInput>

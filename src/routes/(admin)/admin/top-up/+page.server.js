@@ -1,53 +1,59 @@
-import { api } from "$lib/helpers";
-import { fail } from "@sveltejs/kit";
+import { api } from '$lib/helpers';
+import { fail } from '@sveltejs/kit';
+
 
 /** @type {import('./$types').PageServerLoad} */
-export async function load(event) {
-  const fetchTopUpCards = async () => {
-    const res = await api({
-      method: "get",
-      resource: "top-up",
+export async function load ( event ) {
+
+  const fetchTopUps = async () => {
+    const res = await api( {
+      method: 'get',
+      resource: 'products/type/top-up',
       event,
-      logResponse: true,
-    });
+    } );
 
     return res?.json();
-  };
+  }
 
-  const [cardsData] = await Promise.all([fetchTopUpCards()]);
+  const [cardsData] = await Promise.all( [
+    fetchTopUps(),
+  ] );
 
-  // event.setHeaders({
-  //   'Cache-Control': 'public, max-age=604800',
-  // });
+  event.setHeaders({
+    'Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400',
+  });
 
   return {
     /** @type { import('$lib/types').Product[] } */
     cards: cardsData.data,
     meta: cardsData.metadata,
-  };
+  }
 }
 
 /** @satisfies {import('./$types').Actions} */
 export const actions = {
-  /** @param {import('@sveltejs/kit').RequestEvent} event */
-  default: async (event) => {
-    const res = await api({
-      method: "post",
-      resource: "top-up",
-      data: [],
-      event,
-    });
 
-    if (res?.status == 422) {
+  /** @param {import('@sveltejs/kit').RequestEvent} event */
+  delete: async ( event ) => {
+
+    const formData = await event.request.formData();
+
+    const res = await api( {
+      method: 'delete',
+      resource: 'products/'+formData.get('uuid'),
+      event,
+    } );
+
+    if ( res?.status == 422 ) {
       let errRes = await res.json();
 
-      return fail(res?.status || 400, { type: "error", msg: "There are errors in your form! Check them and try again.", errors: errRes.errors });
+      return fail( res?.status || 400, { type: 'error', msg: 'There are errors in your form! Check them and try again.', errors: errRes.errors } );
     }
 
-    if (!res?.ok) {
-      return fail(res?.status || 500, { message: res?.statusText || "An error occured while processing your request" });
+    if ( !res?.ok ) {
+      return fail( res?.status || 500, { message: res?.statusText || 'An error occured while processing your request' } );
     }
 
-    return { type: "success", msg: "Card created successfully!" };
+    return { type: 'success', msg: 'Card created successfully!' };
   },
-};
+}

@@ -149,11 +149,10 @@ export const topUpSchema = type({
   product_type: ["string>1", "@", "selected"], //optional syntax
   product_image: "File?",
   product_category: ["string[]>1", "@", "2 and above"],
-  product_min_price: "number>=0",
+  product_price: "number>0",
   percentage_discount: "0<=number<100",
   purchase_commission: "0<number<100",
   variable_denomination: "boolean?",
-  "price_denominations?": "number[]", // how are we going to get the price discount select?
   "discount_until?": "Date|null",
   faqs: type("string").describe("not be empty"),
 });
@@ -162,9 +161,8 @@ export const topUpDefaults = {
   product_name: "",
   product_type: "",
   product_image: null,
-  product_category: [""],
-  price_denominations: [0],
-  product_min_price: 0,
+  product_category: [""], // games category is different it should be steam, apple or google
+  product_price: 0,
   percentage_discount: 0,
   purchase_commission: 5,
   variable_denomination: false,
