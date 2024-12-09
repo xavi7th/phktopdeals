@@ -6,7 +6,6 @@
   const dispatch = createEventDispatcher();
 
   function handleClick() {
-    // Dispatch an event to the parent
     dispatch("handleClick");
   }
 
@@ -34,7 +33,7 @@
   tabindex="-1"
   aria-labelledby="{name}-label"
   data-hs-overlay-keyboard="false">
-  <div class="m-3 mt-0 opacity-0 transition-all ease-out hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 sm:mx-auto sm:w-full sm:max-w-lg">
+  <div class="hs-overlay-animation-target m-3 mt-0 opacity-0 transition-all ease-out hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 sm:mx-auto sm:w-full sm:max-w-lg">
     <div class="pointer-events-auto flex flex-col rounded-xl border bg-white shadow-sm dark:border-neutral-700 dark:bg-neutral-800 dark:shadow-neutral-700/70">
       <div class="flex items-center justify-between border-b px-4 py-3 dark:border-neutral-700">
         <h3 id="{name}-label" class="font-bold text-gray-800 dark:text-white">
@@ -52,7 +51,7 @@
           </svg>
         </button>
       </div>
-      <div class="p-4">
+      <div class="overflow-y-auto p-4">
         <slot name="content" />
         <slot name="form" />
       </div>

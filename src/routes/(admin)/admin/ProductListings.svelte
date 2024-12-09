@@ -1,8 +1,8 @@
 <script>
   import { toCurrency } from "$lib/helpers";
-  import SvgIcon from '$lib/Components/SvgIcon.svelte';
-  import { checkMarkCircle } from '$lib/Components/iconPaths';
-  import PageNavigation from '$lib/Components/PageNavigation.svelte';
+  import SvgIcon from "$lib/Components/SvgIcon.svelte";
+  import { checkMarkCircle } from "$lib/Components/iconPaths";
+  import PageNavigation from "$lib/Components/PageNavigation.svelte";
 
   /** @type { import('$lib/types').Product[] } */
   export let products = [];

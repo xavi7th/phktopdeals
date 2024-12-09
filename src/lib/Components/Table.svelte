@@ -1,7 +1,7 @@
 <script>
   import SvgIcon from "./SvgIcon.svelte";
-  import { upDownAngleIcon } from './iconPaths';
-  import PageNavigation from './PageNavigation.svelte';
+  import { upDownAngleIcon } from "./iconPaths";
+  import PageNavigation from "./PageNavigation.svelte";
 
   export let tCaption;
   export let tDescription = undefined;

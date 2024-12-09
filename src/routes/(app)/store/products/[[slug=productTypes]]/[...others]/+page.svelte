@@ -2,7 +2,7 @@
   import SvgIcon from "$lib/Components/SvgIcon.svelte";
   import { percentageCalculation } from "$lib/helpers";
   import Sidebar from "$partials/gift-cards/Sidebar.svelte";
-  import PageNavigation from '$lib/Components/PageNavigation.svelte';
+  import PageNavigation from "$lib/Components/PageNavigation.svelte";
   import { favoriteIcon, leftAngle, maximizeIcon, rightAngle } from "$lib/Components/iconPaths";
 
   export let data;

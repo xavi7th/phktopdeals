@@ -1,21 +1,21 @@
 /**
  * Transforms an error object into HTML string
  *
- * @param {String|Array|null} errors The errors to transform
+ * @param {string|string[]|null|import('sveltekit-superforms').ValidationErrors<Object<string, string>>} errors The errors to transform
  * @returns {String}
  */
 export const getErrorString = (errors) => {
   let errs;
   if (typeof errors === "string") {
     errs = errors;
-  } else if (Object.keys(errors).length === 1) {
+  } else if (errors && Object.keys(errors).length === 1) {
     errs = Object.values(errors)
       .flat()
       .filter(Boolean)
       .map((err) => `<li>${err}</li>`)
       .join("");
   } else {
-    errs = Object.values(errors)
+    errs = Object.values(errors || {})
       .filter(Boolean)
       .reduce((val, n) => {
         return (

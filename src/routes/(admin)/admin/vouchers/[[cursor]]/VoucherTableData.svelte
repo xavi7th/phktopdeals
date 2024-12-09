@@ -5,7 +5,8 @@
 
   const dispatch = createEventDispatcher();
 
-  export let vouchers, metadata = {};
+  export let vouchers,
+    metadata = {};
 
   let basePageUrl = "/admin/vouchers";
 </script>

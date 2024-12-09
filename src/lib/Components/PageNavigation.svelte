@@ -1,6 +1,6 @@
 <script>
-  import SvgIcon from './SvgIcon.svelte';
-  import { leftAngle, rightAngle } from './iconPaths';
+  import SvgIcon from "./SvgIcon.svelte";
+  import { leftAngle, rightAngle } from "./iconPaths";
 
   /** @type { { basePageUrl: string;  total?: number; items_count?: number; next_page_cursor?: string; prev_page_cursor?: string; } } */
   export let navData;

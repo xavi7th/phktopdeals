@@ -1,6 +1,6 @@
 <script>
   import { plusIcon } from "$lib/Components/iconPaths";
-  import PageNavigation from '$lib/Components/PageNavigation.svelte';
+  import PageNavigation from "$lib/Components/PageNavigation.svelte";
 
   export let data;
 
