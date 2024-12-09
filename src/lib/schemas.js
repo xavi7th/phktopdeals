@@ -162,7 +162,7 @@ export const topUpSchema = type({
 
 export const topUpDefaults = {
   product_name: '',
-  product_type: 'topup',
+  product_type: 'top-up',
   brand_id: null,
   product_image: null,
   product_category: [''],

@@ -51,7 +51,7 @@
         </div>
 
         <div class="col-span-12 flex gap-x-2">
-          <input name="product_type" class="hidden" placeholder="Product Type" value="top-up" readonly/>
+          <input name="product_type" class="hidden" placeholder="Product Type" value="top up" readonly/>
           <FloatingSelectInput class="flex-1" name="brand_id" label="Product Brand" bind:value={$formData.brand_id} isError={ !! $errors.brand_id} msg={$errors.brand_id}>
             {#each brands || [] as brand}
               <option value={brand.id}>{brand.name}</option>

@@ -86,6 +86,8 @@ export async function load(event) {
       formData.append(dt[0], dt[1]);
     }
 
+    console.log(formData);
+
     const res = await api({
 			method: 'POST',
 			resource: 'products',
