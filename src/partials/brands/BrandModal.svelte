@@ -27,7 +27,7 @@
     timeoutMs: 8000,
   });
 
-  let editContent = {
+  export let editContent = {
     id: 0,
   };
 

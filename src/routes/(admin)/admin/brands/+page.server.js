@@ -1,7 +1,7 @@
 import { api } from "$lib/helpers";
-import { superValidate } from "sveltekit-superforms";
+import { fail, message, setError, superValidate } from "sveltekit-superforms";
 import { arktype } from "sveltekit-superforms/adapters";
-import { brandDefaults, brandSchema } from "$lib/schemas";
+import { brandDefaults, brandEditDefault, brandEditSchema, brandSchema } from "$lib/schemas";
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load(event) {
@@ -31,53 +31,41 @@ export async function load(event) {
   };
 }
 
-// /** @satisfies {import('./$types').Actions} */
-// export const actions = {
+/** @satisfies {import('./$types').Actions} */
+export const actions = {
+  /** @param {import('@sveltejs/kit').RequestEvent} event */
+  deleteBrand: async (event) => {
+    const form = await superValidate(arktype(brandSchema, { defaults: brandDefaults }));
+    const formData = await event.request.formData();
 
-//   /** @param {import('@sveltejs/kit').RequestEvent} event */
-//   create: async ( event ) => {
-//     const form = await superValidate(event, arktype(brandSchema, { defaults: brandDefaults }));
+    const res = await api({
+      method: "delete",
+      resource: "product-brands/" + formData.get("uuid"),
+      event,
+    });
 
-//     if (!form.valid) {
-//       return fail(422, { form });
-//     }
+    if (res?.status == 422) {
+      let errRes = await res.json();
 
-//     const formData = new FormData();
+      for (const [fieldName, errs] of Object.entries(errRes.errors)) {
+        if (fieldName.includes(".")) {
+          setError(form, fieldName.split(".")[0], errs[0], {
+            overwrite: true,
+          });
+        } else {
+          setError(form, fieldName, errs[0], {
+            overwrite: true,
+          });
+        }
+      }
 
-//     for(let dt of Object.entries(form.data)){
-//       formData.append(dt[0], dt[1]);
-//     }
+      return message(form, { type: "error", msg: "There are errors in your form! Check them and try again." }, { status: res?.status || 400 });
+    }
 
-//     const res = await api({
-// 			method: 'post',
-// 			resource: 'product-brands',
-// 			data: formData,
-//       event,
-//       toJSON: false,
-// 		});
+    if (!res?.ok) {
+      return message(form, { type: "error", msg: res?.statusText || "An error occurred while processing your request" }, { status: res?.status || 429 });
+    }
 
-//     if (res?.status == 422) {
-//       let errRes = await res.json();
-
-//       for(const [fieldName, errs] of Object.entries(errRes.errors)){
-//         if (fieldName.includes('.')) {
-//           setError(form, fieldName.split('.')[0], errs[0], {
-//             overwrite: true
-//           });
-//         } else {
-//           setError(form, fieldName, errs[0], {
-//             overwrite: true
-//           });
-//         }
-//       }
-
-//       return message(form, {type: 'error', msg: 'There are errors in your form! Check them and try again.'}, {status: res?.status || 400});
-// 		}
-
-//     if ( ! res?.ok) {
-//       return message(form, {type: 'error', msg: res?.statusText || 'An error occured while processing your request'}, {status: res?.status || 429});
-//     }
-
-// 		return message(form, {type: 'success', msg: 'Card created successfully!'});
-//   },
-// }
+    return message(form, { type: "success", msg: "Brand was Updated successfully!" });
+  },
+};
