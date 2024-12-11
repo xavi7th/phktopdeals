@@ -1,10 +1,26 @@
 {
-    "cSpell.words": [
-      "Laravel",
-      "replacestate",
-      "splidejs",
-      "superforms",
-      "tcaption",
-      "usdttrc"
-    ]
+  "cSpell.words": [
+    "Arrayable",
+    "brandlist",
+    "clsx",
+    "filesize",
+    "Laravel",
+    "mbuilding",
+    "mrunning",
+    "mskipping",
+    "phkhotdeals",
+    "postdeploy",
+    "postpush",
+    "predev",
+    "preline",
+    "prepush",
+    "replacestate",
+    "splidejs",
+    "stwui",
+    "superforms",
+    "tcaption",
+    "tiptap",
+    "usdttrc"
+  ],
+  "cSpell.ignoreWords": ["aboyisaman"]
 }
