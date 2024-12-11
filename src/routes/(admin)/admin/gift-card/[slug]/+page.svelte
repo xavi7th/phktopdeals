@@ -1,21 +1,22 @@
 <script>
-  import { dev } from "$app/environment";
-  import Toast from "$lib/Components/Toast.svelte";
+  import { dev } from '$app/environment';
+	import Toast from '$lib/Components/Toast.svelte';
+	import SuperDebug, { superForm } from 'sveltekit-superforms';
+	import { animatedDotsSVG, spinnerSVG } from '$lib/Components/iconPaths';
+	import WysiwygEditor from '$lib/Components/FormInputs/TipTapEditor.svelte';
+  import FloatingTextInput from '$lib/Components/FormInputs/FloatingTextInput.svelte';
+	import FloatingFileInput from '$lib/Components/FormInputs/FloatingFileInput.svelte';
+	import FloatingDateInput from '$lib/Components/FormInputs/FloatingDateInput.svelte';
+	import SwitchCheckboxInput from '$lib/Components/FormInputs/SwitchCheckboxInput.svelte';
+	import FloatingSelectInput from '$lib/Components/FormInputs/FloatingSelectInput.svelte';
+	import FloatingSelectTagInput from '$lib/Components/FormInputs/FloatingSelectTagInput.svelte';
+	import FloatingNumericTextInput from '$lib/Components/FormInputs/FloatingNumericTextInput.svelte';
+	import FloatingSelectTagAltInput from '$lib/Components/FormInputs/FloatingSelectTagAltInput.svelte';
+	import Brand from '$partials/brands/BrandModal.svelte';
+	import { invalidate } from '$app/navigation';
   import { search } from "$lib/Components/iconPaths";
   import SvgIcon from "$lib/Components/SvgIcon.svelte";
-  import Brand from "$partials/brands/BrandModal.svelte";
   import ProductListings from "../../ProductListings.svelte";
-  import SuperDebug, { superForm } from "sveltekit-superforms";
-  import { animatedDotsSVG, spinnerSVG } from "$lib/Components/iconPaths";
-  import WysiwygEditor from "$lib/Components/FormInputs/TipTapEditor.svelte";
-  import FloatingTextInput from "$lib/Components/FormInputs/FloatingTextInput.svelte";
-  import FloatingFileInput from "$lib/Components/FormInputs/FloatingFileInput.svelte";
-  import FloatingDateInput from "$lib/Components/FormInputs/FloatingDateInput.svelte";
-  import SwitchCheckboxInput from "$lib/Components/FormInputs/SwitchCheckboxInput.svelte";
-  import FloatingSelectInput from "$lib/Components/FormInputs/FloatingSelectInput.svelte";
-  import FloatingSelectTagInput from "$lib/Components/FormInputs/FloatingSelectTagInput.svelte";
-  import FloatingNumericTextInput from "$lib/Components/FormInputs/FloatingNumericTextInput.svelte";
-  import FloatingSelectTagAltInput from "$lib/Components/FormInputs/FloatingSelectTagAltInput.svelte";
 
   export let data;
 
@@ -35,6 +36,10 @@
   $: ({ brands, regions, categories, products, meta } = data);
 
   let title = "";
+
+  $: if ($message && $message.type == 'success') {
+        invalidate('giftcard');
+  }
 </script>
 
 {#if $message}

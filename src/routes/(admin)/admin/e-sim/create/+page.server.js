@@ -1,10 +1,11 @@
-import { api } from "$lib/helpers";
-import { arktype } from "sveltekit-superforms/adapters";
-import { eSimDefaults, eSimSchema } from "$lib/schemas";
-import { message, superValidate, fail, setError } from "sveltekit-superforms";
+import { api } from '$lib/helpers';
+import { arktype } from 'sveltekit-superforms/adapters';
+import { brandDefaults, brandSchema, eSimDefaults , eSimSchema} from '$lib/schemas';
+import { message, superValidate, fail, setError } from 'sveltekit-superforms';
 
 export async function load(event) {
   const form = await superValidate(arktype(eSimSchema, { defaults: eSimDefaults }));
+  const brandForm = await superValidate(arktype(brandSchema, { defaults: brandDefaults }));
 
   const fetchProductTypes = async () => {
     const res = await api({
@@ -17,6 +18,16 @@ export async function load(event) {
     return await res?.json();
   };
 
+  const fetchProductBrands = async () => {
+    const res = await api({
+			method: 'get',
+			resource: 'product-brands',
+      event,
+		});
+
+    return res?.json();
+  }
+
   const fetchCategories = async () => {
     const res = await api({
       method: "get",
@@ -28,13 +39,29 @@ export async function load(event) {
     return await res?.json();
   };
 
-  const [types, categories] = await Promise.all([fetchProductTypes(), fetchCategories()]);
+  const fetchRegions = async () => {
+    const res = await api({
+			method: 'get',
+			resource: 'regions',
+      event,
+		});
+    return res?.json();
+  }
+
+  event.depends('brandlist');
+  
+	const [types, categories, brandsData, regionsData] = await Promise.all([
+	  fetchProductTypes(),
+	  fetchCategories(),
+    fetchProductBrands(),
+	  fetchRegions(),
+	]);
 
   event.setHeaders({
     "Cache-Control": "public, max-age=604800",
   });
 
-  return { form, types, categories };
+  return { form, brandForm, types, categories, regions: regionsData.data, brands: brandsData.data, }
 }
 
 export const actions = {
@@ -47,14 +74,18 @@ export const actions = {
 
     const formData = new FormData();
 
-    for (let dt of Object.entries(form.data)) {
+    for(let dt of Object.entries(form.data)){
+      if (dt[0] == 'discount_until' && dt[1]) {
+        formData.append(dt[0], new Date(dt[1]).toDateString());
+        continue;
+      }
       formData.append(dt[0], dt[1]);
     }
 
     const res = await api({
-      method: "post",
-      resource: "esims",
-      data: formData,
+			method: 'POST',
+			resource: 'products',
+			data: formData,
       event,
       toJSON: false,
     });

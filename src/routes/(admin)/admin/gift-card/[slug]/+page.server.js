@@ -41,20 +41,26 @@ export async function load(event) {
       method: "get",
       resource: "regions",
       event,
-    });
+		});
 
     return await res?.json();
-  };
+  }
 
-  event.depends("brandlist");
-
-  const [productsData, categoriesData, brandsData, regionsData] = await Promise.all([fetchProducts(), fetchCategories(), fetchProductBrands(), fetchRegions()]);
+  event.depends('esim');
+  event.depends('brandlist');
+  
+	const [productData, categoriesData, brandsData, regionsData] = await Promise.all([
+    fetchProduct(),
+	  fetchCategories(),
+    fetchProductBrands(),
+	  fetchRegions(),
+	]);
 
   // the reason why cache is disabled is because of the invalidate
   // when invalidate refetch data, it restores data once deleted
-  event.setHeaders({
-    "Cache-Control": "no-cache",
-  });
+//   event.setHeaders({
+//     "Cache-Control": "no-cache",
+//   });
 
   const form = await superValidate(arktype(GiftCardSchema, { defaults: GiftCardDefaults }));
   // const form = await superValidate(productData.data, arktype(GiftCardSchema, { defaults: GiftCardDefaults }));

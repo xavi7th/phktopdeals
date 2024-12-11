@@ -12,7 +12,9 @@
 	import FloatingSelectTagInput from '$lib/Components/FormInputs/FloatingSelectTagInput.svelte';
 	import FloatingNumericTextInput from '$lib/Components/FormInputs/FloatingNumericTextInput.svelte';
 	import FloatingSelectTagAltInput from '$lib/Components/FormInputs/FloatingSelectTagAltInput.svelte';
+  import { invalidate } from '$app/navigation';
 
+  /** @type {import('./$types').PageData} */
   export let data;
 
   const { form: formData, errors, message, delayed, submitting, timeout, enhance } = superForm(data.form, {
@@ -21,6 +23,14 @@
   });
 
   $: ( { brands, regions, categories, } = data ) ;
+
+  let title = "";
+
+  $: if ($message && $message.type == 'success') {
+    setTimeout(() => {
+      invalidate('esim');
+    }, 3000)
+  }
 </script>
 
 {#if $message}
@@ -36,20 +46,20 @@
   </div>
 
   <div class="bg-white rounded-xl shadow p-4 sm:p-7 dark:bg-neutral-900">
-    <form method="POST" enctype="multipart/form-data" use:enhance>
+    <form method="POST" action="?/edit" enctype="multipart/form-data" use:enhance>
       <div class="grid grid-cols-12 gap-y-8 py-8 first:pt-0 last:pb-0 border-t first:border-transparent border-gray-200 dark:border-neutral-700 dark:first:border-transparent">
         <div class="col-span-12">
           <h2 class="text-lg font-semibold text-gray-800 dark:text-neutral-200">
-            E-sim Management
+            E-sim Card Management
           </h2>
         </div>
 
-      <div class="col-span-12">
-        <FloatingTextInput name="product_name" label="Product Name" bind:value={$formData.product_name} isError={!!$errors.product_name} msg={$errors.product_name} />
-      </div>
+        <div class="col-span-12">
+          <FloatingTextInput name="product_name" label="Product Name" bind:value={$formData.product_name} isError={ !! $errors.product_name} msg={$errors.product_name}/>
+        </div>
 
         <div class="col-span-12 flex gap-x-2">
-          <input name="product_type" class="hidden" placeholder="Product Type" value="esim" readonly/>
+          <input name="product_type" class="hidden" placeholder="Product Type" value="eSim" readonly/>
           <FloatingSelectInput class="flex-1" name="brand_id" label="Product Brand" bind:value={$formData.brand_id} isError={ !! $errors.brand_id} msg={$errors.brand_id}>
             {#each brands || [] as brand}
               <option value={brand.id}>{brand.name}</option>
@@ -67,7 +77,7 @@
 
         <div class="col-span-12 flex gap-x-2">
           <FloatingSelectTagAltInput class="flex-1" name="product_category" label="product category" bind:value={$formData.product_category} isError={ !! $errors.product_category} msg={$errors.product_category?._errors} multiple>
-            {#each categories.data || [] as cat}
+            {#each categories || [] as cat}
               <option value={cat}>{cat}</option>
             {/each}
           </FloatingSelectTagAltInput>
@@ -114,18 +124,14 @@
         <div class="col-span-12">
           <WysiwygEditor name="faqs" bind:val={$formData.faqs} label="Card FAQs" msg={$errors?.faqs?.[0]}/>
         </div>
+
       </div>
-    </div>
-    <button
-      type="submit"
-      class="inline-flex w-full items-center justify-center gap-x-2 rounded-lg border border-transparent bg-brand-600 px-4 py-3 text-sm font-medium text-white hover:bg-brand-700 focus:bg-brand-700 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-      disabled={$submitting}>
-      {#if $timeout}
-        Still Loading {@html animatedDotsSVG}
-      {:else}
-        Save
-        {#if $delayed}
-          {@html spinnerSVG}
+      <button type="submit" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-brand-600 text-white hover:bg-brand-700 focus:outline-none focus:bg-brand-700 disabled:opacity-50 disabled:pointer-events-none" disabled={$submitting}>
+        {#if $timeout}
+          Still Loading {@html animatedDotsSVG}
+        {:else}
+          Save
+          {#if $delayed} {@html spinnerSVG} {/if}
         {/if}
       </button>
     </form>

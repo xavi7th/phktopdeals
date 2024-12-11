@@ -1,14 +1,17 @@
 <script>
-  import { navigating } from "$app/stores";
-  import Header from "$partials/admin/Header.svelte";
-  import { open } from "$lib/Components/iconPaths.js";
-  import SvgIcon from "$lib/Components/SvgIcon.svelte";
-  import Sidebar from "$partials/admin/Sidebar.svelte";
-  import PageSkeleton from "$lib/Components/PageSkeleton.svelte";
+	import { navigating } from '$app/stores';
+	import Header from '$partials/admin/Header.svelte';
+	import { open } from '$lib/Components/iconPaths.js';
+	import SvgIcon from '$lib/Components/SvgIcon.svelte';
+	import Sidebar from '$partials/admin/Sidebar.svelte';
+  import Brand from '$partials/brands/BrandModal.svelte';
+	import PageSkeleton from '$lib/Components/PageSkeleton.svelte';
 
   export let data;
 
-  const { admin_routes } = data;
+  const { admin_routes, brandForm, brands } = data;
+
+  let title = "";
 </script>
 
 <section class="dark:bg-neutral-900">
@@ -46,3 +49,5 @@
     {/if}
   </div>
 </section>
+
+<Brand {title} {brands} form={brandForm} />
