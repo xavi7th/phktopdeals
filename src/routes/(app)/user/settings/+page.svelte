@@ -7,7 +7,6 @@
   import FloatingTextInput from "$lib/Components/FormInputs/FloatingTextInput.svelte";
   import FloatingFileInput from "$lib/Components/FormInputs/FloatingFileInput.svelte";
 
-  /** @type {import('./$types').PageData} */
   export let data;
 
   const {
@@ -63,8 +62,7 @@
                 Your email address is unverified.
                 <a
                   href="auth.verification.send"
-                  class="rounded-md text-sm text-red-600 underline hover:text-red-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-red-400 dark:hover:text-red-100 dark:focus:ring-offset-gray-800"
-                >
+                  class="rounded-md text-sm text-red-600 underline hover:text-red-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-red-400 dark:hover:text-red-100 dark:focus:ring-offset-gray-800">
                   Click here to re-send the verification email.
                 </a>
               </p>
@@ -88,8 +86,7 @@
           <button
             type="submit"
             class="inline-flex w-32 items-center justify-center gap-x-2 text-nowrap rounded-lg border border-transparent bg-brand-600 px-4 py-3 text-sm font-medium text-white hover:bg-brand-700 focus:bg-brand-700 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-            disabled={$submitting}
-          >
+            disabled={$submitting}>
             {#if $timeout}
               Still Loading {@html animatedDotsSVG}
             {:else}
@@ -119,8 +116,7 @@
             isError={!!$errors.current_password}
             msg={$errors.current_password}
             label="Current Password"
-            togglePw={`"#current_password"`}
-          />
+            togglePw={`"#current_password"`} />
         </div>
 
         <div class="col-span-12">
@@ -132,8 +128,7 @@
             isError={!!$errors.password}
             msg={$errors.password}
             strongPw
-            togglePw={`["#password_confirmation", "#password"]`}
-          />
+            togglePw={`["#password_confirmation", "#password"]`} />
         </div>
 
         <div class="col-span-12">
@@ -144,16 +139,14 @@
             bind:value={$formData.password_confirmation}
             isError={!!$errors.password_confirmation}
             msg={$errors.password_confirmation}
-            togglePw={`["#password_confirmation", "#password"]`}
-          />
+            togglePw={`["#password_confirmation", "#password"]`} />
         </div>
 
         <div class="col-span-12 mt-4 flex justify-end">
           <button
             type="submit"
             class="inline-flex items-center justify-center gap-x-2 text-nowrap rounded-lg border border-transparent bg-gray-800 px-4 py-3 text-sm font-medium text-white hover:bg-gray-700 focus:bg-gray-700 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-            disabled={$submitting}
-          >
+            disabled={$submitting}>
             {#if $timeout}
               Still Loading {@html animatedDotsSVG}
             {:else}

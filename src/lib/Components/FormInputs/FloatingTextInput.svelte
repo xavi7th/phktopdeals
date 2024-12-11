@@ -17,6 +17,7 @@
     gray = false,
     togglePw = undefined,
     strongPw = undefined,
+    size = "p-4",
     value = undefined;
   /** @type {string[]|undefined} */
   export let msg = [];
@@ -29,23 +30,21 @@
     {placeholder}
     {...$$restProps}
     bind:value
-    class="peer block w-full rounded-lg border-gray-200 p-4 text-sm placeholder:text-transparent autofill:pb-2 autofill:pt-6
+    class="peer block w-full rounded-lg border-gray-200 {size} text-sm placeholder:text-transparent autofill:pb-2 autofill:pt-6
       focus:border-brand-500/50 focus:pb-2 focus:pt-6 focus:ring-brand-500/50 disabled:pointer-events-none
       disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:focus:ring-neutral-600 [&:not(:placeholder-shown)]:pb-2 [&:not(:placeholder-shown)]:pt-6
       {gray ? 'bg-gray-100 dark:!bg-neutral-800' : ''} {!msg?.toString() && gray ? 'border-transparent dark:border-transparent' : ''}
       {msg?.toString() && isError ? 'border-red-500 focus:border-red-500 focus:ring-red-500 dark:bg-red-900/20' : ''}
-      {msg?.toString() && !isError ? 'border-teal-500 focus:border-teal-500 focus:ring-teal-500 dark:bg-teal-900/20' : ''}"
-  />
+      {msg?.toString() && !isError ? 'border-teal-500 focus:border-teal-500 focus:ring-teal-500 dark:bg-teal-900/20' : ''}" />
 
   <label
     for={name}
     class="pointer-events-none absolute start-0 top-0 h-full origin-[0_0] truncate border border-transparent p-4 text-sm transition duration-100 ease-in-out
       peer-focus:-translate-y-1.5 peer-focus:translate-x-0.5 peer-focus:scale-90 peer-focus:text-gray-500 peer-disabled:pointer-events-none peer-disabled:opacity-50
       peer-[:not(:placeholder-shown)]:-translate-y-1.5 peer-[:not(:placeholder-shown)]:translate-x-0.5 peer-[:not(:placeholder-shown)]:scale-90 peer-[:not(:placeholder-shown)]:text-gray-500
-      dark:text-neutral-500 dark:peer-focus:text-neutral-500 dark:peer-[:not(:placeholder-shown)]:text-neutral-500"
-  >
+      dark:text-neutral-500 dark:peer-focus:text-neutral-500 dark:peer-[:not(:placeholder-shown)]:text-neutral-500">
     {label}
-    <span class="text-gray-400">{placeholder}</span>
+    <span class="ml-5 text-xs text-gray-400">{placeholder}</span>
   </label>
 
   {#if togglePw}
@@ -54,8 +53,7 @@
       data-hs-toggle-password={`{"target": ${togglePw} }`}
       class="absolute top-0 {msg?.toString()
         ? 'bottom-7'
-        : 'bottom-0'} end-0 z-20 flex cursor-pointer items-center rounded-e-md px-3 text-gray-400 focus:text-blue-600 focus:outline-none dark:text-neutral-600 dark:focus:text-blue-500"
-    >
+        : 'bottom-0'} end-0 z-20 flex cursor-pointer items-center rounded-e-md px-3 text-gray-400 focus:text-blue-600 focus:outline-none dark:text-neutral-600 dark:focus:text-blue-500">
       <SvgIcon class="size-3.5 shrink-0 {msg?.toString() ? 'text-red-500' : ''}" svgHeight={24} stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" slot={eyeOpen} />
     </button>
   {/if}
@@ -77,8 +75,7 @@
           "specialCharactersSet": "&!@"
         }
       `}
-        class="-mx-1 mt-2 flex"
-      >
+        class="-mx-1 mt-2 flex">
         &nbsp;
       </div>
 

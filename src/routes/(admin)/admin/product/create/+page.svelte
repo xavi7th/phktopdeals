@@ -21,8 +21,7 @@
           <input
             id="af-submit-application-full-name"
             type="text"
-            class="relative -ms-px -mt-px block w-full border-gray-200 px-3 py-2 pe-11 text-sm shadow-sm first:rounded-t-lg last:rounded-b-lg focus:z-10 focus:border-brand-500 focus:ring-brand-500 disabled:pointer-events-none disabled:opacity-50 sm:mt-0 sm:first:ms-0 sm:first:rounded-s-lg sm:first:rounded-se-none sm:last:rounded-e-lg sm:last:rounded-es-none dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-          />
+            class="relative -ms-px -mt-px block w-full border-gray-200 px-3 py-2 pe-11 text-sm shadow-sm first:rounded-t-lg last:rounded-b-lg focus:z-10 focus:border-brand-500 focus:ring-brand-500 disabled:pointer-events-none disabled:opacity-50 sm:mt-0 sm:first:ms-0 sm:first:rounded-s-lg sm:first:rounded-se-none sm:last:rounded-e-lg sm:last:rounded-es-none dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" />
         </div>
       </div>
 
@@ -36,8 +35,7 @@
           type="file"
           name="af-submit-application-resume-cv"
           id="af-submit-application-resume-cv"
-          class="block w-full rounded-lg border border-gray-200 text-sm shadow-sm file:me-4 file:border-0 file:bg-gray-100 file:bg-gray-50 file:px-4 file:py-2 focus:z-10 focus:border-brand-500 focus:ring-brand-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:file:bg-neutral-700 dark:file:text-neutral-400"
-        />
+          class="block w-full rounded-lg border border-gray-200 text-sm shadow-sm file:me-4 file:border-0 file:bg-gray-100 file:bg-gray-50 file:px-4 file:py-2 focus:z-10 focus:border-brand-500 focus:ring-brand-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:file:bg-neutral-700 dark:file:text-neutral-400" />
       </div>
 
       <div class="col-span-3">
@@ -48,8 +46,7 @@
         <input
           id="af-submit-application-email"
           type="email"
-          class="block w-full rounded-lg border-gray-200 px-3 py-2 pe-11 text-sm shadow-sm focus:border-brand-500 focus:ring-brand-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-        />
+          class="block w-full rounded-lg border-gray-200 px-3 py-2 pe-11 text-sm shadow-sm focus:border-brand-500 focus:ring-brand-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" />
         <button
           type="button"
           class="inline-flex w-40 items-center justify-center gap-x-2 rounded-lg border border-transparent bg-brand-600 px-4 py-3 text-sm font-medium text-white hover:bg-brand-700 focus:bg-brand-700 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
@@ -57,8 +54,7 @@
           aria-expanded="false"
           aria-controls="hs-static-create-modal"
           data-hs-overlay="#hs-static-create-modal"
-          on:click={() => (title = "Manage Type")}
-        >
+          on:click={() => (title = "Manage Type")}>
           Manage
         </button>
       </div>
@@ -71,8 +67,7 @@
         <input
           id="af-submit-application-email"
           type="email"
-          class="block w-full rounded-lg border-gray-200 px-3 py-2 pe-11 text-sm shadow-sm focus:border-brand-500 focus:ring-brand-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-        />
+          class="block w-full rounded-lg border-gray-200 px-3 py-2 pe-11 text-sm shadow-sm focus:border-brand-500 focus:ring-brand-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" />
         <button
           type="button"
           class="inline-flex w-40 items-center justify-center gap-x-2 rounded-lg border border-transparent bg-brand-600 px-4 py-3 text-sm font-medium text-white hover:bg-brand-700 focus:bg-brand-700 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
@@ -80,8 +75,7 @@
           aria-expanded="false"
           aria-controls="hs-static-create-modal"
           data-hs-overlay="#hs-static-create-modal"
-          on:click={() => (title = "Manage Brand")}
-        >
+          on:click={() => (title = "Manage Brand")}>
           Manage
         </button>
       </div>
@@ -94,8 +88,7 @@
         <input
           id="af-submit-application-email"
           type="email"
-          class="block w-full rounded-lg border-gray-200 px-3 py-2 pe-11 text-sm shadow-sm focus:border-brand-500 focus:ring-brand-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-        />
+          class="block w-full rounded-lg border-gray-200 px-3 py-2 pe-11 text-sm shadow-sm focus:border-brand-500 focus:ring-brand-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" />
         <button
           type="button"
           class="inline-flex w-40 items-center justify-center gap-x-2 rounded-lg border border-transparent bg-brand-600 px-4 py-3 text-sm font-medium text-white hover:bg-brand-700 focus:bg-brand-700 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
@@ -103,8 +96,7 @@
           aria-expanded="false"
           aria-controls="hs-static-create-modal"
           data-hs-overlay="#hs-static-create-modal"
-          on:click={() => (title = "Manage Category")}
-        >
+          on:click={() => (title = "Manage Category")}>
           Manage
         </button>
       </div>
@@ -123,8 +115,7 @@
         <input
           id="af-submit-application-linkedin-url"
           type="number"
-          class="block w-full rounded-lg border-gray-200 px-3 py-2 pe-11 text-sm shadow-sm focus:border-brand-500 focus:ring-brand-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-        />
+          class="block w-full rounded-lg border-gray-200 px-3 py-2 pe-11 text-sm shadow-sm focus:border-brand-500 focus:ring-brand-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" />
       </div>
 
       <div class="col-span-3">
@@ -135,8 +126,7 @@
         <input
           id="af-submit-application-twitter-url"
           type="number"
-          class="block w-full rounded-lg border-gray-200 px-3 py-2 pe-11 text-sm shadow-sm focus:border-brand-500 focus:ring-brand-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-        />
+          class="block w-full rounded-lg border-gray-200 px-3 py-2 pe-11 text-sm shadow-sm focus:border-brand-500 focus:ring-brand-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" />
       </div>
 
       <div class="col-span-3">
@@ -145,8 +135,7 @@
 
       <div class="col-span-9">
         <select
-          class="block w-full rounded-lg border-gray-200 px-4 py-3 pe-9 text-sm focus:border-brand-500 focus:ring-brand-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-        >
+          class="block w-full rounded-lg border-gray-200 px-4 py-3 pe-9 text-sm focus:border-brand-500 focus:ring-brand-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
           <option selected>Yes</option>
           <option>No</option>
         </select>
@@ -160,8 +149,7 @@
         <input
           id="af-submit-application-portfolio-url"
           type="number"
-          class="block w-full rounded-lg border-gray-200 px-3 py-2 pe-11 text-sm shadow-sm focus:border-brand-500 focus:ring-brand-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-        />
+          class="block w-full rounded-lg border-gray-200 px-3 py-2 pe-11 text-sm shadow-sm focus:border-brand-500 focus:ring-brand-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" />
       </div>
 
       <div class="col-span-3">
@@ -172,8 +160,7 @@
         <input
           id="af-submit-application-other-website"
           type="number"
-          class="block w-full rounded-lg border-gray-200 px-3 py-2 pe-11 text-sm shadow-sm focus:border-brand-500 focus:ring-brand-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-        />
+          class="block w-full rounded-lg border-gray-200 px-3 py-2 pe-11 text-sm shadow-sm focus:border-brand-500 focus:ring-brand-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" />
       </div>
 
       <div class="col-span-3">
@@ -184,8 +171,7 @@
         <input
           id="af-submit-application-other-website"
           type="number"
-          class="block w-full rounded-lg border-gray-200 px-3 py-2 pe-11 text-sm shadow-sm focus:border-brand-500 focus:ring-brand-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-        />
+          class="block w-full rounded-lg border-gray-200 px-3 py-2 pe-11 text-sm shadow-sm focus:border-brand-500 focus:ring-brand-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" />
       </div>
     </div>
 
@@ -201,8 +187,7 @@
               <button
                 class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
                 type="button"
-                data-hs-editor-bold=""
-              >
+                data-hs-editor-bold="">
                 <svg
                   class="size-4 shrink-0"
                   xmlns="http://www.w3.org/2000/svg"
@@ -213,8 +198,7 @@
                   stroke="currentColor"
                   stroke-width="2"
                   stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
+                  stroke-linejoin="round">
                   <path d="M14 12a4 4 0 0 0 0-8H6v8"></path>
                   <path d="M15 20a4 4 0 0 0 0-8H6v8Z"></path>
                 </svg>
@@ -222,8 +206,7 @@
               <button
                 class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
                 type="button"
-                data-hs-editor-italic=""
-              >
+                data-hs-editor-italic="">
                 <svg
                   class="size-4 shrink-0"
                   xmlns="http://www.w3.org/2000/svg"
@@ -234,8 +217,7 @@
                   stroke="currentColor"
                   stroke-width="2"
                   stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
+                  stroke-linejoin="round">
                   <line x1="19" x2="10" y1="4" y2="4"></line>
                   <line x1="14" x2="5" y1="20" y2="20"></line>
                   <line x1="15" x2="9" y1="4" y2="20"></line>
@@ -244,8 +226,7 @@
               <button
                 class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
                 type="button"
-                data-hs-editor-underline=""
-              >
+                data-hs-editor-underline="">
                 <svg
                   class="size-4 shrink-0"
                   xmlns="http://www.w3.org/2000/svg"
@@ -256,8 +237,7 @@
                   stroke="currentColor"
                   stroke-width="2"
                   stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
+                  stroke-linejoin="round">
                   <path d="M6 4v6a6 6 0 0 0 12 0V4"></path>
                   <line x1="4" x2="20" y1="20" y2="20"></line>
                 </svg>
@@ -265,8 +245,7 @@
               <button
                 class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
                 type="button"
-                data-hs-editor-strike=""
-              >
+                data-hs-editor-strike="">
                 <svg
                   class="size-4 shrink-0"
                   xmlns="http://www.w3.org/2000/svg"
@@ -277,8 +256,7 @@
                   stroke="currentColor"
                   stroke-width="2"
                   stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
+                  stroke-linejoin="round">
                   <path d="M16 4H9a3 3 0 0 0-2.83 4"></path>
                   <path d="M14 12a4 4 0 0 1 0 8H6"></path>
                   <line x1="4" x2="20" y1="12" y2="12"></line>
@@ -287,8 +265,7 @@
               <button
                 class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
                 type="button"
-                data-hs-editor-link=""
-              >
+                data-hs-editor-link="">
                 <svg
                   class="size-4 shrink-0"
                   xmlns="http://www.w3.org/2000/svg"
@@ -299,8 +276,7 @@
                   stroke="currentColor"
                   stroke-width="2"
                   stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
+                  stroke-linejoin="round">
                   <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
                   <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
                 </svg>
@@ -308,8 +284,7 @@
               <button
                 class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
                 type="button"
-                data-hs-editor-ol=""
-              >
+                data-hs-editor-ol="">
                 <svg
                   class="size-4 shrink-0"
                   xmlns="http://www.w3.org/2000/svg"
@@ -320,8 +295,7 @@
                   stroke="currentColor"
                   stroke-width="2"
                   stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
+                  stroke-linejoin="round">
                   <line x1="10" x2="21" y1="6" y2="6"></line>
                   <line x1="10" x2="21" y1="12" y2="12"></line>
                   <line x1="10" x2="21" y1="18" y2="18"></line>
@@ -333,8 +307,7 @@
               <button
                 class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
                 type="button"
-                data-hs-editor-ul=""
-              >
+                data-hs-editor-ul="">
                 <svg
                   class="size-4 shrink-0"
                   xmlns="http://www.w3.org/2000/svg"
@@ -345,8 +318,7 @@
                   stroke="currentColor"
                   stroke-width="2"
                   stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
+                  stroke-linejoin="round">
                   <line x1="8" x2="21" y1="6" y2="6"></line>
                   <line x1="8" x2="21" y1="12" y2="12"></line>
                   <line x1="8" x2="21" y1="18" y2="18"></line>
@@ -358,8 +330,7 @@
               <button
                 class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
                 type="button"
-                data-hs-editor-blockquote=""
-              >
+                data-hs-editor-blockquote="">
                 <svg
                   class="size-4 shrink-0"
                   xmlns="http://www.w3.org/2000/svg"
@@ -370,8 +341,7 @@
                   stroke="currentColor"
                   stroke-width="2"
                   stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
+                  stroke-linejoin="round">
                   <path d="M17 6H3"></path>
                   <path d="M21 12H8"></path>
                   <path d="M21 18H8"></path>
@@ -381,8 +351,7 @@
               <button
                 class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
                 type="button"
-                data-hs-editor-code=""
-              >
+                data-hs-editor-code="">
                 <svg
                   class="size-4 shrink-0"
                   xmlns="http://www.w3.org/2000/svg"
@@ -393,8 +362,7 @@
                   stroke="currentColor"
                   stroke-width="2"
                   stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
+                  stroke-linejoin="round">
                   <path d="m18 16 4-4-4-4"></path>
                   <path d="m6 8-4 4 4 4"></path>
                   <path d="m14.5 4-5 16"></path>
@@ -410,8 +378,7 @@
 
     <button
       type="button"
-      class="inline-flex w-full items-center justify-center gap-x-2 rounded-lg border border-transparent bg-brand-600 px-4 py-3 text-sm font-medium text-white hover:bg-brand-700 focus:bg-brand-700 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-    >
+      class="inline-flex w-full items-center justify-center gap-x-2 rounded-lg border border-transparent bg-brand-600 px-4 py-3 text-sm font-medium text-white hover:bg-brand-700 focus:bg-brand-700 focus:outline-none disabled:pointer-events-none disabled:opacity-50">
       Save
     </button>
   </form>
@@ -440,14 +407,12 @@
                       aria-haspopup="dialog"
                       aria-expanded="false"
                       aria-controls="hs-static-create-modal"
-                      data-hs-overlay="#hs-static-edit-modal"
-                    >
+                      data-hs-overlay="#hs-static-edit-modal">
                       Edit
                     </button>
                     <button
                       type="button"
-                      class="inline-flex items-center gap-x-2 rounded-lg border border-transparent text-sm font-semibold text-red-600 hover:text-red-800 focus:text-red-800 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:text-red-500 dark:hover:text-red-400 dark:focus:text-brand-400"
-                    >
+                      class="inline-flex items-center gap-x-2 rounded-lg border border-transparent text-sm font-semibold text-red-600 hover:text-red-800 focus:text-red-800 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:text-red-500 dark:hover:text-red-400 dark:focus:text-brand-400">
                       Delete
                     </button>
                   </td>
@@ -469,8 +434,7 @@
         <input
           type="text"
           class="block w-full rounded-lg border-gray-200 px-4 py-3 text-sm focus:border-brand-500 focus:ring-brand-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-          placeholder="Title"
-        />
+          placeholder="Title" />
       </div>
     </div>
   </div>

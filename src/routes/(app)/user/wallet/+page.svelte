@@ -5,7 +5,6 @@
   import SvgIcon from "$lib/Components/SvgIcon.svelte";
   import { checkMarkFilledAlt, exclamationCircle, xCircle } from "$lib/Components/iconPaths";
 
-  /** @type {import('./$types').PageData} */
   export let data;
 
   $: ({ currencies, wallet_balance, transactions } = data);
@@ -96,8 +95,7 @@
             class={cn(
               "inline-flex items-center justify-center gap-x-1 rounded-full bg-yellow-100 px-1.5 py-1 text-xs font-medium text-yellow-800 dark:bg-yellow-500/10 dark:text-yellow-500",
               statusData[trx.status]?.class,
-            )}
-          >
+            )}>
             <SvgIcon class="size-2.5" slot={statusData[trx.status]?.icon || statusData["waiting"]?.icon} svgHeight={trx.status === "finished" ? 16 : 24} />
             {trx.status}
           </span>
@@ -162,8 +160,7 @@
             class={cn(
               "inline-flex items-center justify-center gap-x-1 rounded-full bg-yellow-100 px-1.5 py-1 text-xs font-medium text-yellow-800 dark:bg-yellow-500/10 dark:text-yellow-500",
               statusData[trx.status]?.class,
-            )}
-          >
+            )}>
             <SvgIcon class="size-2.5" slot={statusData[trx.status]?.icon || statusData["waiting"]?.icon} svgHeight={trx.status === "finished" ? 16 : 24} />
             {trx.status}
           </span>

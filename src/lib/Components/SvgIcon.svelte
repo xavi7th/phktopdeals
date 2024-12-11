@@ -1,5 +1,6 @@
 <script>
   /**
+   * @component
    * An in-place svg icon component
    * inspired by https://medium.com/javascript-in-plain-english/how-to-add-customizable-svg-icons-in-svelte-js-app-488648d302c8
    *
@@ -48,8 +49,7 @@
   stroke-width={strokeWidth}
   {...props}
   style="--min-height:{minHeight}"
-  on:click
->
+  on:click>
   <slot />
 
   {#if !Object.entries($$slots).length}

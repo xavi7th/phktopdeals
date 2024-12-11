@@ -1,14 +1,17 @@
 <script>
-  import { navigating } from "$app/stores";
-  import Header from "$partials/admin/Header.svelte";
-  import { open } from "$lib/Components/iconPaths.js";
-  import SvgIcon from "$lib/Components/SvgIcon.svelte";
-  import Sidebar from "$partials/admin/Sidebar.svelte";
-  import PageSkeleton from "$lib/Components/PageSkeleton.svelte";
+	import { navigating } from '$app/stores';
+	import Header from '$partials/admin/Header.svelte';
+	import { open } from '$lib/Components/iconPaths.js';
+	import SvgIcon from '$lib/Components/SvgIcon.svelte';
+	import Sidebar from '$partials/admin/Sidebar.svelte';
+  import Brand from '$partials/brands/BrandModal.svelte';
+	import PageSkeleton from '$lib/Components/PageSkeleton.svelte';
 
   export let data;
 
-  const { admin_routes } = data;
+  const { admin_routes, brandForm, brands } = data;
+
+  let title = "";
 </script>
 
 <section class="dark:bg-neutral-900">
@@ -23,8 +26,7 @@
         aria-expanded="false"
         aria-controls="hs-application-sidebar"
         aria-label="Toggle navigation"
-        data-hs-overlay="#hs-application-sidebar"
-      >
+        data-hs-overlay="#hs-application-sidebar">
         <span class="sr-only">Toggle Navigation</span>
         <SvgIcon class="size-4 shrink-0" svgHeight={24} stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" slot={open} />
       </button>
@@ -47,3 +49,5 @@
     {/if}
   </div>
 </section>
+
+<Brand {title} {brands} form={brandForm} />

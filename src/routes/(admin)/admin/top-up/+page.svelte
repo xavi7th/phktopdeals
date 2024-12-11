@@ -2,7 +2,6 @@
 	import { plusIcon } from '$lib/Components/iconPaths';
 	import ProductListings from '../ProductListings.svelte';
 
-  /** @type {import('./$types').PageData} */
   export let data
 
   $: ( { cards, meta } = data ) ;

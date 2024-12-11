@@ -1,7 +1,6 @@
 import { api } from "$lib/helpers";
 import { fail } from "@sveltejs/kit";
 
-/** @type {import('./$types').PageServerLoad} */
 export async function load(event) {
   const fetchGiftCards = async () => {
     const res = await api({
@@ -10,7 +9,7 @@ export async function load(event) {
       event,
     });
 
-    return res?.json();
+    return await res?.json();
   };
 
   const [cardsData] = await Promise.all([fetchGiftCards()]);
@@ -26,10 +25,7 @@ export async function load(event) {
   };
 }
 
-/** @satisfies {import('./$types').Actions} */
 export const actions = {
-  /** @param {import('@sveltejs/kit').RequestEvent} event */
-
   default: async (event) => {
     const res = await api({
       method: "post",

@@ -1,6 +1,5 @@
 import { api } from "$lib/helpers";
 
-/** @type {import('./$types').PageServerLoad} */
 export async function load(event) {
   console.log(event.params);
 
@@ -11,7 +10,7 @@ export async function load(event) {
       event,
     });
 
-    return res?.json();
+    return await res?.json();
   };
 
   event.setHeaders({

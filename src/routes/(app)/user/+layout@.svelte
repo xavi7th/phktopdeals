@@ -23,8 +23,7 @@
         aria-expanded="false"
         aria-controls="hs-application-sidebar"
         aria-label="Toggle navigation"
-        data-hs-overlay="#hs-application-sidebar"
-      >
+        data-hs-overlay="#hs-application-sidebar">
         <span class="sr-only">Toggle Navigation</span>
         <SvgIcon class="size-4 shrink-0" svgHeight={24} stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" slot={open} />
       </button>

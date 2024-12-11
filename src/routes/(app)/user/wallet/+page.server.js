@@ -4,7 +4,6 @@ import { arktype } from "sveltekit-superforms/adapters";
 import { message, superValidate, fail } from "sveltekit-superforms";
 import { TopUpAccountDefaults, TopUpAccountSchema } from "$lib/schemas";
 
-/** @type {import('./$types').PageServerLoad} */
 export async function load(event) {
   const form = await superValidate(arktype(TopUpAccountSchema, { defaults: TopUpAccountDefaults }));
 
@@ -14,7 +13,7 @@ export async function load(event) {
       resource: "user-transactions/available-currencies",
       event,
     });
-    return res?.json();
+    return await res?.json();
   };
 
   const fetchWalletBalance = async () => {
@@ -23,7 +22,7 @@ export async function load(event) {
       resource: "user/wallet-balance",
       event,
     });
-    return res?.json();
+    return await res?.json();
   };
 
   const fetchTopUpTransactions = async () => {
@@ -32,7 +31,7 @@ export async function load(event) {
       resource: "user-transactions/top-up",
       event,
     });
-    return res?.json();
+    return await res?.json();
   };
 
   const [currencies, details, transactions] = await Promise.all([fetchAvailableCryptoCurrencies(), fetchWalletBalance(), fetchTopUpTransactions()]);
@@ -50,9 +49,7 @@ export async function load(event) {
   };
 }
 
-/** @satisfies {import('./$types').Actions} */
 export const actions = {
-  /** @param {import('@sveltejs/kit').RequestEvent} event */
   default: async (event) => {
     const form = await superValidate(event, arktype(TopUpAccountSchema, { defaults: TopUpAccountDefaults }));
 

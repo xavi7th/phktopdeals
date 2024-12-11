@@ -1,7 +1,6 @@
 import { api } from "$lib/helpers";
 import { redirect, fail } from "@sveltejs/kit";
 
-/** @type {import('./$types').PageServerLoad} */
 export async function load(event) {
   if (!event.locals.session) {
     await api({
@@ -21,9 +20,7 @@ export async function load(event) {
   };
 }
 
-/** @satisfies {import('./$types').Actions} */
 export const actions = {
-  /** @param {import('@sveltejs/kit').RequestEvent} event */
   login: async (event) => {
     const form = await event.request.formData();
 
@@ -59,17 +56,16 @@ export const actions = {
     }
 
     if (response?.status == 200 || response?.status == 201) {
-      await event.locals.session.update(async ({ user }) => ({ user: (await response?.json()?.user) || {} }));
+      await event.locals.session.update(async ({ user }) => ({ user: (await response?.json())?.user || {} }));
 
       if (event.locals.session.data?.user?.is_admin) {
         redirect(302, "/admin/dashboard");
       }
 
-      redirect(302, "/user/order");
+      redirect(302, "/store/products");
     }
   },
 
-  /** @param {import('@sveltejs/kit').RequestEvent} event */
   register: async (event) => {
     const form = await event.request.formData();
 
@@ -100,7 +96,7 @@ export const actions = {
     }
 
     if (response?.status == 201) {
-      throw redirect(302, "/user/order");
+      throw redirect(302, "/store/products");
     }
   },
 };

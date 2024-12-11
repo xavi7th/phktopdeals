@@ -1,8 +1,6 @@
 import { api } from '$lib/helpers';
 import { fail } from '@sveltejs/kit';
 
-
-/** @type {import('./$types').PageServerLoad} */
 export async function load ( event ) {
 
   const fetchTopUps = async () => {
@@ -30,10 +28,7 @@ export async function load ( event ) {
   }
 }
 
-/** @satisfies {import('./$types').Actions} */
 export const actions = {
-
-  /** @param {import('@sveltejs/kit').RequestEvent} event */
   delete: async ( event ) => {
 
     const formData = await event.request.formData();

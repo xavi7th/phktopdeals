@@ -1,7 +1,6 @@
 import QRCode from "qrcode";
 import { api } from "$lib/helpers";
 
-/** @type {import('./$types').PageServerLoad} */
 export async function load(event) {
   const fetchPaymentDetails = async () => {
     const res = await api({
@@ -15,7 +14,7 @@ export async function load(event) {
       event,
     });
 
-    return res?.json();
+    return await res?.json();
   };
 
   /** @param {string} text */

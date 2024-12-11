@@ -12,7 +12,6 @@
 
   let selectedDenomination = "btn-0";
 
-  /** @type {import('./$types').PageData} */
   export let data;
 
   const { form, errors, message, delayed, submitting, timeout, enhance } = superForm(data.form, {
@@ -103,7 +102,7 @@
             placeholder={`${toCurrency(totalPurchaseAmount)} per Quantity`}
             bind:value={$form.quantity}
             isError={!!$errors.quantity}
-            msg={$errors.quantity}/>
+            msg={$errors.quantity} />
         </div>
       </div>
 

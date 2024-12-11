@@ -2,14 +2,15 @@
   import SvgIcon from "$lib/Components/SvgIcon.svelte";
   import { percentageCalculation } from "$lib/helpers";
   import Sidebar from "$partials/gift-cards/Sidebar.svelte";
-  import { favoriteIcon, maximizeIcon, rightAngle } from "$lib/Components/iconPaths";
+  import PageNavigation from "$lib/Components/PageNavigation.svelte";
+  import { favoriteIcon, leftAngle, maximizeIcon, rightAngle } from "$lib/Components/iconPaths";
 
   export let data;
 
   /**
    * @param {[cards, category]: [import('$lib/types').ProdSummary[], string]} data
    */
-  $: ({ cards, category } = data);
+  $: ({ cards, category, meta, basePageUrl } = data);
 </script>
 
 <svelte:head>
@@ -20,18 +21,18 @@
 <div class="container">
   <div class="row">
     <div class="w-full pt-40 lg:flex lg:space-x-3">
-      <Sidebar />
+      <!-- <Sidebar /> -->
+      <div class="lg:w-1/3"></div>
 
       <main class="flex-1">
-        <div class="mb-8 grid grid-cols-1 gap-5 lg:grid-cols-3 xl:gap-3">
+        <div class="mb-8 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4 xl:gap-3">
           {#each cards || [] as product}
             <div
-              class="group relative flex flex-col overflow-hidden rounded-xl bg-white shadow transition hover:-translate-y-1 hover:translate-x-1 hover:scale-[1.025] hover:shadow-sm hover:drop-shadow-xl dark:border-neutral-700 dark:bg-neutral-700/30 dark:shadow-neutral-700/70"
-            >
+              class="group relative flex flex-col overflow-hidden rounded-xl bg-white shadow transition hover:-translate-y-1 hover:translate-x-1 hover:scale-[1.025] hover:shadow-sm hover:drop-shadow-xl dark:border-neutral-700 dark:bg-neutral-700/30 dark:shadow-neutral-700/70">
               <img class="h-auto w-full rounded-t-xl" src={product.img_url} alt={product.name} />
 
               <div class="flex-1 px-4 py-2 text-center md:px-5 md:py-3">
-                <h3 class="text-lg font-bold text-gray-800 dark:text-white">{product.name}</h3>
+                <h3 class="text-lg font-bold text-gray-800 dark:text-white">{product.id} - {product.name}</h3>
               </div>
 
               <div class="absolute -right-10 top-20 flex flex-col space-y-2 transition-all duration-300 ease-in-out group-hover:right-4">
@@ -41,8 +42,7 @@
 
               <a
                 href={`/store/${product.name_slug}_${product.id}`}
-                class="mt-1 rounded-b-xl border-t bg-brand px-4 py-3 text-center text-sm text-black transition-colors duration-300 hover:bg-brand-500 hover:text-white md:px-5 md:py-4 dark:border-brand-700 dark:bg-brand-900 dark:text-brand-50"
-              >
+                class="mt-1 rounded-b-xl border-t bg-brand px-4 py-3 text-center text-sm text-black transition-colors duration-300 hover:bg-brand-500 hover:text-white md:px-5 md:py-4 dark:border-brand-700 dark:bg-brand-900 dark:text-brand-50">
                 Buy Now from {percentageCalculation(product.min_price, 0, product.percentage_discount)}
               </a>
             </div>
@@ -65,6 +65,8 @@
             </div>
           {/each}
         </div>
+
+        <PageNavigation navData={{ ...meta, basePageUrl }} />
       </main>
     </div>
   </div>

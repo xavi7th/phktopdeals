@@ -79,8 +79,7 @@
       class="max-w-xs rounded-xl shadow-lg transition duration-300 hs-removing:translate-x-5 hs-removing:opacity-0 {toastClasses[`${type}`]?.bg}"
       role="alert"
       tabindex="-1"
-      aria-labelledby="{toastId}-label"
-    >
+      aria-labelledby="{toastId}-label">
       <div class="flex p-4">
         <div class="shrink-0 self-center">
           {#if type == "info"}
@@ -108,8 +107,7 @@
               class="inline-flex size-5 shrink-0 items-center justify-center rounded-lg opacity-50 hover:opacity-100 focus:opacity-100 focus:outline-none {toastClasses[`${type}`]?.close}"
               aria-label="Close"
               data-hs-remove-element={`#${toastId}`}
-              on:click={() => (showToast = false)}
-            >
+              on:click={() => (showToast = false)}>
               <span class="sr-only">Close</span>
               <SvgIcon class="size-4 shrink-0" svgHeight={24} stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" slot={x} />
             </button>

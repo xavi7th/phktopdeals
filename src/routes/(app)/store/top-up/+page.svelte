@@ -59,8 +59,7 @@
               <div class="item w-full">
                 <div
                   class="card active flex h-12 flex-col items-center justify-center rounded-2xl border-t-4 border-black bg-[#fdfdfd80] hover:border-yellow-400 sm:h-40 sm:rounded-3xl sm:border-t-8"
-                  class:border-yellow-400={selectedTopUp == item.caption}
-                >
+                  class:border-yellow-400={selectedTopUp == item.caption}>
                   <img src={item.image} alt="world" class="centered-image mx-auto mb-5 hidden sm:block sm:max-h-10 sm:max-w-10 md:max-h-10 md:max-w-10 lg:max-h-20 lg:max-w-20" />
                   <h1 class="font-exo-2 text-sm font-extrabold leading-normal text-[#7A7474] sm:text-2xl dark:text-white">{item.caption}</h1>
                 </div>
@@ -160,8 +159,7 @@
                   <div class="mb-8 grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 xl:gap-3">
                     {#each Array(10) as item}
                       <div
-                        class="group relative flex flex-col overflow-hidden rounded-2xl bg-white shadow transition hover:-translate-y-1 hover:translate-x-1 hover:scale-[1.025] hover:shadow-sm hover:drop-shadow-xl dark:border-neutral-700 dark:bg-neutral-700/30 dark:shadow-neutral-700/70"
-                      >
+                        class="group relative flex flex-col overflow-hidden rounded-2xl bg-white shadow transition hover:-translate-y-1 hover:translate-x-1 hover:scale-[1.025] hover:shadow-sm hover:drop-shadow-xl dark:border-neutral-700 dark:bg-neutral-700/30 dark:shadow-neutral-700/70">
                         <img class="h-auto w-full rounded-xl" src={item.imgUrl} alt="prod-thumb" />
 
                         <div class="relative flex-1 px-4 py-2 md:px-5">
@@ -171,8 +169,7 @@
                         </div>
 
                         <div
-                          class="mt-1 flex items-end gap-1.5 rounded-b-xl bg-[#FFDA1C] px-4 py-3 text-sm text-black shadow-[#FFDA1C] transition-colors duration-300 hover:text-white hover:shadow-md md:px-5 md:py-4 dark:border-brand-700 dark:text-brand-50"
-                        >
+                          class="mt-1 flex items-end gap-1.5 rounded-b-xl bg-[#FFDA1C] px-4 py-3 text-sm text-black shadow-[#FFDA1C] transition-colors duration-300 hover:text-white hover:shadow-md md:px-5 md:py-4 dark:border-brand-700 dark:text-brand-50">
                           <div class="flex w-4/5 flex-col gap-1">
                             <span class="text-md text-black">Amount</span>
                             <input type="text" class="rounded-md border border-black/30 focus:border-[#FFDA1C]" />
@@ -271,8 +268,7 @@
                 <button
                   class="hs-accordion-toggle inline-flex w-full items-center justify-between gap-x-3 rounded-lg py-3 text-start font-semibold text-gray-800 hover:text-gray-500 disabled:pointer-events-none disabled:opacity-50 hs-accordion-active:text-blue-600 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 dark:focus:outline-none dark:hs-accordion-active:text-blue-500"
                   aria-expanded="true"
-                  aria-controls="hs-basic-with-title-and-arrow-stretched-collapse-one"
-                >
+                  aria-controls="hs-basic-with-title-and-arrow-stretched-collapse-one">
                   Accordion #1
                   <svg
                     class="block size-4 hs-accordion-active:hidden"
@@ -284,8 +280,7 @@
                     stroke="currentColor"
                     stroke-width="2"
                     stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
+                    stroke-linejoin="round">
                     <path d="m6 9 6 6 6-6"></path>
                   </svg>
                   <svg
@@ -298,8 +293,7 @@
                     stroke="currentColor"
                     stroke-width="2"
                     stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
+                    stroke-linejoin="round">
                     <path d="m18 15-6-6-6 6"></path>
                   </svg>
                 </button>
@@ -307,8 +301,7 @@
                   id="hs-basic-with-title-and-arrow-stretched-collapse-one"
                   class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300"
                   role="region"
-                  aria-labelledby="hs-basic-with-title-and-arrow-stretched-heading-one"
-                >
+                  aria-labelledby="hs-basic-with-title-and-arrow-stretched-heading-one">
                   <p class="text-gray-800 dark:text-neutral-200">
                     <em>This is the third item's accordion body.</em>
                     It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS
@@ -321,8 +314,7 @@
                 <button
                   class="hs-accordion-toggle inline-flex w-full items-center justify-between gap-x-3 rounded-lg py-3 text-start font-semibold text-gray-800 hover:text-gray-500 disabled:pointer-events-none disabled:opacity-50 hs-accordion-active:text-blue-600 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 dark:focus:outline-none dark:hs-accordion-active:text-blue-500"
                   aria-expanded="false"
-                  aria-controls="hs-basic-with-title-and-arrow-stretched-collapse-two"
-                >
+                  aria-controls="hs-basic-with-title-and-arrow-stretched-collapse-two">
                   Accordion #2
                   <svg
                     class="block size-4 hs-accordion-active:hidden"
@@ -334,8 +326,7 @@
                     stroke="currentColor"
                     stroke-width="2"
                     stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
+                    stroke-linejoin="round">
                     <path d="m6 9 6 6 6-6"></path>
                   </svg>
                   <svg
@@ -348,8 +339,7 @@
                     stroke="currentColor"
                     stroke-width="2"
                     stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
+                    stroke-linejoin="round">
                     <path d="m18 15-6-6-6 6"></path>
                   </svg>
                 </button>
@@ -357,8 +347,7 @@
                   id="hs-basic-with-title-and-arrow-stretched-collapse-two"
                   class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300"
                   role="region"
-                  aria-labelledby="hs-basic-with-title-and-arrow-stretched-heading-two"
-                >
+                  aria-labelledby="hs-basic-with-title-and-arrow-stretched-heading-two">
                   <p class="text-gray-800 dark:text-neutral-200">
                     <em>This is the third item's accordion body.</em>
                     It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS
@@ -371,8 +360,7 @@
                 <button
                   class="hs-accordion-toggle inline-flex w-full items-center justify-between gap-x-3 rounded-lg py-3 text-start font-semibold text-gray-800 hover:text-gray-500 disabled:pointer-events-none disabled:opacity-50 hs-accordion-active:text-blue-600 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 dark:focus:outline-none dark:hs-accordion-active:text-blue-500"
                   aria-expanded="false"
-                  aria-controls="hs-basic-with-title-and-arrow-stretched-collapse-three"
-                >
+                  aria-controls="hs-basic-with-title-and-arrow-stretched-collapse-three">
                   Accordion #3
                   <svg
                     class="block size-4 hs-accordion-active:hidden"
@@ -384,8 +372,7 @@
                     stroke="currentColor"
                     stroke-width="2"
                     stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
+                    stroke-linejoin="round">
                     <path d="m6 9 6 6 6-6"></path>
                   </svg>
                   <svg
@@ -398,8 +385,7 @@
                     stroke="currentColor"
                     stroke-width="2"
                     stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
+                    stroke-linejoin="round">
                     <path d="m18 15-6-6-6 6"></path>
                   </svg>
                 </button>
@@ -407,8 +393,7 @@
                   id="hs-basic-with-title-and-arrow-stretched-collapse-three"
                   class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300"
                   role="region"
-                  aria-labelledby="hs-basic-with-title-and-arrow-stretched-heading-three"
-                >
+                  aria-labelledby="hs-basic-with-title-and-arrow-stretched-heading-three">
                   <p class="text-gray-800 dark:text-neutral-200">
                     <em>This is the third item's accordion body.</em>
                     It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS
