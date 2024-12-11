@@ -19,7 +19,7 @@
     strongPw = undefined,
     size = "p-4",
     value = undefined;
-  /** @type {string | string[] | undefined | import('sveltekit-superforms').ValidationErrors<Object<string, string>>}} */
+  /** @type {string | string[] | undefined | import('sveltekit-superforms').ValidationErrors<Object<string, string>>} */
   export let msg = [];
 </script>
 
