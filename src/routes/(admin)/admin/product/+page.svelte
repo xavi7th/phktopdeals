@@ -34,7 +34,7 @@
           </div>
         </div>
 
-        <ProductListings {products} {meta} basePageUrl="/admin/product" />
+        <ProductListings {products} {meta} basePageUrl="/admin/product" hasAction={false} />
       </div>
     </div>
   </div>
