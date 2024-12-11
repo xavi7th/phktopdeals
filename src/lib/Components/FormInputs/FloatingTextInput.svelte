@@ -4,7 +4,7 @@
 
 <!-- <FloatingTextInput name="password-confirmation" type="password" isError={! form?.success}
                 msg={form?.success || form?.errors?.password_confirmation && form?.errors?.password_confirmation[0]} label="Confirm Password *"
-                togglePw='["#password-confirmation", "#hs-floating-input-passowrd-value"]'/> -->
+                togglePw='["#password-confirmation", "#hs-floating-input-password-value"]'/> -->
 <script>
   import { eyeOpen } from "../iconPaths";
   import SvgIcon from "../SvgIcon.svelte";
@@ -19,7 +19,7 @@
     strongPw = undefined,
     size = "p-4",
     value = undefined;
-  /** @type {string[]|undefined} */
+  /** @type {string | string[] | undefined | import('sveltekit-superforms').ValidationErrors<Object<string, string>>} */
   export let msg = [];
 </script>
 

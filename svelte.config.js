@@ -18,6 +18,7 @@ const config = {
       code == "a11y-missing-attribute" ||
       code == "css-unused-selector" ||
       code == "a11y-missing-content" ||
+      code == "a11y-label-has-associated-control" ||
       // code.startsWith('a11y-') ||
       (code == "missing-declaration" && frame.includes("route"))
     ) {

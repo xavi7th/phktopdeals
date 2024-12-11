@@ -124,26 +124,11 @@
 </Modal>
 
 <Modal {title} name="hs-static-edit-modal">
-    <div slot="form">
-        <div class="max-w-md fixed left-0 bottom-0 z-[60]">
-            <SuperDebug data={{$message, $formData, $errors}} label="My form data" collapsible={true} display={dev} />
-        </div>
-        <form method="POST" action={! editContent.id ? "/admin/gift-card?/createBrand" : "/admin/gift-card?/editBrand"} use:enhance>
-            <div class="flex flex-col">
-                {#if editContent.id}
-                    <input type="text" name="uuid" class="hidden" value={editContent.id}>
-                {/if}
-                <div class="col-span-12">
-                    <FloatingTextInput name="name" label="Brand Name" bind:value={$formData.name} isError={ !! $errors.name} msg={$errors.name}/>
-                </div>
-            </div>
-            <button type="submit" id="submit-btn" class="hidden" />
-        </form>
+  <div slot="form">
+    <div class="fixed bottom-0 left-0 z-[60] max-w-md">
+      <SuperDebug data={{ $message, $formData, $errors }} label="My form data" collapsible={true} display={dev} />
     </div>
-    <div slot="footer">
-        <button type="button" id="backButton" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-slate-600 text-white hover:bg-slate-700 focus:outline-none focus:bg-slate-700 disabled:opacity-50 disabled:pointer-events-none" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-static-list-modal" data-hs-overlay="#hs-static-list-modal">Back</button>
-        <label for="submit-btn" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-brand-600 text-white hover:bg-brand-700 focus:outline-none focus:bg-brand-700 disabled:opacity-50 disabled:pointer-events-none">Save</label>
-    </div>
+
     <form method="POST" action={!editContent.id ? "?/createBrand" : "?/editBrand"} use:enhance>
       <div class="flex flex-col">
         {#if editContent.id}
@@ -156,6 +141,7 @@
       <button type="submit" id="submit-btn" class="hidden" />
     </form>
   </div>
+
   <div slot="footer">
     <button
       type="button"
@@ -167,6 +153,7 @@
       data-hs-overlay="#hs-static-list-modal">
       Back
     </button>
+
     <label
       for="submit-btn"
       class="inline-flex items-center gap-x-2 rounded-lg border border-transparent bg-brand-600 px-3 py-2 text-sm font-medium text-white hover:bg-brand-700 focus:bg-brand-700 focus:outline-none disabled:pointer-events-none disabled:opacity-50">
