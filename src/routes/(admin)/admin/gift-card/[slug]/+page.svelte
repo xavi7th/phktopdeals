@@ -38,8 +38,9 @@
   let title = "";
 
   $: if ($message && $message.type == 'success') {
+        invalidate('games');
         invalidate('giftcard');
-  }
+    }
 </script>
 
 {#if $message}
