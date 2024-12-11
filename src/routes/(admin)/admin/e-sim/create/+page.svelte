@@ -13,7 +13,6 @@
 	import FloatingNumericTextInput from '$lib/Components/FormInputs/FloatingNumericTextInput.svelte';
 	import FloatingSelectTagAltInput from '$lib/Components/FormInputs/FloatingSelectTagAltInput.svelte';
 
-  /** @type {import('./$types').PageData} */
   export let data;
 
   const { form: formData, errors, message, delayed, submitting, timeout, enhance } = superForm(data.form, {
@@ -22,7 +21,6 @@
   });
 
   $: ( { brands, regions, categories, } = data ) ;
-
 </script>
 
 {#if $message}
@@ -46,9 +44,9 @@
           </h2>
         </div>
 
-        <div class="col-span-12">
-          <FloatingTextInput name="product_name" label="Product Name" bind:value={$formData.product_name} isError={ !! $errors.product_name} msg={$errors.product_name}/>
-        </div>
+      <div class="col-span-12">
+        <FloatingTextInput name="product_name" label="Product Name" bind:value={$formData.product_name} isError={!!$errors.product_name} msg={$errors.product_name} />
+      </div>
 
         <div class="col-span-12 flex gap-x-2">
           <input name="product_type" class="hidden" placeholder="Product Type" value="esim" readonly/>
@@ -116,14 +114,18 @@
         <div class="col-span-12">
           <WysiwygEditor name="faqs" bind:val={$formData.faqs} label="Card FAQs" msg={$errors?.faqs?.[0]}/>
         </div>
-
       </div>
-      <button type="submit" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-brand-600 text-white hover:bg-brand-700 focus:outline-none focus:bg-brand-700 disabled:opacity-50 disabled:pointer-events-none" disabled={$submitting}>
-        {#if $timeout}
-          Still Loading {@html animatedDotsSVG}
-        {:else}
-          Save
-          {#if $delayed} {@html spinnerSVG} {/if}
+    </div>
+    <button
+      type="submit"
+      class="inline-flex w-full items-center justify-center gap-x-2 rounded-lg border border-transparent bg-brand-600 px-4 py-3 text-sm font-medium text-white hover:bg-brand-700 focus:bg-brand-700 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+      disabled={$submitting}>
+      {#if $timeout}
+        Still Loading {@html animatedDotsSVG}
+      {:else}
+        Save
+        {#if $delayed}
+          {@html spinnerSVG}
         {/if}
       </button>
     </form>

@@ -1,56 +1,54 @@
-import { api } from '$lib/helpers';
-import { arktype } from 'sveltekit-superforms/adapters';
-import { GiftCardDefaults , GiftCardSchema, brandSchema, brandDefaults, brandEditSchema, brandEditDefault} from '$lib/schemas';
-import { message, superValidate, fail, setError } from 'sveltekit-superforms';
+import { api } from "$lib/helpers";
+import { arktype } from "sveltekit-superforms/adapters";
+import { message, superValidate, fail, setError } from "sveltekit-superforms";
+import { GiftCardDefaults, GiftCardSchema, brandSchema, brandDefaults, brandEditSchema, brandEditDefault } from "$lib/schemas";
 
-/** @type {import('./$types').PageServerLoad} */
 export async function load(event) {
-
-  // const form = await superValidate(arktype(giftCardSchema, { defaults: giftCardDefaults }));
   const brandForm = await superValidate(arktype(brandSchema, { defaults: brandDefaults }));
-  
-  const fetchProduct = async () => {
+
+  const fetchProducts = async () => {
     const res = await api({
-      method: 'get',
-			resource: 'products/'+event.params.slug,
+      method: "get",
+      resource: "products/type/gift-card?cursor=" + event.params.slug,
       event,
-		});
-    
-    return res?.json();
-  }
-  
+    });
+
+    return await res?.json();
+  };
+
   const fetchProductBrands = async () => {
     const res = await api({
-			method: 'get',
-			resource: 'product-brands',
+      method: "get",
+      resource: "product-brands",
       event,
-		});
+    });
 
-    return res?.json();
-  }
+    return await res?.json();
+  };
 
   const fetchCategories = async () => {
     const res = await api({
-			method: 'get',
-			resource: 'product-categories',
+      method: "get",
+      resource: "product-categories",
       event,
-		});
+    });
 
-    return res?.json();
-  }
+    return await res?.json();
+  };
 
   const fetchRegions = async () => {
     const res = await api({
-			method: 'get',
-			resource: 'regions',
+      method: "get",
+      resource: "regions",
       event,
 		});
 
-    return res?.json();
+    return await res?.json();
   }
 
   event.depends('esim');
   event.depends('brandlist');
+  
 	const [productData, categoriesData, brandsData, regionsData] = await Promise.all([
     fetchProduct(),
 	  fetchCategories(),
@@ -58,17 +56,14 @@ export async function load(event) {
 	  fetchRegions(),
 	]);
 
-  // event.setHeaders({
-  //   'Cache-Control': 'public, max-age=604800',
-  // });
-  
   // the reason why cache is disabled is because of the invalidate
   // when invalidate refetch data, it restores data once deleted
-  event.setHeaders({
-    'Cache-Control': 'no-cache',
-  });
+//   event.setHeaders({
+//     "Cache-Control": "no-cache",
+//   });
 
-  const form = await superValidate(productData.data, arktype(GiftCardSchema, { defaults: GiftCardDefaults }));
+  const form = await superValidate(arktype(GiftCardSchema, { defaults: GiftCardDefaults }));
+  // const form = await superValidate(productData.data, arktype(GiftCardSchema, { defaults: GiftCardDefaults }));
 
   // form.data = productData.data
 
@@ -81,12 +76,13 @@ export async function load(event) {
     brands: brandsData.data,
     /** @type {import('$lib/types').ProductRegions[]} } */
     regions: regionsData.data,
-  }
+    /** @type { import('$lib/types').Product[] } */
+    products: productsData.data,
+    meta: productsData.metadata,
+  };
 }
 
-/** @satisfies {import('./$types').Actions} */
 export const actions = {
-  /** @param {import('@sveltejs/kit').RequestEvent} event */
   createBrand: async (event) => {
     const form = await superValidate(event, arktype(brandSchema, { defaults: brandDefaults }));
 
@@ -96,44 +92,43 @@ export const actions = {
 
     const formData = new FormData();
 
-    for(let dt of Object.entries(form.data)){
+    for (let dt of Object.entries(form.data)) {
       formData.append(dt[0], dt[1]);
     }
 
     const res = await api({
-			method: 'post',
-			resource: 'product-brands',
-			data: formData,
+      method: "post",
+      resource: "product-brands",
+      data: formData,
       event,
       toJSON: false,
-		});
+    });
 
     if (res?.status == 422) {
       let errRes = await res.json();
 
-      for(const [fieldName, errs] of Object.entries(errRes.errors)){
-        if (fieldName.includes('.')) {
-          setError(form, fieldName.split('.')[0], errs[0], {
-            overwrite: true
+      for (const [fieldName, errs] of Object.entries(errRes.errors)) {
+        if (fieldName.includes(".")) {
+          setError(form, fieldName.split(".")[0], errs[0], {
+            overwrite: true,
           });
         } else {
           setError(form, fieldName, errs[0], {
-            overwrite: true
+            overwrite: true,
           });
         }
       }
 
-      return message(form, {type: 'error', msg: 'There are errors in your form! Check them and try again.'}, {status: res?.status || 400});
-		}
-
-    if ( ! res?.ok) {
-      return message(form, {type: 'error', msg: res?.statusText || 'An error occured while processing your request'}, {status: res?.status || 429});
+      return message(form, { type: "error", msg: "There are errors in your form! Check them and try again." }, { status: res?.status || 400 });
     }
 
-		return message(form, {type: 'success', msg: 'Brand created successfully!'});
-	},
+    if (!res?.ok) {
+      return message(form, { type: "error", msg: res?.statusText || "An error occurred while processing your request" }, { status: res?.status || 429 });
+    }
 
-  /** @param {import('@sveltejs/kit').RequestEvent} event */
+    return message(form, { type: "success", msg: "Brand created successfully!" });
+  },
+
   editBrand: async (event) => {
     const form = await superValidate(event, arktype(brandEditSchema, { defaults: brandEditDefault }));
 
@@ -153,71 +148,70 @@ export const actions = {
     // }
 
     const res = await api({
-			method: 'PUT',
-			resource: 'product-brands/'+uuid,
-			data: form.data,
+      method: "PUT",
+      resource: "product-brands/" + uuid,
+      data: form.data,
       event,
       toJSON: true,
-		});
+    });
 
     if (res?.status == 422) {
       let errRes = await res.json();
 
-      for(const [fieldName, errs] of Object.entries(errRes.errors)){
-        if (fieldName.includes('.')) {
-          setError(form, fieldName.split('.')[0], errs[0], {
-            overwrite: true
+      for (const [fieldName, errs] of Object.entries(errRes.errors)) {
+        if (fieldName.includes(".")) {
+          setError(form, fieldName.split(".")[0], errs[0], {
+            overwrite: true,
           });
         } else {
           setError(form, fieldName, errs[0], {
-            overwrite: true
+            overwrite: true,
           });
         }
       }
 
-      return message(form, {type: 'error', msg: 'There are errors in your form! Check them and try again.'}, {status: res?.status || 400});
-		}
-
-    if ( ! res?.ok) {
-      return message(form, {type: 'error', msg: res?.statusText || 'An error occured while processing your request'}, {status: res?.status || 429});
+      return message(form, { type: "error", msg: "There are errors in your form! Check them and try again." }, { status: res?.status || 400 });
     }
 
-		return message(form, {type: 'success', msg: 'Brand was Updated successfully!'});
-	},
+    if (!res?.ok) {
+      return message(form, { type: "error", msg: res?.statusText || "An error occurred while processing your request" }, { status: res?.status || 429 });
+    }
 
-  /** @param {import('@sveltejs/kit').RequestEvent} event */
-  deleteBrand: async ( event ) => {
+    return message(form, { type: "success", msg: "Brand was Updated successfully!" });
+  },
+
+  deleteBrand: async (event) => {
     const form = await superValidate(arktype(brandSchema, { defaults: brandDefaults }));
     const formData = await event.request.formData();
 
-    const res = await api( {
-      method: 'delete',
-      resource: 'product-brands/'+formData.get('uuid'),
+    const res = await api({
+      method: "delete",
+      resource: "product-brands/" + formData.get("uuid"),
       event,
-    } );
+    });
 
     if (res?.status == 422) {
       let errRes = await res.json();
 
-      for(const [fieldName, errs] of Object.entries(errRes.errors)){
-        if (fieldName.includes('.')) {
-          setError(form, fieldName.split('.')[0], errs[0], {
-            overwrite: true
+      for (const [fieldName, errs] of Object.entries(errRes.errors)) {
+        if (fieldName.includes(".")) {
+          setError(form, fieldName.split(".")[0], errs[0], {
+            overwrite: true,
           });
         } else {
           setError(form, fieldName, errs[0], {
-            overwrite: true
+            overwrite: true,
           });
         }
       }
 
-      return message(form, {type: 'error', msg: 'There are errors in your form! Check them and try again.'}, {status: res?.status || 400});
-		}
-
-    if ( ! res?.ok) {
-      return message(form, {type: 'error', msg: res?.statusText || 'An error occured while processing your request'}, {status: res?.status || 429});
+      return message(form, { type: "error", msg: "There are errors in your form! Check them and try again." }, { status: res?.status || 400 });
     }
 
-    return message(form, {type: 'success', msg: 'Brand was Updated successfully!'});
+    if (!res?.ok) {
+      return message(form, { type: "error", msg: res?.statusText || "An error occurred while processing your request" }, { status: res?.status || 429 });
+    }
+
+    return message(form, { type: "success", msg: "Brand was Updated successfully!" });
   },
-}
+};

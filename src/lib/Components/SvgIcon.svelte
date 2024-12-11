@@ -1,5 +1,6 @@
 <script>
   /**
+   * @component
    * An in-place svg icon component
    * inspired by https://medium.com/javascript-in-plain-english/how-to-add-customizable-svg-icons-in-svelte-js-app-488648d302c8
    *
@@ -25,28 +26,46 @@
    * @see {@link FormMessage.svelte} for further information on usage.
    */
 
-	export let slot = undefined, fill = 'none', minHeight = '10%', svgHeight = 24, svgWidth = svgHeight, stroke = "currentColor", strokeWidth = 2;
+  export let slot = undefined,
+    fill = "none",
+    minHeight = "10%",
+    svgHeight = 24,
+    svgWidth = svgHeight,
+    stroke = "currentColor",
+    strokeWidth = 2;
 
   $: props = (({ slot, fill, minHeight, svgHeight, svgWidth, stroke, strokeWidth, ...rest }) => rest)($$props);
 </script>
 
-<svg xmlns="http://www.w3.org/2000/svg" width="{svgWidth}" height="{svgHeight}" viewBox="0 0 {svgWidth} {svgHeight}" {fill} {stroke} stroke-linecap="round" stroke-linejoin="round" stroke-width={strokeWidth} {...props} style="--min-height:{minHeight}" on:click>
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width={svgWidth}
+  height={svgHeight}
+  viewBox="0 0 {svgWidth} {svgHeight}"
+  {fill}
+  {stroke}
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width={strokeWidth}
+  {...props}
+  style="--min-height:{minHeight}"
+  on:click>
   <slot />
 
-  {#if ! Object.entries($$slots).length}
+  {#if !Object.entries($$slots).length}
     {@html slot}
   {/if}
 </svg>
 
 <style lang="scss">
-  svg{
+  svg {
     min-height: var(--min-height);
 
-    &.left{
+    &.left {
       left: 0;
     }
 
-    &.right{
+    &.right {
       right: 0;
     }
   }

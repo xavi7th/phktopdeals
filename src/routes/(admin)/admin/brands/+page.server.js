@@ -1,29 +1,25 @@
-import { api } from '$lib/helpers';
-import { arktype } from 'sveltekit-superforms/adapters';
-import { brandDefaults , brandSchema} from '$lib/schemas';
-import { message, superValidate, fail, setError } from 'sveltekit-superforms';
+import { api } from "$lib/helpers";
+import { superValidate } from "sveltekit-superforms";
+import { arktype } from "sveltekit-superforms/adapters";
+import { brandDefaults, brandSchema } from "$lib/schemas";
 
-
-/** @type {import('./$types').PageServerLoad} */
 export async function load(event) {
   const form = await superValidate(arktype(brandSchema, { defaults: brandDefaults }));
 
   const fetchProductBrands = async () => {
     const res = await api({
-			method: 'get',
-			resource: 'product-brands',
+      method: "get",
+      resource: "product-brands",
       event,
-		});
+    });
 
-    return res?.json();
-  }
+    return await res?.json();
+  };
 
-	const [cardsData] = await Promise.all([
-    fetchProductBrands(),
-	]);
+  const [cardsData] = await Promise.all([fetchProductBrands()]);
 
   event.setHeaders({
-    'Cache-Control': 'public, max-age=604800',
+    "Cache-Control": "public, max-age=604800",
   });
 
   return {
@@ -31,10 +27,9 @@ export async function load(event) {
     /** @type {import('$lib/types').ProductBrand[] } */
     cards: cardsData.data,
     meta: cardsData.metadata,
-  }
+  };
 }
 
-// /** @satisfies {import('./$types').Actions} */
 // export const actions = {
 
 //   /** @param {import('@sveltejs/kit').RequestEvent} event */
@@ -78,7 +73,7 @@ export async function load(event) {
 // 		}
 
 //     if ( ! res?.ok) {
-//       return message(form, {type: 'error', msg: res?.statusText || 'An error occured while processing your request'}, {status: res?.status || 429});
+//       return message(form, {type: 'error', msg: res?.statusText || 'An error occurred while processing your request'}, {status: res?.status || 429});
 //     }
 
 // 		return message(form, {type: 'success', msg: 'Card created successfully!'});

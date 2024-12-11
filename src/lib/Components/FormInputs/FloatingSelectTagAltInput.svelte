@@ -8,14 +8,19 @@
       </FloatingSelectTagInput> -->
 
 <script>
-	import { onMount } from 'svelte';
-	import { x } from '../iconPaths';
-  import { pageMounted } from '$stores';
-	import SvgIcon from '../SvgIcon.svelte';
-	import { isObject } from '$lib/helpers';
-	import FormMessage from '../FormMessage.svelte';
+  import { onMount } from "svelte";
+  import { x } from "../iconPaths";
+  import { pageMounted } from "$stores";
+  import SvgIcon from "../SvgIcon.svelte";
+  import { isObject } from "$lib/helpers";
+  import FormMessage from "../FormMessage.svelte";
 
-  export let name = 'select-' + crypto.randomUUID().replaceAll('-', '').substring(0, 10), isError = true, label = 'Choose', gray = false, size='p-4', multiple = true;
+  export let name = "select-" + crypto.randomUUID().replaceAll("-", "").substring(0, 10),
+    isError = true,
+    label = "Choose",
+    gray = false,
+    size = "p-4",
+    multiple = true;
 
   /** @type {string|string[]|undefined} */
   export let msg = [];
@@ -26,9 +31,9 @@
   /** @type {string[] | Object.<string, string>} */
   export let options = [];
 
-  export {className as class}
+  export { className as class };
 
-  let className = '';
+  let className = "";
   let elem;
 
   onMount(() => {
@@ -36,16 +41,23 @@
       new window.HSSelect(document.querySelector(`#${name}`));
       elem = window.HSSelect.getInstance(`#${name}`);
     }
-  })
+  });
 </script>
 
-<div id="{name}-wrapper" class="relative {className}
-        {gray ? 'bg-gray-100 dark:!bg-neutral-800' : ''} { !msg?.toString() && gray ? 'border-transparent dark:border-transparent' : ''}
+<div
+  id="{name}-wrapper"
+  class="relative {className}
+        {gray ? 'bg-gray-100 dark:!bg-neutral-800' : ''} {!msg?.toString() && gray ? 'border-transparent dark:border-transparent' : ''}
         {msg?.toString() && isError ? 'error' : ''}
-        {msg?.toString() && ! isError ? 'success' : ''}">
-
-  <select {name} id="{name}" bind:value {...$$restProps} multiple data-hs-select='{`{
-    "placeholder": "Select ${multiple ? 'multiple' : 'single'} ${label} option${multiple ? 's' : ''}...",
+        {msg?.toString() && !isError ? 'success' : ''}">
+  <select
+    {name}
+    id={name}
+    bind:value
+    {...$$restProps}
+    multiple
+    data-hs-select={`{
+    "placeholder": "Select ${multiple ? "multiple" : "single"} ${label} option${multiple ? "s" : ""}...",
     "toggleTag": "<button type='button' aria-expanded='false'></button>",
     "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative ${size} ps-4 pe-9 pt-6 flex gap-x-2 text-nowrap w-full cursor-pointer bg-white border border-gray-200 rounded-lg text-start text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-neutral-600 hs-error:border-red-500 hs-success:border-teal-500 hs-error:focus:border-red-500 hs-success:focus:border-teal-500 hs-error:focus:ring-red-500 hs-success:focus:ring-teal-500 before:absolute before:inset-0 before:z-[1]",
     "toggleSeparators": {
@@ -62,36 +74,39 @@
       "<div class='hidden hs-success:flex absolute inset-y-0 end-8 items-center pointer-events-none'><svg class='shrink-0 size-4 text-teal-500' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg></div>",
       "<div class='absolute top-1/2 end-3 -translate-y-1/2'><svg class='shrink-0 size-3.5 text-gray-500 dark:text-neutral-500 ' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m7 15 5 5 5-5'/><path d='m7 9 5-5 5 5'/></svg></div>"
     ]
-  }`}' class="hidden">
-      {#if isObject(options) && Object.entries(options).length > 0}
-        {#each Object.entries(options) as [val, key]}
-          <option value={key} >{val}</option>
-        {/each}
-      {:else if Array.isArray(options) && options.length > 0}
-        {#each options as val}
-          <option value={ val.toString().toLowerCase() } >{val}</option>
-        {/each}
-      {:else}
-        <slot />
-      {/if}
-
+  }`}
+    class="hidden">
+    {#if isObject(options) && Object.entries(options).length > 0}
+      {#each Object.entries(options) as [val, key]}
+        <option value={key}>{val}</option>
+      {/each}
+    {:else if Array.isArray(options) && options.length > 0}
+      {#each options as val}
+        <option value={val.toString().toLowerCase()}>{val}</option>
+      {/each}
+    {:else}
+      <slot />
+    {/if}
   </select>
 
-  <label for="{name}" class="absolute top-0 start-0 p-4 h-full truncate pointer-events-none border border-transparent text-xs capitalize -translate-y-2 text-gray-500 dark:text-neutral-500">{label}</label>
+  <label for={name} class="pointer-events-none absolute start-0 top-0 h-full -translate-y-2 truncate border border-transparent p-4 text-xs capitalize text-gray-500 dark:text-neutral-500">{label}</label>
 
   {#if msg?.toString()}
-    <FormMessage type="{isError ? 'error' : 'success'}" {msg}/>
+    <FormMessage type={isError ? "error" : "success"} {msg} />
   {/if}
 </div>
 
 <div class="flex flex-wrap gap-2">
-  <button type="button" class="py-1 px-2 inline-flex items-center gap-x-1 text-sm rounded-lg border border-gray-200 bg-white text-gray-800 hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:text-white dark:border-neutral-700 dark:hover:bg-neutral-800" on:click={() => window.HSSelect.getInstance(`#${name}`).setValue([])}>
-    <SvgIcon class="shrink-0 size-3.5" svgHeight={24} slot={x}/>
+  <button
+    type="button"
+    class="inline-flex items-center gap-x-1 rounded-lg border border-gray-200 bg-white px-2 py-1 text-sm text-gray-800 hover:bg-gray-50 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-white dark:hover:bg-neutral-800"
+    on:click={() => window.HSSelect.getInstance(`#${name}`).setValue([])}>
+    <SvgIcon class="size-3.5 shrink-0" svgHeight={24} slot={x} />
   </button>
 </div>
 
 <style global>
-  select{
+  select {
     text-transform: capitalize;
   }
 </style>
