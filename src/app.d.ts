@@ -1,38 +1,46 @@
 // See https://kit.svelte.dev/docs/types#app
 
-import type { AppUser } from '$lib/types';
-import type { DevicePayload } from 'sveltekit-device-detector';
+import type { AppUser } from "$lib/types";
+import type { Session } from "svelte-kit-cookie-session";
+import type { DevicePayload } from "sveltekit-device-detector";
+
+type SessionData = {
+  user: AppUser;
+  recently_purchased: boolean;
+  api_session: string | undefined;
+};
 
 // for information about these interfaces
 declare global {
-	namespace App {
-		interface Error {
-      code: number,
-      message: string | array,
+  namespace App {
+    interface Error {
+      code: number;
+      message: string | array;
     }
-		interface Locals {
+    interface Locals {
       user: AppUser | {};
-      session: string | undefined;
       deviceType: DevicePayload;
       deviceName?: string;
+      session: Session<SessionData>;
     }
-		interface PageData {
+    interface PageData {
       deviceType?: DevicePayload;
       deviceName?: string;
       message?: string;
+      session?: SessionData;
     }
-		interface ActionData {
-      message: string
+    interface ActionData {
+      message: string;
     }
     namespace Superforms {
       type Message = {
-        type: 'grey' | 'success' | 'info' | 'error' | 'warning' | 'white',
-        msg: string
-      }
+        type: "grey" | "success" | "info" | "error" | "warning" | "white";
+        msg: string;
+      };
     }
-		// interface PageState {}
-		// interface Platform {}
-	}
+    // interface PageState {}
+    // interface Platform {}
+  }
 }
 
 export {};

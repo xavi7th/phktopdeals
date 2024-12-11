@@ -1,10 +1,7 @@
-import { api } from '$lib/helpers';
-import { fail } from '@sveltejs/kit';
+import { api } from "$lib/helpers";
+import { fail } from "@sveltejs/kit";
 
-
-/** @type {import('./$types').PageServerLoad} */
 export async function load(event) {
-
   const fetchGamesCards = async () => {
     const res = await api({
 			method: 'get',
@@ -12,8 +9,8 @@ export async function load(event) {
       event,
 		});
 
-    return res?.json();
-  }
+    return await res?.json();
+  };
 
 	const [cardsData] = await Promise.all([
     fetchGamesCards(),
@@ -23,16 +20,14 @@ export async function load(event) {
     'Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400',
   });
 
-    return {
+  return {
     /** @type { import('$lib/types').Product[] } */
     cards: cardsData.data,
     meta: cardsData.metadata,
-  }
+  };
 }
 
-/** @satisfies {import('./$types').Actions} */
  export const actions = {
-  /** @param {import('@sveltejs/kit').RequestEvent} event */
 	delete: async ( event ) => {
 
     const formData = await event.request.formData();

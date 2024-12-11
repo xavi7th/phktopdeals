@@ -8,7 +8,6 @@
  * <SvgIcon class="shrink-0 size-4 text-red-500" svgHeight={24} minHeight="65%" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" slot={exclamationCircle}/>
  */
 
-
 //Full SVGs
 export const softwareIcon = `
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800" style="width: 100%; height: 100%; transform: translate3d(0px, 0px, 0px); content-visibility: visible;" preserveAspectRatio="xMidYMid meet">
@@ -125,7 +124,7 @@ export const softwareIcon = `
       </g>
     </g>
   </svg>
-`
+`;
 
 export const eSimIcon = `
   <svg
@@ -276,7 +275,7 @@ export const eSimIcon = `
       </g>
     </g>
   </svg>
-`
+`;
 
 export const topUpIcon = `
   <svg
@@ -315,7 +314,7 @@ export const topUpIcon = `
       </g>
     </g>
   </svg>
-`
+`;
 
 export const giftCardIcon = `
   <svg
@@ -441,7 +440,7 @@ export const giftCardIcon = `
       </g>
     </g>
   </svg>
-`
+`;
 
 export const gamesIcon = `
   <svg
@@ -833,7 +832,7 @@ export const gamesIcon = `
       </g>
     </g>
   </svg>
-`
+`;
 
 export const maximizeIcon = `
   <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -842,45 +841,45 @@ export const maximizeIcon = `
     <path d="M4.63752 14.0803L1.64217 17.0811V15.6811V14.2865H0.991007H0.339844V16.8098V19.333H2.8631H5.38636V18.6818V18.0307H3.99178H2.59178L5.60341 15.0191L8.61504 12.0074L8.1538 11.5462C7.90419 11.2911 7.68171 11.0849 7.66543 11.0849C7.64915 11.0849 6.28713 12.4361 4.63752 14.0803Z" fill="black" ></path>
     <path d="M11.1917 11.5462L10.7305 12.0074L13.7421 15.0191L16.7537 18.0307H15.3537H13.9592V18.6818V19.333H16.4824H19.0057V16.8098V14.2865H18.3545H17.7033V15.6811V17.0811L14.7026 14.0803C13.0584 12.4361 11.6964 11.0849 11.6801 11.0849C11.6638 11.0849 11.4413 11.2911 11.1917 11.5462Z" fill="black" ></path>
   </svg>
-`
+`;
 
 export const favoriteIcon = `
   <svg width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M4.97214 0.0251923C3.71435 0.183434 2.6616 0.701674 1.7705 1.60365C0.970091 2.41068 0.489057 3.26519 0.213053 4.37683C-0.275867 6.30342 0.0789948 8.20232 1.25398 9.98649C2.00708 11.1298 2.98097 12.1781 4.76711 13.7764C5.90266 14.7931 9.36848 17.7601 9.53802 17.859C9.69574 17.954 9.75488 17.9658 10.09 17.9658C10.4252 17.9658 10.4843 17.954 10.642 17.859C10.8116 17.7601 14.2853 14.7891 15.413 13.7764C17.207 12.1702 18.173 11.1258 18.9261 9.98649C20.1011 8.20232 20.4559 6.30342 19.967 4.37683C19.691 3.26519 19.21 2.41068 18.4096 1.60365C17.6131 0.800575 16.7614 0.337719 15.6456 0.100357C15.0857 -0.0183239 14.0526 -0.0301933 13.5637 0.0805759C12.1995 0.377279 11.1546 1.06167 10.2004 2.28013L10.09 2.41859L9.98357 2.28013C9.04122 1.08541 8.01212 0.401016 6.69913 0.100357C6.30878 0.00936699 5.4098 -0.0301933 4.97214 0.0251923ZM6.28907 1.23178C7.40885 1.42958 8.37487 2.07837 9.13979 3.15046C9.26991 3.3364 9.43156 3.55793 9.49465 3.64892C9.78643 4.06035 10.3936 4.06035 10.6854 3.64892C10.7485 3.55793 10.9102 3.3364 11.0403 3.15046C12.0851 1.68673 13.5401 0.998377 15.1251 1.21596C16.8837 1.45728 18.2558 2.69156 18.7802 4.50738C19.1942 5.94342 19.0128 7.45067 18.2597 8.80759C17.6289 9.94298 16.5761 11.1337 14.7427 12.7834C13.8555 13.5786 10.1255 16.7988 10.09 16.7988C10.0506 16.7988 6.33638 13.5904 5.4374 12.7834C2.61823 10.2476 1.50633 8.66518 1.23821 6.8098C1.06472 5.61112 1.31312 4.32145 1.91639 3.30475C2.82326 1.77376 4.58968 0.935081 6.28907 1.23178Z" fill="black"></path>
   </svg>
-`
+`;
 
 export const plusIcon = `
   <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M5 12h14"></path>
     <path d="M12 5v14" />
   </svg>
-`
+`;
 
 export const minusIcon = `
   <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M5 12h14"></path>
   </svg>
-`
+`;
 
 export const checkPlus = `
   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
     <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21a9 9 0 1 1 0-18c1.052 0 2.062.18 3 .512M7 9.577l3.923 3.923l8.5-8.5M17 14v6m-3-3h6"/>
   </svg>
-`
+`;
 
 export const homeSVG = `
   <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
     <polyline points="9 22 9 12 15 12 15 22" />
   </svg>
-`
+`;
 
 export const productSVG = `
   <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 1024 1024" fill="currentColor" stroke="currentColor">
     <path fill-rule="evenodd" d="M464 144c8.837 0 16 7.163 16 16v304c0 8.836-7.163 16-16 16H160c-8.837 0-16-7.164-16-16V160c0-8.837 7.163-16 16-16zm-52 68H212v200h200zm493.333 87.686c6.248 6.248 6.248 16.379 0 22.627l-181.02 181.02c-6.248 6.248-16.378 6.248-22.627 0l-181.019-181.02c-6.248-6.248-6.248-16.379 0-22.627l181.02-181.02c6.248-6.248 16.378-6.248 22.627 0zm-84.853 11.313L713 203.52L605.52 311L713 418.48zM464 544c8.837 0 16 7.164 16 16v304c0 8.837-7.163 16-16 16H160c-8.837 0-16-7.163-16-16V560c0-8.836 7.163-16 16-16zm-52 68H212v200h200zm452-68c8.837 0 16 7.164 16 16v304c0 8.837-7.163 16-16 16H560c-8.837 0-16-7.163-16-16V560c0-8.836 7.163-16 16-16zm-52 68H612v200h200z"/>
   </svg>
-`
+`;
 
 export const shoppingBagSVG = `
   <svg viewBox="0 0 24 24" class="size-[20px]" fill="currentColor" preserveAspectRatio="xMidYMid meet" focusable="false">
@@ -892,7 +891,7 @@ export const shoppingBagSVG = `
     </g>
   </svg>
 
-`
+`;
 
 export const walletSVG = `
   <svg viewBox="0 0 24 24" class="size-[20px]" fill="currentColor" preserveAspectRatio="xMidYMid meet" focusable="false">
@@ -900,7 +899,7 @@ export const walletSVG = `
     <path d="M21 7.28V5c0-1.1-.9-2-2-2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-2.28c.59-.35 1-.98 1-1.72V9c0-.74-.41-1.37-1-1.72zM20 9v6h-7V9h7zM5 19V5h14v2h-6c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2h6v2H5z"></path>
     <circle cx="16" cy="12" r="1.5"></circle>
   </svg>
-`
+`;
 
 export const heartSVG = `
   <svg viewBox="0 0 24 24" class="size-[20px]" fill="currentColor" preserveAspectRatio="xMidYMid meet" focusable="false">
@@ -909,7 +908,7 @@ export const heartSVG = `
       d="M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3zm-4.4 15.55l-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05z"
     ></path>
   </svg>
-`
+`;
 
 export const shareSVG = `
   <svg viewBox="0 0 24 24" class="size-[20px]" preserveAspectRatio="xMidYMid meet" focusable="false" fill="currentColor">
@@ -918,13 +917,13 @@ export const shareSVG = `
       d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92zM18 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM6 13c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm12 7.02c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"
     ></path>
   </svg>
-`
+`;
 
 export const creditCardSVG = `
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="size-[20px]" fill="none" stroke="currentColor" preserveAspectRatio="xMidYMid meet" focusable="false">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
   </svg>
-`
+`;
 
 export const dollarCircleSVG = `
   <svg viewBox="0 0 24 24" class="size-[20px]" preserveAspectRatio="xMidYMid meet" focusable="false" fill="currentColor">
@@ -933,27 +932,27 @@ export const dollarCircleSVG = `
       d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.31-8.86c-1.77-.45-2.34-.94-2.34-1.67 0-.84.79-1.43 2.1-1.43 1.38 0 1.9.66 1.94 1.64h1.71c-.05-1.34-.87-2.57-2.49-2.97V5H10.9v1.69c-1.51.32-2.72 1.3-2.72 2.81 0 1.79 1.49 2.69 3.66 3.21 1.95.46 2.34 1.15 2.34 1.87 0 .53-.39 1.39-2.1 1.39-1.6 0-2.23-.72-2.32-1.64H8.04c.1 1.7 1.36 2.66 2.86 2.97V19h2.34v-1.67c1.52-.29 2.72-1.16 2.73-2.77-.01-2.2-1.9-2.96-3.66-3.42z"
     ></path>
   </svg>
-`
+`;
 
 export const shieldTickSVG = `
   <svg viewBox="0 0 24 24" class="size-[20px]" preserveAspectRatio="xMidYMid meet" focusable="false" fill="currentColor">
     <path d="M0 0h24v24H0V0z" fill="none"></path>
     <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm7 10c0 4.52-2.98 8.69-7 9.93-4.02-1.24-7-5.41-7-9.93V6.3l7-3.11 7 3.11V11zm-11.59.59L6 13l4 4 8-8-1.41-1.42L10 14.17z"></path>
   </svg>
-`
+`;
 
 export const gearsSVG = `
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="size-[20px]" fill="none" stroke="currentColor" preserveAspectRatio="xMidYMid meet" focusable="false">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
   </svg>
-`
+`;
 
 export const eSimSVG = `
   <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24" fill="none" stroke="currentColor">
     <path d="M18 4v16H6V8.8L10.8 4zm0-2h-8L4 8v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2M9.5 19h-2v-2h2zm7 0h-2v-2h2zm-7-4h-2v-4h2zm3.5 4h-2v-4h2zm0-6h-2v-2h2zm3.5 2h-2v-4h2z"/>
   </svg>
-`
+`;
 
 export const gamesSVGAlt = `
   <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 48 48" fill="currentColor" stroke="currentColor">
@@ -969,13 +968,13 @@ export const gamesSVGAlt = `
     </defs>
     <path d="M0 0h48v48H0z" mask="url(#ipTGameThree0)"/>
   </svg>
-`
+`;
 
 export const giftCardSVGAlt = `
   <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24" fill="none" stroke="currentColor">
     <path d="M11 14v8H7a3 3 0 0 1-3-3v-4a1 1 0 0 1 1-1zm8 0a1 1 0 0 1 1 1v4a3 3 0 0 1-3 3h-4v-8zM16.5 2a3.5 3.5 0 0 1 3.163 5H20a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-7V7h-2v5H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h.337A3.5 3.5 0 0 1 4 5.5C4 3.567 5.567 2 7.483 2c1.755-.03 3.312 1.092 4.381 2.934l.136.243c1.033-1.914 2.56-3.114 4.291-3.175zm-9 2a1.5 1.5 0 0 0 0 3h3.143C9.902 5.095 8.694 3.98 7.5 4m8.983 0c-1.18-.02-2.385 1.096-3.126 3H16.5a1.5 1.5 0 1 0-.017-3"/>
   </svg>
-`
+`;
 
 export const topUpSVGAlt = `
   <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24" fill="none" stroke="currentColor"  stroke-width="2">
@@ -984,7 +983,7 @@ export const topUpSVGAlt = `
       <path d="M2 12c0-4.714 0-7.071 1.464-8.536C4.93 2 7.286 2 12 2m10 10c0 4.714 0 7.071-1.465 8.535C19.072 22 16.714 22 12 22s-7.071 0-8.536-1.465c-.973-.973-1.3-2.342-1.409-4.535"></path>
     </g>
   </svg>
-`
+`;
 
 export const usersSVG = `
   <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -993,15 +992,14 @@ export const usersSVG = `
     <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
     <path d="M16 3.13a4 4 0 0 1 0 7.75" />
   </svg>
-`
+`;
 
 export const spinnerSVG = `
   <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
     <path fill="currentColor" d="M12 2A10 10 0 1 0 22 12A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8A8 8 0 0 1 12 20Z" opacity=".5"></path>
     <path fill="currentColor" d="M20 12h2A10 10 0 0 0 12 2V4A8 8 0 0 1 20 12Z"><animateTransform attributeName="transform" dur="1s" from="0 12 12" repeatCount="indefinite" to="360 12 12" type="rotate"></animateTransform></path>
   </svg>
-`
-
+`;
 
 export const animatedDotsSVG = `
   <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
@@ -1015,47 +1013,47 @@ export const animatedDotsSVG = `
       <animate attributeName="r" begin="0" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"></animate>
     </circle>
   </svg>
-`
+`;
 
 // SVG Paths
 export const bell = `
   <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
   <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
-`
+`;
 
 export const breadcrumb = `
   <line x1="3" x2="21" y1="6" y2="6" />
   <line x1="3" x2="21" y1="12" y2="12" />
   <line x1="3" x2="21" y1="18" y2="18" />
-`
+`;
 
 export const exclamationCircle = `
   <circle cx="12" cy="12" r="10"></circle>
   <line x1="12" x2="12" y1="8" y2="12"></line>
   <line x1="12" x2="12.01" y1="16" y2="16"></line>
-`
+`;
 
 export const xCircle = `
   <circle cx="12" cy="12" r="10"></circle>
   <path d="m15 9-6 6"></path>
   <path d="m9 9 6 6"></path>
-`
+`;
 
 export const exclamationFilled = `
   <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"></path>
-`
+`;
 
 export const checkMarkFilled = `
   <polyline points="20 6 9 17 4 12"></polyline>
-`
+`;
 
 export const checkMarkCircle = `
   <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"></path>
-`
+`;
 
 export const checkMarkFilledAlt = `
   <path fill="currentColor" stroke="none" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-`
+`;
 
 export const eyeOpen = `
   <path class="hs-password-active:hidden" d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
@@ -1064,11 +1062,11 @@ export const eyeOpen = `
   <line class="hs-password-active:hidden" x1="2" x2="22" y1="2" y2="22"></line>
   <path class="hidden hs-password-active:block" d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
   <circle class="hidden hs-password-active:block" cx="12" cy="12" r="3"></circle>
-`
+`;
 
 export const faceBookFilled = `
   <path fill="#1278f2" d="M12 2.04c-5.5 0-10 4.49-10 10.02c0 5 3.66 9.15 8.44 9.9v-7H7.9v-2.9h2.54V9.85c0-2.51 1.49-3.89 3.78-3.89c1.09 0 2.23.19 2.23.19v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.45 2.9h-2.33v7a10 10 0 0 0 8.44-9.9c0-5.53-4.5-10.02-10-10.02"></path>
-`
+`;
 
 export const googleColored = `
   <path fill="#fff" d="M44.59 4.21a63.28 63.28 0 0 0 4.33 120.9a67.6 67.6 0 0 0 32.36.35a57.13 57.13 0 0 0 25.9-13.46a57.44 57.44 0 0 0 16-26.26a74.3 74.3 0 0 0 1.61-33.58H65.27v24.69h34.47a29.72 29.72 0 0 1-12.66 19.52a36.2 36.2 0 0 1-13.93 5.5a41.3 41.3 0 0 1-15.1 0A37.2 37.2 0 0 1 44 95.74a39.3 39.3 0 0 1-14.5-19.42a38.3 38.3 0 0 1 0-24.63a39.25 39.25 0 0 1 9.18-14.91A37.17 37.17 0 0 1 76.13 27a34.3 34.3 0 0 1 13.64 8q5.83-5.8 11.64-11.63c2-2.09 4.18-4.08 6.15-6.22A61.2 61.2 0 0 0 87.2 4.59a64 64 0 0 0-42.61-.38"></path>
@@ -1076,35 +1074,35 @@ export const googleColored = `
   <path fill="#f8bd00" d="M3.26 51.5a63 63 0 0 1 5.5-15.9l20.73 16.09a38.3 38.3 0 0 0 0 24.63q-10.36 8-20.73 16.08a63.33 63.33 0 0 1-5.5-40.9" ></path>
   <path fill="#587dbd" d="M65.27 52.15h59.52a74.3 74.3 0 0 1-1.61 33.58a57.44 57.44 0 0 1-16 26.26c-6.69-5.22-13.41-10.4-20.1-15.62a29.72 29.72 0 0 0 12.66-19.54H65.27c-.01-8.22 0-16.45 0-24.68" ></path>
   <path fill="#319f43" d="M8.75 92.4q10.37-8 20.73-16.08A39.3 39.3 0 0 0 44 95.74a37.2 37.2 0 0 0 14.08 6.08a41.3 41.3 0 0 0 15.1 0a36.2 36.2 0 0 0 13.93-5.5c6.69 5.22 13.41 10.4 20.1 15.62a57.13 57.13 0 0 1-25.9 13.47a67.6 67.6 0 0 1-32.36-.35a63 63 0 0 1-23-11.59A63.7 63.7 0 0 1 8.75 92.4" ></path>
-`
+`;
 
 export const atSign = `
   <path fill="none" stroke="currentColor" d="M35.819 24a11.807 11.807 0 1 0-.672 3.937A11.8 11.8 0 0 0 35.82 24m1.902 16.552q.802-.665 1.537-1.406" />
   <path fill="none" stroke="currentColor" d="M45.5 24A21.5 21.5 0 1 0 5.802 35.412l-1.334 8.12l8.12-1.334a21.45 21.45 0 0 0 19.78 1.612" />
   <path fill="none" stroke="currentColor" d="M35.145 27.936c-1.444 3.522.907 5.417 2.93 5.877c2.467.56 7.425-2.019 7.425-9.813" />
-`
+`;
 
 export const infoFilled = `
   <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"></path>
-`
+`;
 
 export const x = `
   <path d="M18 6 6 18"></path>
   <path d="m6 6 12 12"></path>
-`
+`;
 
 export const xFilled = `
   <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"></path>
-`
+`;
 
 export const search = `
   <circle cx="11" cy="11" r="8" />
   <path d="m21 21-4.3-4.3" />
-`
+`;
 
 export const crescentMoon = `
   <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
-`
+`;
 
 export const sunRays = `
   <circle cx="12" cy="12" r="4"></circle>
@@ -1116,89 +1114,89 @@ export const sunRays = `
   <path d="M20 12h2"></path>
   <path d="m6.34 17.66-1.41 1.41"></path>
   <path d="m19.07 4.93-1.41 1.41"></path>
-`
+`;
 
 export const purchaseBag = `
   <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
   <path d="M3 6h18" />
   <path d="M16 10a4 4 0 0 1-8 0" />
-`
+`;
 
 export const cloudDownload = `
   <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
   <path d="M12 12v9" />
   <path d="m8 17 4 4 4-4" />
-`
+`;
 
 export const users = `
   <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
   <circle cx="9" cy="7" r="4" />
   <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
   <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-`
+`;
 
 export const home = `
   <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
   <polyline points="9 22 9 12 15 12 15 22" />
-`
+`;
 
 export const products = `
   <path fill="currentColor" fill-rule="evenodd" d="M464 144c8.837 0 16 7.163 16 16v304c0 8.836-7.163 16-16 16H160c-8.837 0-16-7.164-16-16V160c0-8.837 7.163-16 16-16zm-52 68H212v200h200zm493.333 87.686c6.248 6.248 6.248 16.379 0 22.627l-181.02 181.02c-6.248 6.248-16.378 6.248-22.627 0l-181.019-181.02c-6.248-6.248-6.248-16.379 0-22.627l181.02-181.02c6.248-6.248 16.378-6.248 22.627 0zm-84.853 11.313L713 203.52L605.52 311L713 418.48zM464 544c8.837 0 16 7.164 16 16v304c0 8.837-7.163 16-16 16H160c-8.837 0-16-7.163-16-16V560c0-8.836 7.163-16 16-16zm-52 68H212v200h200zm452-68c8.837 0 16 7.164 16 16v304c0 8.837-7.163 16-16 16H560c-8.837 0-16-7.163-16-16V560c0-8.836 7.163-16 16-16zm-52 68H612v200h200z"/>
-`
+`;
 
 export const eSim = `
   <path fill="currentColor" d="M18 4v16H6V8.8L10.8 4zm0-2h-8L4 8v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2M9.5 19h-2v-2h2zm7 0h-2v-2h2zm-7-4h-2v-4h2zm3.5 4h-2v-4h2zm0-6h-2v-2h2zm3.5 2h-2v-4h2z" />
-`
+`;
 
 export const open = `
   <rect width="18" height="18" x="3" y="3" rx="2" />
   <path d="M15 3v18" />
   <path d="m8 9 3 3-3 3" />
-`
+`;
 
 export const plus = `
   <path d="M5 12h14" />
   <path d="M12 5v14" />
-`
+`;
 
 export const leftAngle = `
   <path d="m15 18-6-6 6-6" />
-`
+`;
 
 export const rightAngle = `
   <path d="m9 18 6-6-6-6" />
-`
+`;
 
 export const boldIcon = `
   <path d="M14 12a4 4 0 0 0 0-8H6v8"></path>
   <path d="M15 20a4 4 0 0 0 0-8H6v8Z"></path>
-`
+`;
 
 export const italicsIcon = `
   <line x1="19" x2="10" y1="4" y2="4"></line>
   <line x1="14" x2="5" y1="20" y2="20"></line>
   <line x1="15" x2="9" y1="4" y2="20"></line>
-`
+`;
 
 export const underlineIcon = `
   <path d="M6 4v6a6 6 0 0 0 12 0V4"></path>
   <line x1="4" x2="20" y1="20" y2="20"></line>
-`
+`;
 
 export const strikethroughIcon = `
   <path d="M16 4H9a3 3 0 0 0-2.83 4"></path>
   <path d="M14 12a4 4 0 0 1 0 8H6"></path>
   <line x1="4" x2="20" y1="12" y2="12"></line>
-`
+`;
 
 export const chainLinkIcon = `
   <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
   <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
-`
+`;
 
 export const cancelChainLinkIcon = `
   <path d="M15.625 12.775L13.85 11H15q.425 0 .713.288T16 12q0 .25-.1.45t-.275.325M20.5 21.9q-.275.275-.7.275t-.7-.275l-17-17q-.275-.275-.275-.7t.275-.7t.7-.275t.7.275l17 17q.275.275.275.7t-.275.7M7 17q-2.075 0-3.537-1.463T2 12q0-1.725 1.05-3.075t2.7-1.775L7.6 9H7q-1.25 0-2.125.875T4 12t.875 2.125T7 15h3q.425 0 .713.288T11 16t-.288.713T10 17zm2-4q-.425 0-.712-.288T8 12t.288-.712T9 11h.625l1.975 2zm9.5 2.8q-.225-.35-.162-.75t.412-.625q.575-.425.913-1.05T20 12q0-1.25-.875-2.125T17 9h-3q-.425 0-.712-.288T13 8t.288-.712T14 7h3q2.075 0 3.538 1.463T22 12q0 1.225-.562 2.288t-1.563 1.762q-.35.225-.75.163T18.5 15.8"/>
-`
+`;
 
 export const numberedBulletsIcon = `
   <line x1="10" x2="21" y1="6" y2="6"></line>
@@ -1207,7 +1205,7 @@ export const numberedBulletsIcon = `
   <path d="M4 6h1v4"></path>
   <path d="M4 10h2"></path>
   <path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"></path>
-`
+`;
 
 export const bulletPointsIcon = `
   <line x1="8" x2="21" y1="6" y2="6"></line>
@@ -1216,33 +1214,33 @@ export const bulletPointsIcon = `
   <line x1="3" x2="3.01" y1="6" y2="6"></line>
   <line x1="3" x2="3.01" y1="12" y2="12"></line>
   <line x1="3" x2="3.01" y1="18" y2="18"></line>
-`
+`;
 
 export const blockquotesIcon = `
   <path d="M17 6H3"></path>
   <path d="M21 12H8"></path>
   <path d="M21 18H8"></path>
   <path d="M3 12v6"></path>
-`
+`;
 
 export const codesIcon = `
   <path d="m18 16 4-4-4-4"></path>
   <path d="m6 8-4 4 4 4"></path>
   <path d="m14.5 4-5 16"></path>
-`
+`;
 
 export const undoIcon = `
   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9h13a5 5 0 0 1 0 10H7M3 9l4-4M3 9l4 4"/>
-`
+`;
 
 export const redoIcon = `
   <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2">
     <path d="M20 9H8a5 5 0 0 0-5 5v0a5 5 0 0 0 5 5h9" />
     <path stroke-linejoin="round" d="m17 5l4 4l-4 4" />
   </g>
-`
+`;
 
 export const upDownAngleIcon = `
   <path d="m7 15 5 5 5-5"></path>
   <path d="m7 9 5-5 5 5"></path>
-`
+`;

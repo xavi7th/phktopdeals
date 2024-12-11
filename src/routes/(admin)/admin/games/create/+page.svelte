@@ -13,7 +13,6 @@
 	import FloatingNumericTextInput from '$lib/Components/FormInputs/FloatingNumericTextInput.svelte';
 	import FloatingSelectTagAltInput from '$lib/Components/FormInputs/FloatingSelectTagAltInput.svelte';
 
-  /** @type {import('./$types').PageData} */
   export let data;
 
   const { form: formData, errors, message, delayed, submitting, timeout, enhance } = superForm(data.form, {
@@ -62,10 +61,9 @@
             Manage
           </button>
         </div>
-
-        <div class="col-span-12">
-          <FloatingFileInput name="product_image" label="Product Image (300 * 300)" accept="image/*" bind:files={$formData.product_image} isError={ !! $errors.product_image} msg={$errors.product_image}/>
-        </div>
+      <div class="col-span-12">
+        <FloatingTextInput name="product_name" label="Product Name" bind:value={$formData.product_name} isError={!!$errors.product_name} msg={$errors.product_name} />
+      </div>
 
         <div class="col-span-12 flex gap-x-2">
           <FloatingSelectTagAltInput class="flex-1" name="product_category" label="product category" bind:value={$formData.product_category} isError={ !! $errors.product_category} msg={$errors.product_category?._errors} multiple>
@@ -83,7 +81,9 @@
           </FloatingSelectTagAltInput>
         </div>
 
-        <h2 class="col-span-12 py-3 flex items-center font-semibold text-lg text-gray-800  before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6 dark:text-neutral-200 dark:before:border-neutral-600 dark:after:border-neutral-600">Pricing</h2>
+      <div class="col-span-12">
+        <FloatingFileInput name="product_image" label="Product Image (300 * 300)" accept="image/*" bind:files={$formData.product_image} isError={!!$errors.product_image} msg={$errors.product_image} />
+      </div>
 
         <div class="col-span-12">
           <FloatingSelectTagInput name="price_denominations" label="Available Card Denominations (optional)"  bind:value={$formData.price_denominations} options={[1, 5, 10, 15, 20, 50, 100, 200, 250, 500, 1000]} isError={ !! $errors.price_denominations} msg={$errors.price_denominations}/>
@@ -99,13 +99,19 @@
           </div>
         {/if}
 
-        <div class="col-span-12">
-          <FloatingNumericTextInput name="purchase_commission" label="Purchase Commission" placeholder="Percentage to add to every purchase" bind:value={$formData.purchase_commission} isError={ !! $errors.purchase_commission} msg={$errors.purchase_commission}/>
-        </div>
+      <div class="col-span-12">
+        <SwitchCheckboxInput
+          name="variable_denomination"
+          label="Allow custom amounts?"
+          tooltip="The users will be given an input field to enter an amount of their choice"
+          bind:checked={$formData.variable_denomination} />
+      </div>
 
+      {#if $formData.variable_denomination}
         <div class="col-span-12">
-          <FloatingNumericTextInput name="percentage_discount" label="Percentage Discount" placeholder="Percentage discount to add (optional)" bind:value={$formData.percentage_discount} isError={ !! $errors.percentage_discount} msg={$errors.percentage_discount}/>
+          <FloatingNumericTextInput name="product_price" label="Minimum Price" placeholder="The price For purchase" bind:value={$formData.product_price} isError={!!$errors.product_price} msg={$errors.product_price} />
         </div>
+      {/if}
 
         {#if $formData.percentage_discount > 0}
           <div class="col-span-12 text-neutral-400">
