@@ -195,29 +195,33 @@ export const gameDefaults = {
 };
 
 export const topUpSchema = type({
-  product_name: type("string>1").describe("not be empty"),
+  product_name: type("string>1").describe("provided"),
   product_type: ["string>1", "@", "selected"], //optional syntax
-  product_image: "File?",
+  product_image: type("File | null").describe('provided').optional(),
+  brand_id: type("string>1").describe("provided"),
   product_category: ["string[]>1", "@", "2 and above"],
+  regions: ["string[]>1", "@", "selected"],
   product_min_price: "number>=0",
   percentage_discount: "0<=number<100",
-  purchase_commission: "0<number<100",
+  purchase_commission: type("0<number<100").describe("at least 0.5"),
   variable_denomination: "boolean?",
-  "price_denominations?": "number[]", // how are we going to get the price discount select?
-  "discount_until?": "Date|null",
-  faqs: type("string").describe("not be empty"),
+  'price_denominations?': "string[]",
+  "discount_until?": "string|null|undefined",
+  faqs: type("string").describe("provided"),
 });
 
 export const topUpDefaults = {
-  product_name: "",
-  product_type: "",
+  product_name: '',
+  product_type: 'top-up',
+  brand_id: null,
   product_image: null,
-  product_category: [""],
-  price_denominations: [0],
+  product_category: [''],
+  regions: [''],
+  price_denominations: [''],
   product_min_price: 0,
   percentage_discount: 0,
   purchase_commission: 5,
   variable_denomination: false,
   discount_until: null,
-  faqs: undefined,
+  faqs: undefined
 };

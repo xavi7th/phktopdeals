@@ -99,7 +99,7 @@ function authorize({ event, resolve }) {
   
     return resolve(event);
   }
-  
+
   async function addSecurityHeaders({ event, resolve }) {
     const securityHeaders = {
       //@see https://edoverflow.com/2023/sveltekit-security-headers/
