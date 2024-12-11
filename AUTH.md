@@ -240,7 +240,7 @@ async function getUserDetails({ event, resolve }) {
       event,
     });
 
-    await event.locals.session.update(async ({ user }) => ({ user: (await getUserDetails?.json()?.data) || {} })); //use this to determine auth on frontend. Before accessing auth routes if this is null redirect to login page
+    await event.locals.session.update(async ({ user }) => ({ user: (await getUserDetails?.json())?.data || {} })); //use this to determine auth on frontend. Before accessing auth routes if this is null redirect to login page
   }
 
   event.locals.deviceName = event.locals.deviceType.isDesktop
@@ -262,7 +262,7 @@ function authorize({ event, resolve }) {
   }
 
   if (event.route.id?.includes("(auth)") && event.locals?.user?.name) {
-    redirect(303, "/user/order");
+    redirect(303, "/user/orders");
   }
 
   return resolve(event);
@@ -412,11 +412,11 @@ export const actions = {
     }
 
     if (!response?.ok) {
-      return fail(response?.status || 500, { message: response?.statusText || "An error occured while processing your request" });
+      return fail(response?.status || 500, { message: response?.statusText || "An error occurred while processing your request" });
     }
 
     if (response?.status == 200 || response?.status == 201) {
-      throw redirect(302, "/user/order");
+      throw redirect(302, "/user/orders");
     }
   },
 };

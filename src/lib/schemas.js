@@ -32,6 +32,38 @@ export const TopUpAccountDefaults = {
   amount: 20,
 };
 
+export const VoucherCodeSchema = type({
+  "id?": type("string>4 | undefined").describe("valid"),
+  product_id: type("string>4").describe("valid"),
+  "product_email_template_id?": type("string>4 | undefined").describe("valid"),
+  amount: "number>0",
+  code: type("string>=6").describe("at least 6 characters"),
+  "app_user_id?": "string | undefined",
+  "user_transaction_id?": "string | undefined",
+  product_name: "string",
+  product_image_url: "string",
+  "email_template?": "string | undefined",
+  "app_user_name?": "string | undefined",
+  "app_user_email?": "string | undefined",
+  is_sold: "boolean",
+});
+
+export const VoucherCodeDefaults = {
+  id: undefined,
+  product_id: "",
+  amount: 0,
+  code: "",
+  product_email_template_id: undefined,
+  app_user_id: undefined,
+  user_transaction_id: undefined,
+  product_name: "",
+  product_image_url: "",
+  email_template: undefined,
+  app_user_name: undefined,
+  app_user_email: undefined,
+  is_sold: false,
+};
+
 export const PurchaseItemSchema = type({
   product_id: type("string>4").describe("valid"),
   email: type("string.email|undefined").describe("provided"),
@@ -52,7 +84,7 @@ export const GiftCardSchema = type({
   product_name: type("string>1").describe("provided"),
   product_type: ["string>1", "@", "selected"], //optional syntax
   product_image: type("File | null").describe("provided").optional(),
-  brand_id: type("string>1").describe("provided"),
+  brand_id: type("null | string>1").describe("provided"),
   product_category: ["string[]>1", "@", "2 and above"],
   regions: ["string[]>1", "@", "selected"],
   product_min_price: "number>=0",
@@ -81,23 +113,35 @@ export const GiftCardDefaults = {
 };
 
 export const eSimSchema = type({
-  product_coverage: type("string>1").describe("not be empty"), //please create a coverage list to import here
-  product_name: type("string>1").describe("not be empty"),
+  product_name: type("string>1").describe("provided"),
   product_type: ["string>1", "@", "selected"], //optional syntax
-  product_image: "File?",
-  data_amount: type("string>1").describe("not be empty"),
-  validity: "Date",
-  cost: "number>0",
+  'product_image?': type("File").describe('provided').optional(),
+  brand_id: type("string>1").describe("provided"),
+  product_category: ["string[]>1", "@", "2 and above"],
+  regions: ["string[]>1", "@", "selected"],
+  product_min_price: "number>=0",
+  percentage_discount: "0<=number<100",
+  purchase_commission: type("0<number<100").describe("at least 0.5"),
+  variable_denomination: "boolean?",
+  'price_denominations?': "string[] | number[]",
+  "discount_until?": "string|null|undefined",
+  faqs: type("string").describe("provided"),
 });
 
 export const eSimDefaults = {
-  product_coverage: "",
-  product_name: "",
-  product_type: "", //optional syntax
+  product_name: '',
+  product_type: 'esim',
+  brand_id: null,
   product_image: null,
-  data_amount: "",
-  validity: null,
-  cost: 0,
+  product_category: [''],
+  regions: [''],
+  price_denominations: [''],
+  product_min_price: 0,
+  percentage_discount: 0,
+  purchase_commission: 5,
+  variable_denomination: false,
+  discount_until: null,
+  faqs: undefined
 };
 
 export const brandSchema = type({
@@ -119,24 +163,30 @@ export const brandEditDefault = {
 };
 
 export const gameSchema = type({
-  product_name: type("string>1").describe("not be empty"),
+  product_name: type("string>1").describe("provided"),
   product_type: ["string>1", "@", "selected"], //optional syntax
-  product_image: "File?",
+  product_image: type("File | null").describe('provided').optional(),
+  brand_id: type("string>1").describe("provided"),
   product_category: ["string[]>1", "@", "2 and above"],
-  product_price: "number>0",
+  regions: ["string[]>1", "@", "selected"],
+  product_min_price: "number>=0",
   percentage_discount: "0<=number<100",
-  purchase_commission: "0<number<100",
+  purchase_commission: type("0<number<100").describe("at least 0.5"),
   variable_denomination: "boolean?",
-  "discount_until?": "Date|null",
-  faqs: type("string").describe("not be empty"),
+  'price_denominations?': "string[]",
+  "discount_until?": "string|null|undefined",
+  faqs: type("string").describe("provided"),
 });
 
 export const gameDefaults = {
-  product_name: "",
-  product_type: "",
+  product_name: '',
+  product_type: 'game',
+  brand_id: null,
   product_image: null,
-  product_category: [""], // games category is different it should be steam, apple or google
-  product_price: 0,
+  product_category: [''],
+  regions: [''],
+  price_denominations: [''],
+  product_min_price: 0,
   percentage_discount: 0,
   purchase_commission: 5,
   variable_denomination: false,

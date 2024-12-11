@@ -3,7 +3,6 @@
   import SvgIcon from "$lib/Components/SvgIcon.svelte";
   import ProductListings from "../ProductListings.svelte";
 
-  /** @type {import('./$types').PageData} */
   export let data;
 
   $: ({ products, meta } = data);
@@ -27,8 +26,7 @@
                 name="products-search"
                 id="products-search"
                 class="block w-full rounded-lg border-gray-200 px-3 py-2 ps-9 text-sm shadow-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-                placeholder="Search for products"
-              />
+                placeholder="Search for products" />
               <div class="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3">
                 <SvgIcon class="size-4 text-gray-400 dark:text-neutral-500" slot={search} />
               </div>
@@ -36,7 +34,7 @@
           </div>
         </div>
 
-        <ProductListings {products} {meta} basePageUrl="/admin/product" />
+        <ProductListings {products} {meta} basePageUrl="/admin/product" hasAction={false} />
       </div>
     </div>
   </div>

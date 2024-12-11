@@ -17,8 +17,7 @@
     stroke-width="2"
     stroke-linecap="round"
     stroke-linejoin="round"
-    slot={type == "error" ? exclamationCircle : checkMarkFilled}
-  />
+    slot={type == "error" ? exclamationCircle : checkMarkFilled} />
 </div>
 
 {#if msg?.toString()}

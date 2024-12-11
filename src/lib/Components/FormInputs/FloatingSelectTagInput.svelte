@@ -41,8 +41,7 @@
   class="relative {className}
         {gray ? 'bg-gray-100 dark:!bg-neutral-800' : ''} {!msg?.toString() && gray ? 'border-transparent dark:border-transparent' : ''}
         {msg?.toString() && isError ? 'error' : ''}
-        {msg?.toString() && !isError ? 'success' : ''}"
->
+        {msg?.toString() && !isError ? 'success' : ''}">
   <select
     {name}
     id={name}
@@ -64,8 +63,7 @@
           "<div class='absolute top-1/2 end-3 -translate-y-1/2'><svg class='shrink-0 size-3.5 text-gray-500 dark:text-neutral-500 ' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m7 15 5 5 5-5'/><path d='m7 9 5-5 5 5'/></svg></div>"
         ]
       }`}
-    class="hidden"
-  >
+    class="hidden">
     {#if isObject(options) && Object.entries(options).length > 0}
       {#each Object.entries(options) as [val, key]}
         <option value={key}>{val}</option>

@@ -1,23 +1,23 @@
 <script>
-  import { dev } from "$app/environment";
-  import Toast from "$lib/Components/Toast.svelte";
+  import { dev } from '$app/environment';
+	import Toast from '$lib/Components/Toast.svelte';
+	import SuperDebug, { superForm } from 'sveltekit-superforms';
+	import { animatedDotsSVG, spinnerSVG } from '$lib/Components/iconPaths';
+	import WysiwygEditor from '$lib/Components/FormInputs/TipTapEditor.svelte';
+  import FloatingTextInput from '$lib/Components/FormInputs/FloatingTextInput.svelte';
+	import FloatingFileInput from '$lib/Components/FormInputs/FloatingFileInput.svelte';
+	import FloatingDateInput from '$lib/Components/FormInputs/FloatingDateInput.svelte';
+	import SwitchCheckboxInput from '$lib/Components/FormInputs/SwitchCheckboxInput.svelte';
+	import FloatingSelectInput from '$lib/Components/FormInputs/FloatingSelectInput.svelte';
+	import FloatingSelectTagInput from '$lib/Components/FormInputs/FloatingSelectTagInput.svelte';
+	import FloatingNumericTextInput from '$lib/Components/FormInputs/FloatingNumericTextInput.svelte';
+	import FloatingSelectTagAltInput from '$lib/Components/FormInputs/FloatingSelectTagAltInput.svelte';
+	import { invalidate } from '$app/navigation';
   import { search } from "$lib/Components/iconPaths";
   import SvgIcon from "$lib/Components/SvgIcon.svelte";
-  import Brand from "$partials/brands/BrandModal.svelte";
   import ProductListings from "../../ProductListings.svelte";
-  import SuperDebug, { superForm } from "sveltekit-superforms";
-  import { animatedDotsSVG, spinnerSVG } from "$lib/Components/iconPaths";
-  import WysiwygEditor from "$lib/Components/FormInputs/TipTapEditor.svelte";
-  import FloatingTextInput from "$lib/Components/FormInputs/FloatingTextInput.svelte";
-  import FloatingFileInput from "$lib/Components/FormInputs/FloatingFileInput.svelte";
-  import FloatingDateInput from "$lib/Components/FormInputs/FloatingDateInput.svelte";
-  import SwitchCheckboxInput from "$lib/Components/FormInputs/SwitchCheckboxInput.svelte";
-  import FloatingSelectInput from "$lib/Components/FormInputs/FloatingSelectInput.svelte";
-  import FloatingSelectTagInput from "$lib/Components/FormInputs/FloatingSelectTagInput.svelte";
-  import FloatingNumericTextInput from "$lib/Components/FormInputs/FloatingNumericTextInput.svelte";
-  import FloatingSelectTagAltInput from "$lib/Components/FormInputs/FloatingSelectTagAltInput.svelte";
+  import Brand from '$partials/brands/BrandModal.svelte';
 
-  /** @type {import('./$types').PageData} */
   export let data;
 
   const {
@@ -36,6 +36,11 @@
   $: ({ brands, regions, categories, products, meta } = data);
 
   let title = "";
+
+  $: if ($message && $message.type == 'success') {
+        invalidate('games');
+        invalidate('giftcard');
+    }
 </script>
 
 {#if $message}
@@ -85,7 +90,9 @@
     <form method="POST" action="?/edit" enctype="multipart/form-data" use:enhance>
       <div class="grid grid-cols-12 gap-y-8 border-t border-gray-200 py-8 first:border-transparent first:pt-0 last:pb-0 dark:border-neutral-700 dark:first:border-transparent">
         <div class="col-span-12">
-          <h2 class="text-lg font-semibold text-gray-800 dark:text-neutral-200">Gift Card Management</h2>
+          <h2 class="text-lg font-semibold text-gray-800 dark:text-neutral-200">
+            Gift Cards
+          </h2>
         </div>
         <div class="col-span-12">
           <FloatingTextInput name="product_name" label="Product Name" bind:value={$formData.product_name} isError={!!$errors.product_name} msg={$errors.product_name} />
@@ -99,14 +106,13 @@
             {/each}
           </FloatingSelectInput>
 
-          <button
-            type="button"
-            class="inline-flex w-40 items-center justify-center gap-x-2 rounded-lg border border-transparent bg-brand-600 px-4 py-3 text-sm font-medium text-white hover:bg-brand-700 focus:bg-brand-700 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-            aria-haspopup="dialog"
-            aria-expanded="false"
-            aria-controls="hs-static-list-modal"
-            data-hs-overlay="#hs-static-list-modal"
-            on:click={() => (title = "Manage Type")}>
+          <button 
+            type="button" 
+            class="w-40 py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-brand-600 text-white hover:bg-brand-700 focus:outline-none focus:bg-brand-700 disabled:opacity-50 disabled:pointer-events-none" 
+            aria-haspopup="dialog" 
+            aria-expanded="false" 
+            aria-controls="hs-static-list-modal" 
+            data-hs-overlay="#hs-static-list-modal">
             Manage
           </button>
         </div>
@@ -194,8 +200,8 @@
         </div>
 
         {#if $formData.percentage_discount > 0}
-          <div class="col-span-12">
-            <FloatingDateInput name="discount_until" min={Date()} label="Discount Valid Until (optional)" bind:value={$formData.discount_until} msg={$errors?.discount_until?.[0]} />
+          <div class="col-span-12 text-neutral-400">
+            <FloatingDateInput name="discount_until" min={Date()} label="Discount Valid Until (optional)" bind:value={$formData.discount_until} msg={$errors?.discount_until?.[0]}/>
           </div>
         {/if}
 
@@ -219,5 +225,3 @@
     </form>
   </div>
 </div>
-
-<Brand {title} {brands} form={data.brandForm} />

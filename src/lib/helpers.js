@@ -1,21 +1,21 @@
 /**
  * Transforms an error object into HTML string
  *
- * @param {String|Array|null} errors The errors to transform
+ * @param {string|string[]|null|import('sveltekit-superforms').ValidationErrors<Object<string, string>>} errors The errors to transform
  * @returns {String}
  */
 export const getErrorString = (errors) => {
   let errs;
   if (typeof errors === "string") {
     errs = errors;
-  } else if (Object.keys(errors).length === 1) {
+  } else if (errors && Object.keys(errors).length === 1) {
     errs = Object.values(errors)
       .flat()
       .filter(Boolean)
       .map((err) => `<li>${err}</li>`)
       .join("");
   } else {
-    errs = Object.values(errors)
+    errs = Object.values(errors || {})
       .filter(Boolean)
       .reduce((val, n) => {
         return (
@@ -254,7 +254,7 @@ import { env } from "$env/dynamic/public";
  *
  * @returns {Promise<Response|undefined>}
  */
-export async function api({ toBaseDomain, resource, event, method, data, logResponse = true, toJSON = true }) {
+export async function api({ toBaseDomain, resource, event, method, data, logResponse = false, toJSON = true }) {
   const base = env.PUBLIC_VITE_BASE_DOMAIN;
   const baseApi = env.PUBLIC_VITE_BASE_API;
   let fullurl = toBaseDomain ? base : baseApi;
@@ -268,12 +268,12 @@ export async function api({ toBaseDomain, resource, event, method, data, logResp
     host: event.request?.headers?.get("host") || "",
     referer: event.request?.headers?.get("referer") || "",
     origin: event.request?.headers?.get("origin") || "",
-    "x-xsrf-token": event.cookies.get("XSRF-TOKEN") || "",
-    "sec-ch-ua": event.cookies.get("sec-ch-ua") || "",
-    "sec-ch-ua-mobile": event.cookies.get("sec-ch-ua-mobile") || "",
-    "sec-ch-ua-platform": event.cookies.get("sec-ch-ua-platform") || "",
-    "user-agent": event.cookies.get("user-agent") || "",
-    "x-sveltekit-action": event.cookies.get("x-sveltekit-action") || false,
+    "x-xsrf-token": event.cookies?.get("XSRF-TOKEN") || "",
+    "sec-ch-ua": event.cookies?.get("sec-ch-ua") || "",
+    "sec-ch-ua-mobile": event.cookies?.get("sec-ch-ua-mobile") || "",
+    "sec-ch-ua-platform": event.cookies?.get("sec-ch-ua-platform") || "",
+    "user-agent": event.cookies?.get("user-agent") || "",
+    "x-sveltekit-action": event.cookies?.get("x-sveltekit-action") || false,
   };
 
   if (toJSON) {

@@ -27,7 +27,7 @@ declare global {
       deviceType?: DevicePayload;
       deviceName?: string;
       message?: string;
-      session: SessionData;
+      session?: SessionData;
     }
     interface ActionData {
       message: string;

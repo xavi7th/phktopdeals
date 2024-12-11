@@ -25,8 +25,7 @@
         disabled:pointer-events-none disabled:opacity-50 file:sm:py-5 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:file:bg-neutral-700 dark:file:text-neutral-400
         {gray ? 'bg-gray-100 dark:!bg-neutral-800' : ''} {!msg && gray ? 'border-transparent dark:border-transparent' : ''}
         {msg?.toString() && isError ? 'border-red-500 focus:border-red-500 focus:ring-red-500 dark:border-red-950 dark:bg-red-900/20' : ''}
-        {msg?.toString() && !isError ? 'border-teal-500 focus:border-teal-500 focus:ring-teal-500 dark:bg-teal-900/20' : ''}"
-  />
+        {msg?.toString() && !isError ? 'border-teal-500 focus:border-teal-500 focus:ring-teal-500 dark:bg-teal-900/20' : ''}" />
 
   <label for={name} class="pointer-events-none absolute start-28 top-2 h-full -translate-y-2 truncate border border-transparent text-xs capitalize text-gray-500 dark:text-neutral-500">
     {label}

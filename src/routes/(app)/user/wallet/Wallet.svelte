@@ -67,7 +67,7 @@
           placeholder="Amount to top (Minimum: ${minAmount})"
           bind:value={$form.amount}
           isError={!!$errors.amount}
-          msg={$errors.amount}/>
+          msg={$errors.amount} />
       </form>
     </div>
   </div>

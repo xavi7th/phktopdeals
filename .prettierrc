@@ -1,5 +1,5 @@
 {
-  "bracketSameLine": false,
+  "bracketSameLine": true,
   "endOfLine": "lf",
   "htmlWhitespaceSensitivity": "ignore",
   "overrides": [{ "files": "*.svelte", "options": { "parser": "svelte" } }],

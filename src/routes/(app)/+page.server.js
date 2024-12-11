@@ -1,6 +1,5 @@
 import { api } from "$lib/helpers";
 
-/** @type {import('./$types').PageServerLoad} */
 export async function load(event) {
   const fetchPageData = async () => {
     const res = await api({
@@ -9,7 +8,7 @@ export async function load(event) {
       event,
     });
 
-    return res?.json();
+    return await res?.json();
   };
 
   const [pageData] = await Promise.all([fetchPageData()]);

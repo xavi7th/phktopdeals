@@ -1,17 +1,15 @@
 import { api } from "$lib/helpers";
 import { fail } from "@sveltejs/kit";
 
-/** @type {import('./$types').PageServerLoad} */
 export async function load(event) {
   const fetchTopUpCards = async () => {
     const res = await api({
       method: "get",
       resource: "top-up",
       event,
-      logResponse: true,
     });
 
-    return res?.json();
+    return await res?.json();
   };
 
   const [cardsData] = await Promise.all([fetchTopUpCards()]);
@@ -27,9 +25,7 @@ export async function load(event) {
   };
 }
 
-/** @satisfies {import('./$types').Actions} */
 export const actions = {
-  /** @param {import('@sveltejs/kit').RequestEvent} event */
   default: async (event) => {
     const res = await api({
       method: "post",
@@ -45,7 +41,7 @@ export const actions = {
     }
 
     if (!res?.ok) {
-      return fail(res?.status || 500, { message: res?.statusText || "An error occured while processing your request" });
+      return fail(res?.status || 500, { message: res?.statusText || "An error occurred while processing your request" });
     }
 
     return { type: "success", msg: "Card created successfully!" };

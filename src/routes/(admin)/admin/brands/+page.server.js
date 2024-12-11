@@ -3,7 +3,6 @@ import { fail, message, setError, superValidate } from "sveltekit-superforms";
 import { arktype } from "sveltekit-superforms/adapters";
 import { brandDefaults, brandEditDefault, brandEditSchema, brandSchema } from "$lib/schemas";
 
-/** @type {import('./$types').PageServerLoad} */
 export async function load(event) {
   const form = await superValidate(arktype(brandSchema, { defaults: brandDefaults }));
 
@@ -14,7 +13,7 @@ export async function load(event) {
       event,
     });
 
-    return res?.json();
+    return await res?.json();
   };
 
   const [cardsData] = await Promise.all([fetchProductBrands()]);
@@ -31,7 +30,7 @@ export async function load(event) {
   };
 }
 
-/** @satisfies {import('./$types').Actions} */
+
 export const actions = {
   /** @param {import('@sveltejs/kit').RequestEvent} event */
   deleteBrand: async (event) => {

@@ -14,6 +14,7 @@ export default {
     },
     container: {
       center: true,
+      padding: "1rem",
     },
     extend: {
       transitionProperty: {
@@ -33,6 +34,7 @@ export default {
           700: "#856d0e",
           800: "#715e12",
           900: "#423606",
+          950: "#2f2604",
         },
       },
     },

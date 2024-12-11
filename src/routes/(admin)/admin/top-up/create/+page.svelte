@@ -13,7 +13,6 @@
   import FloatingNumericTextInput from "$lib/Components/FormInputs/FloatingNumericTextInput.svelte";
   import FloatingSelectTagAltInput from "$lib/Components/FormInputs/FloatingSelectTagAltInput.svelte";
 
-  /** @type {import('./$types').PageData} */
   export let data;
 
   const {
@@ -69,8 +68,7 @@
           bind:value={$formData.product_category}
           isError={!!$errors.product_category}
           msg={$errors.product_category?._errors}
-          multiple
-        >
+          multiple>
           {#each categories?.data || [] as item}
             <option value={item}>{item}</option>
           {/each}
@@ -78,8 +76,7 @@
       </div>
 
       <h2
-        class="col-span-12 flex items-center py-3 text-lg font-semibold text-gray-800 before:me-6 before:flex-1 before:border-t before:border-gray-200 after:ms-6 after:flex-1 after:border-t after:border-gray-200 dark:text-neutral-200 dark:before:border-neutral-600 dark:after:border-neutral-600"
-      >
+        class="col-span-12 flex items-center py-3 text-lg font-semibold text-gray-800 before:me-6 before:flex-1 before:border-t before:border-gray-200 after:ms-6 after:flex-1 after:border-t after:border-gray-200 dark:text-neutral-200 dark:before:border-neutral-600 dark:after:border-neutral-600">
         Pricing
       </h2>
 
@@ -90,8 +87,7 @@
           bind:value={$formData.price_denominations}
           options={[1, 5, 10, 15, 20, 50, 100, 200, 250, 500, 1000]}
           isError={!!$errors.price_denominations}
-          msg={$errors.price_denominations}
-        />
+          msg={$errors.price_denominations} />
       </div>
 
       <div class="col-span-12">
@@ -99,8 +95,7 @@
           name="variable_denomination"
           label="Allow custom amounts?"
           tooltip="The users will be given an input field to enter an amount of their choice"
-          bind:checked={$formData.variable_denomination}
-        />
+          bind:checked={$formData.variable_denomination} />
       </div>
 
       {#if $formData.variable_denomination}
@@ -111,8 +106,7 @@
             placeholder="The minimum custom price they can purchase"
             bind:value={$formData.product_min_price}
             isError={!!$errors.product_min_price}
-            msg={$errors.product_min_price}
-          />
+            msg={$errors.product_min_price} />
         </div>
       {/if}
 
@@ -123,8 +117,7 @@
           placeholder="Percentage to add to every purchase"
           bind:value={$formData.purchase_commission}
           isError={!!$errors.purchase_commission}
-          msg={$errors.purchase_commission}
-        />
+          msg={$errors.purchase_commission} />
       </div>
 
       <div class="col-span-12">
@@ -134,8 +127,7 @@
           placeholder="Percentage discount to add (optional)"
           bind:value={$formData.percentage_discount}
           isError={!!$errors.percentage_discount}
-          msg={$errors.percentage_discount}
-        />
+          msg={$errors.percentage_discount} />
       </div>
 
       {#if $formData.percentage_discount > 0}
@@ -151,8 +143,7 @@
     <button
       type="submit"
       class="inline-flex w-full items-center justify-center gap-x-2 rounded-lg border border-transparent bg-brand-600 px-4 py-3 text-sm font-medium text-white hover:bg-brand-700 focus:bg-brand-700 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-      disabled={$submitting}
-    >
+      disabled={$submitting}>
       {#if $timeout}
         Still Loading {@html animatedDotsSVG}
       {:else}

@@ -17,7 +17,6 @@ import { handleSession } from "svelte-kit-cookie-session";
 import { handleDeviecDetector } from "sveltekit-device-detector";
 import { VITE_SESSION_NAME, APP_SESSION_KEY } from "$env/static/private";
 
-/** @type {import('@sveltejs/kit').Handle} */
 const sessionHandler = handleSession({
   secret: APP_SESSION_KEY,
   expires: 10, // 160 minutes
@@ -27,7 +26,6 @@ const sessionHandler = handleSession({
   init: () => ({ user: {}, recently_purchased: false }),
 });
 
-/** @type {import('@sveltejs/kit').Handle} */
 async function logger({ event, resolve }) {
   const start_time = Date.now();
 
@@ -42,7 +40,6 @@ async function logger({ event, resolve }) {
   return response;
 }
 
-/** @type {import('@sveltejs/kit').Handle} */
 async function getUserDetails({ event, resolve }) {
   const cookies = parse(event.request.headers.get("cookie") || "");
   await event.locals.session.update(({ api_session }) => ({ api_session: cookies[VITE_SESSION_NAME] }));
@@ -68,7 +65,6 @@ async function getUserDetails({ event, resolve }) {
   return resolve(event);
 }
 
-/** @type {import('@sveltejs/kit').Handle} */
 function authorize({ event, resolve }) {
   /**
    * @auth Protect routes that need authentication
@@ -104,7 +100,6 @@ function authorize({ event, resolve }) {
     return resolve(event);
   }
   
-  /** @type {import('@sveltejs/kit').Handle} */
   async function addSecurityHeaders({ event, resolve }) {
     const securityHeaders = {
       //@see https://edoverflow.com/2023/sveltekit-security-headers/
@@ -127,60 +122,57 @@ function authorize({ event, resolve }) {
   
     return response;
   }
-  
-  /** @type {import('@sveltejs/kit').HandleFetch} */
-  export const handleFetch = async ({ request, fetch, event }) => {
-    const response = await fetch(request);
-  
-    /**
-     * @crsf Handle expired tokens and csrf expiry
-     */
-    if (response?.status == 419 && event.url.pathname.startsWith(env.PUBLIC_VITE_BASE_API)) {
-      redirect(303, "/logout");
-    }
-  
-    /** @type {import('set-cookie-parser').Cookie[]} */
-    let cookies = scp.parse(response);
-  
-    // using a try catch block because when streaming data from the backend, cookies cannot be set after the response has started streaming and this throws an error
-    try {
-      //This will take care of updating the csrf cookies from our backend for us.
-      if (cookies.length) {
-        cookies.forEach((cookie) => {
-          event.cookies.set(cookie.name, cookie.value, {
-            ...cookie,
-            sameSite: cookie.sameSite,
-            secure: !dev,
-          });
+
+export const handleFetch = async ({ request, fetch, event }) => {
+  const response = await fetch(request);
+
+  /**
+   * @csrf Handle expired tokens and csrf expiry
+   */
+  if (response?.status == 419 && event.url.pathname.startsWith(env.PUBLIC_VITE_BASE_API)) {
+    redirect(303, "/logout");
+  }
+
+  /** @type {import('set-cookie-parser').Cookie[]} */
+  let cookies = scp.parse(response);
+
+  // using a try catch block because when streaming data from the backend, cookies cannot be set after the response has started streaming and this throws an error
+  try {
+    //This will take care of updating the csrf cookies from our backend for us.
+    if (cookies.length) {
+      cookies.forEach((cookie) => {
+        event.cookies.set(cookie.name, cookie.value, {
+          ...cookie,
+          sameSite: cookie.sameSite,
+          secure: !dev,
         });
-      }
-    } catch (error) {
-      // console.log(error);
-    }
-  
-    return response;
-  };
-  
-  /** @type {import('@sveltejs/kit').HandleServerError} */
-  export const handleError = async ({ event, error, message, status }) => {
-    if (!event.url.pathname.includes("assets")) {
-      console.log("------------SERVER ERROR-----------");
-      console.error({
-        error,
-        event: {
-          url: event.url.href,
-          locals: JSON.stringify(event.locals, null, 4),
-        },
-        message,
-        status,
       });
-  
-      return {
-        message,
-        code: status ?? 500,
-      };
     }
-  };
-  
-  /** @type {import('@sveltejs/kit').Handle} */
-  export const handle = sequence(sessionHandler, handleDeviecDetector({}), logger, getUserDetails, authorize, addSecurityHeaders);
+  } catch (error) {
+    // console.log(error);
+  }
+
+  return response;
+};
+
+export const handleError = async ({ event, error, message, status }) => {
+  if (!event.url.pathname.includes("assets")) {
+    console.log("------------SERVER ERROR-----------");
+    console.error({
+      error,
+      event: {
+        url: event.url.href,
+        locals: JSON.stringify(event.locals, null, 4),
+      },
+      message,
+      status,
+    });
+
+    return {
+      message,
+      code: status ?? 500,
+    };
+  }
+};
+
+export const handle = sequence(sessionHandler, handleDeviecDetector({}), logger, getUserDetails, authorize, addSecurityHeaders);

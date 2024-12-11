@@ -1,9 +1,8 @@
-import { api } from "$lib/helpers";
-import { arktype } from "sveltekit-superforms/adapters";
-import { gameDefaults, gameSchema } from "$lib/schemas";
-import { message, superValidate, fail, setError } from "sveltekit-superforms";
+import { api } from '$lib/helpers';
+import { arktype } from 'sveltekit-superforms/adapters';
+import { gameSchema , gameDefaults} from '$lib/schemas';
+import { message, superValidate, fail, setError } from 'sveltekit-superforms';
 
-/** @type {import('./$types').PageServerLoad} */
 export async function load(event) {
   const form = await superValidate(arktype(gameSchema, { defaults: gameDefaults }));
 
@@ -15,8 +14,18 @@ export async function load(event) {
       logResponse: true,
     });
 
-    return res?.json();
+    return await res?.json();
   };
+
+  const fetchProductBrands = async () => {
+    const res = await api({
+			method: 'get',
+			resource: 'product-brands',
+      event,
+		});
+
+    return res?.json();
+  }
 
   const fetchCategories = async () => {
     const res = await api({
@@ -26,21 +35,35 @@ export async function load(event) {
       logResponse: true,
     });
 
-    return res?.json();
+    return await res?.json();
   };
 
-  const [types, categories] = await Promise.all([fetchProductTypes(), fetchCategories()]);
+  const fetchRegions = async () => {
+    const res = await api({
+			method: 'get',
+			resource: 'regions',
+      event,
+		});
+
+    return res?.json();
+  }
+
+  event.depends('brandlist');
+	const [types, categories, brandsData, regionsData] = await Promise.all([
+	  fetchProductTypes(),
+	  fetchCategories(),
+    fetchProductBrands(),
+	  fetchRegions(),
+	]);
 
   event.setHeaders({
     "Cache-Control": "public, max-age=604800",
   });
 
-  return { form, types, categories };
+  return { form, types, categories, regions: regionsData.data, brands: brandsData.data, }
 }
 
-/** @satisfies {import('./$types').Actions} */
 export const actions = {
-  /** @param {import('@sveltejs/kit').RequestEvent} event */
   default: async (event) => {
     const form = await superValidate(event, arktype(gameSchema, { defaults: gameDefaults }));
 
@@ -50,14 +73,18 @@ export const actions = {
 
     const formData = new FormData();
 
-    for (let dt of Object.entries(form.data)) {
+    for(let dt of Object.entries(form.data)){
+      if (dt[0] == 'discount_until' && dt[1]) {
+        formData.append(dt[0], new Date(dt[1]).toDateString());
+        continue;
+      }
       formData.append(dt[0], dt[1]);
     }
 
     const res = await api({
-      method: "post",
-      resource: "games",
-      data: formData,
+			method: 'POST',
+			resource: 'products',
+			data: formData,
       event,
       toJSON: false,
     });
@@ -81,9 +108,9 @@ export const actions = {
     }
 
     if (!res?.ok) {
-      return message(form, { type: "error", msg: res?.statusText || "An error occured while processing your request" }, { status: res?.status || 429 });
+      return message(form, { type: "error", msg: res?.statusText || "An error occurred while processing your request" }, { status: res?.status || 429 });
     }
 
-    return message(form, { type: "success", msg: "Card created successfully!" });
-  },
-};
+		return message(form, {type: 'success', msg: 'Card created successfully!'});
+	},
+}

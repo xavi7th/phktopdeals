@@ -5,7 +5,6 @@
   import OurPartners from "$partials/home/OurPartners.svelte";
   import ProductSection from "$partials/home/ProductSection.svelte";
 
-  /** @type {import('./$types').PageData} */
   export let data;
 
   $: ({ sections, services } = data);

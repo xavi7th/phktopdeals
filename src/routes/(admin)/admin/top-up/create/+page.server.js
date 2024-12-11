@@ -3,7 +3,6 @@ import { arktype } from "sveltekit-superforms/adapters";
 import { topUpDefaults, topUpSchema } from "$lib/schemas";
 import { message, superValidate, fail, setError } from "sveltekit-superforms";
 
-/** @type {import('./$types').PageServerLoad} */
 export async function load(event) {
   const form = await superValidate(arktype(topUpSchema, { defaults: topUpDefaults }));
 
@@ -12,10 +11,9 @@ export async function load(event) {
       method: "get",
       resource: "product-types",
       event,
-      logResponse: true,
     });
 
-    return res?.json();
+    return await res?.json();
   };
 
   const fetchCategories = async () => {
@@ -23,10 +21,9 @@ export async function load(event) {
       method: "get",
       resource: "product-categories",
       event,
-      logResponse: true,
     });
 
-    return res?.json();
+    return await res?.json();
   };
 
   const [types, categories] = await Promise.all([fetchProductTypes(), fetchCategories()]);
@@ -38,9 +35,7 @@ export async function load(event) {
   return { form, types, categories };
 }
 
-/** @satisfies {import('./$types').Actions} */
 export const actions = {
-  /** @param {import('@sveltejs/kit').RequestEvent} event */
   default: async (event) => {
     const form = await superValidate(event, arktype(topUpSchema, { defaults: topUpDefaults }));
 
@@ -81,7 +76,7 @@ export const actions = {
     }
 
     if (!res?.ok) {
-      return message(form, { type: "error", msg: res?.statusText || "An error occured while processing your request" }, { status: res?.status || 429 });
+      return message(form, { type: "error", msg: res?.statusText || "An error occurred while processing your request" }, { status: res?.status || 429 });
     }
 
     return message(form, { type: "success", msg: "Card created successfully!" });

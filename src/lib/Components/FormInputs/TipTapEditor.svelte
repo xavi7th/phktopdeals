@@ -1,14 +1,21 @@
 <!-- @see https://tiptap.dev/docs/editor -->
+<!-- Example usage -->
+<!-- import WysiwygEditor from "$lib/Components/FormInputs/TipTapEditor.svelte"; -->
+<!-- <TipTapEditor name="description" label="Product Description" msg={form?.success || form?.errors?.description && form?.errors?.description[0]}/> -->
+
+<!-- <div class="col-span-12">
+  <WysiwygEditor name="faqs" bind:val={$formData.faqs} label="Card FAQs" msg={$errors?.faqs?.[0]} />
+</div> -->
 <script>
-  import { onMount, onDestroy, afterUpdate } from "svelte";
   import { Editor } from "@tiptap/core";
-  import StarterKit from "@tiptap/starter-kit";
-  import Placeholder from "@tiptap/extension-placeholder";
-  import Underline from "@tiptap/extension-underline";
-  import Link from "@tiptap/extension-link";
   import SvgIcon from "../SvgIcon.svelte";
-  import { blockquotesIcon, boldIcon, bulletPointsIcon, cancelChainLinkIcon, chainLinkIcon, codesIcon, italicsIcon, numberedBulletsIcon, redoIcon, strikethroughIcon, underlineIcon, undoIcon } from "../iconPaths";
+  import Link from "@tiptap/extension-link";
+  import StarterKit from "@tiptap/starter-kit";
   import FormMessage from "../FormMessage.svelte";
+  import Underline from "@tiptap/extension-underline";
+  import Placeholder from "@tiptap/extension-placeholder";
+  import { onMount, onDestroy, afterUpdate, tick } from "svelte";
+  import { blockquotesIcon, boldIcon, bulletPointsIcon, cancelChainLinkIcon, chainLinkIcon, codesIcon, italicsIcon, numberedBulletsIcon, redoIcon, strikethroughIcon, underlineIcon, undoIcon } from "../iconPaths";
 
   /** @type {string|undefined} */
   export let label;
@@ -16,13 +23,13 @@
   /** @type {string} */
   export let name = "tiptap-textarea-" + crypto.randomUUID();
 
-  /** @type {string|undefined} */
+  /** @type {string|undefined|null} */
   export let val;
 
   /** @type {HTMLElement} */
   let element;
 
-  /** @type {Editor} */
+  /** @type { import('@tiptap/core').Editor } */
   let editor;
 
   /** @type {string|string[]|undefined} */
@@ -48,6 +55,8 @@
     // update link
     editor.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
   };
+
+  let isUpdating = false;
 
   onMount(() => {
     editor = new Editor({
@@ -102,14 +111,60 @@
           },
         }),
       ],
-      content: "",
+      content: val || "",
       onTransaction: () => {
-        // force re-render so `editor.isActive` works as expected
-        editor = editor;
+        isUpdating = true;
+
+        editor = editor; // force re-render so `editor.isActive` works as expected
+
         // val = editor.getHTML(); // This returns ONLY the HTML content without the container
-        val = editor.options.element.innerHTML.replace('contenteditable="true"', "");
+        if (editor.options.element.innerHTML.includes("Type your content here")) {
+          val = null;
+        } else {
+          val = editor.options.element.innerHTML.replace('contenteditable="true"', "");
+        }
+        tick().then(() => (isUpdating = false));
       },
+      onPaste(/** @type { ClipboardEvent } */ event, /** @type { import('@tiptap/pm/model').Slice } */ slice) {
+        isUpdating = true;
+        editor.commands.setContent(event.clipboardData?.getData("text/plain") || "");
+        tick().then(() => (isUpdating = false));
+      },
+      // onBeforeCreate({ editor }) {
+      //   // Before the view is created.
+      // },
+      // onCreate({ editor }) {
+      //   // The editor is ready.
+      // },
+      // onUpdate({ editor }) {
+      //   // The content has changed.
+      // },
+      // onSelectionUpdate({ editor }) {
+      //   // The selection has changed.
+      // },
+      // onFocus({ editor, event }) {
+      //   // The editor is focused.
+      // },
+      // onBlur({ editor, event }) {
+      //   // The editor isn’t focused anymore.
+      // },
+      // onDestroy() {
+      //   // The editor is being destroyed.
+      // },
+      // onDrop(/** @type { DragEvent } */ event, /** @type { import('@tiptap/pm/model').Slice } */ slice, /** @type { boolean } */ moved) {
+      //   // The editor is being pasted into.
+      // },
+      // onContentError({ editor, error, disableCollaboration }) {
+      //   // The editor content does not match the schema.
+      // },
     });
+  });
+
+  afterUpdate(() => {
+    if (!isUpdating) {
+      // Update the editor contents when the reactive val is updated outside this component, but don't trigger this on internal updates to val
+      editor.commands.setContent(val || "");
+    }
   });
 
   onDestroy(() => {
@@ -119,7 +174,11 @@
   });
 </script>
 
-<div class="relative overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-neutral-700 dark:bg-neutral-800" class:pt-6={label}>
+<div
+  class="relative overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-neutral-700 dark:bg-neutral-800
+      {msg?.toString() && isError ? 'border-red-500 focus:border-red-500 focus:ring-red-500 dark:bg-red-900/20' : ''}
+      {msg?.toString() && !isError ? 'border-teal-500 focus:border-teal-500 focus:ring-teal-500 dark:bg-teal-900/20' : ''}"
+  class:pt-6={label}>
   {#if label}
     <label for="product_category" class="s-kc2lUeBIIpXP pointer-events-none absolute start-0 top-0 h-full -translate-y-2 truncate border border-transparent p-4 text-xs capitalize text-gray-500 dark:text-neutral-500">
       {label}
@@ -133,8 +192,7 @@
           on:click|preventDefault|stopPropagation={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
           class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold hover:bg-gray-100 focus:bg-gray-100 focus:outline-none
                     disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700
-                    {editor.isActive('heading', { level: 1 }) ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}"
-        >
+                    {editor.isActive('heading', { level: 1 }) ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}">
           H1
         </button>
 
@@ -142,8 +200,7 @@
           on:click|preventDefault|stopPropagation={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
           class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold hover:bg-gray-100 focus:bg-gray-100 focus:outline-none
                     disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700
-                    {editor.isActive('heading', { level: 2 }) ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}"
-        >
+                    {editor.isActive('heading', { level: 2 }) ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}">
           H2
         </button>
 
@@ -151,8 +208,7 @@
           on:click|preventDefault|stopPropagation={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
           class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold hover:bg-gray-100 focus:bg-gray-100 focus:outline-none
                     disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700
-                    {editor.isActive('heading', { level: 3 }) ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}"
-        >
+                    {editor.isActive('heading', { level: 3 }) ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}">
           H3
         </button>
 
@@ -160,8 +216,7 @@
           on:click|preventDefault|stopPropagation={() => editor.chain().focus().setParagraph().run()}
           class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold hover:bg-gray-100 focus:bg-gray-100 focus:outline-none
                     disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700
-                    {editor.isActive('paragraph') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}"
-        >
+                    {editor.isActive('paragraph') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}">
           P
         </button>
 
@@ -169,8 +224,7 @@
           on:click|preventDefault|stopPropagation={() => editor.chain().focus().setBold().run()}
           class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold hover:bg-gray-100 focus:bg-gray-100 focus:outline-none
                     disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700
-                    {editor.isActive('bold') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}"
-        >
+                    {editor.isActive('bold') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}">
           <SvgIcon class="size-4 shrink-0" slot={boldIcon} />
         </button>
 
@@ -178,8 +232,7 @@
           on:click|preventDefault|stopPropagation={() => editor.chain().focus().toggleItalic().run()}
           class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none
                       disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700
-                      {editor.isActive('italic') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}"
-        >
+                      {editor.isActive('italic') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}">
           <SvgIcon class="size-4 shrink-0" slot={italicsIcon} />
         </button>
 
@@ -187,8 +240,7 @@
           on:click|preventDefault|stopPropagation={() => editor.chain().focus().toggleUnderline().run()}
           class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none
                       disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700
-                      {editor.isActive('underline') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}"
-        >
+                      {editor.isActive('underline') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}">
           <SvgIcon class="size-4 shrink-0" slot={underlineIcon} />
         </button>
 
@@ -196,8 +248,7 @@
           on:click|preventDefault|stopPropagation={() => editor.chain().focus().toggleStrike().run()}
           class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none
                       disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700
-                      {editor.isActive('strike') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}"
-        >
+                      {editor.isActive('strike') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}">
           <SvgIcon class="size-4 shrink-0" slot={strikethroughIcon} />
         </button>
 
@@ -205,8 +256,7 @@
           on:click|preventDefault|stopPropagation={setLink}
           class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none
                       disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700
-                      {editor.isActive('bold') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}"
-        >
+                      {editor.isActive('bold') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}">
           <SvgIcon class="size-4 shrink-0" slot={chainLinkIcon} />
         </button>
 
@@ -215,8 +265,7 @@
           disabled={!editor.can().unsetLink()}
           class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none
                       disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700
-                      {editor.isActive('bold') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}"
-        >
+                      {editor.isActive('bold') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}">
           <SvgIcon class="size-4 shrink-0" slot={cancelChainLinkIcon} />
         </button>
 
@@ -224,8 +273,7 @@
           on:click|preventDefault|stopPropagation={() => editor.chain().focus().toggleOrderedList().run()}
           class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none
                       disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700
-                      {editor.isActive('orderedList') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}"
-        >
+                      {editor.isActive('orderedList') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}">
           <SvgIcon class="size-4 shrink-0" slot={numberedBulletsIcon} />
         </button>
 
@@ -233,8 +281,7 @@
           on:click|preventDefault|stopPropagation={() => editor.chain().focus().toggleBulletList().run()}
           class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none
                       disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700
-                      {editor.isActive('bulletList') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}"
-        >
+                      {editor.isActive('bulletList') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}">
           <SvgIcon class="size-4 shrink-0" slot={bulletPointsIcon} />
         </button>
 
@@ -242,8 +289,7 @@
           on:click|preventDefault|stopPropagation={() => editor.chain().focus().toggleBlockquote().run()}
           class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none
                       disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700
-                      {editor.isActive('blockquote') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}"
-        >
+                      {editor.isActive('blockquote') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}">
           <SvgIcon class="size-4 shrink-0" slot={blockquotesIcon} />
         </button>
 
@@ -251,8 +297,7 @@
           on:click|preventDefault|stopPropagation={() => editor.chain().focus().toggleCodeBlock().run()}
           class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none
                       disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700
-                      {editor.isActive('codeBlock') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}"
-        >
+                      {editor.isActive('codeBlock') ? 'bg-gray-100 text-brand-600' : 'text-gray-800'}">
           <SvgIcon class="size-4 shrink-0" slot={codesIcon} />
         </button>
 
@@ -260,16 +305,14 @@
           on:click|preventDefault|stopPropagation={() => editor.chain().focus().undo().run()}
           disabled={!editor.can().undo()}
           class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none
-                      disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
-        >
+                      disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">
           <SvgIcon class="size-4 shrink-0" slot={undoIcon} />
         </button>
         <button
           on:click|preventDefault|stopPropagation={() => editor.chain().focus().redo().run()}
           disabled={!editor.can().redo()}
           class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none
-                      disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
-        >
+                      disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">
           <SvgIcon class="size-4 shrink-0" slot={redoIcon} />
         </button>
       </div>
@@ -285,22 +328,26 @@
   {/if}
 </div>
 
-<style global>
-  .ProseMirror:focus {
-    outline: none;
-  }
+<style global lang="scss">
+	.ProseMirror:focus {
+		outline: none;
+	}
 
-  .tiptap ul p,
-  .tiptap ol p {
-    display: inline;
-  }
+	.tiptap ul p,
+	.tiptap ol p {
+		display: inline;
+	}
 
-  .tiptap p.is-editor-empty:first-child::before {
-    font-size: 14px;
-    content: attr(data-placeholder);
-    float: left;
-    height: 0;
-    pointer-events: none;
+	.tiptap p {
+		@apply text-neutral-400
+	}
+
+	.tiptap p.is-editor-empty:first-child::before {
+		font-size: 14px;
+		content: attr(data-placeholder);
+		float: left;
+		height: 0;
+		pointer-events: none;
     color: #9ca3af !important;
   }
 </style>

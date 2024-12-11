@@ -30,8 +30,7 @@
       class="cta border-sm border-md rounded-xl border-2 border-brand-400 px-8 py-4 capitalize text-black shadow-md shadow-brand-500 transition hover:bg-brand-400 hover:font-semibold hover:text-white dark:text-white"
       href="/"
       aria-label="back to home"
-      title="back to home"
-    >
+      title="back to home">
       back to home
     </a>
   </div>

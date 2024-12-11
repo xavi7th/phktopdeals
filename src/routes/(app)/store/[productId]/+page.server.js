@@ -4,18 +4,17 @@ import { arktype } from "sveltekit-superforms/adapters";
 import { PurchaseItemDefaults, PurchaseItemSchema } from "$lib/schemas";
 import { message, setError, superValidate } from "sveltekit-superforms";
 
-/** @type {import('./$types').PageServerLoad} */
 export async function load(event) {
   const form = await superValidate(arktype(PurchaseItemSchema, { defaults: PurchaseItemDefaults }));
 
   const fetchProductDetails = async () => {
     const res = await api({
       method: "get",
-      resource: "products/" + event.params.slug.split("_")[1],
+      resource: "products/" + event.params.productId.split("_")[1],
       event,
     });
 
-    return res?.json();
+    return await res?.json();
   };
 
   const [details] = await Promise.all([fetchProductDetails()]);
@@ -36,9 +35,7 @@ export async function load(event) {
   };
 }
 
-/** @satisfies {import('./$types').Actions} */
 export const actions = {
-  /** @param {import('@sveltejs/kit').RequestEvent} event */
   default: async (event) => {
     const form = await superValidate(event, arktype(PurchaseItemSchema, { defaults: PurchaseItemDefaults }));
 

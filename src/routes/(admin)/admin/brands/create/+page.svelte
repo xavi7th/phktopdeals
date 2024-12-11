@@ -6,7 +6,6 @@
   import { animatedDotsSVG, spinnerSVG } from "$lib/Components/iconPaths";
   import FloatingTextInput from "$lib/Components/FormInputs/FloatingTextInput.svelte";
 
-  /** @type {import('./$types').PageData} */
   export let data;
 
   const {

@@ -1,11 +1,10 @@
-/** @type {import('./$types').LayoutServerLoad} */
 export async function load({ locals }) {
   /** @type { import('$lib/types').AdminNavMenuItem[] } */
   const user_routes = [
     {
       name: "My Order",
       description: "View and track your purchases",
-      uri: "/user/order",
+      uri: "/user/orders",
       icon: "shoppingBagSVG",
       reload: false,
     },
