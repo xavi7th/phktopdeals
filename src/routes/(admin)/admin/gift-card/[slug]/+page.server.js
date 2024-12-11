@@ -63,7 +63,11 @@ export async function load(event) {
 //     "Cache-Control": "no-cache",
 //   });
 
-  productData.data['price_denominations'] = productData.data.product_price.denominations;
+if (productData.data.product_price) {
+    productData.data['price_denominations'] = productData.data.product_price.denominations;
+} else {
+    productData.data['price_denominations'] = [];
+}
 
   // const form = await superValidate(arktype(GiftCardSchema, { defaults: GiftCardDefaults }));
   const form = await superValidate(productData.data, arktype(GiftCardSchema, { defaults: GiftCardDefaults }));
