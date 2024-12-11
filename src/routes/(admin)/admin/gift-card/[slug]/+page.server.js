@@ -47,6 +47,7 @@ export async function load(event) {
   }
 
   event.depends('giftcard');
+  event.depends('games');
   event.depends('esim');
   event.depends('brandlist');
   
@@ -100,6 +101,10 @@ export const actions = {
     const formData = new FormData();
 
     for ( let dt of Object.entries( form.data ) ) {
+      if (dt[0] == 'discount_until' && dt[1]) {
+        formData.append(dt[0], new Date(dt[1]).toDateString());
+        continue;
+      }
       formData.append( dt[0], dt[1] );
     }
 
@@ -135,11 +140,10 @@ export const actions = {
       return message( form, { type: 'error', msg: res?.statusText || 'An error occurred while processing your request' }, { status: res?.status || 429 } );
     }
 
-    event.locals.user = ( await res.json() ).data;
+    event.locals.user = ( await res.json() ).data; //Why are we doing this?
 
     return message( form, { type: 'success', msg: 'Product updated successfully!' } );
 	},
-    
   createBrand: async (event) => {
     const form = await superValidate(event, arktype(brandSchema, { defaults: brandDefaults }));
 

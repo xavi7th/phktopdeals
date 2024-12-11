@@ -90,11 +90,13 @@
         </td>
         {#if hasAction}
         <td class="size-px whitespace-nowrap">
-          <div class="flex gap-3 px-6 py-1.5">
-            <a class="inline-flex items-center gap-x-1 text-sm font-medium text-brand-600 decoration-2 hover:underline focus:underline focus:outline-none dark:text-brand-500" href={basePageUrl + "/" + card.id}>Edit</a>
-            <form action="?/delete" method="POST" class="inline-flex items-center gap-x-1 text-sm font-medium text-red-600 decoration-2 hover:underline focus:underline focus:outline-none dark:text-red-500">
-              <input type="text" class="hidden" name="uuid" value={card.id} />
-              <button type="submit" class="m-0 border-0 bg-transparent p-0 shadow-none">Delete</button>
+          <div class="px-6 py-1.5 flex gap-3">
+            <a class="inline-flex items-center gap-x-1 text-sm text-brand-600 decoration-2 hover:underline focus:outline-none focus:underline font-medium dark:text-brand-500" href={basePageUrl+'/'+card.id}>
+              Edit
+            </a>
+            <form action="?/delete" method="POST" class="inline-flex items-center gap-x-1 text-sm text-red-600 decoration-2 hover:underline focus:outline-none focus:underline font-medium dark:text-red-500">
+              <input type="text" class="hidden" name="product_id" value={card.id}>
+              <button type="submit" class="bg-transparent p-0 m-0 border-0 shadow-none">Delete</button>
             </form>
           </div>
         </td>
