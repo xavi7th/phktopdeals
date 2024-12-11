@@ -1,13 +1,68 @@
 <script>
   import { plusIcon } from "$lib/Components/iconPaths";
+  import SvgIcon from "$lib/Components/SvgIcon.svelte";
+  import { leftAngle, rightAngle } from "$lib/Components/iconPaths";
+  import SuperDebug, { superForm } from "sveltekit-superforms";
+  import { invalidate } from "$app/navigation";
+  import Modal from "$partials/Modal.svelte";
+  import { dev } from "$app/environment";
+  import FloatingTextInput from "$lib/Components/FormInputs/FloatingTextInput.svelte";
+  import Toast from "$lib/Components/Toast.svelte";
   import PageNavigation from "$lib/Components/PageNavigation.svelte";
 
   export let data;
 
   let basePageUrl = "/admin/brands";
 
+  const {
+    form: formData,
+    errors,
+    message,
+    enhance,
+  } = superForm(data.form, {
+    delayMs: 500,
+    timeoutMs: 8000,
+  });
+
+  let editContent = {
+    id: 0,
+  };
+
+  const handleEdit = (/** @type {{ id: any; name: any; }} */ brand) => {
+    editContent = {
+      id: brand.id,
+    };
+
+    $formData.name = brand.name;
+    $formData.uuid = brand.id;
+
+    $message = {
+      type: "grey",
+      msg: "",
+    };
+  };
+
+  const clearEdit = () => {
+    editContent = {
+      id: 0,
+    };
+
+    $formData.name = "";
+    delete $formData.uuid;
+    $message = {
+      type: "grey",
+      msg: "",
+    };
+  };
+
   $: ({ cards, meta } = data);
 </script>
+
+{#if $message}
+  <div class="fixed end-3 top-24 z-[100] space-y-3">
+    <Toast positioned={false} type={$message.type} msg={$message.msg} />
+  </div>
+{/if}
 
 <div class="col-span-5 lg:col-span-4 lg:col-start-2">
   <div class="space-y-4 p-4 sm:space-y-6 sm:p-6">
@@ -51,12 +106,10 @@
 
               <div>
                 <div class="inline-flex gap-x-2">
-                  <a
-                    class="inline-flex items-center gap-x-2 rounded-lg border border-transparent bg-brand-600 px-3 py-2 text-sm font-medium text-white hover:bg-brand-700 focus:bg-brand-700 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-                    href="{basePageUrl}/create">
+                  <button type="button" class="w-40 py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-brand-600 text-white hover:bg-brand-700 focus:outline-none focus:bg-brand-700 disabled:opacity-50 disabled:pointer-events-none"aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-static-list-modal" data-hs-overlay="#hs-static-list-modal">
                     {@html plusIcon}
                     Add Brand
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>
@@ -87,9 +140,20 @@
                     </td>
                     <td class="size-px whitespace-nowrap">
                       <div class="flex gap-3 px-6 py-1.5">
-                        <a class="inline-flex items-center gap-x-1 text-sm font-medium text-brand-600 decoration-2 hover:underline focus:underline focus:outline-none dark:text-brand-500" href="#">Edit</a>
-                        <form action="/?delete" class="inline-flex items-center gap-x-1 text-sm font-medium text-red-600 decoration-2 hover:underline focus:underline focus:outline-none dark:text-red-500">
-                          <input type="text" class="hidden" bind:value={card.id} />
+                        <button
+                        type="button"
+                        class="inline-flex items-center gap-x-2 rounded-lg border border-transparent text-sm font-semibold text-brand-600 hover:text-brand-800 focus:text-brand-800 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:text-brand-500 dark:hover:text-brand-400 dark:focus:text-brand-400"
+                        aria-haspopup="dialog"
+                        aria-expanded="true"
+                        aria-controls="hs-static-edit-modal"
+                        data-hs-overlay="#hs-static-edit-modal"
+                        on:click={() => {
+                          handleEdit(card);
+                        }}>
+                        Edit
+                      </button>
+                        <form method="POST" action="?/deleteBrand" class="inline-flex items-center gap-x-1 text-sm font-medium text-red-600 decoration-2 hover:underline focus:underline focus:outline-none dark:text-red-500">
+                          <input type="text" name="product_id" class="hidden" bind:value={card.id} />
                           <button type="submit" class="m-0 border-0 bg-transparent p-0 shadow-none">Delete</button>
                         </form>
                       </div>

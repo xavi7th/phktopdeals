@@ -17,7 +17,6 @@ import { handleSession } from "svelte-kit-cookie-session";
 import { handleDeviecDetector } from "sveltekit-device-detector";
 import { VITE_SESSION_NAME, APP_SESSION_KEY } from "$env/static/private";
 
-/** @type {import('@sveltejs/kit').Handle} */
 const sessionHandler = handleSession({
   secret: APP_SESSION_KEY,
   expires: 10, // 160 minutes
@@ -27,7 +26,6 @@ const sessionHandler = handleSession({
   init: () => ({ user: {}, recently_purchased: false }),
 });
 
-/** @type {import('@sveltejs/kit').Handle} */
 async function logger({ event, resolve }) {
   const start_time = Date.now();
 
@@ -42,7 +40,6 @@ async function logger({ event, resolve }) {
   return response;
 }
 
-/** @type {import('@sveltejs/kit').Handle} */
 async function getUserDetails({ event, resolve }) {
   const cookies = parse(event.request.headers.get("cookie") || "");
   await event.locals.session.update(({ api_session }) => ({ api_session: cookies[VITE_SESSION_NAME] }));
@@ -68,7 +65,6 @@ async function getUserDetails({ event, resolve }) {
   return resolve(event);
 }
 
-/** @type {import('@sveltejs/kit').Handle} */
 function authorize({ event, resolve }) {
   /**
    * @auth Protect routes that need authentication
@@ -87,54 +83,51 @@ function authorize({ event, resolve }) {
     }
     redirect(303, "/store/products");
   }
-
-  /**
+    /**
    * @authorize Protect User routes from admins
    */
-  if (event.url.pathname.startsWith("/user") && event.locals.session.data?.user?.is_admin) {
-    redirect(303, "/admin/dashboard");
+    if (event.url.pathname.startsWith("/user") && event.locals.session.data?.user?.is_admin) {
+      redirect(303, "/admin/dashboard");
+    }
+  
+    /**
+     * @authorize Protect Admin routes
+     */
+    if (event.url.pathname.startsWith("/admin") && !event.locals.session.data?.user?.is_admin) {
+      redirect(303, "/logout");
+    }
+  
+    return resolve(event);
+  }
+  
+  async function addSecurityHeaders({ event, resolve }) {
+    const securityHeaders = {
+      //@see https://edoverflow.com/2023/sveltekit-security-headers/
+      "Cross-Origin-Embedder-Policy": "credentialless",
+      "Cross-Origin-Opener-Policy": "same-origin",
+      "Cross-Origin-Resource-Policy": "same-origin",
+      // 'Content-Security-Policy': 'script-src \'self\' \'nonce-Y70QFNhAVmer2wdobT8YoQ==\'',
+      // 'Referrer-Policy': 'no-referrer',
+      // 'Strict-transport-security': 'max-age=15552000; includeSubDomains',
+      // 'X-Content-Type-Options': 'nosniff',
+      // 'X-DNS-Prefetch-Control': 'off',
+      // 'X-Download-Options': 'noopen',
+      // 'X-Permitted-Cross-Domain-Policies': 'none',
+      "X-Frame-Options": "SAMEORIGIN",
+      "X-XSS-Protection": "0",
+    };
+    const response = await resolve(event);
+  
+    Object.entries(securityHeaders).forEach(([header, value]) => response.headers.set(header, value));
+  
+    return response;
   }
 
-  /**
-   * @authorize Protect Admin routes
-   */
-  if (event.url.pathname.startsWith("/admin") && !event.locals.session.data?.user?.is_admin) {
-    redirect(303, "/logout");
-  }
-
-  return resolve(event);
-}
-
-/** @type {import('@sveltejs/kit').Handle} */
-async function addSecurityHeaders({ event, resolve }) {
-  const securityHeaders = {
-    //@see https://edoverflow.com/2023/sveltekit-security-headers/
-    "Cross-Origin-Embedder-Policy": "credentialless",
-    "Cross-Origin-Opener-Policy": "same-origin",
-    "Cross-Origin-Resource-Policy": "same-origin",
-    // 'Content-Security-Policy': 'script-src \'self\' \'nonce-Y70QFNhAVmer2wdobT8YoQ==\'',
-    // 'Referrer-Policy': 'no-referrer',
-    // 'Strict-transport-security': 'max-age=15552000; includeSubDomains',
-    // 'X-Content-Type-Options': 'nosniff',
-    // 'X-DNS-Prefetch-Control': 'off',
-    // 'X-Download-Options': 'noopen',
-    // 'X-Permitted-Cross-Domain-Policies': 'none',
-    "X-Frame-Options": "SAMEORIGIN",
-    "X-XSS-Protection": "0",
-  };
-  const response = await resolve(event);
-
-  Object.entries(securityHeaders).forEach(([header, value]) => response.headers.set(header, value));
-
-  return response;
-}
-
-/** @type {import('@sveltejs/kit').HandleFetch} */
 export const handleFetch = async ({ request, fetch, event }) => {
   const response = await fetch(request);
 
   /**
-   * @crsf Handle expired tokens and csrf expiry
+   * @csrf Handle expired tokens and csrf expiry
    */
   if (response?.status == 419 && event.url.pathname.startsWith(env.PUBLIC_VITE_BASE_API)) {
     redirect(303, "/logout");
@@ -162,7 +155,6 @@ export const handleFetch = async ({ request, fetch, event }) => {
   return response;
 };
 
-/** @type {import('@sveltejs/kit').HandleServerError} */
 export const handleError = async ({ event, error, message, status }) => {
   if (!event.url.pathname.includes("assets")) {
     console.log("------------SERVER ERROR-----------");
@@ -183,5 +175,4 @@ export const handleError = async ({ event, error, message, status }) => {
   }
 };
 
-/** @type {import('@sveltejs/kit').Handle} */
 export const handle = sequence(sessionHandler, handleDeviecDetector({}), logger, getUserDetails, authorize, addSecurityHeaders);
