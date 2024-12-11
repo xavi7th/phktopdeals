@@ -51,7 +51,7 @@
                 </div>
               </div>
             </div>
-          </div>
+
             <ProductListings products={cards} {meta} basePageUrl="/admin/e-sim"/>
           </div>
         </div>

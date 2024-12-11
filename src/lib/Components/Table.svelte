@@ -3,13 +3,13 @@
   import { upDownAngleIcon } from "./iconPaths";
   import PageNavigation from "./PageNavigation.svelte";
 
-  export let tCaption;
+  export let tCaption = undefined;
   export let tDescription = undefined;
   /** @type {number | undefined} */
   export let totalDataCount = undefined;
 
-  /** @type { { basePageUrl: string;  total?: number; items_count?: number; next_page_cursor?: string; prev_page_cursor?: string; } } */
-  export let navData;
+  /** @type { undefined | { basePageUrl: string;  total?: number; items_count?: number; next_page_cursor?: string; prev_page_cursor?: string; } } */
+  export let navData = undefined;
 
   let itemsPerPage = 15;
 </script>

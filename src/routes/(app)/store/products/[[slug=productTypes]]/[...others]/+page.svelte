@@ -3,13 +3,10 @@
   import { percentageCalculation } from "$lib/helpers";
   import Sidebar from "$partials/gift-cards/Sidebar.svelte";
   import PageNavigation from "$lib/Components/PageNavigation.svelte";
-  import { favoriteIcon, leftAngle, maximizeIcon, rightAngle } from "$lib/Components/iconPaths";
+  import { favoriteIcon, maximizeIcon, rightAngle } from "$lib/Components/iconPaths";
 
   export let data;
 
-  /**
-   * @param {[cards, category]: [import('$lib/types').ProdSummary[], string]} data
-   */
   $: ({ cards, category, meta, basePageUrl } = data);
 </script>
 

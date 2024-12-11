@@ -1,8 +1,6 @@
 <script>
   import Table from "$lib/Components/Table.svelte";
 
-  export let data;
-
   let currentTab = "All Orders";
 
   const orderTabs = [
@@ -63,4 +61,5 @@
     </button>
   {/each}
 </div>
+
 <Table />

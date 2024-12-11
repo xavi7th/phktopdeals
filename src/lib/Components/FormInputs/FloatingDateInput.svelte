@@ -4,7 +4,7 @@
 
 <!-- <FloatingTextInput name="password-confirmation" type="password" isError={! form?.success}
                 msg={form?.success || form?.errors?.password_confirmation && form?.errors?.password_confirmation[0]} label="Confirm Password *"
-                togglePw='["#password-confirmation", "#hs-floating-input-passowrd-value"]'/> -->
+                togglePw='["#password-confirmation", "#hs-floating-input-password-value"]'/> -->
 <script>
   import { onMount } from "svelte";
   import { cn } from "$lib/helpers";
@@ -13,7 +13,7 @@
   export let name = "input-" + crypto.randomUUID().replaceAll("-", "").substring(0, 10),
     format = "MMMM D, YYYY",
     label = "",
-    inputClases = "",
+    inputClasses = "",
     min = undefined;
 
   /** @type {string|undefined} */
@@ -26,7 +26,7 @@
 
   onMount(() => {
     elem = document.getElementById(`${name}-visual`);
-    elem?.classList.add(...cn("h-auto px-8 pt-4", inputClases).split(" "));
+    elem?.classList.add(...cn("h-auto px-8 pt-4", inputClasses).split(" "));
     elem?.setAttribute("spellCheck", false);
     elem?.setAttribute("autoCorrect", "off");
     elem?.setAttribute("autoCapitalize", "off");
