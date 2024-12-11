@@ -25,7 +25,7 @@
 </script>
 
 {#if $message}
-  <div class="fixed top-[100] z-50 end-3 space-y-3">
+  <div class="fixed top-[100px] z-50 end-3 space-y-3">
     <Toast positioned={false} type={$message.type} msg={$message.msg}/>
   </div>
 {/if}
