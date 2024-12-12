@@ -43,13 +43,15 @@
             </svg>`,
     },
   ];
+
+  $: console.log(currentTab);
 </script>
 
 <div class="grid grid-cols-3 gap-6 sm:mx-10 sm:grid-cols-5">
   {#each orderTabs as tab}
     <button
-      class="grid place-content-center rounded-xl bg-white p-[16px] text-slate-800 shadow-lg dark:bg-[#404040] dark:text-slate-100"
-      class:border-[#FFDA1C]={currentTab === tab.caption}
+      class="grid place-content-center rounded-xl bg-white p-[16px] text-slate-800 shadow-lg dark:bg-[#404040] dark:text-slate-100 border"
+      class:border-brand-700={currentTab === tab.caption}
       on:click={() => (currentTab = tab.caption)}>
       <div class="mx-auto mb-4 grid size-16 place-content-center rounded-full border-[#FFDA1C] bg-[#FFDA1C30]">
         {@html tab.icon}
