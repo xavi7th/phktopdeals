@@ -11,7 +11,7 @@
 
   let currentTab = "All Orders";
 
-  $: ({ pageData, orderTabs } = data);
+  $: ({ pageData, orderTabs, filter } = data);
 
   /**
    * @param {(MouseEvent|KeyboardEvent) & { currentTarget: HTMLAnchorElement }} e
@@ -37,18 +37,19 @@
 
 <div class="grid grid-cols-3 gap-6 sm:mx-10 sm:grid-cols-5">
   {#each orderTabs as tab}
-    <button
+    <a
+      href={tab.filter ? "/user/orders?filter=" + tab.filter : "/user/orders"}
       class="grid place-content-center rounded-xl border bg-white p-[16px] text-slate-800 shadow-lg dark:border-neutral-600 dark:bg-neutral-800 dark:text-slate-100"
-      class:!border-brand-700={currentTab === tab.caption}
-      class:!dark:border-2={currentTab === tab.caption}
-      on:click={() => (currentTab = tab.caption)}>
+      class:!border-brand-700={filter === tab.filter}
+      class:!dark:border-2={filter === tab.filter}
+      on:click={() => (filter = tab.filter)}>
       <div class="mx-auto mb-4 grid size-16 place-content-center rounded-full border-yellow-400 bg-yellow-400/20">
         {@html tab.icon}
       </div>
       <p class="flex items-center justify-center gap-1.5 text-[13px]">
         {tab.caption}
       </p>
-    </button>
+    </a>
   {/each}
 </div>
 
