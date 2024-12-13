@@ -3,9 +3,9 @@
   import Modal from "$partials/Modal.svelte";
   import Toast from "$lib/Components/Toast.svelte";
   import { VoucherCodeDefaults } from "$lib/schemas";
-  import TableSkeleton from "./TableSkeleton.svelte";
   import VoucherTableData from "./VoucherTableData.svelte";
   import SuperDebug, { superForm } from "sveltekit-superforms";
+  import TableSkeleton from '$lib/Components/TableSkeleton.svelte';
   import LoadingButton from "$lib/Components/FormInputs/LoadingButton.svelte";
   import FloatingTextInput from "$lib/Components/FormInputs/FloatingTextInput.svelte";
   import FloatingNumericTextInput from "$lib/Components/FormInputs/FloatingNumericTextInput.svelte";

@@ -1,25 +1,64 @@
 <script>
+  /**
+   * @component
+   *
+   * This is a modal component
+   *
+   * EXAMPLE USAGE
+   *
+   *
+   * <Modal title="{$form.id ? 'Update' : 'Create'} Email Template" name="manage-email-templates">
+   *   <div slot="content">
+   *     <div class="flex flex-col">
+   *      SOME CONTENT
+   *     </div>
+   *   </div>
+   *   <LoadingButton
+   *     slot="footer"
+   *     form="manage-email-templates-form"
+   *     class="w-auto bg-black px-3 py-2 font-medium transition-opacity duration-300 hover:bg-gray-700 hover:text-neutral-50 focus:bg-gray-700"
+   *     {timeout}
+   *     {delayed}
+   *     {submitting}>
+   *     {$form.id ? "Update" : "Create"} Template
+   *   </LoadingButton>
+   * </Modal>
+   */
+
+  import { x } from '$lib/Components/iconPaths';
+  import SvgIcon from '$lib/Components/SvgIcon.svelte';
+
   // import { pageMounted } from '$stores';
-  import { onDestroy, onMount } from "svelte";
-  import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher, onDestroy, onMount } from "svelte";
+
+  export let title = "",
+  actionTitle = "Create",
+  handleClick = () => {},
+  name = "modal-" + crypto.randomUUID().replaceAll("-", "").substring(0, 10);
 
   const dispatch = createEventDispatcher();
 
-  function handleClick() {
-    dispatch("handleClick");
-  }
-
-  export let title = "",
-    actionTitle = "Create",
-    name = "modal-" + crypto.randomUUID().replaceAll("-", "").substring(0, 10);
-
   onMount(() => {
-    //   if ($pageMounted) {
-    //     new window.HSOverlay(document.querySelector(`#${name}`));
-    //     elem = window.HSOverlay.getInstance(`#${name}`);
-    //   }
-    // window.HSStaticMethods.autoInit();
-  });
+    let modalInt = setInterval(() => {
+      const el = window.HSOverlay?.getInstance(`#${name}`, true);
+      if (el) {
+        clearInterval(modalInt);
+
+        el.element.on('open', (e) => {
+          dispatch("open");
+        });
+
+        el.element.on('close', (e) => {
+          console.log('modal:closed');
+          dispatch("close");
+        });
+
+        return;
+      }
+
+      window?.HSStaticMethods?.autoInit();
+    }, 600);
+  })
 
   onDestroy(() => {
     typeof window !== "undefined" && window?.HSOverlay?.close(`#${name}`);
@@ -43,15 +82,13 @@
           type="button"
           class="inline-flex size-8 items-center justify-center gap-x-2 rounded-full border border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:bg-neutral-700 dark:text-neutral-400 dark:hover:bg-neutral-600 dark:focus:bg-neutral-600"
           aria-label="Close"
-          data-hs-overlay={`#${name}`}>
+          data-hs-overlay={`#${name}`}
+          on:click={() => dispatch("close")}>
           <span class="sr-only">Close</span>
-          <svg class="size-4 shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M18 6 6 18"></path>
-            <path d="m6 6 12 12"></path>
-          </svg>
+          <SvgIcon class="size-4 shrink-0" slot={x} />
         </button>
       </div>
-      <div class="overflow-y-auto p-4">
+      <div>
         <slot name="content" />
         <slot name="form" />
       </div>
@@ -68,7 +105,8 @@
         <button
           type="button"
           class="inline-flex items-center gap-x-2 rounded-lg border border-gray-300 bg-gray-200 px-3 py-2 text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-200 focus:bg-gray-200 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
-          data-hs-overlay={`#${name}`}>
+          data-hs-overlay={`#${name}`}
+          on:click={() => dispatch("close")}>
           Close
         </button>
       </div>

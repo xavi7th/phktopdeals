@@ -1,6 +1,6 @@
 // See https://kit.svelte.dev/docs/types#app
 
-import type { AppUser } from "$lib/types";
+import type { AppUser, UserOrder } from "$lib/types";
 import type { Session } from "svelte-kit-cookie-session";
 import type { DevicePayload } from "sveltekit-device-detector";
 
@@ -38,7 +38,13 @@ declare global {
         msg: string;
       };
     }
-    // interface PageState {}
+    interface PageState {
+      orderDetails: {
+        order: UserOrder;
+        user: AppUser;
+        user_routes: import("$lib/types").AdminNavMenuItem[];
+      }
+    }
     // interface Platform {}
   }
 }

@@ -2,7 +2,7 @@ export async function load({ locals }) {
   /** @type { import('$lib/types').AdminNavMenuItem[] } */
   const user_routes = [
     {
-      name: "My Order",
+      name: "My Orders",
       description: "View and track your purchases",
       uri: "/user/orders",
       icon: "shoppingBagSVG",

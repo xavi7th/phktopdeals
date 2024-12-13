@@ -28,7 +28,7 @@ export async function load(event) {
   const fetchTopUpTransactions = async () => {
     const res = await api({
       method: "get",
-      resource: "user-transactions/top-up",
+      resource: "user-transactions",
       event,
     });
     return await res?.json();

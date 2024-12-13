@@ -1,5 +1,5 @@
-import type { Cookies, RequestEvent } from "@sveltejs/kit";
 import type { HTMLAttributes } from "svelte/elements";
+import type { Cookies, RequestEvent } from "@sveltejs/kit";
 
 export type ApiParams = {
   method: string;
@@ -136,4 +136,20 @@ export type NowCryptoCurrency = {
     min_amount: number;
     fiat_equivalent: number;
   };
+};
+export type UserOrder = {
+  id: string;
+  app_user_id: string;
+  product_id: string;
+  price_amount: string;
+  pay_amount: number;
+  pay_currency: string;
+  description: string;
+  payment_method: string;
+  status: string;
+  expired_at?: string | null;
+  valid_until?: string | null;
+  is_processed: boolean;
+  product_image_url: string;
+  voucher_codes: { code: string; amount: number; }[];
 };

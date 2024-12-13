@@ -11,7 +11,7 @@
   /** @type { undefined | { basePageUrl: string;  total?: number; items_count?: number; next_page_cursor?: string; prev_page_cursor?: string; } } */
   export let navData = undefined;
 
-  let itemsPerPage = 15;
+  let itemsPerPage = navData?.items_count || 15;
 </script>
 
 <div class="mt-7 overflow-hidden rounded-xl bg-white shadow-lg sm:mx-10 dark:bg-gray-600 {$$slots.mobile ? 'hidden md:block' : ''}" {...$$restProps}>
@@ -66,7 +66,7 @@
           <th>Balance</th>
         </slot>
       </tfoot>
-      <tbody class="odd:*:bg-white even:*:bg-gray-100 dark:odd:*:bg-neutral-900 dark:even:*:bg-neutral-800">
+      <tbody class="odd:*:bg-white even:*:bg-gray-100 dark:odd:*:bg-neutral-900 dark:even:*:bg-neutral-800 border dark:border-neutral-800">
         <slot>
           <tr class="h-14 border-y border-[#00000020] text-slate-800 dark:text-slate-100">
             <td>1</td>
@@ -95,7 +95,7 @@
           class="relative flex w-full flex-initial cursor-pointer gap-x-2 text-nowrap rounded-lg border border-gray-200 bg-white bg-none py-3 pe-9 ps-4 text-start text-sm focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500 lg:w-20 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-neutral-600"
           bind:value={itemsPerPage}>
           <option value={15}>15</option>
-          <option value={25}>25</option>
+          <option value={30}>30</option>
           <option value={50}>50</option>
           <option value={100}>100</option>
         </select>
@@ -120,4 +120,30 @@
 
 <div class="mt-8 grid gap-4 space-y-4 {$$slots.mobile ? 'md:hidden' : 'hidden'}" class:md:hidden={$$slots.mobile}>
   <slot name="mobile"></slot>
+
+  <div class="mt-4 items-center justify-between gap-7 border-t border-gray-300 px-5 py-3 text-slate-800 sm:px-10 dark:text-slate-100">
+    <div class="relative justify-end flex items-center gap-x-8">
+      <p class="text-xs shrink-0">Items per page</p>
+      <select
+        class="relative inline-flex flex-initial cursor-pointer gap-x-2 text-nowrap rounded-lg border border-gray-200 bg-white bg-none py-3 pe-9 ps-4 text-start text-sm focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500 lg:w-20 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-neutral-600"
+        bind:value={itemsPerPage}>
+        <option value={15}>15</option>
+        <option value={30}>30</option>
+        <option value={50}>50</option>
+        <option value={100}>100</option>
+      </select>
+
+      <div class="pointer-events-none absolute end-3 top-1/2 -translate-y-1/2">
+        <SvgIcon class="size-4 shrink-0" slot={upDownAngleIcon} />
+      </div>
+
+      {#if totalDataCount && itemsPerPage}
+        <p class="text-xs">{itemsPerPage} of {totalDataCount}</p>
+      {/if}
+    </div>
+
+    {#if navData}
+      <PageNavigation {navData} />
+    {/if}
+  </div>
 </div>

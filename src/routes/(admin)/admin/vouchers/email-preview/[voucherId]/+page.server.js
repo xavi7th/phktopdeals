@@ -13,8 +13,6 @@ export async function load(event) {
 
   let noJS = !!event.url.searchParams.get("noJS");
 
-  console.log(await fetchVoucherPreview());
-
   return {
     /** @type { Promise<{ data: string }> } */
     pageData: noJS ? await fetchVoucherPreview() : fetchVoucherPreview(), // This must come first to force awaiting in all noJS contexts
