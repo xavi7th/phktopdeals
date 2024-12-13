@@ -28,13 +28,13 @@ export async function load(event) {
   const fetchTopUpTransactions = async () => {
     const res = await api({
       method: "get",
-      resource: "user-transactions",
+      resource: "user-transactions?cursor=" + event.params.cursor,
       event,
     });
     return await res?.json();
   };
 
-  const [currencies, details, transactions] = await Promise.all([fetchAvailableCryptoCurrencies(), fetchWalletBalance(), fetchTopUpTransactions()]);
+  const [currencies, details] = await Promise.all([fetchAvailableCryptoCurrencies(), fetchWalletBalance()]);
 
   event.setHeaders({
     "Cache-Control": "public, max-age=3600, stale-while-revalidate=86400",
@@ -45,7 +45,7 @@ export async function load(event) {
     /** @type { import('$lib/types').NowCryptoCurrency[] } */
     currencies: currencies.data,
     wallet_balance: details.data?.wallet_balance,
-    transactions: transactions.data,
+    transactions: fetchTopUpTransactions(),
   };
 }
 

@@ -3,6 +3,7 @@
   import { cn, toCurrency } from "$lib/helpers";
   import Table from "$lib/Components/Table.svelte";
   import SvgIcon from "$lib/Components/SvgIcon.svelte";
+  import TableSkeleton from '$lib/Components/TableSkeleton.svelte';
   import { checkMarkFilledAlt, exclamationCircle, xCircle } from "$lib/Components/iconPaths";
 
   export let data;
@@ -36,7 +37,11 @@
 
 <Wallet data={data.form} {currencies} {wallet_balance} />
 
-<Table tCaption="List of Top Up Transactions" totalDataCount={100}>
+
+{#await transactions}
+<TableSkeleton />
+{:then transactions}
+<Table tCaption="List of Top Up Transactions" navData={{ ...transactions.metadata, basePageUrl: "/user/wallet" }}>
   <svelte:fragment slot="thead">
     <th scope="col" class="px-6 py-3 text-center">
       <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">ID</span>
@@ -63,7 +68,7 @@
       </th> -->
   </svelte:fragment>
 
-  {#each transactions as trx, i}
+  {#each transactions.data as trx, i}
     <tr class="text-start">
       <td class="size-px whitespace-nowrap">
         <div class="px-6 py-3">
@@ -149,7 +154,7 @@
   {/each}
 
   <svelte:fragment slot="mobile">
-    {#each transactions as trx, i}
+    {#each transactions.data as trx, i}
       <div class="rounded-lg border bg-white p-4 shadow">
         <div class="-m-4 flex items-center justify-between border-b px-4 py-2">
           <h2 class="text-lg font-normal text-gray-800">
@@ -206,3 +211,4 @@
     {/each}
   </svelte:fragment>
 </Table>
+{/await}
