@@ -106,7 +106,13 @@
 
               <div>
                 <div class="inline-flex gap-x-2">
-                  <button type="button" class="w-40 py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-brand-600 text-white hover:bg-brand-700 focus:outline-none focus:bg-brand-700 disabled:opacity-50 disabled:pointer-events-none"aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-static-list-modal" data-hs-overlay="#hs-static-list-modal">
+                  <button
+                    type="button"
+                    class="inline-flex w-40 items-center justify-center gap-x-2 rounded-lg border border-transparent bg-brand-600 px-4 py-3 text-sm font-medium text-white hover:bg-brand-700 focus:bg-brand-700 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+                    aria-haspopup="dialog"
+                    aria-expanded="false"
+                    aria-controls="hs-static-list-modal"
+                    data-hs-overlay="#hs-static-list-modal">
                     {@html plusIcon}
                     Add Brand
                   </button>
@@ -141,18 +147,21 @@
                     <td class="size-px whitespace-nowrap">
                       <div class="flex gap-3 px-6 py-1.5">
                         <button
-                        type="button"
-                        class="inline-flex items-center gap-x-2 rounded-lg border border-transparent text-sm font-semibold text-brand-600 hover:text-brand-800 focus:text-brand-800 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:text-brand-500 dark:hover:text-brand-400 dark:focus:text-brand-400"
-                        aria-haspopup="dialog"
-                        aria-expanded="true"
-                        aria-controls="hs-static-edit-modal"
-                        data-hs-overlay="#hs-static-edit-modal"
-                        on:click={() => {
-                          handleEdit(card);
-                        }}>
-                        Edit
-                      </button>
-                        <form method="POST" action="?/deleteBrand" class="inline-flex items-center gap-x-1 text-sm font-medium text-red-600 decoration-2 hover:underline focus:underline focus:outline-none dark:text-red-500">
+                          type="button"
+                          class="inline-flex items-center gap-x-2 rounded-lg border border-transparent text-sm font-semibold text-brand-600 hover:text-brand-800 focus:text-brand-800 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:text-brand-500 dark:hover:text-brand-400 dark:focus:text-brand-400"
+                          aria-haspopup="dialog"
+                          aria-expanded="true"
+                          aria-controls="hs-static-edit-modal"
+                          data-hs-overlay="#hs-static-edit-modal"
+                          on:click={() => {
+                            handleEdit(card);
+                          }}>
+                          Edit
+                        </button>
+                        <form
+                          method="POST"
+                          action="?/deleteBrand"
+                          class="inline-flex items-center gap-x-1 text-sm font-medium text-red-600 decoration-2 hover:underline focus:underline focus:outline-none dark:text-red-500">
                           <input type="text" name="product_id" class="hidden" bind:value={card.id} />
                           <button type="submit" class="m-0 border-0 bg-transparent p-0 shadow-none">Delete</button>
                         </form>

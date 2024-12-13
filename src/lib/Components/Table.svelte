@@ -66,7 +66,7 @@
           <th>Balance</th>
         </slot>
       </tfoot>
-      <tbody class="odd:*:bg-white even:*:bg-gray-100 dark:odd:*:bg-neutral-900 dark:even:*:bg-neutral-800 border dark:border-neutral-800">
+      <tbody class="border odd:*:bg-white even:*:bg-gray-100 dark:border-neutral-800 dark:odd:*:bg-neutral-900 dark:even:*:bg-neutral-800">
         <slot>
           <tr class="h-14 border-y border-[#00000020] text-slate-800 dark:text-slate-100">
             <td>1</td>
@@ -122,8 +122,8 @@
   <slot name="mobile"></slot>
 
   <div class="mt-4 items-center justify-between gap-7 border-t border-gray-300 px-5 py-3 text-slate-800 sm:px-10 dark:text-slate-100">
-    <div class="relative justify-end flex items-center gap-x-8">
-      <p class="text-xs shrink-0">Items per page</p>
+    <div class="relative flex items-center justify-end gap-x-8">
+      <p class="shrink-0 text-xs">Items per page</p>
       <select
         class="relative inline-flex flex-initial cursor-pointer gap-x-2 text-nowrap rounded-lg border border-gray-200 bg-white bg-none py-3 pe-9 ps-4 text-start text-sm focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500 lg:w-20 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-neutral-600"
         bind:value={itemsPerPage}>

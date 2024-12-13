@@ -151,5 +151,5 @@ export type UserOrder = {
   valid_until?: string | null;
   is_processed: boolean;
   product_image_url: string;
-  voucher_codes: { code: string; amount: number; }[];
+  voucher_codes: { code: string; amount: number }[];
 };

@@ -83,45 +83,45 @@ function authorize({ event, resolve }) {
     }
     redirect(303, "/store/products");
   }
-    /**
+  /**
    * @authorize Protect User routes from admins
    */
-    if (event.url.pathname.startsWith("/user") && event.locals.session.data?.user?.is_admin) {
-      redirect(303, "/admin/dashboard");
-    }
-  
-    /**
-     * @authorize Protect Admin routes
-     */
-    if (event.url.pathname.startsWith("/admin") && !event.locals.session.data?.user?.is_admin) {
-      redirect(303, "/logout");
-    }
-  
-    return resolve(event);
+  if (event.url.pathname.startsWith("/user") && event.locals.session.data?.user?.is_admin) {
+    redirect(303, "/admin/dashboard");
   }
 
-  async function addSecurityHeaders({ event, resolve }) {
-    const securityHeaders = {
-      //@see https://edoverflow.com/2023/sveltekit-security-headers/
-      "Cross-Origin-Embedder-Policy": "credentialless",
-      "Cross-Origin-Opener-Policy": "same-origin",
-      "Cross-Origin-Resource-Policy": "same-origin",
-      // 'Content-Security-Policy': 'script-src \'self\' \'nonce-Y70QFNhAVmer2wdobT8YoQ==\'',
-      // 'Referrer-Policy': 'no-referrer',
-      // 'Strict-transport-security': 'max-age=15552000; includeSubDomains',
-      // 'X-Content-Type-Options': 'nosniff',
-      // 'X-DNS-Prefetch-Control': 'off',
-      // 'X-Download-Options': 'noopen',
-      // 'X-Permitted-Cross-Domain-Policies': 'none',
-      "X-Frame-Options": "SAMEORIGIN",
-      "X-XSS-Protection": "0",
-    };
-    const response = await resolve(event);
-  
-    Object.entries(securityHeaders).forEach(([header, value]) => response.headers.set(header, value));
-  
-    return response;
+  /**
+   * @authorize Protect Admin routes
+   */
+  if (event.url.pathname.startsWith("/admin") && !event.locals.session.data?.user?.is_admin) {
+    redirect(303, "/logout");
   }
+
+  return resolve(event);
+}
+
+async function addSecurityHeaders({ event, resolve }) {
+  const securityHeaders = {
+    //@see https://edoverflow.com/2023/sveltekit-security-headers/
+    "Cross-Origin-Embedder-Policy": "credentialless",
+    "Cross-Origin-Opener-Policy": "same-origin",
+    "Cross-Origin-Resource-Policy": "same-origin",
+    // 'Content-Security-Policy': 'script-src \'self\' \'nonce-Y70QFNhAVmer2wdobT8YoQ==\'',
+    // 'Referrer-Policy': 'no-referrer',
+    // 'Strict-transport-security': 'max-age=15552000; includeSubDomains',
+    // 'X-Content-Type-Options': 'nosniff',
+    // 'X-DNS-Prefetch-Control': 'off',
+    // 'X-Download-Options': 'noopen',
+    // 'X-Permitted-Cross-Domain-Policies': 'none',
+    "X-Frame-Options": "SAMEORIGIN",
+    "X-XSS-Protection": "0",
+  };
+  const response = await resolve(event);
+
+  Object.entries(securityHeaders).forEach(([header, value]) => response.headers.set(header, value));
+
+  return response;
+}
 
 export const handleFetch = async ({ request, fetch, event }) => {
   const response = await fetch(request);

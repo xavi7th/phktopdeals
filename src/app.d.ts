@@ -43,7 +43,7 @@ declare global {
         order: UserOrder;
         user: AppUser;
         user_routes: import("$lib/types").AdminNavMenuItem[];
-      }
+      };
     }
     // interface Platform {}
   }

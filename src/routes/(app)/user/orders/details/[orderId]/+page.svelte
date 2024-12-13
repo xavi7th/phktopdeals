@@ -2,12 +2,12 @@
   import { toCurrency } from "$lib/helpers.js";
 
   export let data,
-      isModal = false; // useful when we are loading this page in a modal like on the orders page
+    isModal = false; // useful when we are loading this page in a modal like on the orders page
 
   $: ({ order } = data);
 </script>
 
-<div class="{isModal ? 'w-full block' : 'flex'} justify-center">
+<div class="{isModal ? 'block w-full' : 'flex'} justify-center">
   <div class="{isModal ? 'rounded-none' : 'rounded-lg'} border border-gray-200 bg-slate-50 p-4 shadow-md dark:border-neutral-700 dark:bg-neutral-800 dark:shadow-md dark:shadow-neutral-700/40">
     <div class="-m-4 flex items-center justify-between border-b border-gray-200 p-4 dark:border-neutral-700">
       <h2 class="text-2xl font-normal text-gray-800 dark:text-gray-400">

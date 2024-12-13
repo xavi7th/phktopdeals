@@ -41,34 +41,29 @@ export async function load(event) {
       method: "get",
       resource: "regions",
       event,
-		});
+    });
 
     return await res?.json();
-  }
+  };
 
-  event.depends('giftcard');
-  event.depends('games');
-  event.depends('esim');
-  event.depends('brandlist');
-  
-	const [productData, categoriesData, brandsData, regionsData] = await Promise.all([
-    fetchProduct(),
-	  fetchCategories(),
-    fetchProductBrands(),
-	  fetchRegions(),
-	]);
+  event.depends("giftcard");
+  event.depends("games");
+  event.depends("esim");
+  event.depends("brandlist");
+
+  const [productData, categoriesData, brandsData, regionsData] = await Promise.all([fetchProduct(), fetchCategories(), fetchProductBrands(), fetchRegions()]);
 
   // the reason why cache is disabled is because of the invalidate
   // when invalidate refetch data, it restores data once deleted
-//   event.setHeaders({
-//     "Cache-Control": "no-cache",
-//   });
+  //   event.setHeaders({
+  //     "Cache-Control": "no-cache",
+  //   });
 
-if (productData.data.product_price) {
-    productData.data['price_denominations'] = productData.data.product_price.denominations;
-} else {
-    productData.data['price_denominations'] = [];
-}
+  if (productData.data.product_price) {
+    productData.data["price_denominations"] = productData.data.product_price.denominations;
+  } else {
+    productData.data["price_denominations"] = [];
+  }
 
   // const form = await superValidate(arktype(GiftCardSchema, { defaults: GiftCardDefaults }));
   const form = await superValidate(productData.data, arktype(GiftCardSchema, { defaults: GiftCardDefaults }));
@@ -92,58 +87,58 @@ if (productData.data.product_price) {
 
 export const actions = {
   edit: async (event) => {
-    const form = await superValidate( event, arktype( GiftCardSchema, { defaults: GiftCardDefaults } ) );
+    const form = await superValidate(event, arktype(GiftCardSchema, { defaults: GiftCardDefaults }));
 
-    if ( !form.valid ) {
-      return fail( 422, { form } );
+    if (!form.valid) {
+      return fail(422, { form });
     }
 
     const formData = new FormData();
 
-    for ( let dt of Object.entries( form.data ) ) {
-      if (dt[0] == 'discount_until' && dt[1]) {
+    for (let dt of Object.entries(form.data)) {
+      if (dt[0] == "discount_until" && dt[1]) {
         formData.append(dt[0], new Date(dt[1]).toDateString());
         continue;
       }
-      formData.append( dt[0], dt[1] );
+      formData.append(dt[0], dt[1]);
     }
 
-    formData.append( '_method', 'PUT' );
+    formData.append("_method", "PUT");
 
-    const res = await api( {
-      method: 'post',
-      resource: 'products/'+event.params.slug,
+    const res = await api({
+      method: "post",
+      resource: "products/" + event.params.slug,
       data: formData,
       event,
       toJSON: false,
-    } );
+    });
 
-    if ( res?.status == 422 ) {
+    if (res?.status == 422) {
       let errRes = await res.json();
 
-      for ( const [fieldName, errs] of Object.entries( errRes.errors ) ) {
-        if ( fieldName.includes( '.' ) ) {
-          setError( form, fieldName.split( '.' )[0], errs[0], {
-            overwrite: true
-          } );
+      for (const [fieldName, errs] of Object.entries(errRes.errors)) {
+        if (fieldName.includes(".")) {
+          setError(form, fieldName.split(".")[0], errs[0], {
+            overwrite: true,
+          });
         } else {
-          setError( form, fieldName, errs[0], {
-            overwrite: true
-          } );
+          setError(form, fieldName, errs[0], {
+            overwrite: true,
+          });
         }
       }
 
-      return message( form, { type: 'error', msg: 'There are errors in your form! Check them and try again.' }, { status: res?.status || 400 } );
+      return message(form, { type: "error", msg: "There are errors in your form! Check them and try again." }, { status: res?.status || 400 });
     }
 
-    if ( !res?.ok ) {
-      return message( form, { type: 'error', msg: res?.statusText || 'An error occurred while processing your request' }, { status: res?.status || 429 } );
+    if (!res?.ok) {
+      return message(form, { type: "error", msg: res?.statusText || "An error occurred while processing your request" }, { status: res?.status || 429 });
     }
 
-    event.locals.user = ( await res.json() ).data; //Why are we doing this?
+    event.locals.user = (await res.json()).data; //Why are we doing this?
 
-    return message( form, { type: 'success', msg: 'Product updated successfully!' } );
-	},
+    return message(form, { type: "success", msg: "Product updated successfully!" });
+  },
   createBrand: async (event) => {
     const form = await superValidate(event, arktype(brandSchema, { defaults: brandDefaults }));
 

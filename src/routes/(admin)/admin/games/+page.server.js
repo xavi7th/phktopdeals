@@ -4,20 +4,18 @@ import { fail } from "@sveltejs/kit";
 export async function load(event) {
   const fetchGamesCards = async () => {
     const res = await api({
-			method: 'get',
-			resource: 'products/type/game',
+      method: "get",
+      resource: "products/type/game",
       event,
-		});
+    });
 
     return await res?.json();
   };
 
-	const [cardsData] = await Promise.all([
-    fetchGamesCards(),
-	]);
+  const [cardsData] = await Promise.all([fetchGamesCards()]);
 
   event.setHeaders({
-    'Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400',
+    "Cache-Control": "public, max-age=3600, stale-while-revalidate=86400",
   });
 
   return {
@@ -27,27 +25,26 @@ export async function load(event) {
   };
 }
 
- export const actions = {
-	delete: async ( event ) => {
-
+export const actions = {
+  delete: async (event) => {
     const formData = await event.request.formData();
 
-    const res = await api( {
-      method: 'DELETE',
-      resource: 'products/'+formData.get('product_id'),
+    const res = await api({
+      method: "DELETE",
+      resource: "products/" + formData.get("product_id"),
       event,
-    } );
+    });
 
-    if ( res?.status == 422 ) {
+    if (res?.status == 422) {
       let errRes = await res.json();
 
-      return fail( res?.status || 400, { type: 'error', msg: 'There are errors in your form! Check them and try again.', errors: errRes.errors } );
+      return fail(res?.status || 400, { type: "error", msg: "There are errors in your form! Check them and try again.", errors: errRes.errors });
     }
 
-    if ( !res?.ok ) {
-      return fail( res?.status || 500, { message: res?.statusText || 'An error occurred while processing your request' } );
+    if (!res?.ok) {
+      return fail(res?.status || 500, { message: res?.statusText || "An error occurred while processing your request" });
     }
 
-    return { type: 'success', msg: 'Card deleted successfully!' };
+    return { type: "success", msg: "Card deleted successfully!" };
   },
-}
+};

@@ -55,6 +55,6 @@ export async function load(event) {
   return {
     /** @type { Promise< { data: import('$lib/types.js').UserOrder[] , metadata: { items_count: number; next_page_cursor : string; previous_page_cursor: string; } } > } */
     pageData: noJS ? await fetchUserOrders() : fetchUserOrders(), // This must come first to force awaiting in all noJS contexts
-    orderTabs
+    orderTabs,
   };
 }

@@ -25,16 +25,16 @@
    * </Modal>
    */
 
-  import { x } from '$lib/Components/iconPaths';
-  import SvgIcon from '$lib/Components/SvgIcon.svelte';
+  import { x } from "$lib/Components/iconPaths";
+  import SvgIcon from "$lib/Components/SvgIcon.svelte";
 
   // import { pageMounted } from '$stores';
   import { createEventDispatcher, onDestroy, onMount } from "svelte";
 
   export let title = "",
-  actionTitle = "Create",
-  handleClick = () => {},
-  name = "modal-" + crypto.randomUUID().replaceAll("-", "").substring(0, 10);
+    actionTitle = "Create",
+    handleClick = () => {},
+    name = "modal-" + crypto.randomUUID().replaceAll("-", "").substring(0, 10);
 
   const dispatch = createEventDispatcher();
 
@@ -44,12 +44,12 @@
       if (el) {
         clearInterval(modalInt);
 
-        el.element.on('open', (e) => {
+        el.element.on("open", (e) => {
           dispatch("open");
         });
 
-        el.element.on('close', (e) => {
-          console.log('modal:closed');
+        el.element.on("close", (e) => {
+          console.log("modal:closed");
           dispatch("close");
         });
 
@@ -58,7 +58,7 @@
 
       window?.HSStaticMethods?.autoInit();
     }, 600);
-  })
+  });
 
   onDestroy(() => {
     typeof window !== "undefined" && window?.HSOverlay?.close(`#${name}`);

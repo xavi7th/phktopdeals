@@ -6,11 +6,12 @@
   export let navData;
 </script>
 
-<div class="mt-4 md:mt-0 py-4 flex items-center justify-end gap-x-4 dark:border-neutral-700">
-  {#if navData.items_count && navData.total && ! navData.prev_page_cursor}
+<div class="mt-4 flex items-center justify-end gap-x-4 py-4 md:mt-0 dark:border-neutral-700">
+  {#if navData.items_count && navData.total && !navData.prev_page_cursor}
     <div>
       <p class="text-sm text-gray-600 dark:text-neutral-400">
-        <span class="hidden md:inline-block">Showing</span> <span class="font-semibold text-gray-800 dark:text-neutral-200">{navData.items_count}</span>
+        <span class="hidden md:inline-block">Showing</span>
+        <span class="font-semibold text-gray-800 dark:text-neutral-200">{navData.items_count}</span>
         out of
         <span class="font-semibold text-gray-800 dark:text-neutral-200">{navData.total}</span>
         results
@@ -21,9 +22,11 @@
   {#if navData.items_count && navData.total && navData.prev_page_cursor}
     <div>
       <p class="text-sm text-gray-600 dark:text-neutral-400">
-        <span class="hidden md:inline-block">Showing</span> <span class="font-semibold text-gray-800 dark:text-neutral-200">{navData.items_count}</span>
+        <span class="hidden md:inline-block">Showing</span>
+        <span class="font-semibold text-gray-800 dark:text-neutral-200">{navData.items_count}</span>
         out of
-        <span class="font-semibold text-gray-800 dark:text-neutral-200">{navData.total}</span> items left
+        <span class="font-semibold text-gray-800 dark:text-neutral-200">{navData.total}</span>
+         items left
       </p>
     </div>
   {/if}

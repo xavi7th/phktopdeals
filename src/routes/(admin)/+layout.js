@@ -1,5 +1,5 @@
-export async function load ({data}) {
-  const {brandForm, brands} = data;
+export async function load({ data }) {
+  const { brandForm, brands } = data;
   /** @type { import('$lib/types').AdminNavMenuItem[] } */
   const admin_routes = [
     {

@@ -329,25 +329,25 @@
 </div>
 
 <style global lang="scss">
-	.ProseMirror:focus {
-		outline: none;
-	}
+  .ProseMirror:focus {
+    outline: none;
+  }
 
-	.tiptap ul p,
-	.tiptap ol p {
-		display: inline;
-	}
+  .tiptap ul p,
+  .tiptap ol p {
+    display: inline;
+  }
 
-	.tiptap p {
-		@apply text-neutral-400
-	}
+  .tiptap p {
+    @apply text-neutral-400;
+  }
 
-	.tiptap p.is-editor-empty:first-child::before {
-		font-size: 14px;
-		content: attr(data-placeholder);
-		float: left;
-		height: 0;
-		pointer-events: none;
+  .tiptap p.is-editor-empty:first-child::before {
+    font-size: 14px;
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    pointer-events: none;
     color: #9ca3af !important;
   }
 </style>

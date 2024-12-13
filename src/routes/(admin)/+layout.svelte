@@ -1,11 +1,11 @@
 <script>
-	import { navigating } from '$app/stores';
-	import Header from '$partials/admin/Header.svelte';
-	import { open } from '$lib/Components/iconPaths.js';
-	import SvgIcon from '$lib/Components/SvgIcon.svelte';
-	import Sidebar from '$partials/admin/Sidebar.svelte';
-  import Brand from '$partials/brands/BrandModal.svelte';
-	import PageSkeleton from '$lib/Components/PageSkeleton.svelte';
+  import { navigating } from "$app/stores";
+  import Header from "$partials/admin/Header.svelte";
+  import { open } from "$lib/Components/iconPaths.js";
+  import SvgIcon from "$lib/Components/SvgIcon.svelte";
+  import Sidebar from "$partials/admin/Sidebar.svelte";
+  import Brand from "$partials/brands/BrandModal.svelte";
+  import PageSkeleton from "$lib/Components/PageSkeleton.svelte";
 
   export let data;
 

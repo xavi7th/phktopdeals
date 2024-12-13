@@ -30,7 +30,6 @@ export async function load(event) {
   };
 }
 
-
 export const actions = {
   /** @param {import('@sveltejs/kit').RequestEvent} event */
   deleteBrand: async (event) => {

@@ -115,7 +115,7 @@ export const GiftCardDefaults = {
 export const eSimSchema = type({
   product_name: type("string>1").describe("provided"),
   product_type: ["string>1", "@", "selected"], //optional syntax
-  'product_image?': type("File").describe('provided').optional(),
+  "product_image?": type("File").describe("provided").optional(),
   brand_id: type("string>1").describe("provided"),
   product_category: ["string[]>1", "@", "2 and above"],
   regions: ["string[]>1", "@", "selected"],
@@ -123,25 +123,25 @@ export const eSimSchema = type({
   percentage_discount: "0<=number<100",
   purchase_commission: type("0<number<100").describe("at least 0.5"),
   variable_denomination: "boolean?",
-  'price_denominations?': "string[] | number[]",
+  "price_denominations?": "string[] | number[]",
   "discount_until?": "string|null|undefined",
   faqs: type("string").describe("provided"),
 });
 
 export const eSimDefaults = {
-  product_name: '',
-  product_type: 'esim',
+  product_name: "",
+  product_type: "esim",
   brand_id: null,
   product_image: null,
-  product_category: [''],
-  regions: [''],
-  price_denominations: [''],
+  product_category: [""],
+  regions: [""],
+  price_denominations: [""],
   product_min_price: 0,
   percentage_discount: 0,
   purchase_commission: 5,
   variable_denomination: false,
   discount_until: null,
-  faqs: undefined
+  faqs: undefined,
 };
 
 export const brandSchema = type({
@@ -165,7 +165,7 @@ export const brandEditDefault = {
 export const gameSchema = type({
   product_name: type("string>1").describe("provided"),
   product_type: ["string>1", "@", "selected"], //optional syntax
-  product_image: type("File | null").describe('provided').optional(),
+  product_image: type("File | null").describe("provided").optional(),
   brand_id: type("string>1").describe("provided"),
   product_category: ["string[]>1", "@", "2 and above"],
   regions: ["string[]>1", "@", "selected"],
@@ -173,19 +173,19 @@ export const gameSchema = type({
   percentage_discount: "0<=number<100",
   purchase_commission: type("0<number<100").describe("at least 0.5"),
   variable_denomination: "boolean?",
-  'price_denominations?': "string[]",
+  "price_denominations?": "string[]",
   "discount_until?": "string|null|undefined",
   faqs: type("string").describe("provided"),
 });
 
 export const gameDefaults = {
-  product_name: '',
-  product_type: 'game',
+  product_name: "",
+  product_type: "game",
   brand_id: null,
   product_image: null,
-  product_category: [''],
-  regions: [''],
-  price_denominations: [''],
+  product_category: [""],
+  regions: [""],
+  price_denominations: [""],
   product_min_price: 0,
   percentage_discount: 0,
   purchase_commission: 5,
@@ -197,7 +197,7 @@ export const gameDefaults = {
 export const topUpSchema = type({
   product_name: type("string>1").describe("provided"),
   product_type: ["string>1", "@", "selected"], //optional syntax
-  product_image: type("File | null").describe('provided').optional(),
+  product_image: type("File | null").describe("provided").optional(),
   brand_id: type("string>1").describe("provided"),
   product_category: ["string[]>1", "@", "2 and above"],
   regions: ["string[]>1", "@", "selected"],
@@ -205,23 +205,23 @@ export const topUpSchema = type({
   percentage_discount: "0<=number<100",
   purchase_commission: type("0<number<100").describe("at least 0.5"),
   variable_denomination: "boolean?",
-  'price_denominations?': "string[]",
+  "price_denominations?": "string[]",
   "discount_until?": "string|null|undefined",
   faqs: type("string").describe("provided"),
 });
 
 export const topUpDefaults = {
-  product_name: '',
-  product_type: 'top-up',
+  product_name: "",
+  product_type: "top-up",
   brand_id: null,
   product_image: null,
-  product_category: [''],
-  regions: [''],
-  price_denominations: [''],
+  product_category: [""],
+  regions: [""],
+  price_denominations: [""],
   product_min_price: 0,
   percentage_discount: 0,
   purchase_commission: 5,
   variable_denomination: false,
   discount_until: null,
-  faqs: undefined
+  faqs: undefined,
 };
