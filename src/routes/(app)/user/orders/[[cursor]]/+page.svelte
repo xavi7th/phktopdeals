@@ -9,8 +9,6 @@
 
   export let data;
 
-  let currentTab = "All Orders";
-
   $: ({ pageData, orderTabs, filter } = data);
 
   /**
@@ -85,10 +83,6 @@
                   <a
                     href="/user/orders/details/{order.id}"
                     class="flex w-32 items-center rounded-lg pt-2 text-sm text-gray-800 underline dark:text-neutral-400 dark:hover:text-neutral-300 dark:focus:text-neutral-300"
-                    aria-haspopup="dialog"
-                    aria-expanded="false"
-                    aria-controls="create-order-modal"
-                    data-hs-overlay="#manage-orders"
                     on:click={loadDetails}>
                     View Voucher Codes
                   </a>
@@ -206,10 +200,6 @@
               <a
                 href="/user/orders/details/{order.id}"
                 class="rounded bg-teal-700 px-4 py-2 text-xs text-white hover:bg-teal-600"
-                aria-haspopup="dialog"
-                aria-expanded="true"
-                aria-controls="view-order-details"
-                data-hs-overlay="#view-order-details"
                 on:click={loadDetails}>
                 Voucher Codes
               </a>

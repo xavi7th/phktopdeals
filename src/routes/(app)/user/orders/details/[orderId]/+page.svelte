@@ -24,7 +24,7 @@
           </span>
 
           <span class="block text-base font-semibold text-gray-800 dark:text-neutral-400">
-            Amount: <span class="font-semibold">{toCurrency(order?.pay_amount)}</span>
+            Amount: <span class="font-semibold">{toCurrency(order?.price_amount)}</span>
             <span
               class="ml-3 inline-flex items-center gap-x-1 px-1.5 py-1 text-xs font-medium {!order?.is_processed
                 ? 'bg-red-100 text-red-800 dark:bg-red-500/10 dark:text-red-500'
