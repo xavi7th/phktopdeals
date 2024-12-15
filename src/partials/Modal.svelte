@@ -49,7 +49,6 @@
         });
 
         el.element.on("close", (e) => {
-          console.log("modal:closed");
           dispatch("close");
         });
 

@@ -14,16 +14,12 @@
 
   $: ({ currency, amount, details, qrCode } = data);
 
-  $: console.log(details);
-
   onMount(() => {
     evtSrc = new EventSource(`${env.PUBLIC_VITE_BASE_API}user-transactions/${details?.transaction.id}/status-update`, {
       withCredentials: true,
     });
 
-    evtSrc.onopen = (
-      e, // console.log('Connection with open: ', e)
-    ) =>
+    evtSrc.onopen = (e) =>
       (evtSrc.onmessage = (e) => {
         refreshedStatus = JSON.parse(e.data).status;
 

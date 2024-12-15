@@ -53,8 +53,6 @@ export async function load(event) {
       url += "?cursor=" + event.params.cursor;
     }
 
-    console.log(url);
-
     const res = await api({
       method: "get",
       resource: url,

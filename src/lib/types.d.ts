@@ -149,7 +149,9 @@ export type UserOrder = {
   status: string;
   expired_at?: string | null;
   valid_until?: string | null;
-  is_processed: boolean;
   product_image_url: string;
   voucher_codes: { code: string; amount: number }[];
+  is_processed: boolean;
+  is_processing?: boolean;
+  app_user?: AppUser;
 };
