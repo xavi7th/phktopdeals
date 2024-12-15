@@ -1,8 +1,6 @@
 import { api } from "$lib/helpers";
 
 export async function load(event) {
-  console.log(event.params);
-
   const fetchProducts = async () => {
     const res = await api({
       method: "get",

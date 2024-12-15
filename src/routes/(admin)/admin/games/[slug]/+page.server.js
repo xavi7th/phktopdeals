@@ -61,8 +61,6 @@ export async function load(event) {
 
   productData.data["price_denominations"] = productData.data.product_price.denominations;
 
-  console.log(productData.data);
-
   const form = await superValidate(productData.data, arktype(gameSchema, { defaults: gameDefaults }));
 
   return {
