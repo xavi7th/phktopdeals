@@ -22,5 +22,9 @@
     "tiptap",
     "usdttrc"
   ],
-  "cSpell.ignoreWords": ["aboyisaman"]
+  "cSpell.ignoreWords": ["aboyisaman"],
+  "search.exclude": {
+    "public_html/*": true,
+    "storage/*": true
+  }
 }
