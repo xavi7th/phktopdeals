@@ -20,7 +20,7 @@
     timeoutMs: 8000,
   });
 
-  $: minAmount = Math.ceil((currencies[$form.payment_method]?.min_amount || 0) / 10) * 10;
+  $: minAmount = Math.max(Math.ceil((currencies[$form.payment_method]?.min_amount || 0) / 10) * 10, 50);
 </script>
 
 {#if $message}
