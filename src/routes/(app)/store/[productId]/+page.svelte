@@ -24,7 +24,7 @@
   $: $form.unit_price = product?.product_price?.denominations?.length ? Number(product.product_price.denominations[0]) : 0;
   $: $form.product_id = product?.id;
   $: $form.email = user?.email;
-  $: totalPurchaseAmount = percentageCalculation($form.unit_price * $form.quantity, product.product_price.commission, product.percentage_discount, true);
+  $: totalPurchaseAmount = percentageCalculation($form.unit_price, $form.quantity, product.product_price.commission, product.percentage_discount, true);
 </script>
 
 <svelte:head>
@@ -76,7 +76,7 @@
               on:click={() => {
                 (selectedDenomination = `btn-${idx}`), ($form.unit_price = Number(amount) || 0);
               }}>
-              {percentageCalculation(amount, product.product_price.commission, product.percentage_discount)}
+              {percentageCalculation(amount, 1, product.product_price.commission, product.percentage_discount)}
               <span class="invisible absolute left-0 top-0 flex h-7 w-7 items-center justify-center rounded-ee-2xl rounded-ss-md bg-white text-brand-600 group-[.selected]:visible">
                 {@html checkPlus}
               </span>
