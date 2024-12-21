@@ -137,7 +137,7 @@
         </div>
       {/if}
 
-      <div class="col-span-12">
+      <!-- <div class="col-span-12">
         <FloatingNumericTextInput
           name="purchase_commission"
           label="Purchase Commission"
@@ -145,7 +145,7 @@
           bind:value={$formData.purchase_commission}
           isError={!!$errors.purchase_commission}
           msg={$errors.purchase_commission} />
-      </div>
+      </div> -->
 
       <div class="col-span-12">
         <FloatingNumericTextInput

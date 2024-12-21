@@ -1,3 +1,9 @@
+import { clsx } from "clsx";
+import { error } from "@sveltejs/kit";
+import { env } from "$env/dynamic/public";
+import { twMerge } from "tailwind-merge";
+import { PUBLIC_APP_COMMISSION_AMOUNT } from '$env/static/public';
+
 /**
  * Transforms an error object into HTML string
  *
@@ -49,8 +55,14 @@ export const toCurrency = (amount, currencySymbol = "$") => {
   );
 };
 
-export const percentageCalculation = (amount = 0, commission = 0, discount = 0, numeric = false) => {
+export const percentageCalculation = (unit_price = 0, quantity = 1, commission = 0, discount = 0, numeric = false) => {
   let amount_to_pay;
+
+  let amount = Number(unit_price) * Number(quantity);
+
+  if (commission <= 0) {
+    amount = (Number(unit_price) + Number(PUBLIC_APP_COMMISSION_AMOUNT)) * Number(quantity);
+  }
 
   if (discount) {
     const discount_percent = Number(amount) - (amount * discount) / 100;
@@ -244,9 +256,6 @@ export const getFirstElement = (str, elem = "p") => {
   return "";
 };
 
-import { error } from "@sveltejs/kit";
-import { env } from "$env/dynamic/public";
-
 /**
  * Custom function to set API headers and make API calls
  *
@@ -393,9 +402,6 @@ export const formDataToObject = (form) => {
  * @returns {object}
  */
 export const convertNonPOJOsToPOJOs = (data) => JSON.parse(JSON.stringify(data));
-
-import { clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
 
 /**
  * @param  {import('clsx').ClassValue[]} inputs

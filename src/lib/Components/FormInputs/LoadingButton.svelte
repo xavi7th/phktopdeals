@@ -3,7 +3,7 @@
 <!-- <LoadingButton class="mt-10 bg-black px-10 py-4 font-medium hover:bg-gray-700 hover:text-neutral-50 focus:bg-gray-700" label="Create Account" bind:submitting={$submitting} /> -->
 
 <!-- <LoadingButton class="mt-10 bg-black px-10 py-4 font-medium hover:bg-gray-700 hover:text-neutral-50 focus:bg-gray-700" {timeout} {delayed} {submitting}>
-  Pay with Crypto { percentageCalculation($form.unit_price * $form.quantity, product.product_price.commission, product.percentage_discount) }
+  Pay with Crypto { percentageCalculation($form.unit_price, $form.quantity, product.product_price.commission, product.percentage_discount) }
 </LoadingButton> -->
 
 <script>

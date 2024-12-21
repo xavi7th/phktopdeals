@@ -40,7 +40,7 @@
               <a
                 href={`/store/${product.name_slug}_${product.id}`}
                 class="mt-1 rounded-b-xl border-t bg-brand px-4 py-3 text-center text-sm text-black transition-colors duration-300 hover:bg-brand-500 hover:text-white md:px-5 md:py-4 dark:border-brand-700 dark:bg-brand-900 dark:text-brand-50">
-                Buy Now from {percentageCalculation(product.min_price, 0, product.percentage_discount)}
+                Buy Now from {percentageCalculation(product.min_price, 1, 0, product.percentage_discount)}
               </a>
             </div>
           {:else}
