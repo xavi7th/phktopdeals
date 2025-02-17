@@ -1,19 +1,18 @@
 <script>
   import { dev } from "$app/environment";
-  import { toCurrency } from "$lib/helpers";
-  import Modal from "$partials/Modal.svelte";
+  import Modal from '$partials/Modal.svelte';
   import Toast from "$lib/Components/Toast.svelte";
   import { TopUpAccountSchema } from "$lib/schemas";
   import SuperDebug, { superForm } from "sveltekit-superforms";
-  import LoadingButton from "$lib/Components/FormInputs/LoadingButton.svelte";
-  import FloatingNumericTextInput from "$lib/Components/FormInputs/FloatingNumericTextInput.svelte";
-  import FloatingSearchableSelectInput from "$lib/Components/FormInputs/FloatingSearchableSelectInput.svelte";
+  import LoadingButton from '$lib/Components/FormInputs/LoadingButton.svelte';
+  import FloatingNumericTextInput from '$lib/Components/FormInputs/FloatingNumericTextInput.svelte';
+  import FloatingSearchableSelectInput from '$lib/Components/FormInputs/FloatingSearchableSelectInput.svelte';
 
   /** @type {import('sveltekit-superforms').SuperValidated<import('sveltekit-superforms').Infer<<typeof TopUpAccountSchema.infer>>>} */
   export let data;
   /** @type { import('$lib/types').NowCryptoCurrency[] | {} } */
   export let currencies = {};
-  export let wallet_balance = "$0.00";
+  export let wallet_balance = 0;
 
   const { form, errors, message, delayed, submitting, timeout, enhance } = superForm(data, {
     delayMs: 500,
@@ -21,6 +20,7 @@
   });
 
   $: minAmount = Math.max(Math.ceil((currencies[$form.payment_method]?.min_amount || 0) / 10) * 10, 50);
+
 </script>
 
 {#if $message}
@@ -33,25 +33,15 @@
   <SuperDebug data={{ $message, $form, $errors }} label="My form data" collapsible={true} display={dev} />
 </div>
 
-<div class="flex items-center justify-between rounded-lg bg-white p-3.5 shadow-md sm:mx-10 dark:bg-gray-700">
-  <div class="flex items-center gap-3 sm:gap-8">
-    <div class="grid size-16 place-content-center rounded-md border-brand-500 bg-brand-700"></div>
-    <div>
-      <p class="text-xs text-slate-800 dark:text-slate-400">Current Balance</p>
-      <p class="text-xl text-slate-800 dark:text-slate-100">{toCurrency(wallet_balance)}</p>
-    </div>
-  </div>
-  <div>
-    <button
-      class="inline-flex items-center justify-center gap-x-2 text-nowrap rounded-md border border-transparent bg-brand-400 px-4 py-2.5 text-sm font-normal text-gray-800 shadow-md hover:bg-brand-500 focus:bg-brand-500 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-      aria-haspopup="dialog"
-      aria-expanded="false"
-      aria-controls="hs-static-create-modal"
-      data-hs-overlay="#payment-method">
-      Recharge Wallet
-    </button>
-  </div>
-</div>
+<button
+  type="button"
+  class="inline-flex items-center justify-center w-full px-12 py-4 mt-6 font-semibold text-white transition-all duration-200 rounded-md bg-brand-600 dark:bg-brand-800 hover:opacity-80 focus:opacity-80"
+  aria-haspopup="dialog"
+  aria-expanded="false"
+  aria-controls="hs-static-create-modal"
+  data-hs-overlay="#payment-method">
+  Proceed to Payment
+</button>
 
 <Modal title="Select Payment Method" name="payment-method">
   <div slot="content">

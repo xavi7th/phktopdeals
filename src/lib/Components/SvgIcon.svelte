@@ -33,8 +33,6 @@
     svgWidth = svgHeight,
     stroke = "currentColor",
     strokeWidth = 2;
-
-  $: props = (({ slot, fill, minHeight, svgHeight, svgWidth, stroke, strokeWidth, ...rest }) => rest)($$props);
 </script>
 
 <svg
@@ -47,7 +45,7 @@
   stroke-linecap="round"
   stroke-linejoin="round"
   stroke-width={strokeWidth}
-  {...props}
+  {...$$restProps}
   style="--min-height:{minHeight}"
   on:click>
   <slot />

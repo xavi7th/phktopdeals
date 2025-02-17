@@ -6,11 +6,9 @@
     svgClass = "",
     sectionClass = "text-center",
     strokeColor = "";
-
-  $: props = (({ title, titleClass, svgClass, sectionClass, ...rest }) => rest)($$props);
 </script>
 
-<div class="mx-auto mb-12 max-w-2xl lg:mb-16 {sectionClass}" {...props}>
+<div class="mx-auto mb-12 max-w-2xl lg:mb-16 {sectionClass}" {...$$restProps}>
   <h2 class="text-title relative {titleClass}">
     {title}
 
