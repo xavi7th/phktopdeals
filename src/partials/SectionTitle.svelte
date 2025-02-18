@@ -1,14 +1,10 @@
 <script>
   import SvgIcon from "$lib/Components/SvgIcon.svelte";
 
-  export let title = "Section Title",
-    titleClass = "",
-    svgClass = "",
-    sectionClass = "text-center",
-    strokeColor = "";
+  let { class: className, title = "Section Title", titleClass = "", svgClass = "", sectionClass = "text-center", strokeColor = "", ...rest } = $props();
 </script>
 
-<div class="mx-auto mb-12 max-w-2xl lg:mb-16 {sectionClass}" {...$$restProps}>
+<div class="mx-auto mb-12 max-w-2xl lg:mb-16 {sectionClass}" {...rest}>
   <h2 class="text-title relative {titleClass}">
     {title}
 

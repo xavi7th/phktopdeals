@@ -9,15 +9,7 @@ togglePw='["#password-confirmation", "#hs-floating-input-passowrd-value"]'/> -->
 <script>
   import FormMessage from "$lib/Components/FormMessage.svelte";
 
-  export let name = "check-" + crypto.randomUUID().replaceAll("-", "").substring(0, 10),
-    isError = true,
-    label = "Label",
-    tooltip = " ",
-    gray = false,
-    value = true,
-    checked = false;
-  /** @type {string|string[]|undefined} */
-  export let msg = [];
+  let { class: className, name = "check-" + crypto.randomUUID().replaceAll("-", "").substring(0, 10), isError = true, label = "Label", tooltip = " ", gray = false, value = true, checked = $bindable(false), msg = [], ...rest } = $props();
 </script>
 
 <div class="relative flex-1">
@@ -26,7 +18,7 @@ togglePw='["#password-confirmation", "#hs-floating-input-passowrd-value"]'/> -->
       type="checkbox"
       {name}
       id={name}
-      {...$$restProps}
+      {...rest}
       value={value ?? ""}
       bind:checked
       class="hs-tooltip-toggle relative h-7 w-[3.25rem] cursor-pointer rounded-full border-transparent

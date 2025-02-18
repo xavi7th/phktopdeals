@@ -3,14 +3,7 @@
 <script>
   import FormMessage from "$lib/Components/FormMessage.svelte";
 
-  export let name = "file-" + crypto.randomUUID().replaceAll("-", "").substring(0, 10),
-    isError = true,
-    label = "",
-    gray = false,
-    files = undefined;
-
-  /** @type {string|string[]|undefined} */
-  export let msg = [];
+  let { class: className, name = "file-" + crypto.randomUUID().replaceAll("-", "").substring(0, 10), isError = true, label = "", gray = false, files = $bindable(undefined), msg = [], ...rest } = $props();
 </script>
 
 <div class="relative">
@@ -18,7 +11,7 @@
     type="file"
     {name}
     id={name}
-    {...$$restProps}
+    {...rest}
     bind:files
     class="block w-full rounded-lg border border-gray-200 text-sm shadow-sm file:me-4 file:border-0 file:bg-gray-50
         file:px-4 file:py-3 focus:z-10 focus:border-brand-500 focus:ring-brand-500

@@ -6,21 +6,21 @@ import { importAssets } from "svelte-preprocess-import-assets";
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-  /** @type {import('@sveltejs/vite-plugin-svelte').SvelteConfig['onwarn']} */
+  // /** @type {import('@sveltejs/vite-plugin-svelte').SvelteConfig['onwarn']} */
   onwarn: (warning, handler) => {
     const { code, frame } = warning;
 
     if (
-      code == "anchor-is-valid" ||
-      code == "a11y-invalid-attribute" ||
-      code == "a11y-media-has-caption" ||
-      code == "a11y-no-static-element-interactions" ||
-      code == "a11y-missing-attribute" ||
-      code == "css-unused-selector" ||
-      code == "a11y-missing-content" ||
-      code == "a11y-label-has-associated-control" ||
-      // code.startsWith('a11y-') ||
-      (code == "missing-declaration" && frame.includes("route"))
+      code == "anchor_is_valid" ||
+      code == "a11y_invalid_attribute" ||
+      code == "a11y_media_has_caption" ||
+      code == "a11y_no_static_element_interactions" ||
+      code == "a11y_missing_attribute" ||
+      code == "css_unused_selector" ||
+      code == "a11y_missing_content" ||
+      code == "a11y_label_has_associated_control" ||
+      // code.startsWith('a11y_') ||
+      (code == "missing_declaration" && frame.includes("route"))
     ) {
       return;
     }

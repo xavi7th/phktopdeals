@@ -7,26 +7,10 @@
   import { isObject } from "$lib/helpers";
   import FormMessage from "../FormMessage.svelte";
 
-  export let name = "tags-" + crypto.randomUUID().replaceAll("-", "").substring(0, 10),
-    isError = true,
-    label = "Choose",
-    gray = false,
-    size = "pt-3 pb-0.5";
-  /** @type {string|string[]|undefined} */
-  export let msg = [];
-
-  /** @type { (string[]|number[]) }*/
-  export let value = [];
-
-  /** @type {string[] | Object.<string, string>} */
-  export let options = [];
-
-  export { className as class };
-
-  let className = "";
+  let { class: className, name = "tags-" + crypto.randomUUID().replaceAll("-", "").substring(0, 10), isError = true, label = "Choose", gray = false, size = "pt-3 pb-0.5", msg = [], value = $bindable([]), options = [], ...rest } = $props();
 
   /** @type {import('@preline/select').default} elem */
-  let elem;
+  let elem = $state(undefined);
 
   onMount(() => {
     if ($pageMounted) {

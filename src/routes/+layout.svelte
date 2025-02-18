@@ -6,6 +6,8 @@
 
   import "../app.scss";
 
+  let { children } = $props();
+
   afterNavigate(() => {
     try {
       window.HSStaticMethods.autoInit();
@@ -61,4 +63,4 @@
   <meta name="robots" content="index,follow" />
 </svelte:head>
 
-<slot></slot>
+{@render children()}

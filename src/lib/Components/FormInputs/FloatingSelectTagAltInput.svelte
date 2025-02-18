@@ -15,26 +15,9 @@
   import { isObject } from "$lib/helpers";
   import FormMessage from "../FormMessage.svelte";
 
-  export let name = "select-" + crypto.randomUUID().replaceAll("-", "").substring(0, 10),
-    isError = true,
-    label = "Choose",
-    gray = false,
-    size = "p-4",
-    multiple = true;
+  let { class: className, name = "select-" + crypto.randomUUID().replaceAll("-", "").substring(0, 10), isError = true, label = "Choose", gray = false, size = "p-4", multiple = true, msg = [], value = $bindable([]), options = [], ...rest } = $props();
 
-  /** @type {string|string[]|undefined} */
-  export let msg = [];
-
-  /** @type {string[]} */
-  export let value = [];
-
-  /** @type {string[] | Object.<string, string>} */
-  export let options = [];
-
-  export { className as class };
-
-  let className = "";
-  let elem;
+  let elem = $state(undefined);
 
   onMount(() => {
     if ($pageMounted) {
@@ -54,7 +37,7 @@
     {name}
     id={name}
     bind:value
-    {...$$restProps}
+    {...rest}
     multiple
     data-hs-select={`{
     "placeholder": "Select ${multiple ? "multiple" : "single"} ${label} option${multiple ? "s" : ""}...",

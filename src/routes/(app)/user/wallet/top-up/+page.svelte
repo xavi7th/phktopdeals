@@ -68,16 +68,17 @@
         <div class="mb-8 h-96 w-96 bg-black"></div>
       {/if}
     </div>
-    <p id="time" class="mb-4">
+    <div id="time" class="mb-4">
       <CountdownTimer hideZeroValues date={new Date(details?.expiration_estimate_date).getTime()} onFinish={() => (priceExpired = true)}>
-        <svelte:fragment slot="beforeDisplayText">
+        {#snippet beforeDisplayText()}
           <span>Time Left:</span>
-        </svelte:fragment>
-        <svelte:fragment slot="contentAfterCountdown">
+        {/snippet}
+
+        {#snippet contentAfterCountdown()}
           <span class="block text-xl font-semibold text-red-600">Price Expired!! Refresh the page to get a new amount to send.</span>
-        </svelte:fragment>
+        {/snippet}
       </CountdownTimer>
-    </p>
+    </div>
     <p class="mb-4">
       Status: <b class="uppercase">{priceExpired ? "Expired" : refreshedStatus || details?.payment_status}</b>
     </p>

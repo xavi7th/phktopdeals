@@ -11,22 +11,7 @@
   import { isObject } from "$lib/helpers";
   import FormMessage from "../FormMessage.svelte";
 
-  export let name = "select-" + crypto.randomUUID().replaceAll("-", "").substring(0, 10),
-    isError = true,
-    label = "Choose",
-    gray = false,
-    size = "p-4",
-    value = "";
-
-  /** @type {string|string[]|undefined} */
-  export let msg = [];
-
-  /** @type {string[] | Object<any, string>} */
-  export let options = [];
-
-  export { className as class };
-
-  let className = "";
+  let { class: className, name = "select-" + crypto.randomUUID().replaceAll("-", "").substring(0, 10), isError = true, label = "Choose", gray = false, size = "p-4", value = $bindable(""), msg = [], options = [], ...rest } = $props();
 </script>
 
 <div class="relative {className}">
@@ -40,7 +25,7 @@
         {gray ? 'bg-gray-100 dark:!bg-neutral-800' : ''} {!msg?.toString() && gray ? 'border-transparent dark:border-transparent' : ''}
         {msg?.toString() && isError ? 'border-red-500 focus:border-red-500 focus:ring-red-500 dark:bg-red-900/20' : ''}
         {msg?.toString() && !isError ? 'border-teal-500 focus:border-teal-500 focus:ring-teal-500 dark:bg-teal-900/20' : ''}"
-    {...$$restProps}>
+    {...rest}>
     <option value={undefined}>Select a choice</option>
 
     {#if isObject(options) && Object.entries(options).length > 0}

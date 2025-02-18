@@ -48,22 +48,26 @@
     <table class="w-full min-w-[700px] text-center">
       <thead class="h-14 bg-gray-50 text-slate-800 dark:bg-neutral-700 dark:text-slate-100">
         <slot name="thead">
-          <th>S/N</th>
-          <th>Order Number</th>
-          <th>Amount Paid</th>
-          <th>Tax</th>
-          <th>Total</th>
-          <th>Balance</th>
+          <tr>
+            <th>S/N</th>
+            <th>Order Number</th>
+            <th>Amount Paid</th>
+            <th>Tax</th>
+            <th>Total</th>
+            <th>Balance</th>
+          </tr>
         </slot>
       </thead>
       <tfoot class="h-14 bg-gray-50 text-slate-800 dark:bg-neutral-700 dark:text-slate-100">
         <slot name="thead">
-          <th>S/N</th>
-          <th>Order Number</th>
-          <th>Amount Paid</th>
-          <th>Tax</th>
-          <th>Total</th>
-          <th>Balance</th>
+          <tr>
+            <th>S/N</th>
+            <th>Order Number</th>
+            <th>Amount Paid</th>
+            <th>Tax</th>
+            <th>Total</th>
+            <th>Balance</th>
+          </tr>
         </slot>
       </tfoot>
       <tbody class="border odd:*:bg-white even:*:bg-gray-100 dark:border-neutral-800 dark:odd:*:bg-neutral-900 dark:even:*:bg-neutral-800">

@@ -1,11 +1,9 @@
 <!-- @see https://dev.to/kvetoslavnovak/enhancing-degressive-enhancement-of-streaming-3ehj -->
 <script>
-  import { browser } from "$app/environment";
   import { onDestroy } from "svelte";
+  import { browser } from "$app/environment";
 
-  let className = undefined;
-
-  export { className as class };
+  let { class: className, ...rest } = $props();
 
   onDestroy(() => {
     if (browser) {

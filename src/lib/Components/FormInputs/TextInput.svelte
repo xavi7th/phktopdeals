@@ -10,17 +10,7 @@
   import SvgIcon from "../SvgIcon.svelte";
   import FormMessage from "$lib/Components/FormMessage.svelte";
 
-  export let name = "input-" + crypto.randomUUID().replaceAll("-", "").substring(0, 10),
-    isError = true,
-    label = "",
-    placeholder = " ",
-    gray = false,
-    togglePw = undefined,
-    strongPw = undefined,
-    value = "";
-
-  /** @type {string|string[]|undefined} */
-  export let msg = [];
+  let { class: className, name = "input-" + crypto.randomUUID().replaceAll("-", "").substring(0, 10), isError = true, label = "", placeholder = " ", gray = false, togglePw = undefined, strongPw = undefined, value = $bindable(''), msg = [], ...rest } = $props();
 </script>
 
 <div class="relative flex-1">
@@ -29,7 +19,7 @@
     id={name}
     bind:value
     {placeholder}
-    {...$$restProps}
+    {...rest}
     class="peer block w-full rounded-lg border-gray-200 p-4 text-sm placeholder:text-transparent autofill:pb-2 autofill:pt-6
       focus:border-brand-500/50 focus:pb-2 focus:pt-6 focus:ring-brand-500/50 disabled:pointer-events-none
       disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:focus:ring-neutral-600 [&:not(:placeholder-shown)]:pb-2 [&:not(:placeholder-shown)]:pt-6

@@ -3,22 +3,26 @@
   import { fly } from "svelte/transition";
   import { onDestroy, onMount } from "svelte";
 
-  export { className as class };
-
-  export let hideZeroValues = false, // toggles whether to display 0d 0h 05m or just the 05m
+  let {
+    class: className,
+    hideZeroValues = false, // toggles whether to display 0d 0h 05m or just the 05m
     /** @type {string|number} */
     date = new Date().getTime() + 10000, // example Jan 5, 2030 15:37:25 or epoch timestamp
     hideOnFinish = false, // remove the displayText when it finishes
     invisible = false, // Make the timer run without any visual display on the page
     singleCharacterTimer = true, // changes the displays to be 5m or 5 minutes
     timerClasses = "font-bold text-xl",
-    onFinish = () => console.log("-----===== Timer Ended! =====------");
+    onFinish = () => console.log("-----===== Timer Ended! =====------"),
+    children,
+    contentAfterCountdown,
+    beforeDisplayText,
+    afterDisplayText
+  } = $props();
 
-  let className = "",
-    displayText = "",
+  let displayText = $state(""),
     /** @type {number|undefined} */
-    intervalId = undefined,
-    countDownEpoch = 0;
+    intervalId = $state(undefined),
+    countDownEpoch = $state(0);
 
   function resetInterval() {
     displayText = "";
@@ -53,7 +57,7 @@
     if (distance <= 0) {
       resetInterval();
 
-      if (!hideOnFinish && !$$slots.contentAfterCountdown) {
+      if (!hideOnFinish && !contentAfterCountdown) {
         displayText = "00 s";
       }
 
@@ -77,13 +81,14 @@
 <!-- EXAMPLE USAGE -->
 <!-- <CountdownTimer date={new Date().getTime() + 10000} onFinish={() => alert('time up!')} invisible/> -->
 <!--
-<CountdownTimer class="text-gray-300 text-center px-4" date='Jan 5, 2030 15:37:25' onFinish={() => timeUp = true} hideZeroValues hideOnFinish singleCharacterTimer={false} transitionKey={2}>
-  <svelte:fragment slot="beforeDisplayText">
-    <span>Validating withdrawal in </span>
-  </svelte:fragment>
-  <svelte:fragment slot="contentAfterCountdown">
-    <span transition:fade>Time Up</span>
-  </svelte:fragment>
+<CountdownTimer hideZeroValues date={new Date(details?.expiration_estimate_date).getTime()} onFinish={() => (priceExpired = true)}>
+  {#snippet beforeDisplayText()}
+    <span>Time Left:</span>
+  {/snippet}
+
+  {#snippet contentAfterCountdown()}
+    <span class="block text-xl font-semibold text-red-600">Price Expired!! Refresh the page to get a new amount to send.</span>
+  {/snippet}
 </CountdownTimer>
 -->
 
@@ -94,19 +99,19 @@
 <div class={cn("relative min-h-6 text-center", className)} class:hidden={invisible}>
   {#if displayText}
     <p class="mb-0 whitespace-nowrap" in:fly={{ y: 10, duration: 500 }} out:fly={{ y: -30, duration: 400 }}>
-      <slot name="beforeDisplayText" />
+      {@render beforeDisplayText?.()}
 
       <span class={timerClasses}>{displayText}</span>
 
-      <slot name="afterDisplayText" />
+      {@render afterDisplayText?.()}
     </p>
 
-    <slot />
+    {@render children?.()}
   {/if}
 
-  {#if $$slots.contentAfterCountdown && countDownEpoch == -1}
+  {#if contentAfterCountdown && countDownEpoch == -1}
     <p class="mb-0 whitespace-nowrap" in:fly={{ x: -20, duration: 600, delay: 500 }} out:fly={{ x: 30, duration: 500 }}>
-      <slot name="contentAfterCountdown" />
+      {@render contentAfterCountdown?.()}
     </p>
   {/if}
 </div>
