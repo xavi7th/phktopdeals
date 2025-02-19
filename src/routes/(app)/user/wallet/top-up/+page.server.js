@@ -9,7 +9,7 @@ export async function load(event) {
       data: {
         price_amount: event.url.searchParams.get("amount"),
         payment_method: event.url.searchParams.get("currency"),
-        description: "Wallet balance top up",
+        description: "Crypto wallet balance top up",
       },
       event,
     });

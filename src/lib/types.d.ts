@@ -137,6 +137,17 @@ export type NowCryptoCurrency = {
     fiat_equivalent: number;
   };
 };
+export type ExchangeRate = {
+  provider: string;
+  terms: URL;
+  //The base currency we are converting from
+  base: string;
+  date: string;
+  //Time stamp
+  time_last_updated: number;
+  //E.g "AED": 0.00243,
+  rates: Record<string, number>;
+};
 export type UserOrder = {
   id: string;
   app_user_id: string;

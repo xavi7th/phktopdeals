@@ -23,13 +23,17 @@ export const AppUserDefaults = {
 };
 
 export const TopUpAccountSchema = type({
-  payment_method: "'btc'|'ltc'|'usdttrc20'|'bank payment'",
+  payment_method: "'btc'|'ltc'|'usdttrc20'|'bank payment'|'paystack'",
   amount: "number>0",
+  "pay_amount?": "number|string",
+  "description?": "string",
 });
 
 export const TopUpAccountDefaults = {
   payment_method: null,
   amount: 50,
+  pay_amount: 0,
+  description: '',
 };
 
 export const VoucherCodeSchema = type({

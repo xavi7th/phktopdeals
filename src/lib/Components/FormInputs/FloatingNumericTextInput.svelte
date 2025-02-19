@@ -5,7 +5,7 @@
   import FormMessage from "$lib/Components/FormMessage.svelte";
   import { minusIcon, plusIcon } from "../iconPaths";
 
-  let { class: className, name = "input-" + crypto.randomUUID().replaceAll("-", "").substring(0, 10), isError = true, label = "", placeholder = "", gray = false, size = "py-2 px-3", min = 0, max = undefined, msg = [], value = $bindable(min), ...rest } = $props();
+  let { class: className = undefined, name = "input-" + crypto.randomUUID().replaceAll("-", "").substring(0, 10), isError = true, label = "", placeholder = "", gray = false, size = "py-2 px-3", min = 0, max = undefined, msg = [], value = $bindable(min), ...rest } = $props();
 
   const valueChars = $derived(value?.toString()?.length || 0);
   const inputWidth = $derived(valueChars < 4 ? "w-8" : valueChars > 3 && valueChars < 6 ? "w-12" : valueChars > 5 && valueChars < 10 ? "w-24" : "w-40");
@@ -33,7 +33,7 @@
         {msg?.toString() && !isError ? 'border-teal-500 focus:border-teal-500 focus:ring-teal-500 dark:bg-teal-900/20' : ''}">
     <div class="flex w-full items-center justify-between gap-x-3">
       <div class="truncate">
-        <span class="block text-sm font-medium text-gray-800 dark:text-white">
+        <span class="block text-sm font-medium text-gray-800 dark:text-white text-left">
           {label}
         </span>
         <span class="block text-xs text-gray-500 dark:text-neutral-400">

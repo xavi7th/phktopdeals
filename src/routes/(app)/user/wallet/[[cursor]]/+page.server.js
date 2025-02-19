@@ -28,5 +28,6 @@ export async function load(event) {
   return {
     wallet_balance: details.data?.wallet_balance,
     transactions: fetchTopUpTransactions(),
+    redirectStatus: event.url.searchParams.get('status'),
   };
 }
