@@ -1,9 +1,10 @@
 <script>
   import ProcessPayment from './ProcessPayment.svelte';
 
-  export let data;
+  let { data } = $props();
+  let { currencies, form, rate } = data;
 
-  $: ({ currencies, wallet_balance } = data);
+  let paymentMethod = $state("paystack");
 </script>
 
 <svelte:head>
@@ -29,11 +30,11 @@
 
         <div class="max-w-sm mx-auto mt-8 sm:mt-16">
           <div class="space-y-3">
-            <div class="overflow-hidden transition-all duration-200 bg-white dark:bg-white/10 border-2 border-gray-200 dark:border-gray-200/30 rounded-md hover:bg-gray-100/80 hover:dark:bg-gray-50/20">
+            <div class="overflow-hidden transition-all duration-200 bg-white dark:bg-white/10 border-2 border-gray-200 dark:border-gray-200/30 rounded-md hover:bg-gray-100/80 hover:dark:bg-gray-50/20 {paymentMethod === 'crypto' ? '!border-brand !border-2' : ''}">
               <div class="px-4 py-5 sm:p-6">
                 <div class="flex items-center">
                   <div>
-                    <input type="radio" name="plan" id="crypto" class="w-5 h-5 text-blue-600 border-gray-500 rounded-full cursor-pointer" />
+                    <input type="radio" name="plan" id="crypto" class="w-5 h-5 text-blue-600 border-gray-500 rounded-full cursor-pointer" value="crypto" bind:group={paymentMethod}/>
                   </div>
                   <label for="crypto" class="ml-5 mr-auto cursor-pointer">
                     <p class="text-xl text-left font-semibold text-black dark:text-gray-300">Crypto Payments</p>
@@ -43,11 +44,11 @@
               </div>
             </div>
 
-            <div class="overflow-hidden transition-all duration-200 bg-white dark:bg-white/10 border-2 border-gray-200 dark:border-gray-200/30 rounded-md hover:bg-gray-100/80 hover:dark:bg-gray-50/20">
+            <div class="overflow-hidden transition-all duration-200 bg-white dark:bg-white/10 border-2 border-gray-200 dark:border-gray-200/30 rounded-md hover:bg-gray-100/80 hover:dark:bg-gray-50/20 {paymentMethod === 'manual' ? '!border-brand !border-2' : ''}">
               <div class="px-4 py-5 sm:p-6">
                 <div class="flex items-center">
                   <div>
-                    <input type="radio" name="plan" id="manual-paymernts" class="w-5 h-5 text-blue-600 border-gray-500 rounded-full cursor-pointer" />
+                    <input type="radio" name="plan" id="manual-paymernts" class="w-5 h-5 text-blue-600 border-gray-500 rounded-full cursor-pointer" value="manual" bind:group={paymentMethod}/>
                   </div>
                   <label for="manual-paymernts" class="ml-5 mr-auto cursor-pointer">
                     <p class="text-xl text-left font-semibold text-black dark:text-gray-300">Manual Bank Deposits</p>
@@ -58,11 +59,11 @@
               </div>
             </div>
 
-            <div class="overflow-hidden transition-all duration-200 bg-white dark:bg-white/10 border-2 border-gray-200 dark:border-gray-200/30 rounded-md hover:bg-gray-100/80 hover:dark:bg-gray-50/20">
+            <div class="overflow-hidden transition-all duration-200 bg-white dark:bg-white/10 border-2 border-gray-200 dark:border-gray-200/30 rounded-md hover:bg-gray-100/80 hover:dark:bg-gray-50/20 {paymentMethod === 'paystack' ? '!border-brand !border-2' : ''}">
               <div class="px-4 py-5 sm:p-6">
                 <div class="flex items-center">
                   <div>
-                    <input type="radio" name="plan" id="paystack" class="w-5 h-5 text-blue-600 border-gray-500 rounded-full cursor-pointer" />
+                    <input type="radio" name="plan" id="paystack" class="w-5 h-5 text-blue-600 border-gray-500 rounded-full cursor-pointer" value="paystack" bind:group={paymentMethod}/>
                   </div>
                   <label for="paystack" class="ml-5 mr-auto cursor-pointer">
                     <p class="text-xl text-left font-semibold text-black dark:text-gray-300">Online Payments</p>
@@ -74,7 +75,7 @@
             </div>
           </div>
 
-          <ProcessPayment data={data.form} {currencies} {wallet_balance} />
+          <ProcessPayment formData={form} {currencies} {rate} {paymentMethod} />
         </div>
 
         <div class="grid grid-cols-1 px-20 mt-12 text-left gap-x-12 gap-y-8 sm:grid-cols-2 sm:px-0">

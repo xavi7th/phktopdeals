@@ -73,7 +73,7 @@
 </script>
 
 {#if showToast}
-  <div class="toast max-h-[50vh] overflow-scroll {positioned ? 'fixed end-3 top-24 z-50 transition duration-300' : ''}" in:fly={{ x: 50, duration: 2000 }} out:fly={{ x: 50, duration: 1000 }}>
+  <div class="toast max-h-[50vh] overflow-scroll {positioned ? 'fixed end-3 top-32 lg:top-20 z-50 transition duration-300' : ''}" in:fly={{ x: 50, duration: 2000 }} out:fly={{ x: 50, duration: 1000 }}>
     <div
       id={toastId}
       class="max-w-xs rounded-xl shadow-lg transition duration-300 hs-removing:translate-x-5 hs-removing:opacity-0 {toastClasses[`${type}`]?.bg}"

@@ -1,5 +1,6 @@
 <script>
   import { cn, toCurrency } from "$lib/helpers";
+  import Toast from '$lib/Components/Toast.svelte';
   import Table from "$lib/Components/Table.svelte";
   import SvgIcon from "$lib/Components/SvgIcon.svelte";
   import TableSkeleton from "$lib/Components/TableSkeleton.svelte";
@@ -7,7 +8,7 @@
 
   export let data;
 
-  $: ({ wallet_balance, transactions } = data);
+  $: ({ wallet_balance, transactions, redirectStatus } = data);
 
   let statusData = {
     waiting: {
@@ -28,6 +29,12 @@
     },
   };
 </script>
+
+{#if redirectStatus}
+  <div class="fixed end-3 top-24 space-y-3">
+    <Toast positioned={true} type={redirectStatus} msg={redirectStatus == "success" ? "Transaction successful!" : "We were unable to complete your transaction!"} />
+  </div>
+{/if}
 
 <svelte:head>
   <title>Top Up Wallet | PHKHotDeals</title>

@@ -267,6 +267,7 @@ export async function api({ toBaseDomain, resource, event, method, data, logResp
   const base = env.PUBLIC_VITE_BASE_DOMAIN;
   const baseApi = env.PUBLIC_VITE_BASE_API;
   let fullurl = toBaseDomain ? base : baseApi;
+
   /** @type {import('$lib/types').ApiHeaders} */
   let headers = {
     accept: "application/json",
@@ -275,8 +276,8 @@ export async function api({ toBaseDomain, resource, event, method, data, logResp
     connection: event.request?.headers?.get("connection") || "",
     cookie: event.request?.headers?.get("cookie") || "",
     host: event.request?.headers?.get("host") || "",
-    referer: event.request?.headers?.get("referer") || "",
-    origin: event.request?.headers?.get("origin") || "",
+    referer: event.request?.headers?.get("referer") || event.request?.url || "",
+    origin: event.request?.headers?.get("origin") || env.PUBLIC_VITE_FRONT_END_DOMAIN,
     "x-xsrf-token": event.cookies?.get("XSRF-TOKEN") || "",
     "sec-ch-ua": event.cookies?.get("sec-ch-ua") || "",
     "sec-ch-ua-mobile": event.cookies?.get("sec-ch-ua-mobile") || "",
