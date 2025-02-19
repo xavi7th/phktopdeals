@@ -28,11 +28,17 @@
       class: "bg-red-100 text-red-800 dark:bg-red-500/10 dark:text-red-500",
     },
   };
+
+  let statusMsg = {
+    success: 'Your top up was successful and your wallet has been credited.',
+    error: 'There was an error processing your top up. Please try again.',
+    info: 'Your top up has been initiated and will be processed within 24 hours.',
+  }
 </script>
 
 {#if redirectStatus}
   <div class="fixed end-3 top-24 space-y-3">
-    <Toast positioned={true} type={redirectStatus} msg={redirectStatus == "success" ? "Transaction successful!" : "We were unable to complete your transaction!"} />
+    <Toast positioned={true} type={redirectStatus} msg={statusMsg[redirectStatus]} />
   </div>
 {/if}
 
