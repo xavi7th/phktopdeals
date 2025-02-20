@@ -231,7 +231,7 @@
                         <div class="ml-6">
                           <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300">Notify us of your Payment</h3>
                           <p class="mt-4 text-sm text-gray-600 dark:text-gray-400">
-                            Click the "Process my Payment" button below to initiate the wallet top up process. Once we confirm your payment, your wallet will be credited with the amount you paid. This usually takes between 5 - 24 hours.
+                            Click the "Process my Payment" button below to initiate the wallet top up process. Once we confirm your payment, your wallet will be credited with the amount you paid. This usually takes between 15 minutes - 2 hours.
                           </p>
                         </div>
                       </li>

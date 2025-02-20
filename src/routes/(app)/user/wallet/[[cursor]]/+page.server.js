@@ -22,7 +22,7 @@ export async function load(event) {
   const [details] = await Promise.all([fetchWalletBalance()]);
 
   event.setHeaders({
-    "Cache-Control": "public, max-age=3600, stale-while-revalidate=86400",
+    "Cache-Control": "public, stale-while-revalidate=86400",
   });
 
   return {

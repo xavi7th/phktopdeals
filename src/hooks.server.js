@@ -11,9 +11,9 @@ import { api } from "$lib/helpers";
 import scp from "set-cookie-parser";
 import { dev } from "$app/environment";
 import { redirect } from "@sveltejs/kit";
-import { env } from "$env/dynamic/public";
 import { sequence } from "@sveltejs/kit/hooks";
 import { handleSession } from "svelte-kit-cookie-session";
+import { PUBLIC_VITE_BASE_API } from '$env/static/public';
 import { handleDeviecDetector } from "sveltekit-device-detector";
 import { VITE_SESSION_NAME, APP_SESSION_KEY } from "$env/static/private";
 
@@ -129,7 +129,7 @@ export const handleFetch = async ({ request, fetch, event }) => {
   /**
    * @csrf Handle expired tokens and csrf expiry
    */
-  if (response?.status == 419 && event.url.pathname.startsWith(env.PUBLIC_VITE_BASE_API)) {
+  if (response?.status == 419 && event.url.pathname.startsWith(PUBLIC_VITE_BASE_API)) {
     redirect(303, "/logout");
   }
 

@@ -1,8 +1,7 @@
 import { clsx } from "clsx";
 import { error } from "@sveltejs/kit";
-import { env } from "$env/dynamic/public";
 import { twMerge } from "tailwind-merge";
-import { PUBLIC_APP_COMMISSION_AMOUNT } from '$env/static/public';
+import { PUBLIC_APP_COMMISSION_AMOUNT, PUBLIC_VITE_BASE_API, PUBLIC_VITE_BASE_DOMAIN, PUBLIC_VITE_FRONT_END_DOMAIN } from '$env/static/public';
 
 /**
  * Transforms an error object into HTML string
@@ -264,8 +263,8 @@ export const getFirstElement = (str, elem = "p") => {
  * @returns {Promise<Response|undefined>}
  */
 export async function api({ toBaseDomain, resource, event, method, data, logResponse = false, toJSON = true }) {
-  const base = env.PUBLIC_VITE_BASE_DOMAIN;
-  const baseApi = env.PUBLIC_VITE_BASE_API;
+  const base = PUBLIC_VITE_BASE_DOMAIN;
+  const baseApi = PUBLIC_VITE_BASE_API;
   let fullurl = toBaseDomain ? base : baseApi;
 
   /** @type {import('$lib/types').ApiHeaders} */
@@ -277,7 +276,7 @@ export async function api({ toBaseDomain, resource, event, method, data, logResp
     cookie: event.request?.headers?.get("cookie") || "",
     host: event.request?.headers?.get("host") || "",
     referer: event.request?.headers?.get("referer") || event.request?.url || "",
-    origin: event.request?.headers?.get("origin") || env.PUBLIC_VITE_FRONT_END_DOMAIN,
+    origin: event.request?.headers?.get("origin") || PUBLIC_VITE_FRONT_END_DOMAIN,
     "x-xsrf-token": event.cookies?.get("XSRF-TOKEN") || "",
     "sec-ch-ua": event.cookies?.get("sec-ch-ua") || "",
     "sec-ch-ua-mobile": event.cookies?.get("sec-ch-ua-mobile") || "",

@@ -1,7 +1,7 @@
 <script>
   import { onMount } from "svelte";
-  import { env } from "$env/dynamic/public";
   import Toast from "$lib/Components/Toast.svelte";
+  import { PUBLIC_VITE_BASE_API } from '$env/static/public';
   import CountdownTimer from "$lib/Components/CountdownTimer.svelte";
 
   export let data;
@@ -15,7 +15,7 @@
   $: ({ currency, amount, details, qrCode } = data);
 
   onMount(() => {
-    evtSrc = new EventSource(`${env.PUBLIC_VITE_BASE_API}user-transactions/${details?.transaction.id}/status-update`, {
+    evtSrc = new EventSource(`${PUBLIC_VITE_BASE_API}user-transactions/${details?.transaction.id}/status-update`, {
       withCredentials: true,
     });
 
