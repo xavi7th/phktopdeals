@@ -126,6 +126,8 @@ async function addSecurityHeaders({ event, resolve }) {
 export const handleFetch = async ({ request, fetch, event }) => {
   const response = await fetch(request);
 
+  console.log('----------HOOKS------------', response);
+
   /**
    * @csrf Handle expired tokens and csrf expiry
    */

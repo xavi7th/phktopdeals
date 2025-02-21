@@ -3,7 +3,7 @@
   import { onDestroy } from "svelte";
   import { browser } from "$app/environment";
 
-  let { class: className, ...rest } = $props();
+  let { class: className = undefined, ...rest } = $props();
 
   onDestroy(() => {
     if (browser) {

@@ -97,18 +97,16 @@ export type Product = {
   discount_until: Date;
   faqs: string | undefined;
 };
-export type AppUser =
-  | {}
-  | {
-      full_name: string;
-      email: string;
-      phone?: string;
-      avatar_url?: string;
-      is_active: boolean;
-      is_admin?: boolean;
-      is_verified?: boolean;
-      wallet_balance?: number;
-    };
+export type AppUser = {
+  full_name: string;
+  email: string;
+  phone?: string;
+  avatar_url?: string;
+  is_active: boolean;
+  is_admin?: boolean;
+  is_verified?: boolean;
+  wallet_balance?: number;
+};
 export type AdminNavMenuItem = {
   name: string;
   uri: string;
@@ -157,12 +155,17 @@ export type UserOrder = {
   pay_currency: string;
   description: string;
   payment_method: string;
+  payment_reference: string;
   status: string;
   expired_at?: string | null;
   valid_until?: string | null;
   product_image_url: string;
   voucher_codes: { code: string; amount: number }[];
+  is_confirmed: boolean;
   is_processed: boolean;
   is_processing?: boolean;
   app_user?: AppUser;
+  product?: Product;
+  payment_confirmed_at?: string;
+  transaction_type: "'top up'|'purchase'";
 };

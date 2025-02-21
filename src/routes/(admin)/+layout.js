@@ -15,6 +15,12 @@ export async function load({ data }) {
       reload: false,
     },
     {
+      name: "Manage Payments",
+      uri: "/admin/payment-transactions",
+      icon: "topUpSVGAlt",
+      reload: false,
+    },
+    {
       name: "Manage Vouchers",
       uri: "/admin/vouchers",
       icon: "topUpSVGAlt",

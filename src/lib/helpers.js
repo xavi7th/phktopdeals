@@ -46,6 +46,10 @@ export const toCurrency = (amount, currencySymbol = "$") => {
     return "Invalid Amount";
   }
 
+  if (currencySymbol == 'NGN') {
+    currencySymbol = '₦';
+  }
+
   return (
     currencySymbol +
     Number(amount)

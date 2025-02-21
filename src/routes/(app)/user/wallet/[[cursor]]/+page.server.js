@@ -21,10 +21,6 @@ export async function load(event) {
 
   const [details] = await Promise.all([fetchWalletBalance()]);
 
-  event.setHeaders({
-    "Cache-Control": "public, stale-while-revalidate=86400",
-  });
-
   return {
     wallet_balance: details.data?.wallet_balance,
     transactions: fetchTopUpTransactions(),
