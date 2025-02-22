@@ -26,7 +26,7 @@
    * @see {@link FormMessage.svelte} for further information on usage.
    */
 
-  let { class: className, slot = undefined, fill = "none", minHeight = "10%", svgHeight = 24, svgWidth = svgHeight, stroke = "currentColor", strokeWidth = 2, ...rest } = $props();
+  let {slot = undefined, fill = "none", minHeight = "10%", svgHeight = 24, svgWidth = svgHeight, stroke = "currentColor", strokeWidth = 2, ...rest } = $props();
 </script>
 
 <svg

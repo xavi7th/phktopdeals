@@ -24,7 +24,7 @@
           <span>App Store</span>
           <span>Airbnb</span>
 
-          <SvgIcon svgHeight={25} svgWidth={568} data-static class="typewriter-stroke">
+          <SvgIcon svgHeight={25} svgWidth={568} data-static class="typewriter-stroke !w-[clamp(150px,25vw,300px)]">
             <path data-static opacity="0.7" d="M2 22.5972C104.5 10.5972 295 -16.4028 566 22.5972" stroke="#FFDA1C" stroke-opacity="0.42" stroke-width="3" stroke-linecap="round" />
           </SvgIcon>
         </Typewriter>

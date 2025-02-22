@@ -126,13 +126,23 @@ async function addSecurityHeaders({ event, resolve }) {
 export const handleFetch = async ({ request, fetch, event }) => {
   const response = await fetch(request);
 
-  console.log('----------HOOKS------------', response);
-
   /**
    * @csrf Handle expired tokens and csrf expiry
    */
   if (response?.status == 419 && event.url.pathname.startsWith(PUBLIC_VITE_BASE_API)) {
     redirect(303, "/logout");
+  }
+
+  /**
+   * @unauthenticated Handle expired authentication from the API
+   */
+  if (([401, 403].includes(response?.status))) {
+    console.log('----------HOOKS------------', response.url, response);
+    await event.locals.session.destroy();
+
+    if (! response.url.includes('api/v1/user')) {
+      redirect(303, "/logout");
+    }
   }
 
   /** @type {import('set-cookie-parser').Cookie[]} */
