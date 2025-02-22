@@ -1,7 +1,7 @@
 <script>
   import { isDarkMode } from '$stores';
 
-  let { wide } = $props();
+  let { wide = undefined } = $props();
 </script>
 
 <a class="flex-none text-xl font-semibold focus:opacity-80 focus:outline-none sm:order-1 dark:text-white" href="/">

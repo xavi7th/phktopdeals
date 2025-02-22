@@ -1,16 +1,25 @@
 <script>
+  import { toCurrency } from '$lib/helpers';
   import Logo from "$lib/Components/Logo.svelte";
   import SvgIcon from "$lib/Components/SvgIcon.svelte";
-  import { bell, crescentMoon, purchaseBag, sunRays, undoIcon } from "$lib/Components/iconPaths";
+  import { bell, crescentMoon, dollarCircle, purchaseBag, sunRays, undoIcon } from "$lib/Components/iconPaths";
 
   /** @type { import('$lib/types').AppUser } */
   export let user;
+  export let wallet_balance = 0;
 </script>
 
 <header class="sticky inset-x-0 top-0 z-[48] flex w-full flex-wrap border-b bg-white py-2.5 text-sm md:flex-nowrap md:justify-start lg:ps-[260px] dark:border-neutral-700 dark:bg-neutral-800">
   <nav class="mx-auto flex w-full basis-full items-center px-4 sm:px-6">
     <div class="me-5 lg:me-0 lg:hidden">
       <Logo />
+    </div>
+
+    <div class="hidden lg:flex items-center rounded-full border border-gray-200 bg-gray-200 p-0.5  dark:border-white/20 dark:bg-neutral-800">
+      <a href="/user/wallet/top-up/choose-payment-method" title="" class="mr-4 inline-flex justify-self-end items-center justify-center w-auto h-11 px-3 text-gray-800 dark:text-neutral-300 bg-gray-200 dark:bg-neutral-800 rounded-full">
+        <SvgIcon strokeWidth={1.5} class="size-5 shrink-0" slot={dollarCircle} />
+        <span class="font-bold tracking-tighter ml-2 text-sm">{ toCurrency(wallet_balance) }</span>
+      </a>
     </div>
 
     <div class="ms-auto flex w-full items-center justify-end gap-x-1 md:gap-x-3">

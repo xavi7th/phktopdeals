@@ -23,6 +23,7 @@
 <script>
   import { page } from "$app/state";
   import { slide } from 'svelte/transition';
+  import { toCurrency } from '$lib/helpers';
   import Logo from "$lib/Components/Logo.svelte";
   import { beforeNavigate } from '$app/navigation';
   import SvgIcon from "$lib/Components/SvgIcon.svelte";
@@ -31,7 +32,8 @@
 
   let user  = $derived(page.data?.user);
 
-  let showMenu = $state(false)
+  let showMenu = $state(false);
+  let { wallet_balance } = $props();
 
   beforeNavigate(() => showMenu = false)
 </script>
@@ -52,10 +54,10 @@
         </div>
 
         <div class="inline-flex lg:hidden">
-          {#if user?.full_name}
-            <a href="#" title="" class="mr-4 inline-flex justify-self-end items-center justify-center w-auto h-11 px-3 text-gray-800 dark:text-neutral-300 bg-gray-200 dark:bg-neutral-800 rounded-full">
+          {#if user?.full_name && !user?.is_admin}
+            <a href="/user/wallet/top-up/choose-payment-method" title="" class="mr-4 inline-flex justify-self-end items-center justify-center w-auto h-11 px-3 text-gray-800 dark:text-neutral-300 bg-gray-200 dark:bg-neutral-800 rounded-full">
               <SvgIcon strokeWidth={1.5} class="size-5 shrink-0" slot={dollarCircle} />
-              <span class="font-bold tracking-tighter ml-2 text-sm">$24.00</span>
+              <span class="font-bold tracking-tighter ml-2 text-sm">{ toCurrency(wallet_balance) }</span>
             </a>
           {/if}
 
@@ -93,17 +95,18 @@
             <a href="/login" class="text-base text-gray-700 hover:text-brand-600 dark:text-neutral-300 font-medium tracking-tighter"> Sign In </a>
           {/if}
 
-
           <div class="hidden items-center rounded-full border border-gray-200 bg-gray-200 p-0.5 sm:order-3 sm:flex dark:border-white/20 dark:bg-neutral-800">
             {#if user?.full_name}
-            <a href={user?.is_admin ? "/admin/dashboard" : "/user/orders"} class="inline-flex size-11 text-white items-center justify-center gap-x-2 rounded-full border border-transparent bg-gray-100 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:bg-black">
-              <img class="size-10 shrink-0 rounded-full" src={user?.avatar_url || PUBLIC_VITE_BASE_DOMAIN + 'storage/user.png'} alt="Avatar" />
-            </a>
+              <a href={user?.is_admin ? "/admin/dashboard" : "/user/orders"} class="inline-flex size-11 text-white items-center justify-center gap-x-2 rounded-full border border-transparent bg-gray-100 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:bg-black">
+                <img class="size-10 shrink-0 rounded-full" src={user?.avatar_url || PUBLIC_VITE_BASE_DOMAIN + 'storage/user.png'} alt="Avatar" />
+              </a>
 
-            <a href="#" title="" class="inline-flex  items-center justify-center w-auto h-11 px-3 text-gray-800 dark:text-neutral-300 bg-gray-200 dark:bg-neutral-800 rounded-full">
-              <SvgIcon strokeWidth={1.5} class="size-5 shrink-0" slot={dollarCircle} />
-              <span class="font-bold tracking-tighter ml-2 text-sm">$24.00</span>
-            </a>
+              {#if ! user?.is_admin}
+                <a href="/user/wallet/top-up/choose-payment-method" title="" class="inline-flex  items-center justify-center w-auto h-11 px-3 text-gray-800 dark:text-neutral-300 bg-gray-200 dark:bg-neutral-800 rounded-full">
+                  <SvgIcon strokeWidth={1.5} class="size-5 shrink-0" slot={dollarCircle} />
+                  <span class="font-bold tracking-tighter ml-2 text-sm">{ toCurrency(wallet_balance) }</span>
+                </a>
+              {/if}
             {/if}
             <button
               type="button"

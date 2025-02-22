@@ -35,7 +35,7 @@
           </div>
         </div>
 
-        <div class="mb-8 grid grid-cols-2 gap-4 lg:gap-5 sm:grid-cols-3 lg:grid-cols-5 xl:gap-3">
+        <div class="mb-8 grid grid-cols-3 gap-4 lg:gap-5 lg:grid-cols-5 xl:gap-3">
           {#each cards || [] as product}
             <ProductCard {product} />
           {:else}

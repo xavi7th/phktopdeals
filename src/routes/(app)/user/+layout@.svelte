@@ -1,24 +1,26 @@
 <script>
   import { navigating } from "$app/stores";
+  import { toCurrency } from '$lib/helpers.js';
   import Header from "$partials/user/Header.svelte";
-  import { open } from "$lib/Components/iconPaths.js";
   import SvgIcon from "$lib/Components/SvgIcon.svelte";
   import Sidebar from "$partials/user/Sidebar.svelte";
   import PageSkeleton from "$lib/Components/PageSkeleton.svelte";
+  import { dollarCircle, open } from "$lib/Components/iconPaths.js";
 
   export let data;
 
-  const { user_routes, user } = data;
+  const { user_routes, user, wallet_balance } = data;
 </script>
 
 <section class="dark:bg-neutral-900">
-  <Header {user} />
+  <Header {user} {wallet_balance} />
 
   <div class="sticky inset-x-0 top-0 z-20 border-y bg-white px-4 sm:px-6 lg:hidden lg:px-8 dark:border-neutral-700 dark:bg-neutral-800">
-    <div class="flex items-center py-2">
+    <div class="flex items-center justify-between py-2">
+     <div class="flex">
       <button
         type="button"
-        class="flex size-8 items-center justify-center gap-x-2 rounded-lg border border-gray-200 text-gray-800 hover:text-gray-500 focus:text-gray-500 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:text-neutral-200 dark:hover:text-neutral-500 dark:focus:text-neutral-500"
+        class="flex shrink-0 size-8 items-center justify-center gap-x-2 rounded-lg border border-gray-200 text-gray-800 hover:text-gray-500 focus:text-gray-500 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:text-neutral-200 dark:hover:text-neutral-500 dark:focus:text-neutral-500"
         aria-haspopup="dialog"
         aria-expanded="false"
         aria-controls="hs-application-sidebar"
@@ -31,6 +33,14 @@
       <ol class="ms-3 flex items-center whitespace-nowrap">
         <li class="flex items-center text-sm text-gray-800 dark:text-neutral-400">User Dashboard</li>
       </ol>
+     </div>
+
+      <div class="lg:hidden items-center rounded-full border border-gray-200 bg-gray-200 p-0.5 dark:border-white/20 dark:bg-neutral-800 scale-75">
+        <a href="/user/wallet/top-up/choose-payment-method" title="" class="mr-4 inline-flex justify-self-end items-center justify-center w-auto h-11 px-3 text-gray-800 dark:text-neutral-300 bg-gray-200 dark:bg-neutral-800 rounded-full">
+          <SvgIcon strokeWidth={1.5} class="size-5 shrink-0" slot={dollarCircle} />
+          <span class="font-bold tracking-tighter ml-2 text-sm">{ toCurrency(wallet_balance) }</span>
+        </a>
+      </div>
     </div>
   </div>
 

@@ -1,4 +1,6 @@
-export async function load({ locals }) {
+import { api } from '$lib/helpers';
+
+export async function load(event) {
   /** @type { import('$lib/types').AdminNavMenuItem[] } */
   const user_routes = [
     {
@@ -75,9 +77,21 @@ export async function load({ locals }) {
     },
   ];
 
+  const fetchWalletBalance = async () => {
+    const res = await api({
+      method: "get",
+      resource: "user/wallet-balance",
+      event,
+    });
+    return await res?.json();
+  };
+
+  const [details] = await Promise.all([fetchWalletBalance()]);
+
   return {
     /** @type { import('$lib/types').AppUser } */
-    user: locals.session.data?.user || {},
+    user: event.locals.session.data?.user || {},
     user_routes,
+    wallet_balance: details.data?.wallet_balance,
   };
 }
