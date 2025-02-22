@@ -25,7 +25,7 @@
   </div>
 
   <a
-    href={`store/${product?.name_slug}_${product?.id}`}
+    href={`/store/${product?.name_slug}_${product?.id}`}
     class="mt-1 tracking-tighter rounded-b-xl border-t bg-brand px-2 py-1 text-center text-[0.7rem] text-gray-700 transition-colors duration-300 hover:bg-brand-500 hover:text-white md:px-3 md:py-2 dark:border-brand-900 dark:bg-brand-700 dark:text-brand-50">
     BUY NOW <span class="text-lg font-bold text-black dark:text-white pl-2 inline-block">{percentageCalculation(product.min_price, 1, 0, product.percentage_discount)}</span>
   </a>

@@ -62,7 +62,7 @@
         </div>
       </div>
 
-      <div class="relative mt-5 overflow-hidden rounded-xl rounded-ss-3xl bg-brand-200 pb-8 pt-20 md:px-10 dark:bg-brand-900 dark:text-white">
+      <div class="relative mt-5 overflow-hidden rounded-xl rounded-ss-3xl bg-brand-200 pb-8 pt-20 px-4 md:px-10 dark:bg-brand-900 dark:text-white">
         <div class="payment-steps-id absolute left-0 top-0 rounded-ee-[2rem] rounded-ss-3xl bg-brand-800 text-center">
           <span class="font-bold text-white md:font-extrabold">1</span>
         </div>
@@ -85,7 +85,7 @@
         </div>
       </div>
 
-      <div class="relative mt-5 overflow-hidden rounded-xl rounded-ss-3xl bg-brand-200 pb-8 pt-20 md:px-10 dark:bg-brand-900 dark:text-white">
+      <div class="relative mt-5 overflow-hidden rounded-xl rounded-ss-3xl bg-brand-200 pb-8 pt-20 px-4 md:px-10 dark:bg-brand-900 dark:text-white">
         <div class="payment-steps-id absolute left-0 top-0 rounded-ee-[2rem] rounded-ss-3xl bg-brand-800 text-center">
           <span class="font-bold text-white md:font-extrabold">2</span>
         </div>
