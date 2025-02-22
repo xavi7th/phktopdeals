@@ -1,7 +1,7 @@
 <script>
   import Typewriter from "svelte-typewriter";
+  import { main_nav } from '$partials/Header.svelte';
   import SvgIcon from "$lib/Components/SvgIcon.svelte";
-  import { shuffle } from "$lib/helpers";
 
   let isLoading = false;
 </script>
@@ -75,11 +75,11 @@
       </div>
 
       <div class="my-4 flex flex-wrap items-center gap-3">
-        {#each shuffle(["Restaurants", "Groceries", "Games", "Softwares", "Subscriptions", "VISA Cards"]).slice(0, 3) as item}
+        {#each main_nav as {name, url}}
           <a
             class="mr-1 inline-flex items-center gap-x-3 rounded-full bg-white px-5 py-3 text-xs font-semibold text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none dark:bg-gray-900 dark:text-neutral-50"
-            href="#">
-            {item}
+            href={url}>
+            {name}
           </a>
         {/each}
 

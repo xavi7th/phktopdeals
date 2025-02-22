@@ -1,6 +1,6 @@
 <script>
   import SvgIcon from "$lib/Components/SvgIcon.svelte";
-  import ProductCard from "$partials/ProductCard.svelte";
+  import ProductCardSlider from "$partials/ProductCardSlider.svelte";
 
   export let sectionTitle = "";
   /** @type {import('$lib/types').PageSectionContent} */
@@ -8,7 +8,7 @@
 </script>
 
 {#if content.items?.length}
-  <section class="mt-24 w-full">
+  <section class="mt-12 w-full">
     <div class="container-fluid lg:container">
       <div class="row px-4">
         <div class="mx-auto mb-12 max-w-2xl text-center lg:mb-16">
@@ -20,7 +20,7 @@
           </h2>
         </div>
 
-        <ProductCard products={content.items} />
+        <ProductCardSlider products={content.items} />
       </div>
     </div>
   </section>

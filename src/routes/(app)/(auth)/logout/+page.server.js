@@ -12,5 +12,5 @@ export async function load(event) {
   await event.locals.session.destroy();
   event.cookies.delete(VITE_SESSION_NAME, { path: "/" });
 
-  redirect(307, "/login");
+  redirect(307, "/");
 }

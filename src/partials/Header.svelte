@@ -172,3 +172,9 @@
     </nav>
    {/if}
 </header>
+
+<style global>
+  a[aria-current="page"] {
+    color: theme("colors.brand.500");
+  }
+</style>
