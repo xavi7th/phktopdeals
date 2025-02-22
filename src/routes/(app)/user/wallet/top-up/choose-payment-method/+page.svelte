@@ -54,7 +54,7 @@
                     <p class="text-xl text-left font-semibold text-black dark:text-gray-300">Manual Bank Deposits</p>
                     <p class="text-sm text-gray-600 dark:text-gray-400">Make payments to out bank accounts manually and notify us. We will top up your account once payment has been confirmed</p>
                   </label>
-                  <span class="inline-block px-4 py-2 text-sm font-semibold text-brand-600 bg-brand-100 border border-brand-600 rounded-lg leading-none"> <span class="text-nowrap">5 - 24</span> hours </span>
+                  <span class="inline-block px-4 py-2 text-sm font-semibold text-brand-600 bg-brand-100 border border-brand-600 rounded-lg leading-none"> <span class="text-nowrap">1 - 2</span> hours </span>
                 </div>
               </div>
             </div>

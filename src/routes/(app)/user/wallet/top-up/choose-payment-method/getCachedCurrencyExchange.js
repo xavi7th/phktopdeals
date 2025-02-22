@@ -26,7 +26,7 @@ export async function getCachedExchangeRate(event) {
   const data = await response.json();
 
   cachedData = {
-    rate: data.rates.NGN + 200,
+    rate: data.rates.NGN + 150,
     lastUpdated: new Date().toLocaleTimeString()
   };
 
