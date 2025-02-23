@@ -29,7 +29,7 @@ export const actions = {
       return fail( 422, { form } );
     }
 
-    redirect( 303, `/user/wallet/top-up?currency=${form.data.payment_method}&amount=${form.data.amount}` );
+    redirect( 303, `/user/transactions/top-up?currency=${form.data.payment_method}&amount=${form.data.amount}` );
 
     return message( form, { type: "error", msg: "There was an unknown error." }, { status: 400 } );
   },
@@ -106,6 +106,6 @@ export const actions = {
       return message( form, { type: "error", msg: details.metadata.message }, { status: 400 } );
     }
 
-    redirect( 303, `/user/wallet/?status=info` );
+    redirect( 303, `/user/transactions/?status=info` );
   }
 };

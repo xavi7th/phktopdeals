@@ -8,12 +8,24 @@
 
   export let data;
 
-  $: ({ wallet_balance, transactions, redirectStatus } = data);
+  $: ({ transactions, redirectStatus } = data);
 
   let statusData = {
     waiting: {
       icon: exclamationCircle,
       class: "bg-violet-100 text-violet-800 dark:bg-violet-500/10 dark:text-violet-500",
+    },
+    confirming: {
+      icon: exclamationCircle,
+      class: "bg-violet-100 text-violet-800 dark:bg-violet-500/10 dark:text-violet-500",
+    },
+    processing: {
+      icon: exclamationCircle,
+      class: "bg-violet-100 text-violet-800 dark:bg-violet-500/10 dark:text-violet-500",
+    },
+    confirmed: {
+      icon: checkMarkFilledAlt,
+      class: "bg-teal-100 text-teal-800 dark:bg-teal-500/10 dark:text-teal-500",
     },
     finished: {
       icon: checkMarkFilledAlt,
@@ -47,7 +59,7 @@
   <meta name="description" content="Top up your wallet in your favorite crypto currency or bank transfer to ensure seamless transactions when making purchases." />
 </svelte:head>
 
-<div class="flex items-center justify-between rounded-lg bg-white p-3.5 shadow-md sm:mx-10 dark:bg-gray-700">
+<!-- <div class="flex items-center justify-between rounded-lg bg-white p-3.5 shadow-md sm:mx-10 dark:bg-gray-700">
   <div class="flex items-center gap-3 sm:gap-8">
     <div class="grid size-16 place-content-center rounded-md border-brand-500 bg-brand-700"></div>
     <div>
@@ -56,16 +68,16 @@
     </div>
   </div>
   <div>
-    <a class="inline-flex items-center justify-center gap-x-2 text-nowrap rounded-md border border-transparent bg-brand-400 px-4 py-2.5 text-sm font-normal text-gray-800 shadow-md hover:bg-brand-500 focus:bg-brand-500 focus:outline-none disabled:pointer-events-none disabled:opacity-50" href="wallet/top-up/choose-payment-method">
+    <a class="inline-flex items-center justify-center gap-x-2 text-nowrap rounded-md border border-transparent bg-brand-400 px-4 py-2.5 text-sm font-normal text-gray-800 shadow-md hover:bg-brand-500 focus:bg-brand-500 focus:outline-none disabled:pointer-events-none disabled:opacity-50" href="transactions/top-up/choose-payment-method">
       Recharge Wallet
     </a>
   </div>
-</div>
+</div> -->
 
 {#await transactions}
   <TableSkeleton />
 {:then transactions}
-  <Table tCaption="List of Top Up Transactions" navData={{ ...transactions.metadata, basePageUrl: "/user/wallet" }}>
+  <Table tCaption="List of Top Up Transactions" navData={{ ...transactions.metadata, basePageUrl: "/user/transactions" }}>
     <svelte:fragment slot="thead">
       <th scope="col" class="px-6 py-3 text-center">
         <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">ID</span>
@@ -107,8 +119,11 @@
         <td class="size-px whitespace-nowrap">
           <div class="px-6 py-3">
             <span class="text-base text-gray-800 dark:text-neutral-300">
-              {trx.pay_amount}
-              <span class="uppercase">{trx.pay_currency}</span>
+              {#if trx.pay_currency === "NGN"}
+                {toCurrency(trx.pay_amount, trx.pay_currency.toUpperCase())}
+              {:else}
+                {trx.pay_amount} <span class="uppercase">{trx.pay_currency}</span>
+              {/if}
             </span>
             <br />
             <span class="text-xs text-gray-400 dark:text-neutral-500">{toCurrency(trx.price_amount)}</span>

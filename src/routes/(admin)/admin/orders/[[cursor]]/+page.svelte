@@ -100,25 +100,34 @@
                 <span class="block text-lg font-semibold text-gray-800 dark:text-neutral-200">
                   Amount: <span class="font-semibold">{toCurrency(order.price_amount)}</span>
                   <span
-                    class="ml-3 inline-flex items-center gap-x-1 px-1.5 py-1 text-xs font-medium {order.status == 'finished'
+                    class="ml-3 inline-flex items-center gap-x-1 px-1.5 py-1 text-xs font-medium {order.status == 'finished' || order.status == 'confirmed'
                       ? 'bg-teal-100 text-teal-800 dark:bg-teal-500/10 dark:text-teal-500'
-                      : order.status == 'waiting' && !order.expired_at
+                      : (order.status == 'waiting' || order.status == 'confirming' || order.status == 'partially paid') && !order.expired_at
                         ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-500/10 dark:text-yellow-500'
-                        : 'bg-red-100 text-red-800 dark:bg-red-500/10 dark:text-red-500'} rounded-full">
+                        : order.status == 'processing' || order.status == 'sending'
+                          ? 'bg-purple-200 text-purple-800 dark:bg-purple-500/10 dark:text-purple-500'
+                          : 'bg-red-100 text-red-800 dark:bg-red-500/10 dark:text-red-500'} rounded-full">
                     <SvgIcon class="size-2.5" svgHeight={16} slot={order.is_processed ? checkMarkFilledAlt : warningIcon} />
                     {order?.expired_at ? "Expired" : order?.status}
                   </span>
                 </span>
                 <span class="block text-sm text-gray-600 dark:text-neutral-200">
-                  Pay Amount: <span>{order.pay_amount} {order.pay_currency.toUpperCase()}</span>
+                  Pay Amount:
+                  <span>
+                    {#if order.pay_currency === "NGN"}
+                      {toCurrency(order.pay_amount, order.pay_currency.toUpperCase())}
+                    {:else}
+                      {order.pay_amount} <span class="uppercase">{order.pay_currency}</span>
+                    {/if}
+                  </span>
                 </span>
                 <span class="block text-sm text-gray-600 dark:text-neutral-200">
                   Payment Method: <span>{order.payment_method.toUpperCase().replaceAll("_", " ")}</span>
                 </span>
-                {#if !order.is_processed && !order.expired_at}
+                {#if !order.is_processed && !order.expired_at && order.valid_until}
                   <span class="block text-wrap text-sm text-gray-500 dark:text-neutral-500">
-                    <span class="font-sem-bold text-gray-800">Valid Until:</span>
-                    {new Date(order.valid_until || "").toLocaleDateString()}
+                    <span class="font-sem-bold text-gray-800 dark:text-neutral-400">Valid Until:</span>
+                    {new Date(order.valid_until).toLocaleDateString()}
                   </span>
                 {/if}
                 {#if order.expired_at}
@@ -169,17 +178,26 @@
                 <span class="block text-base font-semibold text-gray-800 dark:text-neutral-400">
                   Amount: <span class="font-semibold">{toCurrency(order.price_amount)}</span>
                   <span
-                    class="ml-3 inline-flex items-center gap-x-1 px-1.5 py-1 text-xs font-medium {order.status == 'finished'
+                    class="ml-3 inline-flex items-center gap-x-1 px-1.5 py-1 text-xs font-medium {order.status == 'finished' || order.status == 'confirmed'
                       ? 'bg-teal-100 text-teal-800 dark:bg-teal-500/10 dark:text-teal-500'
-                      : order.status == 'waiting' && !order.expired_at
+                      : (order.status == 'waiting' || order.status == 'confirming' || order.status == 'partially paid') && !order.expired_at
                         ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-500/10 dark:text-yellow-500'
-                        : 'bg-red-100 text-red-800 dark:bg-red-500/10 dark:text-red-500'} rounded-full">
+                        : order.status == 'processing' || order.status == 'sending'
+                          ? 'bg-purple-200 text-purple-800 dark:bg-purple-500/10 dark:text-purple-500'
+                          : 'bg-red-100 text-red-800 dark:bg-red-500/10 dark:text-red-500'} rounded-full">
                     <SvgIcon class="size-2.5" svgHeight={16} slot={order.is_processed ? checkMarkFilledAlt : warningIcon} />
                     {order?.expired_at ? "Expired" : order?.status}
                   </span>
                 </span>
                 <span class="block text-sm text-gray-600 dark:text-neutral-400">
-                  Pay Amount: <span>{order.pay_amount} {order.pay_currency.toUpperCase()}</span>
+                  Pay Amount:
+                  <span>
+                    {#if order.pay_currency === "NGN"}
+                      {toCurrency(order.pay_amount, order.pay_currency.toUpperCase())}
+                    {:else}
+                      {order.pay_amount} <span class="uppercase">{order.pay_currency}</span>
+                    {/if}
+                  </span>
                 </span>
                 <span class="block text-sm text-gray-600 dark:text-neutral-400">
                   Payment Method: <span>{order.payment_method.toUpperCase().replaceAll("_", " ")}</span>

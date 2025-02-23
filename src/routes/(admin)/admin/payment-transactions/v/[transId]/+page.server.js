@@ -1,4 +1,4 @@
-import { api } from "$lib/helpers";
+import { api, getErrorString } from "$lib/helpers";
 import { error } from "@sveltejs/kit";
 
 export async function load(event) {
@@ -42,7 +42,7 @@ export const actions = {
     if (res?.status == 422) {
       let errRes = await res.json();
 
-      return { message: { type: "error", msg: errRes.metadata.message } };
+      return { message: { type: "error", msg: "There are errors in your form! Check them and try again. <ol class='!text-left'>" + getErrorString( errRes.errors ) + "</ol>"  } };
     }
 
     if (!res?.ok) {

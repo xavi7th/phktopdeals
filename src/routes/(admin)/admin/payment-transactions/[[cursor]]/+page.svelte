@@ -74,17 +74,13 @@
                     purchase
                   {/if}
                 </span>
-                <span class="block text-wrap text-xs font-semibold text-gray-800 dark:text-neutral-500">
-                  <span class="font-light text-gray-500 uppercase">REF:</span>
+                <span class="block text-wrap text-xs font-semibold text-gray-800 dark:text-neutral-500 uppercase">
+                  <span class="font-light text-gray-500">REF:</span>
                   #{trans.payment_reference}
                 </span>
                 <a
                   href="/admin/payment-transactions/v/{trans.id}"
                   class="inline-flex items-center gap-x-1 text-sm font-medium text-brand-600 decoration-2 hover:underline focus:underline focus:outline-none dark:text-brand-500"
-                  aria-haspopup="dialog"
-                  aria-expanded="false"
-                  aria-controls="view-transaction-modal"
-                  data-hs-overlay="#manage-orders"
                   on:click={loadDetails}>
                   View Details
                 </a>
@@ -111,7 +107,14 @@
                   </span>
                 </span>
                 <span class="block text-sm text-gray-600 dark:text-neutral-200">
-                  Pay Amount: <span>{toCurrency(trans.pay_amount, ' ' + trans.pay_currency.toUpperCase())} </span>
+                  Pay Amount:
+                  <span>
+                    {#if trans.pay_currency === "NGN"}
+                      {toCurrency(trans.pay_amount, trans.pay_currency.toUpperCase())}
+                    {:else}
+                      {trans.pay_amount} <span class="uppercase">{trans.pay_currency}</span>
+                    {/if}
+                  </span>
                 </span>
                 <span class="block text-sm text-gray-600 dark:text-neutral-200">
                   Payment Method: <span>{trans.payment_method.toUpperCase().replaceAll("_", " ")}</span>
@@ -141,7 +144,7 @@
           <div class="-m-4 flex items-center justify-between border-b border-gray-200 p-4 dark:border-neutral-700">
             <h2 class="text-2xl font-normal text-gray-800 dark:text-gray-400">
               <span class="text-base font-light">Transaction ID:</span>
-              <span class="font-bold capitalize">#{trans.id}</span>
+              <span class="font-bold uppercase break-all">#{trans.payment_reference}</span>
             </h2>
           </div>
           <div class="mt-4 py-3 pe-6 ps-6 lg:ps-3 xl:ps-0">
@@ -158,9 +161,9 @@
                 <span class="block text-base font-semibold text-gray-800 dark:text-neutral-400">
                   Amount: <span class="font-semibold">{toCurrency(trans.price_amount)}</span>
                   <span
-                    class="ml-3 inline-flex items-center gap-x-1 px-1.5 py-1 text-xs font-medium {trans.status == 'finished'
+                    class="ml-3 inline-flex items-center gap-x-1 px-1.5 py-1 text-xs font-medium {trans.status == 'finished' || trans.status == 'confirmed'
                       ? 'bg-teal-100 text-teal-800 dark:bg-teal-500/10 dark:text-teal-500'
-                      : trans.status == 'waiting' && !trans.expired_at
+                      : (trans.status == 'waiting' || trans.status == 'confirming' || trans.status == 'partially paid') && !trans.expired_at
                         ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-500/10 dark:text-yellow-500'
                         : trans.status == 'processing' || trans.status == 'sending'
                           ? 'bg-purple-200 text-purple-800 dark:bg-purple-500/10 dark:text-purple-500'
@@ -170,40 +173,29 @@
                   </span>
                 </span>
                 <span class="block text-sm text-gray-600 dark:text-neutral-400">
-                  Pay Amount: <span>{trans.pay_amount} {trans.pay_currency.toUpperCase()}</span>
+                  Pay Amount:
+                  <span>
+                    {#if trans.pay_currency === "NGN"}
+                      {toCurrency(trans.pay_amount, trans.pay_currency.toUpperCase())}
+                    {:else}
+                      {trans.pay_amount} <span class="uppercase">{trans.pay_currency}</span>
+                    {/if}
+                  </span>
                 </span>
                 <span class="block text-sm text-gray-600 dark:text-neutral-400">
                   Payment Method: <span>{trans.payment_method.toUpperCase().replaceAll("_", " ")}</span>
                 </span>
-                {#if !trans.is_processed && !trans.expired_at}
-                  <span class="block text-wrap text-sm text-gray-500 dark:text-neutral-500">
-                    <span class="font-sem-bold text-gray-800">Valid Until:</span>
-                    {new Date(trans.valid_until || "").toLocaleDateString()}
-                  </span>
-                {/if}
-                {#if trans.expired_at}
-                  <span class="block text-wrap text-sm text-red-600 dark:text-red-600">
-                    <span class="font-sem-bold text-red-600">Expired:</span>
-                    {new Date(trans.expired_at).toLocaleDateString()}
-                  </span>
-                {/if}
               </div>
             </div>
           </div>
 
           <div class="flex justify-end">
-            {#if trans.is_processed}
-              <a
-                href="/admin/payment-transactions/v/{trans.id}"
-                class="rounded bg-teal-700 px-4 py-2 text-xs text-white hover:bg-teal-600"
-                aria-haspopup="dialog"
-                aria-expanded="true"
-                aria-controls="view-transaction-details"
-                data-hs-overlay="#view-transaction-details"
-                on:click={loadDetails}>
-                View Details
-              </a>
-            {/if}
+            <a
+              href="/admin/payment-transactions/v/{trans.id}"
+              class="rounded bg-teal-700 px-4 py-2 text-xs text-white hover:bg-teal-600"
+              on:click={loadDetails}>
+              View Details
+            </a>
           </div>
         </div>
       {:else}
@@ -242,16 +234,23 @@
     <TransactionDetailsPage data={$page.state.transactionDetails || { transaction: {} }} isModal />
   </div>
   <svelte:fragment slot="footer">
-    {#if $page.state.transactionDetails?.trans?.is_processing || $page.state.transactionDetails?.trans?.is_processed}
+    {#if ! $page.state.transactionDetails?.transaction?.is_confirmed ||
+      ! $page.state.transactionDetails?.transaction?.expired_at &&
+      $page.state.transactionDetails.transaction.status !== 'refunded'
+    }
       <form
         action=""
         method="POST"
-        use:enhance={({ formElement, formData, action, cancel }) =>
-          async ({ result }) =>
-            await applyAction(result)}>
-        <input type="text" name="transId" value={$page.state.transactionDetails?.trans?.id} class="hidden" />
+        use:enhance={ ({ formElement, formData, action, cancel }) => {
+          window.HSOverlay?.close("#view-transaction-details");
+          return async ({ result, update }) => {
+            return await applyAction(result);
+            update();
+          }
+        } }>
+        <input type="text" name="transactionId" value={$page.state.transactionDetails?.transaction?.id} class="hidden" />
         <LoadingButton class="w-auto bg-black px-3 py-2 font-medium transition-opacity duration-300 hover:bg-gray-700 hover:text-neutral-50 focus:bg-gray-700">
-          {#if $page.state.transactionDetails?.trans?.voucher_codes?.length} Resend {:else} Process and Email {/if} Vouchers
+          Confirm Payment
         </LoadingButton>
       </form>
     {/if}

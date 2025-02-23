@@ -28,7 +28,7 @@
           evtSrc.close();
 
           setTimeout(() => {
-            window.location.href = "/user/wallet";
+            window.location.href = "/user/transactions";
           }, 5000);
         }
 
@@ -37,7 +37,7 @@
           evtSrc.close();
 
           setTimeout(() => {
-            window.location.href = "/user/wallet";
+            window.location.href = "/user/transactions";
           }, 5000);
         }
       });
@@ -105,7 +105,7 @@
         <a
           data-sveltekit-replacestate
           data-sveltekit-reload
-          href="/user/wallet"
+          href="/user/transactions"
           class="inline-flex text-nowrap rounded-md border border-transparent bg-red-600 px-4 py-2.5 text-sm font-bold uppercase text-white shadow-md hover:bg-red-500 focus:bg-red-500"
           on:click={() => evtSrc.close()}>
           Cancel this Transaction

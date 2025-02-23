@@ -11,9 +11,9 @@ export async function load(event) {
       reload: false,
     },
     {
-      name: "Wallet",
-      description: "Monitor your transactions",
-      uri: "/user/wallet",
+      name: "Transactions",
+      description: "View your transaction history",
+      uri: "/user/transactions",
       icon: "walletSVG",
       reload: true,
     },

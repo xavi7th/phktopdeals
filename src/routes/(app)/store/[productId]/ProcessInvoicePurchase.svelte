@@ -26,11 +26,11 @@
 
 <Modal title="Are you sure?" name="process-invoice-purchase-modal">
   <div slot="content">
-    <p class="mb-4 text-gray-600">
+    <p class="mb-4 text-gray-600 px-4">
       You are about to complete a purchase for <span class="font-bold">{toCurrency(totalPurchaseAmount)}</span>
       . Please note that this action will deduct the amount from your available balance.
     </p>
-    <div class="mb-4 rounded border border-red-400 bg-red-100 px-4 py-3 text-red-700">
+    <div class="mb-4 rounded border border-red-400 bg-red-100 px-4 py-3 text-red-700 mx-4">
       <p class="font-bold">Important Warning:</p>
       <ul class="ml-4 list-disc text-xs">
         <li>This transaction is irreversible.</li>

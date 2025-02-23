@@ -108,7 +108,14 @@
                   </span>
                 </span>
                 <span class="block text-sm text-gray-600 dark:text-neutral-200">
-                  Pay Amount: <span>{order.pay_amount} {order.pay_currency.toUpperCase()}</span>
+                  Pay Amount:
+                  <span>
+                    {#if order.pay_currency === "NGN"}
+                      {toCurrency(order.pay_amount, order.pay_currency.toUpperCase())}
+                    {:else}
+                      {order.pay_amount} <span class="uppercase">{order.pay_currency}</span>
+                    {/if}
+                  </span>
                 </span>
                 <span class="block text-sm text-gray-600 dark:text-neutral-200">
                   Payment Method: <span>{order.payment_method.toUpperCase().replaceAll("_", " ")}</span>
@@ -174,7 +181,14 @@
                   </span>
                 </span>
                 <span class="block text-sm text-gray-600 dark:text-neutral-400">
-                  Pay Amount: <span>{order.pay_amount} {order.pay_currency.toUpperCase()}</span>
+                  Pay Amount:
+                  <span>
+                    {#if order.pay_currency === "NGN"}
+                      {toCurrency(order.pay_amount, order.pay_currency.toUpperCase())}
+                    {:else}
+                      {order.pay_amount} <span class="uppercase">{order.pay_currency}</span>
+                    {/if}
+                  </span>
                 </span>
                 <span class="block text-sm text-gray-600 dark:text-neutral-400">
                   Payment Method: <span>{order.payment_method.toUpperCase().replaceAll("_", " ")}</span>

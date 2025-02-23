@@ -291,7 +291,7 @@
             {timeout}
             {delayed}
             {submitting}
-            data-hs-overlay="#payment-method">
+            data-hs-overlay="#payment-method" on:click={() => window.HSOverlay?.close("#payment-method")}>
             Process my Payment
           </LoadingButton>
         {/if}

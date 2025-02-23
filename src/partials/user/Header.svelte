@@ -16,7 +16,7 @@
     </div>
 
     <div class="hidden lg:flex items-center rounded-full border border-gray-200 bg-gray-200 p-0.5  dark:border-white/20 dark:bg-neutral-800">
-      <a href="/user/wallet/top-up/choose-payment-method" title="" class="mr-4 inline-flex justify-self-end items-center justify-center w-auto h-11 px-3 text-gray-800 dark:text-neutral-300 bg-gray-200 dark:bg-neutral-800 rounded-full">
+      <a href="/user/transactions/top-up/choose-payment-method" title="" class="mr-4 inline-flex justify-self-end items-center justify-center w-auto h-11 px-3 text-gray-800 dark:text-neutral-300 bg-gray-200 dark:bg-neutral-800 rounded-full">
         <SvgIcon strokeWidth={1.5} class="size-5 shrink-0" slot={dollarCircle} />
         <span class="font-bold tracking-tighter ml-2 text-sm">{ toCurrency(wallet_balance) }</span>
       </a>

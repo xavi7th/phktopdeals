@@ -119,7 +119,7 @@
       {/if}
     </div>
 
-    {#if !isModal && !transaction.is_confirmed && !transaction?.expired_at && transaction.status !== 'refunded'}
+    {#if !isModal && !transaction.is_confirmed && !transaction?.expired_at && transaction.status !== 'refunded' && transaction.status !== 'finished'}
       <div class="-m-4 mt-4 flex items-center justify-end gap-x-2 border-t px-4 py-3 dark:border-neutral-700">
         <form action="" method="POST" use:enhance>
           <input type="text" name="transactionId" value={transaction?.id} class="hidden" />
