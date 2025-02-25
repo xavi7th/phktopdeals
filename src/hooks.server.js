@@ -14,7 +14,7 @@ import { redirect } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
 import { handleSession } from "svelte-kit-cookie-session";
 import { PUBLIC_VITE_BASE_API } from '$env/static/public';
-import { handleDeviecDetector } from "sveltekit-device-detector";
+import { handleDeviceDetector } from "sveltekit-device-detector";
 import { VITE_SESSION_NAME, APP_SESSION_KEY } from "$env/static/private";
 
 const sessionHandler = handleSession({
@@ -187,4 +187,4 @@ export const handleError = async ({ event, error, message, status }) => {
   }
 };
 
-export const handle = sequence(sessionHandler, handleDeviecDetector({}), logger, getUserDetails, authorize, addSecurityHeaders);
+export const handle = sequence(sessionHandler, handleDeviceDetector({}), logger, getUserDetails, authorize, addSecurityHeaders);

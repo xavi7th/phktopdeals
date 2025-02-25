@@ -9,7 +9,7 @@ togglePw='["#password-confirmation", "#hs-floating-input-passowrd-value"]'/> -->
 <script>
   import FormMessage from "$lib/Components/FormMessage.svelte";
 
-  let { class: className, name = "check-" + crypto.randomUUID().replaceAll("-", "").substring(0, 10), isError = true, label = "Label", tooltip = " ", gray = false, value = true, checked = $bindable(false), msg = [], ...rest } = $props();
+  let { class: className = undefined, name = "check-" + crypto.randomUUID().replaceAll("-", "").substring(0, 10), isError = true, label = "Label", tooltip = " ", gray = false, value = true, checked = $bindable(false), msg = [], ...rest } = $props();
 </script>
 
 <div class="relative flex-1">

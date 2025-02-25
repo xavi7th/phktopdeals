@@ -5,7 +5,22 @@
   import FormMessage from "$lib/Components/FormMessage.svelte";
   import { minusIcon, plusIcon } from "../iconPaths";
 
-  let { class: className = '', name = "input-" + crypto.randomUUID().replaceAll("-", "").substring(0, 10), isError = true, label = "", placeholder = "", gray = false, size = "py-2 px-3", min = 0, max = undefined, msg = [], value = $bindable(min), ...rest } = $props();
+  let {
+    class: className = '',
+    name = "input-" + crypto.randomUUID().replaceAll("-",
+    "").substring(0,
+    10),
+    isError = true,
+    label = "",
+    placeholder = "",
+    gray = false,
+    size = "py-2 px-3",
+    min = 0,
+    max = undefined,
+    msg,
+    value = $bindable(min),
+    ...rest
+  } = $props();
 
   const valueChars = $derived(value?.toString()?.length || 0);
   const inputWidth = $derived(valueChars < 4 ? "w-8" : valueChars > 3 && valueChars < 6 ? "w-12" : valueChars > 5 && valueChars < 10 ? "w-24" : "w-40");

@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: "selector",
-  content: ["./src/**/*.{html,js,svelte,ts}", "./node_modules/preline/preline.js", "./node_modules/stwui/**/*.{svelte,js,ts,html}"],
+  content: ["./src/**/*.{html,js,svelte,ts}", "./node_modules/preline/preline.js"],
 
   theme: {
     // => @media (min-width: Xpx) { ... }
@@ -39,5 +39,5 @@ export default {
       },
     },
   },
-  plugins: [require("@tailwindcss/typography"), require("@tailwindcss/forms"), require("preline/plugin"), require("stwui/plugin")],
+  plugins: [require("@tailwindcss/typography"), require("@tailwindcss/forms"), require("preline/plugin")],
 };

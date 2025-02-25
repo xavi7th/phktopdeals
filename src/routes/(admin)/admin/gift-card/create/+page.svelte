@@ -159,7 +159,7 @@
 
       {#if $formData.percentage_discount > 0}
         <div class="col-span-12">
-          <FloatingDateInput name="discount_until" min={Date()} label="Discount Valid Until (optional)" bind:value={$formData.discount_until} msg={$errors?.discount_until?.[0]} />
+          <FloatingDateInput name="discount_until" enablePastDates={false} label="Discount Valid Until (optional)" bind:value={$formData.discount_until} msg={$errors?.discount_until?.[0]} />
         </div>
       {/if}
 

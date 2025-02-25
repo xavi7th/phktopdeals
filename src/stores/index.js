@@ -1,8 +1,11 @@
+import { browser } from '$app/environment';
 import { writable, readable } from 'svelte/store';
 
 export const pageMounted = writable(false);
 
 export const isDarkMode = readable(false, (set) => {
+  if(!browser) return () => {};
+
   const htmlElement = document.documentElement;
 
   // Function to update the store based on the current theme
