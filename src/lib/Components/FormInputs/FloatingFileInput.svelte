@@ -6,7 +6,7 @@
   let { class: className, name = "file-" + crypto.randomUUID().replaceAll("-", "").substring(0, 10), isError = true, label = "", gray = false, files = $bindable(undefined), msg = [], ...rest } = $props();
 </script>
 
-<div class="relative">
+<div class="relative {className}">
   <input
     type="file"
     {name}

@@ -11,7 +11,6 @@ export async function load(event) {
       method: "get",
       resource: "product-types",
       event,
-      logResponse: true,
     });
 
     return await res?.json();
@@ -32,7 +31,6 @@ export async function load(event) {
       method: "get",
       resource: "product-categories",
       event,
-      logResponse: true,
     });
 
     return await res?.json();

@@ -25,24 +25,24 @@
   /** @type {Object<string, Object<string, string>>} */
   let toastClasses = {
     grey: {
-      bg: "bg-gray-200 border border-gray-300 text-sm text-gray-800 rounded-lg dark:bg-white/10 dark:border-white/20 dark:text-white",
+      bg: "bg-gray-200 border border-gray-300 text-sm text-gray-800 rounded-lg dark:bg-white/20 dark:border-white/20 dark:text-white",
       close: "text-gray-800 dark:text-white",
     },
     success: {
-      bg: "bg-teal-100 border border-teal-200 text-sm text-teal-800 rounded-lg dark:bg-teal-800/10 dark:border-teal-900 dark:text-teal-500",
+      bg: "bg-teal-100 border border-teal-200 text-sm text-teal-800 rounded-lg dark:bg-teal-800/20 dark:border-teal-900 dark:text-teal-500",
       close: "text-teal-800 dark:text-teal-200",
     },
     info: {
-      bg: "bg-blue-100 border border-blue-200 text-sm text-blue-800 rounded-lg dark:bg-blue-800/10 dark:border-blue-900 dark:text-blue-500",
+      bg: "bg-blue-100 border border-blue-200 text-sm text-blue-800 rounded-lg dark:bg-blue-800/20 dark:border-blue-900 dark:text-blue-500",
       close: "text-blue-800 dark:text-blue-200",
       icon: "text-blue-500",
     },
     error: {
-      bg: "bg-red-100 border border-red-200 text-sm text-red-800 rounded-lg dark:bg-red-800/10 dark:border-red-900 dark:text-red-500",
+      bg: "bg-red-100 border border-red-200 text-sm text-red-800 rounded-lg dark:bg-red-800/20 dark:border-red-900 dark:text-red-500",
       close: "text-red-800 dark:text-red-200",
     },
     warning: {
-      bg: "bg-yellow-100 border border-yellow-200 text-sm text-yellow-800 rounded-lg dark:bg-yellow-800/10 dark:border-yellow-900 dark:text-yellow-500",
+      bg: "bg-yellow-100 border border-yellow-200 text-sm text-yellow-800 rounded-lg dark:bg-yellow-800/20 dark:border-yellow-900 dark:text-yellow-500",
       close: "text-yellow-800 dark:text-yellow-200",
     },
     white: {

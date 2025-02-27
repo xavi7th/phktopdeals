@@ -1,7 +1,7 @@
 <script>
   import { page } from "$app/stores";
   import Logo from "$lib/Components/Logo.svelte";
-  import { homeSVG, productSVG, eSimSVG, gamesSVGAlt, giftCardSVGAlt, topUpSVGAlt, usersSVG } from "$lib/Components/iconPaths";
+  import { homeSVG, productSVG, eSimSVG, gamesSVGAlt, giftCardSVGAlt, topUpSVGAlt, usersSVG, spinnerSVG } from "$lib/Components/iconPaths";
 
   /** @type {Object<string, string>}*/
   let icons = {
@@ -12,6 +12,7 @@
     giftCardSVGAlt,
     topUpSVGAlt,
     usersSVG,
+    spinnerSVG,
   };
 
   /** @type {import('$lib/types').AdminNavMenuItem[]} */

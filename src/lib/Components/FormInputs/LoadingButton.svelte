@@ -11,7 +11,7 @@
   import { readable } from "svelte/store";
   import { animatedDotsSVG, spinnerSVG } from "../iconPaths";
 
-  let { class: className, timeout = readable(false), delayed = readable(false), submitting = readable(false), disabled = false, label = "", ...rest } = $props();
+  let { class: className = "", timeout = readable(false), delayed = readable(false), submitting = $bindable(readable(false)), disabled = false, label = "", children = undefined, ...rest } = $props();
 </script>
 
 <button
@@ -32,7 +32,7 @@
     {#if label}
       {label}
     {:else}
-      <slot />
+      {@render children?.()}
     {/if}
     {#if $delayed}
       {@html spinnerSVG}
