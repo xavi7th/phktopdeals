@@ -260,6 +260,20 @@ export const getFirstElement = (str, elem = "p") => {
 };
 
 /**
+ * Checks if a FormData object contains any File instances.
+ * @param {FormData} formData - The FormData object to check.
+ * @returns {boolean} - True if the FormData contains at least one File, false otherwise.
+ */
+export const hasFile = (formData) => {
+  for (const value of formData.values()) {
+    if (value instanceof File) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
  * Custom function to set API headers and make API calls
  *
  * @param {import('$lib/types').ApiParams} params
@@ -289,8 +303,12 @@ export async function api({ toBaseDomain, resource, event, method, data, logResp
     "x-sveltekit-action": event.cookies?.get("x-sveltekit-action") || false,
   };
 
-  if (toJSON) {
+  const isFormData = data instanceof FormData;
+  const hasFiles = isFormData && hasFile(data);
+
+  if (! hasFiles) {
     headers["content-type"] = "application/json";
+    data = data ? JSON.stringify(isFormData ? Object.fromEntries(data) : data) : null;
   }
 
   if (resource) {
@@ -304,7 +322,7 @@ export async function api({ toBaseDomain, resource, event, method, data, logResp
   const response = await event?.fetch(fullurl, {
     method: method,
     headers,
-    body: (data && (toJSON ? JSON.stringify(data) : data)) || null,
+    body: data || null,
   });
 
   if (logResponse) {

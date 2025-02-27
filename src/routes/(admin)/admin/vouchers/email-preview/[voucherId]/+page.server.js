@@ -6,7 +6,6 @@ export async function load(event) {
       method: "get",
       resource: "voucher-codes/" + event.params.voucherId,
       event,
-      logResponse: true,
     });
     return await res?.json();
   };

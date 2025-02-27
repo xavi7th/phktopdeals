@@ -28,6 +28,7 @@ declare global {
       deviceName?: string;
       message?: string;
       session?: SessionData;
+      flash?: Superforms.Message;
     }
     interface ActionData {
       message: string;

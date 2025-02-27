@@ -18,7 +18,6 @@ export async function load(event) {
       method: "get",
       resource: url,
       event,
-      logResponse: true
     });
     return await res?.json();
   };

@@ -1,4 +1,5 @@
 <script>
+  import { fade } from 'svelte/transition';
   import SvgIcon from "$lib/Components/SvgIcon.svelte";
   import ProductCardSlider from "$partials/ProductCardSlider.svelte";
 
@@ -8,7 +9,7 @@
 </script>
 
 {#if content.items?.length}
-  <section class="mt-12 w-full">
+  <section class="mt-12 w-full" transition:fade={{ duration: 1000 }}>
     <div class="container-fluid lg:container">
       <div class="row px-4">
         <div class="mx-auto mb-12 max-w-2xl text-center lg:mb-16">

@@ -1,5 +1,5 @@
 import { error } from "@sveltejs/kit";
-import { api, getErrorString } from "$lib/helpers";
+import { api } from "$lib/helpers";
 
 export async function load(event) {
   const fetchOrderDetails = async () => {

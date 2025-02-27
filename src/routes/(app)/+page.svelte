@@ -1,4 +1,5 @@
 <script>
+  import { fade } from 'svelte/transition';
   import Hero from "$partials/home/Hero.svelte";
   import Services from "$partials/home/Services.svelte";
   import HowItWorks from "$partials/home/HowItWorks.svelte";
@@ -7,31 +8,73 @@
 
   export let data;
 
-  $: ({ sections, services } = data);
+  $: ({ pageData } = data);
 </script>
 
+{#snippet skeleton(section)}
+  <div class="bg-gray-100 dark:bg-gray-900 p-8 transition-colors duration-300" class:mt-20={section === 'hero'} transition:fade>
+    <div class="container mx-auto">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+        {#each { length: 4 } as _, i}
+          <div class="animate-pulse" aria-busy="true">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md h-48">
+              <div class="p-4">
+                <div class="bg-gray-200 dark:bg-gray-700 h-6 w-3/4 rounded mb-4"></div>
+                <div class="bg-gray-200 dark:bg-gray-700 h-4 w-1/2 rounded mb-2"></div>
+                <div class="bg-gray-200 dark:bg-gray-700 h-4 w-1/2 rounded"></div>
+              </div>
+            </div>
+          </div>
+        {/each}
+      </div>
+
+      {#if section !== 'hero'}
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+          {#each { length: 4 } as _, i}
+            <div class="animate-pulse" aria-busy="true">
+              <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md h-48">
+                <div class="p-4">
+                  <div class="bg-gray-200 dark:bg-gray-700 h-6 w-3/4 rounded mb-4"></div>
+                  <div class="bg-gray-200 dark:bg-gray-700 h-4 w-1/2 rounded mb-2"></div>
+                  <div class="bg-gray-200 dark:bg-gray-700 h-4 w-1/2 rounded"></div>
+                </div>
+              </div>
+            </div>
+          {/each}
+        </div>
+      {/if}
+    </div>
+  </div>
+{/snippet}
+
 <main class="flex flex-auto flex-col">
-  <Hero />
+  <Hero {pageData} />
 
-  {#if sections && Object.entries(sections)}
-    {#each Object.entries(sections.top) as [sectionTitle, content]}
-      <ProductSection {sectionTitle} {content} />
-    {/each}
-
-    {#each Object.entries(sections.misc) as [sectionTitle, content], idx}
-      {#if idx <= 2}
+  {#await pageData}
+    {@render skeleton()}
+  {:then pageData}
+    {#if pageData?.data?.sections && Object.entries(pageData.data.sections)}
+      {#each Object.entries(pageData.data.sections.top) as [sectionTitle, content]}
         <ProductSection {sectionTitle} {content} />
-      {/if}
-    {/each}
+      {/each}
 
-    {#each Object.entries(sections.misc) as [sectionTitle, content], idx}
-      {#if idx > 2}
-        <ProductSection {sectionTitle} {content} />
-      {/if}
-    {/each}
-  {/if}
+      {#each Object.entries(pageData.data.sections.misc) as [sectionTitle, content], idx}
+        {#if idx <= 2}
+          <ProductSection {sectionTitle} {content} />
+        {/if}
+      {/each}
 
-  <Services {services} />
+      {#each Object.entries(pageData.data.sections.misc) as [sectionTitle, content], idx}
+        {#if idx > 2}
+          <ProductSection {sectionTitle} {content} />
+        {/if}
+      {/each}
+    {/if}
+  {:catch error}
+  {/await}
+
+
+  <Services {skeleton} {pageData} />
 
   <section class="mt-32 w-full">
     <div class="container-fluid lg:container">

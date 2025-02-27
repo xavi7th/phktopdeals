@@ -38,7 +38,6 @@ export const actions = {
       resource: "voucher-codes",
       data: form.data,
       event,
-      logResponse: true,
     });
 
     if (res?.status == 422) {
@@ -116,7 +115,6 @@ export const actions = {
       resource: "voucher-codes" + "/" + form.data.id,
       data: form.data,
       event,
-      logResponse: true,
     });
 
     if (res?.status == 422) {

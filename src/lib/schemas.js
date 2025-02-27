@@ -1,4 +1,5 @@
 import { type } from "arktype";
+import { PUBLIC_VITE_FRONT_END_DOMAIN } from '$env/static/public';
 
 export const AppUserSchema = type({
   full_name: type("string>3").describe("provided"),
@@ -146,6 +147,20 @@ export const eSimDefaults = {
   variable_denomination: false,
   discount_until: null,
   faqs: undefined,
+};
+
+export const sliderSchema = type({
+  "url": type("string.url|undefined|null").describe("a valid url"),
+  image: type("File").describe("provided").configure({ problem: ctx => ctx.propString + ' must be ' + ctx.expected }),
+  size: '"large"|"small"',
+  "id?": type("string | undefined"),
+});
+
+export const sliderDefaults = {
+  url: PUBLIC_VITE_FRONT_END_DOMAIN + "store/products",
+  image: undefined,
+  size: undefined,
+  id:undefined,
 };
 
 export const brandSchema = type({

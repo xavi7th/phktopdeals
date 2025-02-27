@@ -3,6 +3,10 @@
   import { page } from "$app/stores";
   import { pageMounted } from "$stores";
   import { afterNavigate } from "$app/navigation";
+  import Toast from '$lib/Components/Toast.svelte';
+  import { getFlash } from 'sveltekit-flash-message';
+
+  const flash = getFlash(page);
 
   import "../app.scss";
 
@@ -62,5 +66,11 @@
 
   <meta name="robots" content="index,follow" />
 </svelte:head>
+
+{#if $flash}
+  <div class="fixed end-3 top-24 z-[100] space-y-3">
+    <Toast positioned={false} type={$flash?.type} msg={$flash.msg} />
+  </div>
+{/if}
 
 {@render children()}

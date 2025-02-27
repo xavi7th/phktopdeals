@@ -69,6 +69,12 @@ export async function load({ data }) {
       reload: false,
     },
     {
+      name: "Sliders",
+      uri: "/admin/sliders",
+      icon: "spinnerSVG",
+      reload: false,
+    },
+    {
       name: "Users",
       uri: "/admin/users",
       icon: "usersSVG",

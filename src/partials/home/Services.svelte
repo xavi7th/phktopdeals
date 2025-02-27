@@ -1,6 +1,5 @@
 <script>
-  /** @type {import('$lib/types').Service[]} */
-  export let services = [];
+  let {skeleton, pageData} = $props();
 </script>
 
 <section class="services mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
@@ -25,33 +24,40 @@
     </label>
   </div>
 
-  <div class="mt-24 grid gap-4 sm:grid-cols-2 lg:grid-cols-5 lg:items-center">
-    {#each services as service}
-      <div
-        class="service-card flex flex-col rounded-2xl bg-gradient-to-b from-brand-200 p-8 text-center {service.isMobileHidden ? 'hidden lg:block' : ''} {service.isPopular
-          ? 'border-2 border-brand-600 shadow-xl dark:border-brand-700'
-          : 'border border-gray-200 shadow-md dark:border-neutral-800'}">
-        {#if service.isPopular}
-          <p class="mb-3">
-            <span class="inline-flex items-center gap-1.5 rounded-lg bg-brand-100 px-3 py-1.5 text-xs font-semibold uppercase text-brand-800 dark:bg-brand-600 dark:text-white">Most popular</span>
-          </p>
-        {/if}
+  {#await pageData}
+    {@render skeleton()}
+  {:then pageData}
+    <div class="mt-24 grid gap-4 sm:grid-cols-2 lg:grid-cols-5 lg:items-center">
+      {#each pageData.data.services as service}
+        <div
+          class="service-card flex flex-col rounded-2xl bg-gradient-to-b from-brand-200 p-8 text-center {service.isMobileHidden ? 'hidden lg:block' : ''} {service.isPopular
+            ? 'border-2 border-brand-600 shadow-xl dark:border-brand-700'
+            : 'border border-gray-200 shadow-md dark:border-neutral-800'}">
+          {#if service.isPopular}
+            <p class="mb-3">
+              <span class="inline-flex items-center gap-1.5 rounded-lg bg-brand-100 px-3 py-1.5 text-xs font-semibold uppercase text-brand-800 dark:bg-brand-600 dark:text-white">Most popular</span>
+            </p>
+          {/if}
 
-        <h4 class="-mt-6 h-24 stroke-black text-lg font-medium text-gray-600 dark:text-neutral-200">{@html service.icon}</h4>
-        <span class="text-xl font-bold text-gray-600 dark:text-neutral-200">{service.title}</span>
-        <p class="mt-7 line-clamp-4 text-xs text-gray-500 hover:line-clamp-none dark:text-neutral-500">{service.desc}</p>
+          <h4 class="-mt-6 h-24 stroke-black text-lg font-medium text-gray-600 dark:text-neutral-200">{@html service.icon}</h4>
+          <span class="text-xl font-bold text-gray-600 dark:text-neutral-200">{service.title}</span>
+          <p class="mt-7 line-clamp-4 text-xs text-gray-500 hover:line-clamp-none dark:text-neutral-500">{service.desc}</p>
 
-        <a
-          class="mt-5 inline-flex items-center justify-center gap-x-2 rounded-full border px-4 py-3 text-sm font-medium shadow-sm focus:outline-none disabled:pointer-events-none disabled:opacity-50
-            {service.isPopular
-            ? 'border-transparent bg-brand-600 text-white hover:bg-brand-700 focus:bg-brand-700'
-            : 'border-gray-200 bg-gray-200 text-gray-800 hover:bg-gray-50 focus:bg-gray-50 dark:border-neutral-700 dark:bg-transparent dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800'}"
-          href={service.url}>
-          {service.cta}
-        </a>
-      </div>
-    {/each}
-  </div>
+          <a
+            class="mt-5 inline-flex items-center justify-center gap-x-2 rounded-full border px-4 py-3 text-sm font-medium shadow-sm focus:outline-none disabled:pointer-events-none disabled:opacity-50
+              {service.isPopular
+              ? 'border-transparent bg-brand-600 text-white hover:bg-brand-700 focus:bg-brand-700'
+              : 'border-gray-200 bg-gray-200 text-gray-800 hover:bg-gray-50 focus:bg-gray-50 dark:border-neutral-700 dark:bg-transparent dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800'}"
+            href={service.url}>
+            {service.cta}
+          </a>
+        </div>
+      {/each}
+    </div>
+  {:catch error}
+    <!-- pageData was rejected -->
+  {/await}
+
 </section>
 
 <style lang="scss">

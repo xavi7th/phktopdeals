@@ -7,7 +7,6 @@ export async function load(event) {
       method: "get",
       resource: "products/type/esim",
       event,
-      logResponse: true,
     });
 
     return await res?.json();

@@ -169,3 +169,10 @@ export type UserOrder = {
   payment_confirmed_at?: string;
   transaction_type: "'top up'|'purchase'";
 };
+
+export type Slider = {
+  id: string;
+  url: string;
+  img_url: string;
+  size: string;
+};
