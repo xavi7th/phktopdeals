@@ -9,6 +9,9 @@
   const flash = getFlash(page);
 
   import "../app.scss";
+  import 'swiper/css';
+  import 'swiper/css/autoplay';
+  import 'swiper/css/pagination';
 
   let { children } = $props();
 

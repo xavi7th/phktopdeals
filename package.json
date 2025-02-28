@@ -68,5 +68,8 @@
     "sharp",
     "svelte-preprocess"
   ],
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "swiper": "^11.2.4"
+  }
 }
