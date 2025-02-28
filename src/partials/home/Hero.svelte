@@ -1,19 +1,102 @@
 <script>
+  import Swiper from 'swiper';
+  import { tick } from 'svelte';
   import { slide } from 'svelte/transition';
   import Typewriter from "svelte-typewriter";
   import { main_nav } from '$partials/Header.svelte';
   import SvgIcon from "$lib/Components/SvgIcon.svelte";
+  import { Pagination, Autoplay } from 'swiper/modules';
 
-  let isLoading = false;
+  /**
+   * @typedef PageData
+   * @property {import('$lib/types').PageSection} sections
+   * @property {import('$lib/types').Service[]} services
+   * @property { {small: import('$lib/types').Slider[], large: import('$lib/types').Slider[]} } sliders
+   */
 
+  /** @type { {pageData: Promise< { data: PageData } > } } */
   let {pageData} = $props();
+  let sliders = $state({small: [], large: []}), isLoaded = $state(false);
+
+  pageData.then(async (pageData) => {
+    sliders = pageData.data.sliders;
+    await tick();
+    isLoaded = true;
+  });
+
+  $effect(() => {
+    const progressCircle = document.querySelector(".autoplay-progress svg");
+    const progressContent = document.querySelector(".autoplay-progress span");
+
+    if (isLoaded && sliders?.small?.length > 0) {
+      const slider = new Swiper('.small-sliders', {
+        modules: [Autoplay],
+        loop: true,
+        enabled: true,
+        autoplay: {
+          delay: 1500,
+          disableOnInteraction: false
+        },
+        cssMode: true,
+        slidesPerView: 2,
+        spaceBetween: 30,
+        speed: 200,
+        breakpoints: {
+          320: {
+            slidesPerView: 3,
+            spaceBetween: 10
+          },
+          640: {
+            slidesPerView: 5,
+            spaceBetween: 30
+          }
+        },
+      });
+
+      const slider2 = new Swiper('.large-sliders', {
+        modules: [Autoplay, Pagination],
+        loop: true,
+        enabled: true,
+        centeredSlides: true,
+        autoplay: {
+          delay: 3000,
+          disableOnInteraction: false
+        },
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true
+        },
+        on: {
+          autoplayTimeLeft(s, time, progress) {
+            progressCircle.style.setProperty("--progress", 1 - progress);
+            progressContent.textContent = `${Math.ceil(time / 1000)}s`;
+          }
+        },
+        mousewheel: true,
+        keyboard: true,
+        cssMode: true,
+        slidesPerView: 1,
+        spaceBetween: 0,
+        speed: 100,
+      });
+
+      return () => {
+        slider?.destroy();
+        slider2?.destroy();
+      }
+    }
+
+
+  })
+
+  $inspect({sliders, isLoaded})
 </script>
 
 <section class="hero min-h-[95dvh] bg-gray-100 lg:min-h-[85dvh]">
-  <enhanced:img class="hero-bkg-img absolute h-full w-full rounded-xl" src="$lib/images/hero.jpg?enhance&w=1920" alt="hero-img" />
+  <enhanced:img class="hero-bkg-img absolute h-full w-full rounded-lg" src="$lib/images/hero.jpg?enhance&w=1920" alt="hero-img" />
   <div class="container-fluid hero-content relatize z-20 mx-auto h-fit px-4 pb-10">
     <div class="w-full">
-      <div class="flex max-w-screen-sm flex-col md:w-4/5">
+      <div class="flex w-full flex-col">
         <Typewriter mode="loop" element="h1" --cursor-color="white" --cursor-width="2px" interval={60} wordInterval={2000} unwriteInterval={80}>
           <span data-static>Buy</span>
           <span>eSim</span>
@@ -33,7 +116,7 @@
         </Typewriter>
 
         <h2>With Bitcoin and other Cryptos</h2>
-        <p>Online shop with USDT, USDC, and other stable coins is also supported.</p>
+        <p class="hidden lg:block">Online shop with USDT, USDC, and other stable coins is also supported.</p>
 
         <div class="max-w-xl space-y-3">
           <div>
@@ -66,7 +149,7 @@
                             px-4 py-3 text-sm font-semibold text-gray-800 hover:bg-brand-500
                             focus:bg-brand-500 focus:outline-none disabled:pointer-events-none disabled:opacity-50">
                 Start Shopping
-                {#if isLoading}
+                {#if ! isLoaded}
                   <span class="inline-block size-4 animate-spin rounded-full border-[3px] border-current border-t-transparent text-white" role="status" aria-label="loading">
                     <span class="sr-only">Loading...</span>
                   </span>
@@ -96,82 +179,48 @@
         {/each}
       </div>
 
-      {#await pageData}
-      {:then pageData}
-        <div class="mb-8 mt-28 grid h-max grid-cols-5 content-start gap-3" transition:slide={{ duration: 2000, axis: 'y' }}>
+      {#if isLoaded}
+        <div class="mb-8 mt-8 lg:mt-16 h-max content-start" transition:slide={{ duration: 2000, axis: 'y' }}>
 
-          {#if pageData.data.sliders?.large}
-            <div class="order-last col-span-5 h-[200px] rounded-xl border bg-white shadow-sm sm:h-[300px] md:order-none md:col-span-3 lg:!h-[360px] dark:border-neutral-700 dark:bg-neutral-900 dark:shadow-neutral-700/70">
-              <div class="h-full w-full rounded-lg bg-white shadow-md dark:bg-neutral-800">
-                <div data-hs-carousel={`{"loadingClasses": "opacity-0", "isAutoPlay": "true"}`} class="relative h-full">
-                  <div class="hs-carousel relative h-full w-full overflow-hidden rounded-lg bg-white">
-                    <div class="hs-carousel-body absolute bottom-0 start-0 top-0 flex h-full flex-nowrap opacity-0 transition-transform duration-700">
-                      {#each pageData.data.sliders.large as slider}
-                        <div class="hs-carousel-slide">
-                          <a href="{slider.url}">
-                            <img class="h-full w-full rounded-xl" src="{slider.img_url}" alt="hero-img-thumb" />
-                          </a>
-                        </div>
-                      {/each}
+          <div class="h-[200px] rounded-lg bg-white shadow-sm sm:h-[300px] lg:!h-[360px] dark:bg-neutral-900 dark:shadow-neutral-700/70">
+            <div class="h-full w-full rounded-lg bg-white shadow-md dark:bg-neutral-800">
+              <div class="swiper large-sliders h-full">
+                <div class="swiper-wrapper h-full">
+                  {#each sliders.large as slider}
+                    <div class="swiper-slide h-full w-full rounded-xl">
+                      <span class="block h-full w-full rounded-md bg-cover bg-center bg-no-repeat  border border-brand-500" style="background-image: url({slider.img_url});"></span>
                     </div>
-                  </div>
+                  {/each}
+                </div>
 
-                  <button
-                    type="button"
-                    class="hs-carousel-prev hs-carousel:disabled:opacity-50 absolute inset-y-0 start-0 inline-flex h-full w-[46px] items-center justify-center rounded-s-lg text-gray-800 hover:bg-gray-800/10 focus:bg-gray-800/10 focus:outline-none disabled:pointer-events-none dark:text-white dark:hover:bg-white/10 dark:focus:bg-white/10">
-                    <span class="text-2xl" aria-hidden="true">
-                      <svg
-                        class="size-5 shrink-0"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="m15 18-6-6 6-6"></path>
-                      </svg>
-                    </span>
-                    <span class="sr-only">Previous</span>
-                  </button>
-                  <button
-                    type="button"
-                    class="hs-carousel-next hs-carousel:disabled:opacity-50 absolute inset-y-0 end-0 inline-flex h-full w-[46px] items-center justify-center rounded-e-lg text-gray-800 hover:bg-gray-800/10 focus:bg-gray-800/10 focus:outline-none disabled:pointer-events-none dark:text-white dark:hover:bg-white/10 dark:focus:bg-white/10">
-                    <span class="sr-only">Next</span>
-                    <span class="text-2xl" aria-hidden="true">
-                      <svg
-                        class="size-5 shrink-0"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="m9 18 6-6-6-6"></path>
-                      </svg>
-                    </span>
-                  </button>
-
-                  <div class="hs-carousel-pagination absolute bottom-3 end-0 start-0 flex justify-center space-x-2">
-                    {#each Array(8) as n}
-                      <span
-                        class="size-3 cursor-pointer rounded-full border border-gray-400 hs-carousel-active:border-blue-700 hs-carousel-active:bg-blue-700 dark:border-neutral-600 dark:hs-carousel-active:border-blue-500 dark:hs-carousel-active:bg-blue-500">
-                      </span>
-                    {/each}
-                  </div>
+                <div class="swiper-pagination"></div>
+                <div class="autoplay-progress">
+                  <svg viewBox="0 0 48 48">
+                    <circle cx="24" cy="24" r="20"></circle>
+                  </svg>
+                  <span></span>
                 </div>
               </div>
             </div>
-          {/if}
+          </div>
 
+          <h3 class="text-xl md:text-2xl font-semibold lg:font-bold text-neutral-200 mt-6 md:mt-12 mb-2 lg:mb-4 px-5">Hot Items</h3>
+
+          <div class="swiper small-sliders !px-5">
+            <div class="swiper-wrapper">
+              {#each sliders.small as slider}
+                <div class="swiper-slide h-48 rounded-md bg-white shadow-sm dark:bg-neutral-900 dark:shadow-neutral-700/70">
+                  <a href="{slider.url}" target="_blank">
+                    <!-- <img class="h-full rounded-xl" src="{slider.img_url}" alt="hero-img-thumb" /> -->
+                    <span class="block h-28 md:h-48 w-full rounded-md bg-cover border border-brand-500" style="background-image: url({slider.img_url});"></span>
+                  </a>
+                </div>
+              {/each}
+            </div>
+          </div>
         </div>
-      {:catch}
-      {/await}
+      {/if}
+
     </div>
   </div>
 </section>
@@ -271,5 +320,36 @@
       margin-bottom: 1.25rem;
       font-size: 0.875rem;
     }
+  }
+
+  .autoplay-progress {
+    --swiper-theme-color: theme("colors.brand.500");
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    z-index: 10;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: var(--swiper-theme-color);
+  }
+
+  .autoplay-progress svg {
+    --progress: 0;
+    position: absolute;
+    left: 0;
+    top: 0px;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    stroke-width: 4px;
+    stroke: var(--swiper-theme-color);
+    fill: none;
+    stroke-dashoffset: calc(125.6px * (1 - var(--progress)));
+    stroke-dasharray: 125.6;
+    transform: rotate(-90deg);
   }
 </style>
