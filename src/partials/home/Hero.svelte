@@ -88,8 +88,6 @@
 
 
   })
-
-  $inspect({sliders, isLoaded})
 </script>
 
 <section class="hero min-h-[95dvh] bg-gray-100 lg:min-h-[85dvh]">
@@ -179,45 +177,50 @@
         {/each}
       </div>
 
-      {#if isLoaded}
+      {#if isLoaded && (sliders.large?.length > 0 || sliders.small?.length > 0)}
         <div class="mb-8 mt-8 lg:mt-16 h-max content-start" transition:slide={{ duration: 2000, axis: 'y' }}>
 
-          <div class="h-[200px] rounded-lg bg-white shadow-sm sm:h-[300px] lg:!h-[360px] dark:bg-neutral-900 dark:shadow-neutral-700/70">
-            <div class="h-full w-full rounded-lg bg-white shadow-md dark:bg-neutral-800">
-              <div class="swiper large-sliders h-full">
-                <div class="swiper-wrapper h-full">
-                  {#each sliders.large as slider}
-                    <div class="swiper-slide h-full w-full rounded-xl">
-                      <span class="block h-full w-full rounded-md bg-cover bg-center bg-no-repeat  border border-brand-500" style="background-image: url({slider.img_url});"></span>
-                    </div>
-                  {/each}
-                </div>
+          {#if sliders.large.length > 0}
+            <div class="h-[200px] rounded-lg bg-white shadow-sm sm:h-[300px] lg:!h-[360px] dark:bg-neutral-900 dark:shadow-neutral-700/70">
+              <div class="h-full w-full rounded-lg bg-white shadow-md dark:bg-neutral-800">
+                <div class="swiper large-sliders h-full">
+                  <div class="swiper-wrapper h-full">
+                    {#each sliders.large as slider}
+                      <div class="swiper-slide h-full w-full rounded-xl">
+                        <span class="block h-full w-full rounded-md bg-cover bg-center bg-no-repeat  border border-brand-500" style="background-image: url({slider.img_url});"></span>
+                      </div>
+                    {/each}
+                  </div>
 
-                <div class="swiper-pagination"></div>
-                <div class="autoplay-progress">
-                  <svg viewBox="0 0 48 48">
-                    <circle cx="24" cy="24" r="20"></circle>
-                  </svg>
-                  <span></span>
+                  <div class="swiper-pagination"></div>
+                  <div class="autoplay-progress">
+                    <svg viewBox="0 0 48 48">
+                      <circle cx="24" cy="24" r="20"></circle>
+                    </svg>
+                    <span></span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          {/if}
 
-          <h3 class="text-xl md:text-2xl font-semibold lg:font-bold text-neutral-200 mt-6 md:mt-12 mb-2 lg:mb-4 px-5">Hot Items</h3>
+          {#if sliders.small.length > 0}
+            <h3 class="text-xl md:text-2xl font-semibold lg:font-bold text-neutral-200 mt-6 md:mt-12 mb-2 lg:mb-4 px-5">Hot Items</h3>
 
-          <div class="swiper small-sliders !px-5">
-            <div class="swiper-wrapper">
-              {#each sliders.small as slider}
-                <div class="swiper-slide h-48 rounded-md bg-white shadow-sm dark:bg-neutral-900 dark:shadow-neutral-700/70">
-                  <a href="{slider.url}" target="_blank">
-                    <!-- <img class="h-full rounded-xl" src="{slider.img_url}" alt="hero-img-thumb" /> -->
-                    <span class="block h-28 md:h-48 w-full rounded-md bg-cover border border-brand-500" style="background-image: url({slider.img_url});"></span>
-                  </a>
-                </div>
-              {/each}
+            <div class="swiper small-sliders !px-5">
+              <div class="swiper-wrapper">
+                {#each sliders.small as slider}
+                  <div class="swiper-slide h-48 rounded-md bg-white shadow-sm dark:bg-neutral-900 dark:shadow-neutral-700/70">
+                    <a href="{slider.url}" target="_blank">
+                      <!-- <img class="h-full rounded-xl" src="{slider.img_url}" alt="hero-img-thumb" /> -->
+                      <span class="block h-28 md:h-48 w-full rounded-md bg-cover border border-brand-500" style="background-image: url({slider.img_url});"></span>
+                    </a>
+                  </div>
+                {/each}
+              </div>
             </div>
-          </div>
+          {/if}
+
         </div>
       {/if}
 
