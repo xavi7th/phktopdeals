@@ -16,7 +16,7 @@
 
   /** @type { {pageData: Promise< { data: PageData } > } } */
   let {pageData} = $props();
-  let sliders = $state({small: [], large: []}), isLoaded = $state(false);
+  let sliders = $state({small: [], large: []}), isLoaded = $state(false), searchQuery = $state(undefined);
 
   pageData.then(async (pageData) => {
     sliders = pageData.data.sliders;
@@ -117,14 +117,14 @@
         <p class="hidden lg:block">Online shop with USDT, USDC, and other stable coins is also supported.</p>
 
         <div class="max-w-xl space-y-3">
-          <div>
-            <div class="relative flex rounded-lg shadow-sm">
+            <form action="/store/products" method="GET" class="text-gray-600 dark:text-gray-400 relative flex rounded-lg shadow-sm">
               <input
+                bind:value={searchQuery}
                 type="text"
                 id="hs-search-box-with-loading-5"
-                name="hs-search-box-with-loading-5"
-                class="block w-full rounded-s-lg border-gray-200 px-4 py-3 ps-11 text-sm shadow-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-                placeholder="Input search" />
+                name="s"
+                class="block w-full rounded-s-lg border-gray-200 px-4 py-3 ps-11 text-sm shadow-sm focus:z-10 focus:border-brand-500 focus:ring-brand-500 disabled:pointer-events-none disabled:opacity-50 dark:border-brand-600/50 dark:bg-neutral-900 dark:focus:ring-neutral-600"
+                placeholder="Search for products" />
               <div class="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-4">
                 <svg
                   class="size-4 shrink-0 text-gray-400 dark:text-neutral-500"
@@ -142,7 +142,6 @@
                 </svg>
               </div>
               <button
-                type="button"
                 class="inline-flex items-center justify-center gap-x-2 text-nowrap rounded-e-md border border-transparent bg-brand-400
                             px-4 py-3 text-sm font-semibold text-gray-800 hover:bg-brand-500
                             focus:bg-brand-500 focus:outline-none disabled:pointer-events-none disabled:opacity-50">
@@ -153,15 +152,14 @@
                   </span>
                 {/if}
               </button>
-            </div>
-          </div>
+            </form>
         </div>
       </div>
 
       <div class="my-4 flex flex-wrap items-center gap-3">
         {#each main_nav as {name, url}}
           <a
-            class="mr-1 inline-flex items-center gap-x-3 rounded-full bg-white px-5 py-3 text-xs font-semibold text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none dark:bg-gray-900 dark:text-neutral-50"
+            class="mr-1 inline-flex items-center gap-x-3 rounded-full bg-white px-5 py-3 text-xs font-semibold text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none dark:bg-gray-900 dark:hover:bg-gray-800 dark:focus:bg-gray-800 dark:text-neutral-50"
             href={url}>
             {name}
           </a>

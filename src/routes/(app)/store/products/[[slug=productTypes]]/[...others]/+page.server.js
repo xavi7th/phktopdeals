@@ -11,6 +11,12 @@ export async function load(event) {
     url += `?cursor=${event.params.others.split("/")[1]}`;
   }
 
+  if (event.params.others && event.params.others.split("/")[0] == "cursor" && event.url.searchParams.get("s")) {
+    url += "&s=" + event.url.searchParams.get("s");
+  } else if (! (event.params.others && event.params.others.split("/")[0] == "cursor") && event.url.searchParams.get("s")) {
+    url += "?s=" + event.url.searchParams.get("s");
+  }
+
   const fetchGiftCards = async () => {
     const res = await api({
       method: "get",
@@ -28,5 +34,6 @@ export async function load(event) {
     meta: cardsData.metadata,
     category: event.params.slug || "all",
     basePageUrl: "/store/products" + (event.params.slug ? "/" + event.params.slug + "/cursor" : ""),
+    search: event.url.searchParams.get("s") || undefined,
   };
 }
