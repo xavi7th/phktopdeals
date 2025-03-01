@@ -2,6 +2,7 @@ import { api } from "$lib/helpers";
 
 export async function load(event) {
   let url = "store";
+  const searchQuery = event.url.searchParams.get("s");
 
   if (event.params.slug) {
     url += "/" + event.params.slug;
@@ -11,10 +12,9 @@ export async function load(event) {
     url += `?cursor=${event.params.others.split("/")[1]}`;
   }
 
-  if (event.params.others && event.params.others.split("/")[0] == "cursor" && event.url.searchParams.get("s")) {
-    url += "&s=" + event.url.searchParams.get("s");
-  } else if (! (event.params.others && event.params.others.split("/")[0] == "cursor") && event.url.searchParams.get("s")) {
-    url += "?s=" + event.url.searchParams.get("s");
+  if (searchQuery) {
+    const separator = url.includes('?') ? '&' : '?';
+    url += `${separator}s=${searchQuery}`;
   }
 
   const fetchGiftCards = async () => {
