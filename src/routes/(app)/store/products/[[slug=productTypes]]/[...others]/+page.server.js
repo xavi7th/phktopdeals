@@ -22,10 +22,6 @@ export async function load(event) {
 
   const [cardsData] = await Promise.all([fetchGiftCards()]);
 
-  // event.setHeaders({
-  //   "Cache-Control": "public, max-age=3600, stale-while-revalidate=86400",
-  // });
-
   return {
     /** @type { import('$lib/types').ProdSummary[] } */
     cards: cardsData.data,

@@ -25,6 +25,7 @@
   $: $form.product_id = product?.id;
   $: $form.email = user?.email;
   $: totalPurchaseAmount = percentageCalculation($form.unit_price, $form.quantity, product.product_price.commission, product.percentage_discount, true);
+  $: paymentAmount = percentageCalculation($form.unit_price, $form.quantity, product.product_price.commission, product.percentage_discount, true, true);
 </script>
 
 <svelte:head>
@@ -125,9 +126,9 @@
               Pay with Wallet Funds {toCurrency(totalPurchaseAmount)}
             </LoadingButton>
 
-            <ProcessInvoicePurchase data={$form} {totalPurchaseAmount} />
+            <ProcessInvoicePurchase data={$form} {paymentAmount} />
 
-            {#if totalPurchaseAmount > user?.wallet_balance}
+            {#if paymentAmount > user?.wallet_balance}
               <span class="pb-6 text-end text-sm font-medium text-red-700">You have exceeded your wallet balance of {toCurrency(user?.wallet_balance)}</span>
             {/if}
           </div>
