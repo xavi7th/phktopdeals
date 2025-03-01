@@ -431,3 +431,21 @@ export const convertNonPOJOsToPOJOs = (data) => JSON.parse(JSON.stringify(data))
 export function cn(...inputs) {
   return twMerge(clsx(inputs));
 }
+
+/**
+ * This function debounces a function call for a specified amount of time
+ *
+ * @param {Function} func
+ * @param {number} wait number of seconds to debounce for.
+ * @returns {Function}
+ */
+export  function debounce(func, wait) {
+  /**
+   * @type {string | number | NodeJS.Timeout | undefined}
+   */
+  let timeout;
+  return function (/** @type {any} */ ...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(this, args), wait);
+  };
+}

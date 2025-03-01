@@ -9,7 +9,7 @@
 
   export let data;
 
-  $: ({ cards, category, meta, basePageUrl } = data);
+  $: ({ cards, category, meta, basePageUrl, search } = data);
 </script>
 
 <svelte:head>
@@ -39,15 +39,20 @@
           {#each cards || [] as product}
             <ProductCard {product} />
           {:else}
-            <div class="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 col-span-3">
+            <div class="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 col-span-3 lg:col-start-2">
               <div class="max-w-2xl px-4 sm:px-6 py-12 md:py-20 lg:px-8 mx-auto">
                 <div class="mb-5 sm:mb-10 text-center">
-                  <h2 class="text-2xl font-bold lg:text-3xl lg:leading-tight dark:text-white">{category} Not Found</h2>
-                  <p class="mt-3 text-gray-500 dark:text-neutral-400">The requested product category was not found. Check your url and try again</p>
+                  {#if search}
+                    <h2 class="text-2xl font-bold lg:text-3xl lg:leading-tight dark:text-white">There are no products with the name "{search}"</h2>
+                    <p class="mt-3 text-gray-500 dark:text-neutral-400">Review your search term and try again or click <a href="/store/products" class="text-brand-600 dark:text-brand-400 decoration-2 hover:underline focus:outline-none focus:underline font-medium">here</a> to view all products</p>
+                  {:else}
+                    <h2 class="text-2xl font-bold lg:text-3xl lg:leading-tight dark:text-white capitalize">{category} products Not Found</h2>
+                    <p class="mt-3 text-gray-500 dark:text-neutral-400">There are no products under this category at the moment. Click <a href="/store/products" class="text-brand-600 dark:text-brand-400 decoration-2 hover:underline focus:outline-none focus:underline font-medium">here</a> to view all products</p>
+                  {/if}
                 </div>
 
                 <div class="mt-5 flex justify-center items-center gap-x-1 sm:gap-x-3">
-                  <span class="text-sm text-gray-600 dark:text-neutral-400">You can</span>
+                  <span class="text-sm text-gray-600 dark:text-neutral-400">Or you can</span>
                   <a class="inline-flex items-center gap-x-1 text-sm text-brand-600 decoration-2 hover:underline focus:outline-none focus:underline font-medium dark:text-brand-500" href="/">
                     Go back Home
                     <SvgIcon class="shrink-0 size-4 text-red-500" slot={rightAngle} />
