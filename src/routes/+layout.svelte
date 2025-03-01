@@ -33,12 +33,12 @@
   <meta
     name="description"
     content={$page.data?.seo?.description ||
-      "Experience a groundbreaking e-commerce revolution with PHK Hot Deals! Our blockchain-powered platform seamlessly integrates cryptocurrency transactions, offering over 190,000 virtual items worldwide. Step into the future of online shopping with instant delivery, support for 90+ cryptocurrencies, and strategic partnerships. Join PHK Hot Deals and transform the way you shop online."} />
+      "Experience a groundbreaking e-commerce revolution with PHK Hot Deals, a subsidiary of MOZYFLEX LTD! We are  an online retailer specializing in the sale of digital gift cards, including popular brands such as iTunes, Google Play, Amazon, and more. Our platform allows customers to purchase and send digital gift cards instantly, making it the perfect solution for last-minute gifts, birthdays, holidays, and other special occasions. Our mission is to provide a seamless and convenient shopping experience for our customers, offering a wide selection of digital gift cards that can be easily purchased and sent to friends and loved ones. We strive to offer the best prices, fastest delivery, and exceptional customer service, ensuring that our customers return to us time and time again."} />
 
   <meta
     name="abstract"
     content={$page.data?.seo?.description ||
-      "Experience a groundbreaking e-commerce revolution with PHK Hot Deals! Our blockchain-powered platform seamlessly integrates cryptocurrency transactions, offering over 190,000 virtual items worldwide. Step into the future of online shopping with instant delivery, support for 90+ cryptocurrencies, and strategic partnerships. Join PHK Hot Deals and transform the way you shop online."} />
+      "Experience a groundbreaking e-commerce revolution with PHK Hot Deals, a subsidiary of MOZYFLEX LTD! We are  an online retailer specializing in the sale of digital gift cards, including popular brands such as iTunes, Google Play, Amazon, and more. Our platform allows customers to purchase and send digital gift cards instantly, making it the perfect solution for last-minute gifts, birthdays, holidays, and other special occasions. Our mission is to provide a seamless and convenient shopping experience for our customers, offering a wide selection of digital gift cards that can be easily purchased and sent to friends and loved ones. We strive to offer the best prices, fastest delivery, and exceptional customer service, ensuring that our customers return to us time and time again."} />
   <meta name="author" content="Ehikioya Daniel Akhile" />
 
   <meta itemprop="name" content={$page.data?.seo?.title || "PHK Hot Deals Ltd"} />
@@ -49,7 +49,7 @@
   <meta
     property="og:description"
     content={$page.data?.seo?.description ||
-      "Experience a groundbreaking e-commerce revolution with PHK Hot Deals! Our blockchain-powered platform seamlessly integrates cryptocurrency transactions, offering over 190,000 virtual items worldwide. Step into the future of online shopping with instant delivery, support for 90+ cryptocurrencies, and strategic partnerships. Join PHK Hot Deals and transform the way you shop online."} />
+      "Experience a groundbreaking e-commerce revolution with PHK Hot Deals, a subsidiary of MOZYFLEX LTD! We are  an online retailer specializing in the sale of digital gift cards, including popular brands such as iTunes, Google Play, Amazon, and more. Our platform allows customers to purchase and send digital gift cards instantly, making it the perfect solution for last-minute gifts, birthdays, holidays, and other special occasions. Our mission is to provide a seamless and convenient shopping experience for our customers, offering a wide selection of digital gift cards that can be easily purchased and sent to friends and loved ones. We strive to offer the best prices, fastest delivery, and exceptional customer service, ensuring that our customers return to us time and time again."} />
   <meta property="og:title" content={$page.data?.seo?.title || "PHK Hot Deals Ltd"} />
   <meta property="og:site_name" content="PHK Hot Deals" />
   <meta property="og:url" content={$page.data?.seo?.url || "https://www.phkhotdeals.com/"} />
@@ -63,7 +63,7 @@
   <meta
     name="twitter:description"
     content={$page.data?.seo?.description ||
-      "Experience a groundbreaking e-commerce revolution with PHK Hot Deals! Our blockchain-powered platform seamlessly integrates cryptocurrency transactions, offering over 190,000 virtual items worldwide. Step into the future of online shopping with instant delivery, support for 90+ cryptocurrencies, and strategic partnerships. Join PHK Hot Deals and transform the way you shop online."} />
+      "Experience a groundbreaking e-commerce revolution with PHK Hot Deals, a subsidiary of MOZYFLEX LTD! We are  an online retailer specializing in the sale of digital gift cards, including popular brands such as iTunes, Google Play, Amazon, and more. Our platform allows customers to purchase and send digital gift cards instantly, making it the perfect solution for last-minute gifts, birthdays, holidays, and other special occasions. Our mission is to provide a seamless and convenient shopping experience for our customers, offering a wide selection of digital gift cards that can be easily purchased and sent to friends and loved ones. We strive to offer the best prices, fastest delivery, and exceptional customer service, ensuring that our customers return to us time and time again."} />
   <meta name="twitter:title" content={$page.data?.seo?.title || "PHK Hot Deals Ltd"} />
   <meta name="twitter:image" content={$page.data?.seo?.imgUrl || "/favicon.png"} />
 

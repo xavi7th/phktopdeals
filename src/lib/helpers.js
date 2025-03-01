@@ -58,13 +58,13 @@ export const toCurrency = (amount, currencySymbol = "$") => {
   );
 };
 
-export const percentageCalculation = (unit_price = 0, quantity = 1, commission = 0, discount = 0, numeric = false) => {
+export const percentageCalculation = (unit_price = 0, quantity = 1, commission = 0, discount = 0, numeric = false, shouldTopUp = false) => {
   let amount_to_pay;
 
   let amount = Number(unit_price) * Number(quantity);
 
   if (commission <= 0) {
-    amount = (Number(unit_price) + Number(PUBLIC_APP_COMMISSION_AMOUNT)) * Number(quantity);
+    amount = (Number(unit_price) + (shouldTopUp ? Number(PUBLIC_APP_COMMISSION_AMOUNT) : 0)) * Number(quantity);
   }
 
   if (discount) {

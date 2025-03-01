@@ -8,7 +8,7 @@
 
   /** @type { import('sveltekit-superforms').SuperValidated<import('sveltekit-superforms').Infer<<typeof PurchaseItemSchema.infer>>> } */
   export let data,
-    totalPurchaseAmount = 0;
+    paymentAmount = 0;
 
   const { message, form, errors, enhance, timeout, delayed, submitting } = superForm(data, {
     delayMs: 500,
@@ -27,7 +27,8 @@
 <Modal title="Are you sure?" name="process-invoice-purchase-modal">
   <div slot="content">
     <p class="mb-4 text-gray-600 px-4">
-      You are about to complete a purchase for <span class="font-bold">{toCurrency(totalPurchaseAmount)}</span>
+      You are about to complete a purchase for {toCurrency(data.unit_price * data.quantity)}. There will be an additional charge of {toCurrency(paymentAmount - (data.unit_price * data.quantity))},
+       so we will be paying a total of <span class="font-bold">{toCurrency(paymentAmount)}</span>
       . Please note that this action will deduct the amount from your available balance.
     </p>
     <div class="mb-4 rounded border border-red-400 bg-red-100 px-4 py-3 text-red-700 mx-4">
@@ -45,7 +46,7 @@
     <input type="text" name="quantity" bind:value={data.quantity} class="hidden" />
     <input type="text" name="product_id" bind:value={data.product_id} class="hidden" />
     <LoadingButton class="w-auto bg-teal-700 px-3 py-2 font-medium hover:bg-teal-500 hover:text-neutral-50 focus:bg-teal-500" {timeout} {delayed} {submitting} data-hs-overlay="#process-invoice-purchase-modal">
-      Confirm Purchase
+      Proceed with Purchase
     </LoadingButton>
   </form>
 </Modal>

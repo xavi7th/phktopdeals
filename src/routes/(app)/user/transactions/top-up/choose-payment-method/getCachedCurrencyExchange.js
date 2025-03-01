@@ -16,7 +16,7 @@ export async function getCachedExchangeRate(event) {
     };
   }
 
-  const response = await event.fetch('https://api.exchangerate-api.com/v4/latest/USD');
+  const response = await event.fetch('https://api.exchangerate-api.com/v4/latest/USD').catch(() => console.log('api.exchangerate-api NOT AVAILABLE AT THE MOMENT'));
 
   if (!response.ok) {
     throw new Error('Failed to fetch exchange rate');
