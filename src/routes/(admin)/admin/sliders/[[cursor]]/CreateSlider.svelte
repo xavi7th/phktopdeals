@@ -13,8 +13,6 @@
     delayMs: 500,
     timeoutMs: 8000,
     async onResult({ result }) {
-      console.log(result);
-
       if (result.type === 'redirect') {
         window.HSOverlay?.close("#slider-modal");
         await new Promise((r) => setTimeout(r, 300));

@@ -17,7 +17,12 @@
 
   afterNavigate(() => {
     try {
-      window.HSStaticMethods.autoInit();
+      setTimeout(() => window.HSStaticMethods.autoInit(), 1500);
+
+      // setInterval(() => {
+      //   window?.HSStaticMethods?.autoInit();
+      //   clearInterval(modalInt);
+      // }, 600);
     } catch (e) {
       console.error("HSStaticMethods initialisation failed!");
     }

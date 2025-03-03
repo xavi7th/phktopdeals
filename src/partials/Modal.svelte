@@ -39,23 +39,23 @@
   const dispatch = createEventDispatcher();
 
   onMount(() => {
+    let x = 0;
     let modalInt = setInterval(() => {
-      const el = window.HSOverlay?.getInstance(`#${name}`, true);
-      if (el) {
-        clearInterval(modalInt);
+      try {
+        const el = window.HSOverlay?.getInstance(`#${name}`, true);
+        if (el) {
+          el.element.on("open", () => dispatch("open"));
+          el.element.on("close", () => dispatch("close"));
 
-        el.element.on("open", (e) => {
-          dispatch("open");
-        });
-
-        el.element.on("close", (e) => {
-          dispatch("close");
-        });
-
-        return;
+          return clearInterval(modalInt);
+        }
+      } catch (error) {
+        console.error('Modals not initialized');
       }
 
-      window?.HSStaticMethods?.autoInit();
+      if (++x > 10) {
+        clearInterval(modalInt);
+      }
     }, 600);
   });
 

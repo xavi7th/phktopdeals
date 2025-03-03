@@ -35,7 +35,7 @@
         class="inline-flex items-center justify-center gap-x-2 text-nowrap rounded-md border border-transparent bg-brand-400 px-4 py-2.5 text-sm font-normal text-gray-800 shadow-md hover:bg-brand-500 focus:bg-brand-500 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:bg-brand-950 dark:text-neutral-300 dark:hover:bg-brand-900 dark:focus:bg-brand-900"
         aria-haspopup="dialog"
         aria-expanded="false"
-        aria-controls="hs-static-create-modal"
+        aria-controls="manage-email-templates"
         data-hs-overlay="#manage-email-templates"
         on:click={() => ($form = { alias: "", instructions: "" })}>
         Create Template
@@ -99,7 +99,7 @@
                   class="flex w-full items-center gap-x-3 rounded-lg px-3 py-2 text-sm text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700 dark:focus:text-neutral-300"
                   aria-haspopup="dialog"
                   aria-expanded="false"
-                  aria-controls="hs-static-create-modal"
+                  aria-controls="manage-email-templates"
                   data-hs-overlay="#manage-email-templates"
                   on:click={() =>
                     ($form = {
@@ -119,7 +119,7 @@
                   class="flex w-full items-center gap-x-3 rounded-lg px-3 py-2 text-sm text-red-600 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-red-500 dark:hover:bg-neutral-700"
                   aria-haspopup="dialog"
                   aria-expanded="false"
-                  aria-controls="hs-static-create-modal"
+                  aria-controls="delete-email-template"
                   data-hs-overlay="#delete-email-template"
                   on:click={() => ($form = { id: trx.id })}>
                   Delete Template
@@ -164,7 +164,7 @@
             class="rounded bg-yellow-400 px-4 py-2 text-xs text-black hover:bg-yellow-700"
             aria-haspopup="dialog"
             aria-expanded="false"
-            aria-controls="hs-static-create-modal"
+            aria-controls="manage-email-templates"
             data-hs-overlay="#manage-email-templates"
             on:click={() =>
               ($form = {
@@ -181,7 +181,7 @@
             class="rounded bg-red-500 px-4 py-2 text-xs text-white hover:bg-red-700"
             aria-haspopup="dialog"
             aria-expanded="false"
-            aria-controls="hs-static-create-modal"
+            aria-controls="delete-email-template"
             data-hs-overlay="#delete-email-template"
             on:click={() => ($form = { id: trx.id })}>
             Delete

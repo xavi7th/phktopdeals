@@ -2,22 +2,10 @@
 <!-- <FloatingSelectTagInput name="price_denominations" options={['Gift Cards','Games','eSim','Top Up']} msg={form?.success || (form?.errors?.price_denominations && form?.errors?.price_denominations[0])}/> -->
 
 <script>
-  import { onMount } from "svelte";
-  import { pageMounted } from "$stores";
   import { isObject } from "$lib/helpers";
   import FormMessage from "../FormMessage.svelte";
 
   let { class: className, name = "tags-" + crypto.randomUUID().replaceAll("-", "").substring(0, 10), isError = true, label = "Choose", gray = false, size = "pt-3 pb-0.5", msg = [], value = $bindable([]), options = [], ...rest } = $props();
-
-  /** @type {import('@preline/select').default} elem */
-  let elem = $state(undefined);
-
-  onMount(() => {
-    if ($pageMounted) {
-      new window.HSSelect(document.querySelector(`#${name}`));
-      elem = window.HSSelect.getInstance(`#${name}`);
-    }
-  });
 </script>
 
 <div

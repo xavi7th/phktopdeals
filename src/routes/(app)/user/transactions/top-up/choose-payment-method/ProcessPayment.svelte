@@ -56,7 +56,7 @@
   class="inline-flex items-center justify-center w-full px-12 py-4 mt-6 font-semibold text-white transition-all duration-200 rounded-md bg-brand-600 dark:bg-brand-800 hover:opacity-80 focus:opacity-80"
   aria-haspopup="dialog"
   aria-expanded="false"
-  aria-controls="hs-static-create-modal"
+  aria-controls="payment-method"
   data-hs-overlay="#payment-method">
   Proceed to Payment
 </button>
