@@ -1,5 +1,6 @@
-import { api } from "$lib/helpers";
 import { fail } from "@sveltejs/kit";
+import { api, getErrorString } from "$lib/helpers";
+import { redirect, setFlash } from 'sveltekit-flash-message/server';
 
 export async function load(event) {
   const fetchGiftCards = async () => {
@@ -26,47 +27,27 @@ export async function load(event) {
 }
 
 export const actions = {
-  default: async (event) => {
-    const res = await api({
-      method: "post",
-      resource: "gift-cards",
-      data: [],
-
-      event,
-    });
-
-    if (res?.status == 422) {
-      let errRes = await res.json();
-
-      return fail(res?.status || 400, { type: "error", msg: "There are errors in your form! Check them and try again.", errors: errRes.errors });
-    }
-
-    if (!res?.ok) {
-      return fail(res?.status || 500, { message: res?.statusText || "An error occurred while processing your request" });
-    }
-
-    return { type: "success", msg: "Card created successfully!" };
-  },
-
   delete: async (event) => {
     const formData = await event.request.formData();
 
     const res = await api({
       method: "delete",
-      resource: "products/" + formData.get("uuid"),
+      resource: "products/" + formData.get("id"),
       event,
     });
 
     if (res?.status == 422) {
       let errRes = await res.json();
 
-      return fail(res?.status || 400, { type: "error", msg: "There are errors in your form! Check them and try again.", errors: errRes.errors });
+      setFlash({ type: "error", msg: "<ol class='!text-left'>" + getErrorString(errRes.errors) + "</ol>" }, event);
+      return fail(res?.status || 422, { type: "error", msg: "There are errors in your form! Check them and try again.", errors: errRes.errors });
     }
 
     if (!res?.ok) {
-      return fail(res?.status || 500, { message: res?.statusText || "An error occurred while processing your request" });
+      setFlash({ type: "error", msg: res?.statusText || "An error occurred while processing your request" }, event);
+      return fail(res?.status || 429, { message: res?.statusText || "An error occurred while processing your request" });
     }
 
-    return { type: "success", msg: "Card created successfully!" };
+    redirect({ type: "success", msg: (await res?.json())?.metadata?.message || "Gift Card deleted!" }, event);
   },
 };

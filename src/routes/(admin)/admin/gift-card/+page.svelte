@@ -7,12 +7,6 @@
   $: ({ cards, meta } = data);
 </script>
 
-<!-- {#if $message}
-  <div class="fixed top-24 end-3 space-y-3">
-    <Toast positioned={false} type={$message.type} msg={$message.msg}/>
-  </div>
-{/if} -->
-
 <div class="space-y-4 p-4 sm:space-y-6 sm:p-6">
   <div class="flex flex-col">
     <div class="-m-1.5 overflow-x-auto">

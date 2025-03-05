@@ -17,14 +17,14 @@
 
   afterNavigate(() => {
     try {
-      setTimeout(() => window.HSStaticMethods.autoInit(), 1500);
+      // setTimeout(() => window.HSStaticMethods.autoInit(), 1500);
 
-      // setInterval(() => {
-      //   window?.HSStaticMethods?.autoInit();
-      //   clearInterval(modalInt);
-      // }, 600);
+      let prelineInit = setInterval(() => {
+        window?.HSStaticMethods?.autoInit();
+        clearInterval(prelineInit);
+      }, 600);
     } catch (e) {
-      console.error("HSStaticMethods initialisation failed!");
+      console.log("---------------HSStaticMethods initialisation failed!-----------------");
     }
   });
 
