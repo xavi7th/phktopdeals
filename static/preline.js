@@ -5,8 +5,8 @@
     var n = e();
     for (var o in n) ("object" == typeof exports ? exports : t)[o] = n[o];
   }
-})(self, () =>
-  (() => {
+})(self, () => {
+  setTimeout(() => {
     "use strict";
     var t = {
         170: (t, e, n) => {
@@ -7397,5 +7397,5 @@
       }),
       n(158)
     );
-  })(),
-);
+  }, 2000);
+});

@@ -1,17 +1,14 @@
 <script>
-  import { navigating } from "$app/stores";
+  import { navigating } from "$app/state";
   import Header from "$partials/admin/Header.svelte";
   import { open } from "$lib/Components/iconPaths.js";
   import SvgIcon from "$lib/Components/SvgIcon.svelte";
   import Sidebar from "$partials/admin/Sidebar.svelte";
-  import Brand from "$partials/brands/BrandModal.svelte";
   import PageSkeleton from "$lib/Components/PageSkeleton.svelte";
 
-  export let data;
+  let { data, children } = $props();
 
-  const { admin_routes, brandForm, brands } = data;
-
-  let title = "";
+  const { admin_routes } = data;
 </script>
 
 <section class="dark:bg-neutral-900">
@@ -40,14 +37,12 @@
   <div class="relative grid grid-cols-5">
     <Sidebar {admin_routes} />
 
-    {#if $navigating}
+    {#if navigating.to}
       <PageSkeleton />
     {:else}
       <div class="col-span-5 space-y-4 p-4 sm:space-y-6 sm:p-6 lg:col-span-4 lg:col-start-2">
-        <slot></slot>
+        {@render children?.()}
       </div>
     {/if}
   </div>
 </section>
-
-<Brand {title} {brands} form={brandForm} />

@@ -153,7 +153,7 @@ export const sliderSchema = type({
   "url": type("string.url|undefined|null").describe("a valid url"),
   image: type("File").describe("provided").configure({ problem: ctx => ctx.propString + ' must be ' + ctx.expected }),
   size: '"large"|"small"',
-  "id?": type("string | undefined"),
+  "id?": type("string|undefined"),
 });
 
 export const sliderDefaults = {
@@ -164,21 +164,15 @@ export const sliderDefaults = {
 };
 
 export const brandSchema = type({
+  "id?": type("string|undefined"),
   name: type("string>1").describe("not be empty"),
+  "name_slug?": type("string"),
 });
 
 export const brandDefaults = {
-  name: "",
-};
-
-export const brandEditSchema = type({
-  uuid: type("string>1").describe("not be empty"),
-  name: type("string>1").describe("not be empty"),
-});
-
-export const brandEditDefault = {
-  uuid: "",
-  name: "",
+  id: undefined,
+  name: '',
+  name_slug: '',
 };
 
 export const gameSchema = type({

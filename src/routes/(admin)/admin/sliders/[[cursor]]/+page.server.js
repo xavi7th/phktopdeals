@@ -164,7 +164,7 @@ export const actions = {
       let errRes = await res.json();
 
       setFlash({ type: 'error', msg: "<ol class='!text-left'>" + getErrorString( errRes.errors ) + "</ol>"  }, event);
-      return fail(res?.status || 400, { form });
+      return fail(res?.status || 422, { form });
     }
 
     if (! res?.ok) {
