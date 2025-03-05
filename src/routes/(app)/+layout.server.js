@@ -2,6 +2,10 @@ import { api } from "$lib/helpers";
 
 export async function load(event) {
   const fetchWalletBalance = async () => {
+    if (event.locals.session.data?.user?.is_admin) {
+      return await new Promise((r) => setTimeout(() => r({ data: { wallet_balance: 0 } }), 2000));
+    }
+
     const res = await api({
       method: "get",
       resource: "user/wallet-balance",
