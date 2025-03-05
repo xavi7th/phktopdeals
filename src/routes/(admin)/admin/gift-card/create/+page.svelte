@@ -42,10 +42,6 @@
         <h2 class="text-lg font-semibold text-gray-800 dark:text-neutral-200">Gift Card Management</h2>
       </div>
 
-      <div class="col-span-12">
-        <FloatingTextInput name="product_name" label="Product Name" bind:value={$form.product_name} isError={!!$errors.product_name} msg={$errors.product_name} />
-      </div>
-
       <div class="col-span-12 flex gap-x-2">
         <input name="product_type" class="hidden" placeholder="Product Type" value="Gift Card" readonly />
         <FloatingSelectInput class="flex-1" name="brand_id" label="Product Brand" bind:value={$form.brand_id} isError={!!$errors.brand_id} msg={$errors.brand_id}>
@@ -54,7 +50,11 @@
           {/each}
         </FloatingSelectInput>
 
-        <CreateBrand brandForm={data.brandForm} />
+        <CreateBrand brandForm={data.brandForm} create />
+      </div>
+
+      <div class="col-span-12">
+        <FloatingTextInput name="product_name" label="Product Name" bind:value={$form.product_name} isError={!!$errors.product_name} msg={$errors.product_name} />
       </div>
 
       <div class="col-span-12">
@@ -96,7 +96,7 @@
           bind:value={$form.price_denominations}
           options={[1, 5, 10, 15, 20, 50, 100, 200, 250, 500, 1000]}
           isError={!!$errors.price_denominations}
-          msg={$errors.price_denominations} />
+          msg={$errors.price_denominations?._errors} />
       </div>
 
       <div class="col-span-12">

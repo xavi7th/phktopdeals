@@ -86,17 +86,17 @@ export const PurchaseItemDefaults = {
 };
 
 export const GiftCardSchema = type({
-  product_name: type("string>1").describe("provided"),
+  product_name: type("string>1").describe("provided").pipe(v => v ?? undefined),
   product_type: ["string>1", "@", "selected"], //optional syntax
-  product_image: type("File | null").describe("provided").optional(),
+  product_image: type("File").describe("provided").configure({ problem: ctx => 'You need to provide a ' + ctx.propString }),
   brand_id: type("null | string>1").describe("provided"),
-  product_category: ["string[]>1", "@", "2 and above"],
-  regions: ["string[]>1", "@", "selected"],
+  product_category: type.string.array().moreThanLength(0).configure({ problem: ctx => 'You need to provide at least one ' + ctx.propString }),
+  regions: type.string.array().moreThanLength(0).configure({ problem: ctx => 'You need to provide at least one ' + ctx.propString }),
   product_min_price: "number>=0",
   percentage_discount: "0<=number<100",
-  "purchase_commission?": type("0<=number<100|undefined").describe("at least 00"),
+  "purchase_commission?": type("0<=number<100|undefined").configure({ problem: ctx => ctx.propString + ' must be between 0% and 100%' }),
   variable_denomination: "boolean?",
-  "price_denominations?": "undefined|string[]",
+  "price_denominations?": "string[]",
   "discount_until?": "string|null|undefined",
   faqs: type("string").describe("provided"),
 });
