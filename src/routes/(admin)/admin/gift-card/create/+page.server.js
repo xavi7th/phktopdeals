@@ -1,10 +1,11 @@
 import { api } from "$lib/helpers";
 import { arktype } from "sveltekit-superforms/adapters";
-import { GiftCardDefaults, GiftCardSchema } from "$lib/schemas";
 import { message, superValidate, fail, setError } from "sveltekit-superforms";
+import { brandDefaults, brandSchema, GiftCardDefaults, GiftCardSchema } from "$lib/schemas";
 
 export async function load(event) {
-  const form = await superValidate(arktype(GiftCardSchema, { defaults: GiftCardDefaults }));
+  const giftCardForm = await superValidate(arktype(GiftCardSchema, { defaults: GiftCardDefaults }));
+  const brandForm = await superValidate(arktype(brandSchema, { defaults: brandDefaults }));
 
   const fetchProductBrands = async () => {
     const res = await api({
@@ -43,7 +44,8 @@ export async function load(event) {
   });
 
   return {
-    form,
+    giftCardForm,
+    brandForm,
     /** @type {string[]} */
     categories: categoriesData.data,
     /** @type {import('$lib/types').ProductBrand[] } */

@@ -45,7 +45,7 @@
       </div>
     </div>
 
-    <table class="w-full min-w-[700px] text-center">
+    <table class="w-full min-w-[400px] text-center">
       <thead class="h-14 bg-gray-50 text-slate-800 dark:bg-neutral-700 dark:text-slate-100">
         <slot name="thead">
           <tr>

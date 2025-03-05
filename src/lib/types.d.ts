@@ -74,7 +74,7 @@ export type ProductPriceTag = {
   commission: number;
 };
 export type ProductBrand = {
-  id: string;
+  id: string|undefined;
   name: string;
   name_slug: string;
 };
