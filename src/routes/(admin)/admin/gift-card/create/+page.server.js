@@ -87,7 +87,7 @@ export const actions = {
 
       for (const [fieldName, errs] of Object.entries(errRes.errors)) {
         if (fieldName.includes(".")) {
-          setError(form, fieldName.split(".")[0] + '._errors', errs[0], {
+          setError(form, fieldName.split(".")[0] + "._errors", errs[0], {
             overwrite: true,
           });
         } else {

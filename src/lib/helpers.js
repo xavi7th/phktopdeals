@@ -1,7 +1,7 @@
 import { clsx } from "clsx";
 import { error } from "@sveltejs/kit";
 import { twMerge } from "tailwind-merge";
-import { PUBLIC_APP_COMMISSION_AMOUNT, PUBLIC_VITE_BASE_API, PUBLIC_VITE_BASE_DOMAIN, PUBLIC_VITE_FRONT_END_DOMAIN } from '$env/static/public';
+import { PUBLIC_APP_COMMISSION_AMOUNT, PUBLIC_VITE_BASE_API, PUBLIC_VITE_BASE_DOMAIN, PUBLIC_VITE_FRONT_END_DOMAIN } from "$env/static/public";
 
 /**
  * Transforms an error object into HTML string
@@ -46,8 +46,8 @@ export const toCurrency = (amount, currencySymbol = "$") => {
     return "Invalid Amount";
   }
 
-  if (currencySymbol == 'NGN') {
-    currencySymbol = '₦';
+  if (currencySymbol == "NGN") {
+    currencySymbol = "₦";
   }
 
   return (
@@ -271,7 +271,7 @@ export const hasFile = (formData) => {
     }
   }
   return false;
-}
+};
 
 /**
  * Custom function to set API headers and make API calls
@@ -306,7 +306,7 @@ export async function api({ toBaseDomain, resource, event, method, data, logResp
   const isFormData = data instanceof FormData;
   const hasFiles = isFormData && hasFile(data);
 
-  if (! hasFiles) {
+  if (!hasFiles) {
     headers["content-type"] = "application/json";
     data = data ? JSON.stringify(isFormData ? Object.fromEntries(data) : data) : null;
   }
@@ -439,7 +439,7 @@ export function cn(...inputs) {
  * @param {number} wait number of seconds to debounce for.
  * @returns {Function}
  */
-export  function debounce(func, wait) {
+export function debounce(func, wait) {
   /**
    * @type {string | number | NodeJS.Timeout | undefined}
    */

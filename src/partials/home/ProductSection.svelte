@@ -1,5 +1,5 @@
 <script>
-  import { fade } from 'svelte/transition';
+  import { fade } from "svelte/transition";
   import SvgIcon from "$lib/Components/SvgIcon.svelte";
   import ProductCardSlider from "$partials/ProductCardSlider.svelte";
 

@@ -1,5 +1,5 @@
 <script>
-  import { toCurrency } from '$lib/helpers';
+  import { toCurrency } from "$lib/helpers";
   import Logo from "$lib/Components/Logo.svelte";
   import SvgIcon from "$lib/Components/SvgIcon.svelte";
   import { bell, crescentMoon, dollarCircle, purchaseBag, sunRays, undoIcon } from "$lib/Components/iconPaths";
@@ -15,10 +15,13 @@
       <Logo />
     </div>
 
-    <div class="hidden lg:flex items-center rounded-full border border-gray-200 bg-gray-200 p-0.5  dark:border-white/20 dark:bg-neutral-800">
-      <a href="/user/transactions/top-up/choose-payment-method" title="" class="mr-4 inline-flex justify-self-end items-center justify-center w-auto h-11 px-3 text-gray-800 dark:text-neutral-300 bg-gray-200 dark:bg-neutral-800 rounded-full">
+    <div class="hidden items-center rounded-full border border-gray-200 bg-gray-200 p-0.5 lg:flex dark:border-white/20 dark:bg-neutral-800">
+      <a
+        href="/user/transactions/top-up/choose-payment-method"
+        title=""
+        class="mr-4 inline-flex h-11 w-auto items-center justify-center justify-self-end rounded-full bg-gray-200 px-3 text-gray-800 dark:bg-neutral-800 dark:text-neutral-300">
         <SvgIcon strokeWidth={1.5} class="size-5 shrink-0" slot={dollarCircle} />
-        <span class="font-bold tracking-tighter ml-2 text-sm">{ toCurrency(wallet_balance) }</span>
+        <span class="ml-2 text-sm font-bold tracking-tighter">{toCurrency(wallet_balance)}</span>
       </a>
     </div>
 

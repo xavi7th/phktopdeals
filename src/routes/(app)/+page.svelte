@@ -1,5 +1,5 @@
 <script>
-  import { fade } from 'svelte/transition';
+  import { fade } from "svelte/transition";
   import Hero from "$partials/home/Hero.svelte";
   import Services from "$partials/home/Services.svelte";
   import HowItWorks from "$partials/home/HowItWorks.svelte";
@@ -12,31 +12,31 @@
 </script>
 
 {#snippet skeleton(section)}
-  <div class="bg-gray-100 dark:bg-gray-900 p-8 transition-colors duration-300" class:mt-20={section === 'hero'} transition:fade>
+  <div class="bg-gray-100 p-8 transition-colors duration-300 dark:bg-gray-900" class:mt-20={section === "hero"} transition:fade>
     <div class="container mx-auto">
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+      <div class="mb-8 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-4">
         {#each { length: 4 } as _, i}
           <div class="animate-pulse" aria-busy="true">
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md h-48">
+            <div class="h-48 rounded-lg bg-white shadow-md dark:bg-gray-800">
               <div class="p-4">
-                <div class="bg-gray-200 dark:bg-gray-700 h-6 w-3/4 rounded mb-4"></div>
-                <div class="bg-gray-200 dark:bg-gray-700 h-4 w-1/2 rounded mb-2"></div>
-                <div class="bg-gray-200 dark:bg-gray-700 h-4 w-1/2 rounded"></div>
+                <div class="mb-4 h-6 w-3/4 rounded bg-gray-200 dark:bg-gray-700"></div>
+                <div class="mb-2 h-4 w-1/2 rounded bg-gray-200 dark:bg-gray-700"></div>
+                <div class="h-4 w-1/2 rounded bg-gray-200 dark:bg-gray-700"></div>
               </div>
             </div>
           </div>
         {/each}
       </div>
 
-      {#if section !== 'hero'}
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+      {#if section !== "hero"}
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-4">
           {#each { length: 4 } as _, i}
             <div class="animate-pulse" aria-busy="true">
-              <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md h-48">
+              <div class="h-48 rounded-lg bg-white shadow-md dark:bg-gray-800">
                 <div class="p-4">
-                  <div class="bg-gray-200 dark:bg-gray-700 h-6 w-3/4 rounded mb-4"></div>
-                  <div class="bg-gray-200 dark:bg-gray-700 h-4 w-1/2 rounded mb-2"></div>
-                  <div class="bg-gray-200 dark:bg-gray-700 h-4 w-1/2 rounded"></div>
+                  <div class="mb-4 h-6 w-3/4 rounded bg-gray-200 dark:bg-gray-700"></div>
+                  <div class="mb-2 h-4 w-1/2 rounded bg-gray-200 dark:bg-gray-700"></div>
+                  <div class="h-4 w-1/2 rounded bg-gray-200 dark:bg-gray-700"></div>
                 </div>
               </div>
             </div>
@@ -70,9 +70,7 @@
         {/if}
       {/each}
     {/if}
-  {:catch error}
   {/await}
-
 
   <Services {skeleton} {pageData} />
 

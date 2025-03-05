@@ -17,7 +17,7 @@
   export let data;
 
   const { form, errors, message, delayed, submitting, timeout, enhance } = superForm(data.giftCardForm, {
-    id: 'gift-card-form-' + crypto.randomUUID().replaceAll("-", "").substring(0, 10),
+    id: "gift-card-form-" + crypto.randomUUID().replaceAll("-", "").substring(0, 10),
     delayMs: 500,
     timeoutMs: 8000,
   });
@@ -100,11 +100,7 @@
       </div>
 
       <div class="col-span-12">
-        <SwitchCheckboxInput
-          name="variable_denomination"
-          label="Allow custom amounts?"
-          tooltip="The users will be given an input field to enter an amount of their choice"
-          bind:checked={$form.variable_denomination} />
+        <SwitchCheckboxInput name="variable_denomination" label="Allow custom amounts?" tooltip="The users will be given an input field to enter an amount of their choice" bind:checked={$form.variable_denomination} />
       </div>
 
       {#if $form.variable_denomination}

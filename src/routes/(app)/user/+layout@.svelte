@@ -1,6 +1,6 @@
 <script>
   import { navigating } from "$app/stores";
-  import { toCurrency } from '$lib/helpers.js';
+  import { toCurrency } from "$lib/helpers.js";
   import Header from "$partials/user/Header.svelte";
   import SvgIcon from "$lib/Components/SvgIcon.svelte";
   import Sidebar from "$partials/user/Sidebar.svelte";
@@ -17,28 +17,31 @@
 
   <div class="sticky inset-x-0 top-0 z-20 border-y bg-white px-4 sm:px-6 lg:hidden lg:px-8 dark:border-neutral-700 dark:bg-neutral-800">
     <div class="flex items-center justify-between py-2">
-     <div class="flex">
-      <button
-        type="button"
-        class="flex shrink-0 size-8 items-center justify-center gap-x-2 rounded-lg border border-gray-200 text-gray-800 hover:text-gray-500 focus:text-gray-500 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:text-neutral-200 dark:hover:text-neutral-500 dark:focus:text-neutral-500"
-        aria-haspopup="dialog"
-        aria-expanded="false"
-        aria-controls="hs-application-sidebar"
-        aria-label="Toggle navigation"
-        data-hs-overlay="#hs-application-sidebar">
-        <span class="sr-only">Toggle Navigation</span>
-        <SvgIcon class="size-4 shrink-0" svgHeight={24} stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" slot={open} />
-      </button>
+      <div class="flex">
+        <button
+          type="button"
+          class="flex size-8 shrink-0 items-center justify-center gap-x-2 rounded-lg border border-gray-200 text-gray-800 hover:text-gray-500 focus:text-gray-500 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:text-neutral-200 dark:hover:text-neutral-500 dark:focus:text-neutral-500"
+          aria-haspopup="dialog"
+          aria-expanded="false"
+          aria-controls="hs-application-sidebar"
+          aria-label="Toggle navigation"
+          data-hs-overlay="#hs-application-sidebar">
+          <span class="sr-only">Toggle Navigation</span>
+          <SvgIcon class="size-4 shrink-0" svgHeight={24} stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" slot={open} />
+        </button>
 
-      <ol class="ms-3 flex items-center whitespace-nowrap">
-        <li class="flex items-center text-sm text-gray-800 dark:text-neutral-400">User Dashboard</li>
-      </ol>
-     </div>
+        <ol class="ms-3 flex items-center whitespace-nowrap">
+          <li class="flex items-center text-sm text-gray-800 dark:text-neutral-400">User Dashboard</li>
+        </ol>
+      </div>
 
-      <div class="lg:hidden items-center rounded-full border border-gray-200 bg-gray-200 p-0.5 dark:border-white/20 dark:bg-neutral-800 scale-75">
-        <a href="/user/transactions/top-up/choose-payment-method" title="" class="mr-4 inline-flex justify-self-end items-center justify-center w-auto h-11 px-3 text-gray-800 dark:text-neutral-300 bg-gray-200 dark:bg-neutral-800 rounded-full">
+      <div class="scale-75 items-center rounded-full border border-gray-200 bg-gray-200 p-0.5 lg:hidden dark:border-white/20 dark:bg-neutral-800">
+        <a
+          href="/user/transactions/top-up/choose-payment-method"
+          title=""
+          class="mr-4 inline-flex h-11 w-auto items-center justify-center justify-self-end rounded-full bg-gray-200 px-3 text-gray-800 dark:bg-neutral-800 dark:text-neutral-300">
           <SvgIcon strokeWidth={1.5} class="size-5 shrink-0" slot={dollarCircle} />
-          <span class="font-bold tracking-tighter ml-2 text-sm">{ toCurrency(wallet_balance) }</span>
+          <span class="ml-2 text-sm font-bold tracking-tighter">{toCurrency(wallet_balance)}</span>
         </a>
       </div>
     </div>

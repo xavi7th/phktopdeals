@@ -1,7 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import Toast from "$lib/Components/Toast.svelte";
-  import { PUBLIC_VITE_BASE_API } from '$env/static/public';
+  import { PUBLIC_VITE_BASE_API } from "$env/static/public";
   import CountdownTimer from "$lib/Components/CountdownTimer.svelte";
 
   export let data;

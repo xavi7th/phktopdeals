@@ -125,7 +125,11 @@
         <form action="" method="POST" use:enhance>
           <input type="text" name="orderId" value={order?.id} class="hidden" />
           <LoadingButton class="bg-black px-3 py-2 font-medium transition-opacity duration-300 hover:bg-gray-700 hover:text-neutral-50 focus:bg-gray-700">
-            {#if order.voucher_codes?.length} Resend {:else} Process and Email {/if} Vouchers
+            {#if order.voucher_codes?.length}
+              Resend
+            {:else}
+              Process and Email
+            {/if} Vouchers
           </LoadingButton>
         </form>
       </div>

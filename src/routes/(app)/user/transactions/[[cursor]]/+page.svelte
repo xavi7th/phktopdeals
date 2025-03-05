@@ -1,6 +1,6 @@
 <script>
   import { cn, toCurrency } from "$lib/helpers";
-  import Toast from '$lib/Components/Toast.svelte';
+  import Toast from "$lib/Components/Toast.svelte";
   import Table from "$lib/Components/Table.svelte";
   import SvgIcon from "$lib/Components/SvgIcon.svelte";
   import TableSkeleton from "$lib/Components/TableSkeleton.svelte";
@@ -42,10 +42,10 @@
   };
 
   let statusMsg = {
-    success: 'Your top up was successful and your wallet has been credited.',
-    error: 'There was an error processing your top up. Please try again.',
-    info: 'Your top up has been initiated and will be processed within 24 hours.',
-  }
+    success: "Your top up was successful and your wallet has been credited.",
+    error: "There was an error processing your top up. Please try again.",
+    info: "Your top up has been initiated and will be processed within 24 hours.",
+  };
 </script>
 
 {#if redirectStatus}
@@ -122,7 +122,8 @@
               {#if trx.pay_currency === "NGN"}
                 {toCurrency(trx.pay_amount, trx.pay_currency.toUpperCase())}
               {:else}
-                {trx.pay_amount} <span class="uppercase">{trx.pay_currency}</span>
+                {trx.pay_amount}
+                <span class="uppercase">{trx.pay_currency}</span>
               {/if}
             </span>
             <br />

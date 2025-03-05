@@ -4,7 +4,6 @@ import { topUpSchema, topUpDefaults } from "$lib/schemas";
 import { message, superValidate, fail, setError } from "sveltekit-superforms";
 
 export async function load(event) {
-
   const fetchProduct = async () => {
     const res = await api({
       method: "get",
@@ -61,7 +60,6 @@ export async function load(event) {
 
   productData.data["price_denominations"] = productData.data.product_price.denominations;
   const form = await superValidate(productData.data, arktype(topUpSchema, { defaults: topUpDefaults }));
-
 
   return {
     form,
@@ -123,5 +121,5 @@ export const actions = {
     event.locals.user = (await res.json()).data;
 
     return message(form, { type: "success", msg: "Product updated successfully!" });
-  }
+  },
 };

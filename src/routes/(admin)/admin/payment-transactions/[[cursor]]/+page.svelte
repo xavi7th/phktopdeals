@@ -29,7 +29,6 @@
     const result = await preloadData(href);
 
     if (result.type === "loaded" && result.status === 200) {
-
       pushState(href, { transactionDetails: result.data });
 
       setTimeout(() => {
@@ -74,7 +73,7 @@
                     purchase
                   {/if}
                 </span>
-                <span class="block text-wrap text-xs font-semibold text-gray-800 dark:text-neutral-500 uppercase">
+                <span class="block text-wrap text-xs font-semibold uppercase text-gray-800 dark:text-neutral-500">
                   <span class="font-light text-gray-500">REF:</span>
                   #{trans.payment_reference}
                 </span>
@@ -112,7 +111,8 @@
                     {#if trans.pay_currency === "NGN"}
                       {toCurrency(trans.pay_amount, trans.pay_currency.toUpperCase())}
                     {:else}
-                      {trans.pay_amount} <span class="uppercase">{trans.pay_currency}</span>
+                      {trans.pay_amount}
+                      <span class="uppercase">{trans.pay_currency}</span>
                     {/if}
                   </span>
                 </span>
@@ -144,7 +144,7 @@
           <div class="-m-4 flex items-center justify-between border-b border-gray-200 p-4 dark:border-neutral-700">
             <h2 class="text-2xl font-normal text-gray-800 dark:text-gray-400">
               <span class="text-base font-light">Transaction ID:</span>
-              <span class="font-bold uppercase break-all">#{trans.payment_reference}</span>
+              <span class="break-all font-bold uppercase">#{trans.payment_reference}</span>
             </h2>
           </div>
           <div class="mt-4 py-3 pe-6 ps-6 lg:ps-3 xl:ps-0">
@@ -178,7 +178,8 @@
                     {#if trans.pay_currency === "NGN"}
                       {toCurrency(trans.pay_amount, trans.pay_currency.toUpperCase())}
                     {:else}
-                      {trans.pay_amount} <span class="uppercase">{trans.pay_currency}</span>
+                      {trans.pay_amount}
+                      <span class="uppercase">{trans.pay_currency}</span>
                     {/if}
                   </span>
                 </span>
@@ -190,12 +191,7 @@
           </div>
 
           <div class="flex justify-end">
-            <a
-              href="/admin/payment-transactions/v/{trans.id}"
-              class="rounded bg-teal-700 px-4 py-2 text-xs text-white hover:bg-teal-600"
-              on:click={loadDetails}>
-              View Details
-            </a>
+            <a href="/admin/payment-transactions/v/{trans.id}" class="rounded bg-teal-700 px-4 py-2 text-xs text-white hover:bg-teal-600" on:click={loadDetails}>View Details</a>
           </div>
         </div>
       {:else}
@@ -212,8 +208,8 @@
     </svelte:fragment>
   </Table>
 {:catch err}
-  <div class="bg-red-200 dark:bg-red-800 shadow rounded-lg p-4 border border-red-400 dark:border-red-700">
-    <div class="ps-6 lg:ps-3 xl:ps-0 pe-6 py-3">
+  <div class="rounded-lg border border-red-400 bg-red-200 p-4 shadow dark:border-red-700 dark:bg-red-800">
+    <div class="py-3 pe-6 ps-6 lg:ps-3 xl:ps-0">
       <div class="flex items-center gap-x-3 text-center">
         <div class="grow">
           <span class="block text-xl text-gray-600 dark:text-neutral-200">THERE WAS AN ERROR WHILE TRYING TO LOAD THE TRANSACTIONS</span>
@@ -222,7 +218,6 @@
     </div>
   </div>
 {/await}
-
 
 <Modal
   title="Details"
@@ -234,24 +229,19 @@
     <TransactionDetailsPage data={$page.state.transactionDetails || { transaction: {} }} isModal />
   </div>
   <svelte:fragment slot="footer">
-    {#if ! $page.state.transactionDetails?.transaction?.is_confirmed ||
-      ! $page.state.transactionDetails?.transaction?.expired_at &&
-      $page.state.transactionDetails.transaction.status !== 'refunded'
-    }
+    {#if !$page.state.transactionDetails?.transaction?.is_confirmed || (!$page.state.transactionDetails?.transaction?.expired_at && $page.state.transactionDetails.transaction.status !== "refunded")}
       <form
         action=""
         method="POST"
-        use:enhance={ ({ formElement, formData, action, cancel }) => {
+        use:enhance={({ formElement, formData, action, cancel }) => {
           window.HSOverlay?.close("#view-transaction-details");
           return async ({ result, update }) => {
             return await applyAction(result);
             update();
-          }
-        } }>
+          };
+        }}>
         <input type="text" name="transactionId" value={$page.state.transactionDetails?.transaction?.id} class="hidden" />
-        <LoadingButton class="w-auto bg-black px-3 py-2 font-medium transition-opacity duration-300 hover:bg-gray-700 hover:text-neutral-50 focus:bg-gray-700">
-          Confirm Payment
-        </LoadingButton>
+        <LoadingButton class="w-auto bg-black px-3 py-2 font-medium transition-opacity duration-300 hover:bg-gray-700 hover:text-neutral-50 focus:bg-gray-700">Confirm Payment</LoadingButton>
       </form>
     {/if}
   </svelte:fragment>

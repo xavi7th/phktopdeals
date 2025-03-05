@@ -16,7 +16,7 @@
     children,
     contentAfterCountdown,
     beforeDisplayText,
-    afterDisplayText
+    afterDisplayText,
   } = $props();
 
   let displayText = $state(""),

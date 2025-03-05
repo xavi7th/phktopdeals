@@ -7,7 +7,6 @@ import { message, superValidate, fail, setError } from "sveltekit-superforms";
 export async function load(event) {
   const form = await superValidate(productData.data, arktype(eSimSchema, { defaults: eSimDefaults }));
 
-
   const fetchProduct = async () => {
     const res = await api({
       method: "get",

@@ -1,5 +1,5 @@
 <script>
-  import ProductCard from '$partials/ProductCard.svelte';
+  import ProductCard from "$partials/ProductCard.svelte";
   import { Splide, SplideSlide } from "@splidejs/svelte-splide";
 
   const splideCarousel = {
@@ -37,7 +37,7 @@
   <Splide options={splideCarousel} aria-label="List Of products in this category">
     {#each products as product}
       <SplideSlide>
-        <ProductCard {product}/>
+        <ProductCard {product} />
       </SplideSlide>
     {/each}
   </Splide>

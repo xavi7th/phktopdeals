@@ -6,10 +6,8 @@
   import { minusIcon, plusIcon } from "../iconPaths";
 
   let {
-    class: className = '',
-    name = "input-" + crypto.randomUUID().replaceAll("-",
-    "").substring(0,
-    10),
+    class: className = "",
+    name = "input-" + crypto.randomUUID().replaceAll("-", "").substring(0, 10),
     isError = true,
     label = "",
     placeholder = "",
@@ -48,7 +46,7 @@
         {msg?.toString() && !isError ? 'border-teal-500 focus:border-teal-500 focus:ring-teal-500 dark:bg-teal-900/20' : ''}">
     <div class="flex w-full items-center justify-between gap-x-3">
       <div class="truncate">
-        <span class="block text-sm font-medium text-gray-800 dark:text-white text-left">
+        <span class="block text-left text-sm font-medium text-gray-800 dark:text-white">
           {label}
         </span>
         <span class="block text-xs text-gray-500 dark:text-neutral-400">

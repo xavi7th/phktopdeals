@@ -13,7 +13,7 @@ import { dev } from "$app/environment";
 import { redirect } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
 import { handleSession } from "svelte-kit-cookie-session";
-import { PUBLIC_VITE_BASE_API } from '$env/static/public';
+import { PUBLIC_VITE_BASE_API } from "$env/static/public";
 import { handleDeviceDetector } from "sveltekit-device-detector";
 import { VITE_SESSION_NAME, APP_SESSION_KEY } from "$env/static/private";
 
@@ -136,11 +136,11 @@ export const handleFetch = async ({ request, fetch, event }) => {
   /**
    * @unauthenticated Handle expired authentication from the API
    */
-  if (([401, 403].includes(response?.status))) {
-    console.log('----------HOOKS------------', response.url, response);
+  if ([401, 403].includes(response?.status)) {
+    console.log("----------HOOKS------------", response.url, response);
     await event.locals.session.destroy();
 
-    if (! response.url.includes('api/v1/user')) {
+    if (!response.url.includes("api/v1/user")) {
       redirect(303, "/logout");
     }
   }

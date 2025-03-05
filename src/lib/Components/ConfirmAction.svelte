@@ -14,16 +14,16 @@ const { form, errors, message, delayed, submitting, timeout, enhance} = superFor
 </ConfirmAction> -->
 
 <script>
-  import { browser } from '$app/environment';
-  import { superForm } from 'sveltekit-superforms';
-  import LoadingButton from '$lib/Components/FormInputs/LoadingButton.svelte';
+  import { browser } from "$app/environment";
+  import { superForm } from "sveltekit-superforms";
+  import LoadingButton from "$lib/Components/FormInputs/LoadingButton.svelte";
 
   /**
    * @typedef Props
    * @property {string} action
    * @property {Record<string, any>} formData
    * @property {string} msg
-  */
+   */
 
   /** @type {Props} */
   let { action, formData, msg = "Are you sure you want to proceed?" } = $props();
@@ -50,7 +50,7 @@ const { form, errors, message, delayed, submitting, timeout, enhance} = superFor
     if (formElement) {
       formElement.requestSubmit();
     }
-    if (! $submitting) {
+    if (!$submitting) {
       dialog?.close();
     }
   }
@@ -60,17 +60,27 @@ const { form, errors, message, delayed, submitting, timeout, enhance} = superFor
   }
 </script>
 
-<dialog bind:this={dialog} class="min-w-96 p-6 rounded-lg shadow-xl backdrop:bg-black/70 dark:backdrop:bg-black/60 backdrop:backdrop-blur-md bg-gray-200 dark:bg-neutral-800 dark:border-gray-500 border-2">
+<dialog bind:this={dialog} class="min-w-96 rounded-lg border-2 bg-gray-200 p-6 shadow-xl backdrop:bg-black/70 backdrop:backdrop-blur-md dark:border-gray-500 dark:bg-neutral-800 dark:backdrop:bg-black/60">
   <div class="space-y-4">
     <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-200">Confirm Action</h2>
-    <p class="text-gray-700 dark:text-gray-300 py-4">{msg}</p>
+    <p class="py-4 text-gray-700 dark:text-gray-300">{msg}</p>
     <div class="flex justify-end space-x-3">
-      <button class="px-4 py-2 text-xs font-medium text-gray-700 bg-gray-100 dark:bg-gray-800 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 ring-2 ring-gray-500 focus:ring-gray-600" on:click={cancelSubmit}>Cancel</button>
-      <LoadingButton class="px-4 py-2 text-xs font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 w-auto"  {timeout} {delayed} {submitting} on:click={confirmSubmit} label="Yes, Continue" />
+      <button
+        class="rounded-lg bg-gray-100 px-4 py-2 text-xs font-medium text-gray-700 ring-2 ring-gray-500 hover:bg-gray-200 focus:ring-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+        on:click={cancelSubmit}>
+        Cancel
+      </button>
+      <LoadingButton
+        class="w-auto rounded-lg bg-blue-600 px-4 py-2 text-xs font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        {timeout}
+        {delayed}
+        {submitting}
+        on:click={confirmSubmit}
+        label="Yes, Continue" />
     </div>
   </div>
 </dialog>
 
-<form method="POST" bind:this={formElement} action={action} use:enhance={{ onSubmit: handleSubmit }} {name} id={name}>
+<form method="POST" bind:this={formElement} {action} use:enhance={{ onSubmit: handleSubmit }} {name} id={name}>
   <slot {form} {errors} {constraints} {message} />
 </form>

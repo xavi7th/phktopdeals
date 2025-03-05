@@ -48,12 +48,12 @@
           el.element.on("close", () => dispatch("close"));
 
           clearInterval(modalInt);
-          console.log(name + ' modals initialized.....');
+          console.log(name + " modals initialized.....");
 
           return;
         }
       } catch (error) {
-        console.error('Modals not initialized');
+        console.error("Modals not initialized");
       }
 
       if (++x > 10) {

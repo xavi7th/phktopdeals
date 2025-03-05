@@ -1,5 +1,5 @@
 import { type } from "arktype";
-import { PUBLIC_VITE_FRONT_END_DOMAIN } from '$env/static/public';
+import { PUBLIC_VITE_FRONT_END_DOMAIN } from "$env/static/public";
 
 export const AppUserSchema = type({
   full_name: type("string>3").describe("provided"),
@@ -34,7 +34,7 @@ export const TopUpAccountDefaults = {
   payment_method: null,
   amount: 50,
   pay_amount: 0,
-  description: '',
+  description: "",
 };
 
 export const VoucherCodeSchema = type({
@@ -86,15 +86,25 @@ export const PurchaseItemDefaults = {
 };
 
 export const GiftCardSchema = type({
-  product_name: type("string>1").describe("provided").pipe(v => v ?? undefined),
+  product_name: type("string>1")
+    .describe("provided")
+    .pipe((v) => v ?? undefined),
   product_type: ["string>1", "@", "selected"], //optional syntax
-  product_image: type("File").describe("provided").configure({ problem: ctx => 'You need to provide a ' + ctx.propString }),
+  product_image: type("File")
+    .describe("provided")
+    .configure({ problem: (ctx) => "You need to provide a " + ctx.propString }),
   brand_id: type("null | string>1").describe("provided"),
-  product_category: type.string.array().moreThanLength(0).configure({ problem: ctx => 'You need to provide at least one ' + ctx.propString }),
-  regions: type.string.array().moreThanLength(0).configure({ problem: ctx => 'You need to provide at least one ' + ctx.propString }),
+  product_category: type.string
+    .array()
+    .moreThanLength(0)
+    .configure({ problem: (ctx) => "You need to provide at least one " + ctx.propString }),
+  regions: type.string
+    .array()
+    .moreThanLength(0)
+    .configure({ problem: (ctx) => "You need to provide at least one " + ctx.propString }),
   product_min_price: "number>=0",
   percentage_discount: "0<=number<100",
-  "purchase_commission?": type("0<=number<100|undefined").configure({ problem: ctx => ctx.propString + ' must be between 0% and 100%' }),
+  "purchase_commission?": type("0<=number<100|undefined").configure({ problem: (ctx) => ctx.propString + " must be between 0% and 100%" }),
   variable_denomination: "boolean?",
   "price_denominations?": "string[]",
   "discount_until?": "string|null|undefined",
@@ -120,7 +130,7 @@ export const GiftCardDefaults = {
 export const eSimSchema = type({
   product_name: type("string>1").describe("provided"),
   product_type: ["string>1", "@", "selected"], //optional syntax
-  "product_image": type("File").describe("provided").optional(),
+  product_image: type("File").describe("provided").optional(),
   brand_id: type("string>1").describe("provided"),
   product_category: ["string[]>1", "@", "2 and above"],
   regions: ["string[]>1", "@", "selected"],
@@ -150,8 +160,10 @@ export const eSimDefaults = {
 };
 
 export const sliderSchema = type({
-  "url": type("string.url|undefined|null").describe("a valid url"),
-  image: type("File").describe("provided").configure({ problem: ctx => ctx.propString + ' must be ' + ctx.expected }),
+  url: type("string.url|undefined|null").describe("a valid url"),
+  image: type("File")
+    .describe("provided")
+    .configure({ problem: (ctx) => ctx.propString + " must be " + ctx.expected }),
   size: '"large"|"small"',
   "id?": type("string|undefined"),
 });
@@ -160,7 +172,7 @@ export const sliderDefaults = {
   url: PUBLIC_VITE_FRONT_END_DOMAIN + "store/products",
   image: undefined,
   size: undefined,
-  id:undefined,
+  id: undefined,
 };
 
 export const brandSchema = type({
@@ -171,8 +183,8 @@ export const brandSchema = type({
 
 export const brandDefaults = {
   id: undefined,
-  name: '',
-  name_slug: '',
+  name: "",
+  name_slug: "",
 };
 
 export const gameSchema = type({

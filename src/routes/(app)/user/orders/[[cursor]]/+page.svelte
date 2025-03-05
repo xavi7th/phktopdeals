@@ -113,7 +113,8 @@
                     {#if order.pay_currency === "NGN"}
                       {toCurrency(order.pay_amount, order.pay_currency.toUpperCase())}
                     {:else}
-                      {order.pay_amount} <span class="uppercase">{order.pay_currency}</span>
+                      {order.pay_amount}
+                      <span class="uppercase">{order.pay_currency}</span>
                     {/if}
                   </span>
                 </span>
@@ -186,7 +187,8 @@
                     {#if order.pay_currency === "NGN"}
                       {toCurrency(order.pay_amount, order.pay_currency.toUpperCase())}
                     {:else}
-                      {order.pay_amount} <span class="uppercase">{order.pay_currency}</span>
+                      {order.pay_amount}
+                      <span class="uppercase">{order.pay_currency}</span>
                     {/if}
                   </span>
                 </span>
@@ -211,12 +213,7 @@
 
           <div class="flex justify-end">
             {#if order.is_processed}
-              <a
-                href="/user/orders/details/{order.id}"
-                class="rounded bg-teal-700 px-4 py-2 text-xs text-white hover:bg-teal-600"
-                on:click={loadDetails}>
-                Voucher Codes
-              </a>
+              <a href="/user/orders/details/{order.id}" class="rounded bg-teal-700 px-4 py-2 text-xs text-white hover:bg-teal-600" on:click={loadDetails}>Voucher Codes</a>
             {/if}
           </div>
         </div>

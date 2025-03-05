@@ -2,40 +2,47 @@
 <!-- EXAMPLE USAGE -->
 <!-- <FloatingDateInput name="discount_until" enablePastDates={false} label="Discount Valid Until (optional)" bind:value={$formData.discount_until} msg={$errors?.discount_until?.[0]} /> -->
 <script>
-  import { format } from 'date-fns';
-  import { DatePicker } from '@svelte-plugins/datepicker';
-  import FormMessage from '$lib/Components/FormMessage.svelte';
+  import { format } from "date-fns";
+  import { DatePicker } from "@svelte-plugins/datepicker";
+  import FormMessage from "$lib/Components/FormMessage.svelte";
 
   export let name = "input-" + crypto.randomUUID().replaceAll("-", "").substring(0, 10),
-    label = "", className = "", placeholder = undefined, gray = false, isError = true, size = "p-4", showTimePicker = false,
-    enableFutureDates = true, enablePastDates = true,
+    label = "",
+    className = "",
+    placeholder = undefined,
+    gray = false,
+    isError = true,
+    size = "p-4",
+    showTimePicker = false,
+    enableFutureDates = true,
+    enablePastDates = true,
     /** @type {null | undefined | string | Date}*/ endDate = null,
     /** @type {string | undefined} */ msg = undefined,
     /** @type {string | undefined | null} */ value = undefined;
 
   let startDate = new Date();
-  let dateFormat = 'MM/dd/yy';
+  let dateFormat = "MM/dd/yy";
   let isOpen = false;
 
   const formatDate = (/** @type {string | number | Date} */ dateString) => {
     // @ts-ignore
     if (isNaN(new Date(dateString))) {
-      return '';
+      return "";
     }
 
-    return dateString && format(new Date(dateString), dateFormat) || '';
+    return (dateString && format(new Date(dateString), dateFormat)) || "";
   };
 
   const onChange = () => {
-    startDate = new Date(value || '');
+    startDate = new Date(value || "");
   };
 
   const onNavigationChange = (/** @type { {direction: string, isPastPeriod: boolean, type: string, currentPeriod: {start: string, end: string} } } */ e) => {
-    console.log(e, 'onNavigationChange');
+    console.log(e, "onNavigationChange");
   };
 
   const onDateChange = (/** @type { {startDate: number, startTime: string} } */ args) => {
-    console.log(args, 'onDateChange');
+    console.log(args, "onDateChange");
   };
 
   $: value = formatDate(startDate);

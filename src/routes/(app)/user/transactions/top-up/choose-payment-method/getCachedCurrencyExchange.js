@@ -1,4 +1,4 @@
-import { api } from '$lib/helpers';
+import { api } from "$lib/helpers";
 
 let lastFetchTime = 0;
 let cachedData = null;
@@ -9,20 +9,20 @@ const CACHE_DURATION = 1000 * 60 * 60 * 5; // 5 hours in milliseconds
 export async function getCachedExchangeRate(event) {
   const now = Date.now();
 
-  if (cachedData && lastFetchTime && (now - lastFetchTime) < CACHE_DURATION) {
+  if (cachedData && lastFetchTime && now - lastFetchTime < CACHE_DURATION) {
     return {
       ...cachedData,
-      fromCache: true
+      fromCache: true,
     };
   }
 
-  const response = await event.fetch('https://api.exchangerate-api.com/v4/latest/USD').catch((error) => {
-    console.error('api.exchangerate-api NOT AVAILABLE AT THE MOMENT', error);
-    return { ok: false, error: 'Exchange rate API unavailable' };
+  const response = await event.fetch("https://api.exchangerate-api.com/v4/latest/USD").catch((error) => {
+    console.error("api.exchangerate-api NOT AVAILABLE AT THE MOMENT", error);
+    return { ok: false, error: "Exchange rate API unavailable" };
   });
 
   if (!response.ok) {
-    throw new Error('Failed to fetch exchange rate');
+    throw new Error("Failed to fetch exchange rate");
   }
 
   /** @type {import('$lib/types').ExchangeRate} */
@@ -30,14 +30,14 @@ export async function getCachedExchangeRate(event) {
 
   cachedData = {
     rate: data.rates.NGN + 150,
-    lastUpdated: new Date().toLocaleTimeString()
+    lastUpdated: new Date().toLocaleTimeString(),
   };
 
   lastFetchTime = now;
 
   return {
     ...cachedData,
-    fromCache: false
+    fromCache: false,
   };
 }
 
@@ -45,7 +45,7 @@ export async function getCachedExchangeRate(event) {
 export async function getNOWAvailableCurrencies(event) {
   const now = Date.now();
 
-  if (cachedCurrencies && lastFetchTime && (now - lastFetchTime) < CACHE_DURATION) {
+  if (cachedCurrencies && lastFetchTime && now - lastFetchTime < CACHE_DURATION) {
     return cachedCurrencies.data;
   }
 
@@ -56,7 +56,7 @@ export async function getNOWAvailableCurrencies(event) {
   });
 
   if (!res?.ok) {
-    throw new Error('Failed to fetch available crypto currencies.');
+    throw new Error("Failed to fetch available crypto currencies.");
   }
 
   const currencies = await res?.json();

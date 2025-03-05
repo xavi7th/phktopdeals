@@ -1,9 +1,9 @@
 <script>
   import { page } from "$app/stores";
-  import { main_nav } from '$partials/Header.svelte';
+  import { main_nav } from "$partials/Header.svelte";
   import SvgIcon from "$lib/Components/SvgIcon.svelte";
   import { rightAngle } from "$lib/Components/iconPaths";
-  import ProductCard from '$partials/ProductCard.svelte';
+  import ProductCard from "$partials/ProductCard.svelte";
   import Sidebar from "$partials/gift-cards/Sidebar.svelte";
   import PageNavigation from "$lib/Components/PageNavigation.svelte";
 
@@ -23,11 +23,15 @@
       <Sidebar />
 
       <main class="flex-1">
-        <div class=" w-full sm:w-2/3 lg:w-1/2 mx-auto mb-7 block md:hidden">
-          <div class="hs-collapse rounded-0 mt-2 grow basis-full space-x-0.5 overflow-hidden border border-gray-200 bg-gray-200 transition-all duration-300 block sm:grow-0 sm:basis-auto rounded-full dark:border-white/20">
+        <div class=" mx-auto mb-7 block w-full sm:w-2/3 md:hidden lg:w-1/2">
+          <div
+            class="hs-collapse rounded-0 mt-2 block grow basis-full space-x-0.5 overflow-hidden rounded-full border border-gray-200 bg-gray-200 transition-all duration-300 sm:grow-0 sm:basis-auto dark:border-white/20">
             <div class="flex items-center justify-evenly divide-y sm:flex-row sm:items-center sm:gap-5 sm:divide-y-0">
-              {#each main_nav as {name, url}}
-                <a class="p-3.5 font-bold tracking-tighter text-gray-600 hover:text-brand-500 focus:text-brand-500 focus:outline-none dark:font-semibold dark:text-neutral-700 dark:hover:text-brand-900 dark:focus:text-brand-900" href="{url}" aria-current={$page.url.pathname.includes(url) ? "page" : undefined}>
+              {#each main_nav as { name, url }}
+                <a
+                  class="p-3.5 font-bold tracking-tighter text-gray-600 hover:text-brand-500 focus:text-brand-500 focus:outline-none dark:font-semibold dark:text-neutral-700 dark:hover:text-brand-900 dark:focus:text-brand-900"
+                  href={url}
+                  aria-current={$page.url.pathname.includes(url) ? "page" : undefined}>
                   {name}
                 </a>
               {/each}
@@ -35,7 +39,7 @@
           </div>
         </div>
 
-        <div class="mb-8 grid grid-cols-3 gap-4 lg:gap-5 lg:grid-cols-5 xl:gap-3">
+        <div class="mb-8 grid grid-cols-3 gap-4 lg:grid-cols-5 lg:gap-5 xl:gap-3">
           {#each cards || [] as product}
             <ProductCard {product} />
           {:else}
@@ -44,10 +48,22 @@
                 <div class="mb-5 sm:mb-10 text-center">
                   {#if search}
                     <h2 class="text-2xl font-bold lg:text-3xl lg:leading-tight dark:text-white">There are no products with the name "{search}"</h2>
-                    <p class="mt-3 text-gray-500 dark:text-neutral-400">Review your search term and try again or click <a href="/store/products" class="text-brand-600 dark:text-brand-400 decoration-2 hover:underline focus:outline-none focus:underline font-medium">here</a> to view all products</p>
+                    <p class="mt-3 text-gray-500 dark:text-neutral-400">
+                      Review your search term and try again or click <a href="/store/products" class="text-brand-600 dark:text-brand-400 decoration-2 hover:underline focus:outline-none focus:underline font-medium">
+                        here
+                      </a>
+                       to view all products
+                    </p>
                   {:else}
                     <h2 class="text-2xl font-bold lg:text-3xl lg:leading-tight dark:text-white capitalize">{category} products Not Found</h2>
-                    <p class="mt-3 text-gray-500 dark:text-neutral-400">There are no products under this category at the moment. Click <a href="/store/products" class="text-brand-600 dark:text-brand-400 decoration-2 hover:underline focus:outline-none focus:underline font-medium">here</a> to view all products</p>
+                    <p class="mt-3 text-gray-500 dark:text-neutral-400">
+                      There are no products under this category at the moment. Click <a
+                        href="/store/products"
+                        class="text-brand-600 dark:text-brand-400 decoration-2 hover:underline focus:outline-none focus:underline font-medium">
+                        here
+                      </a>
+                       to view all products
+                    </p>
                   {/if}
                 </div>
 

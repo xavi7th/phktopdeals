@@ -1,8 +1,8 @@
 <script>
-  import { brandDefaults } from '$lib/schemas.js';
-  import Table from '$lib/Components/Table.svelte';
-  import CreateBrand from '$partials/brands/CreateBrand.svelte';
-  import TableSkeleton from '$lib/Components/TableSkeleton.svelte';
+  import { brandDefaults } from "$lib/schemas.js";
+  import Table from "$lib/Components/Table.svelte";
+  import CreateBrand from "$partials/brands/CreateBrand.svelte";
+  import TableSkeleton from "$lib/Components/TableSkeleton.svelte";
 
   let { data } = $props();
 
@@ -10,7 +10,6 @@
 
   let curBrand = $state(brandDefaults);
 </script>
-
 
 {#await brands}
   <TableSkeleton />
@@ -35,7 +34,7 @@
 
         <div>
           <div class="inline-flex gap-x-2">
-            <CreateBrand brandForm={data.form} brand={curBrand} create/>
+            <CreateBrand brandForm={data.form} brand={curBrand} create />
           </div>
         </div>
       </div>
@@ -55,18 +54,19 @@
       <tr>
         <td class="whitespace-nowrap px-6">
           <div class="py-3 pe-6 ps-6 lg:ps-3 xl:ps-0">
-            <span class="block text-sm text-start font-semibold text-gray-800 dark:text-neutral-200">{brand.name}</span>
+            <span class="block text-start text-sm font-semibold text-gray-800 dark:text-neutral-200">{brand.name}</span>
           </div>
         </td>
         <td class="size-px whitespace-nowrap">
           <div class="flex gap-3 px-6 py-1.5">
+            <CreateBrand
+              brandForm={data.form}
+              {brand}
+              onclick={() => {
+                curBrand = brand;
+              }} />
 
-            <CreateBrand brandForm={data.form} {brand} onclick={() => {(curBrand = brand)}}/>
-
-            <form
-              method="POST"
-              action="?/deleteBrand"
-              class="inline-flex items-center gap-x-1 text-sm font-medium text-red-600 decoration-2 hover:underline focus:underline focus:outline-none dark:text-red-500">
+            <form method="POST" action="?/deleteBrand" class="inline-flex items-center gap-x-1 text-sm font-medium text-red-600 decoration-2 hover:underline focus:underline focus:outline-none dark:text-red-500">
               <input type="text" name="id" class="hidden" value={brand.id} />
               <button type="submit" class="m-0 border-0 bg-transparent p-0 shadow-none">Delete</button>
             </form>

@@ -13,7 +13,7 @@ export async function load(event) {
   }
 
   if (searchQuery) {
-    const separator = url.includes('?') ? '&' : '?';
+    const separator = url.includes("?") ? "&" : "?";
     url += `${separator}s=${searchQuery}`;
   }
 

@@ -66,7 +66,7 @@
           </span>
           {#if transaction.is_confirmed}
             <span class="block text-sm text-gray-600 dark:text-neutral-400">
-              Date of Confirmation: <span>{new Date(transaction.payment_confirmed_at || '').toLocaleDateString() + " " + new Date(transaction.payment_confirmed_at || '').toLocaleTimeString()}</span>
+              Date of Confirmation: <span>{new Date(transaction.payment_confirmed_at || "").toLocaleDateString() + " " + new Date(transaction.payment_confirmed_at || "").toLocaleTimeString()}</span>
             </span>
           {/if}
           {#if transaction?.expired_at}
@@ -119,13 +119,11 @@
       {/if}
     </div>
 
-    {#if !isModal && !transaction.is_confirmed && !transaction?.expired_at && transaction.status !== 'refunded' && transaction.status !== 'finished'}
+    {#if !isModal && !transaction.is_confirmed && !transaction?.expired_at && transaction.status !== "refunded" && transaction.status !== "finished"}
       <div class="-m-4 mt-4 flex items-center justify-end gap-x-2 border-t px-4 py-3 dark:border-neutral-700">
         <form action="" method="POST" use:enhance>
           <input type="text" name="transactionId" value={transaction?.id} class="hidden" />
-          <LoadingButton class="bg-black px-3 py-2 font-medium transition-opacity duration-300 hover:bg-gray-700 hover:text-neutral-50 focus:bg-gray-700">
-            Confirm Payment
-          </LoadingButton>
+          <LoadingButton class="bg-black px-3 py-2 font-medium transition-opacity duration-300 hover:bg-gray-700 hover:text-neutral-50 focus:bg-gray-700">Confirm Payment</LoadingButton>
         </form>
       </div>
     {/if}

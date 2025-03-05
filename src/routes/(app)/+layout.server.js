@@ -1,16 +1,16 @@
-import { api } from '$lib/helpers';
+import { api } from "$lib/helpers";
 
-export async function load ( event ) {
+export async function load(event) {
   const fetchWalletBalance = async () => {
-    const res = await api( {
+    const res = await api({
       method: "get",
       resource: "user/wallet-balance",
       event,
-    } );
+    });
     return await res?.json();
   };
 
-  const [details] = await Promise.all( [fetchWalletBalance()] );
+  const [details] = await Promise.all([fetchWalletBalance()]);
 
   return {
     user: event.locals.session.data?.user,

@@ -117,7 +117,8 @@
                     {#if order.pay_currency === "NGN"}
                       {toCurrency(order.pay_amount, order.pay_currency.toUpperCase())}
                     {:else}
-                      {order.pay_amount} <span class="uppercase">{order.pay_currency}</span>
+                      {order.pay_amount}
+                      <span class="uppercase">{order.pay_currency}</span>
                     {/if}
                   </span>
                 </span>
@@ -195,7 +196,8 @@
                     {#if order.pay_currency === "NGN"}
                       {toCurrency(order.pay_amount, order.pay_currency.toUpperCase())}
                     {:else}
-                      {order.pay_amount} <span class="uppercase">{order.pay_currency}</span>
+                      {order.pay_amount}
+                      <span class="uppercase">{order.pay_currency}</span>
                     {/if}
                   </span>
                 </span>
@@ -267,7 +269,11 @@
             await applyAction(result)}>
         <input type="text" name="orderId" value={$page.state.orderDetails?.order?.id} class="hidden" />
         <LoadingButton class="w-auto bg-black px-3 py-2 font-medium transition-opacity duration-300 hover:bg-gray-700 hover:text-neutral-50 focus:bg-gray-700">
-          {#if $page.state.orderDetails?.order?.voucher_codes?.length} Resend {:else} Process and Email {/if} Vouchers
+          {#if $page.state.orderDetails?.order?.voucher_codes?.length}
+            Resend
+          {:else}
+            Process and Email
+          {/if} Vouchers
         </LoadingButton>
       </form>
     {/if}

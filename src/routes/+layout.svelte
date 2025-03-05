@@ -3,15 +3,15 @@
   import { page } from "$app/stores";
   import { pageMounted } from "$stores";
   import { afterNavigate } from "$app/navigation";
-  import Toast from '$lib/Components/Toast.svelte';
-  import { getFlash } from 'sveltekit-flash-message';
+  import Toast from "$lib/Components/Toast.svelte";
+  import { getFlash } from "sveltekit-flash-message";
 
   const flash = getFlash(page);
 
   import "../app.scss";
-  import 'swiper/css';
-  import 'swiper/css/autoplay';
-  import 'swiper/css/pagination';
+  import "swiper/css";
+  import "swiper/css/autoplay";
+  import "swiper/css/pagination";
 
   let { children } = $props();
 

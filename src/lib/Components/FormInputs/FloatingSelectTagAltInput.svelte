@@ -13,7 +13,19 @@
   import { isObject } from "$lib/helpers";
   import FormMessage from "../FormMessage.svelte";
 
-  let { class: className, name = "select-" + crypto.randomUUID().replaceAll("-", "").substring(0, 10), isError = true, label = "Choose", gray = false, size = "p-4", multiple = true, msg = [], value = $bindable([]), options = [], ...rest } = $props();
+  let {
+    class: className,
+    name = "select-" + crypto.randomUUID().replaceAll("-", "").substring(0, 10),
+    isError = true,
+    label = "Choose",
+    gray = false,
+    size = "p-4",
+    multiple = true,
+    msg = [],
+    value = $bindable([]),
+    options = [],
+    ...rest
+  } = $props();
 </script>
 
 <div

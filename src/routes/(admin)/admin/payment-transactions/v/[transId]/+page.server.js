@@ -34,15 +34,14 @@ export const actions = {
     const res = await api({
       method: "put",
       resource: "transactions/" + form.get("transactionId"),
-      data: {'status': 'confirmed'},
+      data: { status: "confirmed" },
       event,
     });
-
 
     if (res?.status == 422) {
       let errRes = await res.json();
 
-      return { message: { type: "error", msg: "There are errors in your form! Check them and try again. <ol class='!text-left'>" + getErrorString( errRes.errors ) + "</ol>"  } };
+      return { message: { type: "error", msg: "There are errors in your form! Check them and try again. <ol class='!text-left'>" + getErrorString(errRes.errors) + "</ol>" } };
     }
 
     if (!res?.ok) {

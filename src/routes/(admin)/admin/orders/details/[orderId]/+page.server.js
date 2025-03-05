@@ -38,7 +38,6 @@ export const actions = {
       event,
     });
 
-
     if (res?.status == 422) {
       let errRes = await res.json();
 

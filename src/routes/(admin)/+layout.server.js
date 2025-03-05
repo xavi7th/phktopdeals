@@ -1,6 +1,6 @@
 export async function load() {
-   /** @type { import('$lib/types').AdminNavMenuItem[] } */
-   const admin_routes = [
+  /** @type { import('$lib/types').AdminNavMenuItem[] } */
+  const admin_routes = [
     {
       name: "Dashboard",
       uri: "/admin/dashboard",
