@@ -1,8 +1,9 @@
 import { type } from "arktype";
-import { api } from "$lib/helpers";
+import { api, getErrorString } from "$lib/helpers";
 import { arktype } from "sveltekit-superforms/adapters";
+import { redirect, setFlash } from 'sveltekit-flash-message/server';
 import { VoucherCodeDefaults, VoucherCodeSchema } from "$lib/schemas";
-import { message, superValidate, setError } from "sveltekit-superforms";
+import { message, superValidate, setError, fail } from "sveltekit-superforms";
 
 export async function load(event) {
   const form = await superValidate(arktype(VoucherCodeSchema, { defaults: VoucherCodeDefaults }));
@@ -55,14 +56,16 @@ export const actions = {
         }
       }
 
-      return message(form, { type: "error", msg: errRes.message }, { status: res?.status || 400 });
+      setFlash({ type: "error", msg: "<ol class='!text-left'>" + getErrorString(errRes.errors) + "</ol>" }, event);
+      return fail(res?.status || 422, { form });
     }
 
     if (!res?.ok) {
-      return message(form, { type: "error", msg: res?.statusText || "An error occurred while processing your request" }, { status: res?.status || 429 });
+      setFlash({ type: "error", msg: res?.statusText || "An error occurred while processing your request" }, event);
+      return fail(res?.status || 429, { form });
     }
 
-    return message(form, { type: "success", msg: (await res.json())?.metadata?.message });
+    redirect({ type: "success", msg: (await res?.json())?.metadata?.message || "Voucher created!" }, event);
   },
 
   update: async (event) => {

@@ -18,6 +18,13 @@
   const { form, errors, message, delayed, submitting, timeout, enhance } = superForm(data.form, {
     delayMs: 500,
     timeoutMs: 8000,
+    async onResult({ result }) {
+      if (result.type === "redirect") {
+        // @ts-ignore
+        window.HSOverlay?.close(`#manage-vouchers`);
+        await new Promise((r) => setTimeout(r, 600));
+      }
+    },
   });
 </script>
 
@@ -53,7 +60,7 @@
           </FloatingSearchableSelectInput>
 
           <FloatingSearchableSelectInput name="product_email_template_id" label="Email Template to use for this voucher (optional)" bind:value={$form.product_email_template_id} msg={$errors.product_email_template_id}>
-            <option value={undefined}>N/A</option>
+            <option value="">N/A</option>
             {#each pageData.data?.email_templates || [] as template}
               <option value={template.id}>{template.alias}</option>
             {/each}
