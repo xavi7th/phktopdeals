@@ -1,6 +1,6 @@
 <script>
-  import { onMount } from "svelte";
   import { page } from "$app/stores";
+  import { onMount, tick } from "svelte";
   import { pageMounted } from "$stores";
   import { afterNavigate } from "$app/navigation";
   import Toast from "$lib/Components/Toast.svelte";
@@ -15,13 +15,17 @@
 
   let { children } = $props();
 
-  afterNavigate(() => {
+  afterNavigate(async () => {
     try {
       // setTimeout(() => window.HSStaticMethods.autoInit(), 1500);
+
+      await tick();
 
       let prelineInit = setInterval(() => {
         window?.HSStaticMethods?.autoInit();
         clearInterval(prelineInit);
+
+        console.log("---------------HSStaticMethods initialized!-----------------");
       }, 600);
     } catch (e) {
       console.log("---------------HSStaticMethods initialisation failed!-----------------");

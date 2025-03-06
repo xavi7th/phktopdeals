@@ -1,6 +1,6 @@
 import { fail } from "@sveltejs/kit";
 import { api, getErrorString } from "$lib/helpers";
-import { redirect, setFlash } from 'sveltekit-flash-message/server';
+import { redirect, setFlash } from "sveltekit-flash-message/server";
 
 export async function load(event) {
   const fetchGiftCards = async () => {

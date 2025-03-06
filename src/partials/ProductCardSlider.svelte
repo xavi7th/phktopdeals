@@ -5,6 +5,7 @@
   const splideCarousel = {
     label: "List Of Items In Carousel",
     type: "loop",
+    clones: 0,
     gap: "1rem",
     perPage: 5,
     perMove: 2,

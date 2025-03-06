@@ -1,5 +1,5 @@
 <script>
-  import { enhance } from '$app/forms';
+  import { enhance } from "$app/forms";
   import { toCurrency } from "$lib/helpers";
   import SvgIcon from "$lib/Components/SvgIcon.svelte";
   import { checkMarkCircle } from "$lib/Components/iconPaths";
@@ -92,7 +92,9 @@
         {#if hasAction}
           <td class="size-px whitespace-nowrap">
             <div class="flex gap-3 px-6 py-1.5">
-              <a class="inline-flex items-center gap-x-1 text-sm font-medium text-brand-600 decoration-2 hover:underline focus:underline focus:outline-none dark:text-brand-500" href={basePageUrl + "/edit/" + card.id}>Edit</a>
+              <a class="inline-flex items-center gap-x-1 text-sm font-medium text-brand-600 decoration-2 hover:underline focus:underline focus:outline-none dark:text-brand-500" href={basePageUrl + "/edit/" + card.id}>
+                Edit
+              </a>
               <form action="?/delete" method="POST" class="inline-flex items-center gap-x-1 text-sm font-medium text-red-600 decoration-2 hover:underline focus:underline focus:outline-none dark:text-red-500" use:enhance>
                 <input type="text" class="hidden" name="id" value={card.id} />
                 <button type="submit" class="m-0 border-0 bg-transparent p-0 shadow-none">Delete</button>

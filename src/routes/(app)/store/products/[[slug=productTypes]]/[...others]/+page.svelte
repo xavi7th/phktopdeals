@@ -52,7 +52,7 @@
                       Review your search term and try again or click <a href="/store/products" class="text-brand-600 dark:text-brand-400 decoration-2 hover:underline focus:outline-none focus:underline font-medium">
                         here
                       </a>
-                       to view all products
+                      to view all products
                     </p>
                   {:else}
                     <h2 class="text-2xl font-bold lg:text-3xl lg:leading-tight dark:text-white capitalize">{category} products Not Found</h2>
@@ -62,7 +62,7 @@
                         class="text-brand-600 dark:text-brand-400 decoration-2 hover:underline focus:outline-none focus:underline font-medium">
                         here
                       </a>
-                       to view all products
+                      to view all products
                     </p>
                   {/if}
                 </div>

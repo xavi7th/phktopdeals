@@ -42,6 +42,7 @@
     let x = 0;
     let modalInt = setInterval(() => {
       try {
+        window.HSStaticMethods?.autoInit();
         const el = window.HSOverlay?.getInstance(`#${name}`, true);
         if (el) {
           el.element.on("open", () => dispatch("open"));
@@ -53,7 +54,7 @@
           return;
         }
       } catch (error) {
-        console.error("Modals not initialized");
+        console.error("Modals not initialized", error);
       }
 
       if (++x > 10) {

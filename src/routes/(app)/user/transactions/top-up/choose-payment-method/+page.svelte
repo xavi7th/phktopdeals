@@ -64,7 +64,7 @@
                   </label>
                   <span class="inline-block rounded-lg border border-brand-600 bg-brand-100 px-4 py-2 text-sm font-semibold leading-none text-brand-600">
                     <span class="text-nowrap">1 - 2</span>
-                     hours
+                    hours
                   </span>
                 </div>
               </div>

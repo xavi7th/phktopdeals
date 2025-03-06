@@ -86,10 +86,12 @@ export const PurchaseItemDefaults = {
 };
 
 export const GiftCardSchema = type({
+  "id?": type("string"),
   product_name: type("string>1")
     .describe("provided")
     .pipe((v) => v ?? undefined),
   product_type: ["string>1", "@", "selected"], //optional syntax
+  "product_image_url?": "string|null|undefined",
   product_image: type("File")
     .describe("provided")
     .configure({ problem: (ctx) => "You need to provide a " + ctx.propString }),
@@ -112,6 +114,7 @@ export const GiftCardSchema = type({
 });
 
 export const GiftCardDefaults = {
+  id: "",
   product_name: "",
   product_type: "gift card",
   brand_id: null,
@@ -125,6 +128,7 @@ export const GiftCardDefaults = {
   variable_denomination: false,
   discount_until: null,
   faqs: undefined,
+  product_image_url: undefined,
 };
 
 export const eSimSchema = type({

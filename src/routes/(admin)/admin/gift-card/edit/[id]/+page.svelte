@@ -1,5 +1,5 @@
 <script>
-  import GiftCardForm from "./GiftCardForm.svelte";
+  import GiftCardForm from "../../create/GiftCardForm.svelte";
 
   let { data } = $props();
   let { brands, regions, categories } = data;
