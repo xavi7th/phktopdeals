@@ -40,7 +40,7 @@
           <p class="text-sm font-light text-gray-400 dark:text-neutral-400">{tDescription}</p>
         {/if}
       </div>
-      <div class="table-action shrink-0">
+      <div class="table-action shrink-0 flex justify-end items-center">
         <slot name="tableAction" />
       </div>
     </div>
@@ -58,18 +58,6 @@
           </tr>
         </slot>
       </thead>
-      <tfoot class="h-14 bg-gray-50 text-slate-800 dark:bg-neutral-700 dark:text-slate-100">
-        <slot name="thead">
-          <tr>
-            <th>S/N</th>
-            <th>Order Number</th>
-            <th>Amount Paid</th>
-            <th>Tax</th>
-            <th>Total</th>
-            <th>Balance</th>
-          </tr>
-        </slot>
-      </tfoot>
       <tbody class="border odd:*:bg-white even:*:bg-gray-100 dark:border-neutral-800 dark:odd:*:bg-neutral-900 dark:even:*:bg-neutral-800">
         <slot>
           <tr class="h-14 border-y border-[#00000020] text-slate-800 dark:text-slate-100">
@@ -90,6 +78,18 @@
           </tr>
         </slot>
       </tbody>
+      <tfoot class="h-14 bg-gray-50 text-slate-800 dark:bg-neutral-700 dark:text-slate-100">
+        <slot name="thead">
+          <tr>
+            <th>S/N</th>
+            <th>Order Number</th>
+            <th>Amount Paid</th>
+            <th>Tax</th>
+            <th>Total</th>
+            <th>Balance</th>
+          </tr>
+        </slot>
+      </tfoot>
     </table>
 
     <div class="mt-4 flex items-center justify-between gap-7 border-t border-gray-300 px-5 py-3 text-slate-800 sm:px-10 dark:text-slate-100">
@@ -123,6 +123,18 @@
 </div>
 
 <div class="mt-8 grid gap-4 space-y-4 {$$slots.mobile ? 'md:hidden' : 'hidden'}" class:md:hidden={$$slots.mobile}>
+  <div class="ml-6 inline-flex flex-col w-11/12 justify-end pb-8 pt-4 text-start text-xl font-semibold text-gray-600 dark:text-neutral-300">
+    <div class="caption flex-1">
+      <span>{tCaption}</span>
+      {#if tDescription}
+        <p class="text-sm font-light text-gray-400 dark:text-neutral-400">{tDescription}</p>
+      {/if}
+    </div>
+    <div class="table-action shrink-0 mt-8 flex justify-end items-center">
+      <slot name="tableAction" />
+    </div>
+  </div>
+
   <slot name="mobile"></slot>
 
   <div class="mt-4 items-center justify-between gap-7 border-t border-gray-300 px-5 py-3 text-slate-800 sm:px-10 dark:text-slate-100">

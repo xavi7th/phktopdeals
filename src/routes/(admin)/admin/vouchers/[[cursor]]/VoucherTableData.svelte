@@ -16,9 +16,9 @@
   tDescription="Create voucher codes that can be sent to customers when they make a purchase. You can create, update or delete new voucher codes"
   navData={{ ...metadata, basePageUrl }}>
   <svelte:fragment slot="tableAction">
-    <div>
+    <div class="flex justify-end">
       <button
-        class="inline-flex items-center justify-center gap-x-2 text-nowrap rounded-md border border-transparent bg-brand-400 px-4 py-2.5 text-sm font-normal text-gray-800 shadow-md hover:bg-brand-500 focus:bg-brand-500 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:bg-brand-950 dark:text-neutral-300 dark:hover:bg-brand-900 dark:focus:bg-brand-900"
+        class="inline-flex items-center justify-center gap-x-2 text-nowrap rounded-md border border-transparent bg-brand-400 px-4 py-2.5 text-sm font-normal text-gray-800 shadow-md hover:bg-brand-500 focus:bg-brand-500 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:bg-brand-900 dark:text-neutral-300 dark:hover:bg-brand-800 dark:focus:bg-brand-800"
         aria-haspopup="dialog"
         aria-expanded="false"
         aria-controls="create-voucher-modal"

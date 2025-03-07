@@ -7,7 +7,7 @@ export async function load(event) {
   const form = await superValidate(
     arktype(
       type({
-        "id?": type("string|undefined").optional(),
+        "id?": type("string|undefined"),
         alias: type("string"),
         instructions: type("string"),
       }),

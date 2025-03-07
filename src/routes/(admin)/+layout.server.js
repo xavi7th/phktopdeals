@@ -73,12 +73,12 @@ export async function load() {
       icon: "spinnerSVG",
       reload: false,
     },
-    {
-      name: "Users",
-      uri: "/admin/users",
-      icon: "usersSVG",
-      reload: false,
-    },
+    // {
+    //   name: "Users",
+    //   uri: "/admin/users",
+    //   icon: "usersSVG",
+    //   reload: false,
+    // },
   ];
 
   return { admin_routes };

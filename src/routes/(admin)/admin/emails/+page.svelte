@@ -44,17 +44,19 @@
   </svelte:fragment>
 
   <svelte:fragment slot="thead">
-    <th scope="col" class="px-6 py-3 text-start">
-      <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">Alias</span>
-    </th>
+    <tr>
+      <th scope="col" class="px-6 py-3 text-start">
+        <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">Alias</span>
+      </th>
 
-    <th scope="col" class="px-6 py-3 text-start">
-      <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">Instructions</span>
-    </th>
+      <th scope="col" class="px-6 py-3 text-start">
+        <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">Instructions</span>
+      </th>
 
-    <th scope="col" class="px-6 py-3 text-start">
-      <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">Actions</span>
-    </th>
+      <th scope="col" class="px-6 py-3 text-start">
+        <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">Actions</span>
+      </th>
+    </tr>
   </svelte:fragment>
 
   {#each templates as trx}

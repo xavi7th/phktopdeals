@@ -67,7 +67,7 @@
         </div>
       </div>
     {:else}
-      <div class="bg-white dark:bg-white/10 shadow rounded-lg p-4 border dark:border-neutral-700 mt-10 col-span-2 col-start-2">
+      <div class="bg-white dark:bg-white/10 shadow rounded-lg p-4 border dark:border-neutral-700 mt-10 col-span-2 lg:col-start-2">
         <div class="ps-6 lg:ps-3 xl:ps-0 pe-6 py-3">
           <div class="flex items-center gap-x-3 text-center">
             <div class="grow">
