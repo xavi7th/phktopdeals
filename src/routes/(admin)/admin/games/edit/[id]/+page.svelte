@@ -5,4 +5,4 @@
   let { brands, regions, categories } = data;
 </script>
 
-<ProductManagementForm productForm={data.giftCardForm} brandForm={data.brandForm} {brands} {regions} {categories} productType="Gift Card" />
+<ProductManagementForm productForm={data.topUpForm} brandForm={data.brandForm} {brands} {regions} {categories} productType="Top Up" />

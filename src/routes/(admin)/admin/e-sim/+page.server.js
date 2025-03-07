@@ -12,7 +12,7 @@ export async function load(event) {
     return await res?.json();
   };
 
-  const [cardsData] = await Promise.all([fetchESimCards()]);
+  const [eSimsData] = await Promise.all([fetchESimCards()]);
 
   event.setHeaders({
     "Cache-Control": "public, max-age=3600, stale-while-revalidate=86400",
@@ -20,8 +20,8 @@ export async function load(event) {
 
   return {
     /** @type { import('$lib/types').Product[] } */
-    cards: cardsData.data,
-    meta: cardsData.metadata,
+    eSims: eSimsData.data,
+    meta: eSimsData.metadata,
   };
 }
 

@@ -17,7 +17,7 @@
 
   afterNavigate(async () => {
     try {
-      // setTimeout(() => window.HSStaticMethods.autoInit(), 1500);
+      setTimeout(() => window.HSStaticMethods.autoInit(), 1500);
 
       await tick();
 

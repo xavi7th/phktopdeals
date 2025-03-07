@@ -14,10 +14,10 @@
   import FloatingNumericTextInput from "$lib/Components/FormInputs/FloatingNumericTextInput.svelte";
   import FloatingSelectTagAltInput from "$lib/Components/FormInputs/FloatingSelectTagAltInput.svelte";
 
-  let { brands, regions, categories, giftCardForm, brandForm } = $props();
+  let { brands, regions, categories, productForm, brandForm, productType } = $props();
 
-  const { form, errors, message, delayed, submitting, timeout, enhance } = superForm(giftCardForm, {
-    id: "gift-card-form-" + crypto.randomUUID().replaceAll("-", "").substring(0, 10),
+  const { form, errors, message, delayed, submitting, timeout, enhance } = superForm(productForm, {
+    id: "product-form-" + crypto.randomUUID().replaceAll("-", "").substring(0, 10),
     delayMs: 500,
     timeoutMs: 8000,
   });
@@ -30,18 +30,18 @@
 {/if}
 
 <div class="fixed bottom-0 left-0 z-[60] max-w-md">
-  <SuperDebug data={{ $message, $form, $errors }} label="Gift Card Form" collapsible={true} display={dev} />
+  <SuperDebug data={{ $message, $form, $errors }} label="{productType} Form" collapsible={true} display={dev} />
 </div>
 
 <div class="rounded-xl bg-white p-4 shadow sm:p-7 dark:bg-neutral-900">
   <form method="POST" enctype="multipart/form-data" use:enhance>
     <div class="grid grid-cols-12 gap-y-8 border-t border-gray-200 py-8 first:border-transparent first:pt-0 last:pb-0 dark:border-neutral-700 dark:first:border-transparent">
       <div class="col-span-12">
-        <h2 class="text-lg font-semibold text-gray-800 dark:text-neutral-200">Gift Card Management</h2>
+        <h2 class="text-lg font-semibold text-gray-800 dark:text-neutral-200">{productType} Management</h2>
       </div>
 
       <div class="col-span-12 flex gap-x-2">
-        <input name="product_type" class="hidden" value="Gift Card" readonly />
+        <input name="product_type" class="hidden" value={$form.product_type} readonly />
         <input name="id" class="hidden" value={$form.id} readonly />
         <FloatingSelectInput class="flex-1" name="brand_id" label="Product Brand" bind:value={$form.brand_id} isError={!!$errors.brand_id} msg={$errors.brand_id}>
           {#each brands || [] as brand}
@@ -164,7 +164,7 @@
       {#if $timeout}
         Still Loading {@html animatedDotsSVG}
       {:else}
-        {#if $form.id}Update Gift Card{:else}Save{/if}
+        {`${$form.id ? "Update" : "Create"} ${productType}`}
         {#if $delayed}
           {@html spinnerSVG}
         {/if}

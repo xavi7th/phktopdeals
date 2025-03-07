@@ -1,19 +1,19 @@
-import { giftCardDefaults } from "$lib/schemas";
+import { eSimDefaults } from "$lib/schemas";
 import { getData, updateAction } from "../../../prepareProductListings";
 
 export async function load(event) {
-  const data = await getData(event, giftCardDefaults);
+  const data = await getData(event, eSimDefaults);
 
   event.setHeaders({
     "Cache-Control": "public, max-age=604800",
   });
 
   return {
-    giftCardForm: data.form,
+    eSimForm: data.form,
     ...data.otherData,
   };
 }
 
 export const actions = {
-  default: (event) => updateAction(event, giftCardDefaults),
+  default: (event) => updateAction(event, eSimDefaults),
 };

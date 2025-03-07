@@ -1,5 +1,5 @@
 <script>
-  import ProductManagementForm from "../../ProductManagementForm.svelte";
+  import ProductManagementForm from "../../../ProductManagementForm.svelte";
 
   let { data } = $props();
   let { brands, regions, categories } = data;

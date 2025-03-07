@@ -40,7 +40,9 @@ export const TopUpAccountDefaults = {
 export const VoucherCodeSchema = type({
   "id?": type("string>4 | undefined").describe("valid"),
   product_id: type("string>4").describe("valid"),
-  "product_email_template_id?": type("string>4 | undefined").describe("valid").pipe((v) => v || undefined),
+  "product_email_template_id?": type("string>4 | undefined")
+    .describe("valid")
+    .pipe((v) => v || undefined),
   amount: "number>0",
   code: type("string>=6").describe("at least 6 characters"),
   "app_user_id?": "string | undefined",
@@ -85,7 +87,7 @@ export const PurchaseItemDefaults = {
   payment_method: null,
 };
 
-export const GiftCardSchema = type({
+export const productSchema = type({
   "id?": type("string"),
   product_name: type("string>1")
     .describe("provided")
@@ -113,10 +115,9 @@ export const GiftCardSchema = type({
   faqs: type("string").describe("provided"),
 });
 
-export const GiftCardDefaults = {
+export const productDefaults = {
   id: "",
   product_name: "",
-  product_type: "gift card",
   brand_id: null,
   product_image: null,
   product_category: [""],
@@ -131,36 +132,24 @@ export const GiftCardDefaults = {
   product_image_url: undefined,
 };
 
-export const eSimSchema = type({
-  product_name: type("string>1").describe("provided"),
-  product_type: ["string>1", "@", "selected"], //optional syntax
-  product_image: type("File").describe("provided").optional(),
-  brand_id: type("string>1").describe("provided"),
-  product_category: ["string[]>1", "@", "2 and above"],
-  regions: ["string[]>1", "@", "selected"],
-  product_min_price: "number>=0",
-  percentage_discount: "0<=number<100",
-  "purchase_commission?": type("0<=number<100|undefined").describe("at least 00"),
-  variable_denomination: "boolean?",
-  "price_denominations?": "string[] | number[]",
-  "discount_until?": "string|null|undefined",
-  faqs: type("string").describe("provided"),
-});
+export const giftCardDefaults = {
+  ...productDefaults,
+  product_type: "gift card",
+};
 
 export const eSimDefaults = {
-  product_name: "",
+  ...productDefaults,
   product_type: "esim",
-  brand_id: null,
-  product_image: null,
-  product_category: [""],
-  regions: [""],
-  price_denominations: [""],
-  product_min_price: 0,
-  percentage_discount: 0,
-  purchase_commission: 0,
-  variable_denomination: false,
-  discount_until: null,
-  faqs: undefined,
+};
+
+export const topUpDefaults = {
+  ...productDefaults,
+  product_type: "top up",
+};
+
+export const gameDefaults = {
+  ...productDefaults,
+  product_type: "game",
 };
 
 export const sliderSchema = type({
@@ -189,68 +178,4 @@ export const brandDefaults = {
   id: undefined,
   name: "",
   name_slug: "",
-};
-
-export const gameSchema = type({
-  product_name: type("string>1").describe("provided"),
-  product_type: ["string>1", "@", "selected"], //optional syntax
-  product_image: type("File | null").describe("provided").optional(),
-  brand_id: type("string>1").describe("provided"),
-  product_category: ["string[]>1", "@", "2 and above"],
-  regions: ["string[]>1", "@", "selected"],
-  product_min_price: "number>=0",
-  percentage_discount: "0<=number<100",
-  "purchase_commission?": type("0<=number<100|undefined").describe("at least 00"),
-  variable_denomination: "boolean?",
-  "price_denominations?": "string[]",
-  "discount_until?": "string|null|undefined",
-  faqs: type("string").describe("provided"),
-});
-
-export const gameDefaults = {
-  product_name: "",
-  product_type: "game",
-  brand_id: null,
-  product_image: null,
-  product_category: [""],
-  regions: [""],
-  price_denominations: [""],
-  product_min_price: 0,
-  percentage_discount: 0,
-  purchase_commission: 0,
-  variable_denomination: false,
-  discount_until: null,
-  faqs: undefined,
-};
-
-export const topUpSchema = type({
-  product_name: type("string>1").describe("provided"),
-  product_type: ["string>1", "@", "selected"], //optional syntax
-  product_image: type("File | null").describe("provided").optional(),
-  brand_id: type("string>1").describe("provided"),
-  product_category: ["string[]>1", "@", "2 and above"],
-  regions: ["string[]>1", "@", "selected"],
-  product_min_price: "number>=0",
-  percentage_discount: "0<=number<100",
-  "purchase_commission?": type("0<=number<100|undefined").describe("at least 00"),
-  variable_denomination: "boolean?",
-  "price_denominations?": "string[]",
-  "discount_until?": "string|null|undefined",
-  faqs: type("string").describe("provided"),
-});
-
-export const topUpDefaults = {
-  product_name: "",
-  product_type: "top-up",
-  brand_id: null,
-  product_image: null,
-  product_category: [""],
-  regions: [""],
-  price_denominations: [""],
-  product_min_price: 0,
-  percentage_discount: 0,
-  purchase_commission: 0,
-  variable_denomination: false,
-  discount_until: null,
-  faqs: undefined,
 };

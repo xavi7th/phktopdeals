@@ -1,8 +1,8 @@
 <script>
-  import GiftCardForm from "./GiftCardForm.svelte";
+  import ProductManagementForm from "../../ProductManagementForm.svelte";
 
   let { data } = $props();
   let { brands, regions, categories } = data;
 </script>
 
-<GiftCardForm giftCardForm={data.giftCardForm} brandForm={data.brandForm} {brands} {regions} {categories} />
+<ProductManagementForm productForm={data.giftCardForm} brandForm={data.brandForm} {brands} {regions} {categories} productType="Gift Card" />

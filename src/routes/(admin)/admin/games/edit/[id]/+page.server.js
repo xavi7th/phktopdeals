@@ -1,19 +1,19 @@
-import { giftCardDefaults } from "$lib/schemas";
+import { topUpDefaults } from "$lib/schemas";
 import { getData, updateAction } from "../../../prepareProductListings";
 
 export async function load(event) {
-  const data = await getData(event, giftCardDefaults);
+  const data = await getData(event, topUpDefaults);
 
   event.setHeaders({
     "Cache-Control": "public, max-age=604800",
   });
 
   return {
-    giftCardForm: data.form,
+    topUpForm: data.form,
     ...data.otherData,
   };
 }
 
 export const actions = {
-  default: (event) => updateAction(event, giftCardDefaults),
+  default: (event) => updateAction(event, topUpDefaults),
 };

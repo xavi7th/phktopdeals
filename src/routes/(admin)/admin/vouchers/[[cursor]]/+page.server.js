@@ -1,7 +1,7 @@
 import { type } from "arktype";
 import { api, getErrorString } from "$lib/helpers";
 import { arktype } from "sveltekit-superforms/adapters";
-import { redirect, setFlash } from 'sveltekit-flash-message/server';
+import { redirect, setFlash } from "sveltekit-flash-message/server";
 import { VoucherCodeDefaults, VoucherCodeSchema } from "$lib/schemas";
 import { message, superValidate, setError, fail } from "sveltekit-superforms";
 
