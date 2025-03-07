@@ -40,7 +40,7 @@ export const TopUpAccountDefaults = {
 export const VoucherCodeSchema = type({
   "id?": type("string>4 | undefined").describe("valid"),
   product_id: type("string>4").describe("valid"),
-  "product_email_template_id?": type("string>4 | undefined")
+  "product_email_template_id?": type("string>4 | undefined | null")
     .describe("valid")
     .pipe((v) => v || undefined),
   amount: "number>0",
