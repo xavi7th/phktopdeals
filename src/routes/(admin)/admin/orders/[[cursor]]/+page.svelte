@@ -77,18 +77,16 @@
                   <span class="font-light text-gray-500">Transaction ID:</span>
                   #{order.id}
                 </span>
-                {#if order.status == "finished" || order.status == "waiting"}
-                  <a
-                    href="/admin/orders/details/{order.id}"
-                    class="inline-flex items-center gap-x-1 text-sm font-medium text-brand-600 decoration-2 hover:underline focus:underline focus:outline-none dark:text-brand-500"
-                    aria-haspopup="dialog"
-                    aria-expanded="false"
-                    aria-controls="create-order-modal"
-                    data-hs-overlay="#manage-orders"
-                    on:click={loadDetails}>
-                    View Details
-                  </a>
-                {/if}
+                <a
+                  href="/admin/orders/details/{order.id}"
+                  class="inline-flex items-center gap-x-1 text-sm font-medium text-brand-600 decoration-2 hover:underline focus:underline focus:outline-none dark:text-brand-500"
+                  aria-haspopup="dialog"
+                  aria-expanded="false"
+                  aria-controls="create-order-modal"
+                  data-hs-overlay="#manage-orders"
+                  on:click={loadDetails}>
+                  View Details
+                </a>
               </div>
             </div>
           </div>
@@ -221,18 +219,16 @@
           </div>
 
           <div class="flex justify-end">
-            {#if order.is_processed}
-              <a
-                href="/admin/orders/details/{order.id}"
-                class="rounded bg-teal-700 px-4 py-2 text-xs text-white hover:bg-teal-600"
-                aria-haspopup="dialog"
-                aria-expanded="true"
-                aria-controls="view-order-details"
-                data-hs-overlay="#view-order-details"
-                on:click={loadDetails}>
-                View Details
-              </a>
-            {/if}
+            <a
+              href="/admin/orders/details/{order.id}"
+              class="rounded bg-teal-700 px-4 py-2 text-xs text-white hover:bg-teal-600"
+              aria-haspopup="dialog"
+              aria-expanded="true"
+              aria-controls="view-order-details"
+              data-hs-overlay="#view-order-details"
+              on:click={loadDetails}>
+              View Details
+            </a>
           </div>
         </div>
       {:else}
