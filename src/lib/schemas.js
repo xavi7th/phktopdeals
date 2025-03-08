@@ -102,7 +102,7 @@ export const productSchema = type({
     .array()
     .moreThanLength(0)
     .configure({ problem: (ctx) => "You need to provide at least one " + ctx.propString }),
-  regions: type.string
+  "regions?": type.string
     .array()
     .moreThanLength(0)
     .configure({ problem: (ctx) => "You need to provide at least one " + ctx.propString }),
