@@ -23,7 +23,7 @@ const sessionHandler = handleSession({
   expires_in: "minutes",
   saveUninitialized: true,
   rolling: 90, // 1 - 100 representing the percentage time that should have passed before renewing the expires time or true to refresh expires on every request
-  init: () => ({ user: {}, recently_purchased: false }),
+  init: () => ({ user: { is_active: false }, recently_purchased: false }),
 });
 
 async function logger({ event, resolve }) {
@@ -54,7 +54,7 @@ async function getUserDetails({ event, resolve }) {
 
     if (getUserDetails?.status == 200) {
       //TODO: Set a localStorage with key user and expiration time for 5mins. If that key is present, no need to getUserDetails. @see https://www.sohamkamani.com/javascript/localstorage-with-ttl-expiry/
-      await event.locals.session.update(async ({ user }) => ({ user: (await getUserDetails?.json())?.data || {} })); //use this to determine auth on frontend. Before accessing auth routes if this is null redirect to login page
+      await event.locals.session.update(async ({ user }) => ({ user: (await getUserDetails?.json())?.data || { is_active: false } })); //use this to determine auth on frontend. Before accessing auth routes if this is null redirect to login page
     }
   }
 
@@ -137,10 +137,13 @@ export const handleFetch = async ({ request, fetch, event }) => {
    * @unauthenticated Handle expired authentication from the API
    */
   if ([401, 403].includes(response?.status)) {
-    console.log("----------HOOKS------------", response.url, response);
-    await event.locals.session.destroy();
+    if (["wallet-balance", "api/v1/user"].every((url) => !response.url.includes(url))) {
+      console.log("----------HOOKS------------", response.url, response);
+    }
 
-    if (["/logout", "api/v1/user"].every((url) => ! response.url.includes(url))) {
+    if (["logout", "api/v1/user"].every((url) => !response.url.includes(url))) {
+      await event.locals.session.destroy();
+
       redirect(303, "/logout");
     }
   }

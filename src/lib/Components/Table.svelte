@@ -40,7 +40,7 @@
           <p class="text-sm font-light text-gray-400 dark:text-neutral-400">{tDescription}</p>
         {/if}
       </div>
-      <div class="table-action shrink-0 flex justify-end items-center">
+      <div class="table-action flex shrink-0 items-center justify-end">
         <slot name="tableAction" />
       </div>
     </div>
@@ -123,14 +123,14 @@
 </div>
 
 <div class="mt-8 grid gap-4 space-y-4 {$$slots.mobile ? 'md:hidden' : 'hidden'}" class:md:hidden={$$slots.mobile}>
-  <div class="ml-6 inline-flex flex-col w-11/12 justify-end pb-8 pt-4 text-start text-xl font-semibold text-gray-600 dark:text-neutral-300">
+  <div class="ml-6 inline-flex w-11/12 flex-col justify-end pb-8 pt-4 text-start text-xl font-semibold text-gray-600 dark:text-neutral-300">
     <div class="caption flex-1">
       <span>{tCaption}</span>
       {#if tDescription}
         <p class="text-sm font-light text-gray-400 dark:text-neutral-400">{tDescription}</p>
       {/if}
     </div>
-    <div class="table-action shrink-0 mt-8 flex justify-end items-center">
+    <div class="table-action mt-8 flex shrink-0 items-center justify-end">
       <slot name="tableAction" />
     </div>
   </div>

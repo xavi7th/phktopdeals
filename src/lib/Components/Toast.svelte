@@ -10,10 +10,12 @@
 </Toast> -->
 
 <script>
-  import { onMount } from "svelte";
+  import { createEventDispatcher, onMount } from "svelte";
   import { fly } from "svelte/transition";
   import SvgIcon from "$lib/Components/SvgIcon.svelte";
   import { bell, checkMarkFilledAlt, exclamationFilled, infoFilled, x, xFilled } from "./iconPaths";
+
+  let dispatch = createEventDispatcher();
 
   export let type = "grey",
     msg = "A toast message is required",
@@ -68,6 +70,7 @@
   onMount(() => {
     setTimeout(() => {
       showToast = false;
+      dispatch("toastClosed");
     }, calculateTimeout(toastContentContainer.innerText));
   });
 </script>

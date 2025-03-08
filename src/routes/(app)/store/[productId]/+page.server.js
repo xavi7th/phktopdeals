@@ -1,8 +1,10 @@
 import { api } from "$lib/helpers";
-import { error, redirect } from "@sveltejs/kit";
+import { error } from "@sveltejs/kit";
+import { getErrorString } from "$lib/helpers";
 import { arktype } from "sveltekit-superforms/adapters";
+import { setFlash, redirect } from "sveltekit-flash-message/server";
+import { setError, superValidate, fail } from "sveltekit-superforms";
 import { PurchaseItemDefaults, PurchaseItemSchema } from "$lib/schemas";
-import { message, setError, superValidate } from "sveltekit-superforms";
 
 export async function load(event) {
   const form = await superValidate(arktype(PurchaseItemSchema, { defaults: PurchaseItemDefaults }));
@@ -40,12 +42,13 @@ export const actions = {
     const form = await superValidate(event, arktype(PurchaseItemSchema, { defaults: PurchaseItemDefaults }));
 
     if (!form.valid) {
-      return message(form, { type: "error", msg: "There are errors in your form." }, { status: 422 });
+      setFlash({ type: "error", msg: "There are errors in your form.", errors: form.errors }, event);
+      return fail(422, { form });
     }
 
-    const res = await api({
+    let res = await api({
       method: "post",
-      resource: "purchase-invoices",
+      resource: form.data.is_auth_purchase ? "purchase-invoices" : "g/purchase-invoices",
       data: form.data,
       event,
     });
@@ -53,9 +56,9 @@ export const actions = {
     if (res?.status == 422) {
       let errRes = await res.json();
 
-      for (const [fieldName, errs] of Object.entries(errRes.errors)) {
+      for (const [fieldName, errs] of Object.entries(errRes.errors || {})) {
         if (fieldName.includes(".")) {
-          setError(form, fieldName.split(".")[0], errs[0], {
+          setError(form, fieldName.split(".")[0] + "._errors", errs[0], {
             overwrite: true,
           });
         } else {
@@ -64,16 +67,19 @@ export const actions = {
           });
         }
       }
-
-      return message(form, { type: "error", msg: "There are errors in your form." }, { status: res?.status || 400 });
+      setFlash({ type: "error", msg: "<ol class='!text-left'>" + getErrorString(errRes.errors || errRes.metadata.message) + "</ol>" }, event);
+      return fail(res?.status || 422, { form });
     }
 
     if (!res?.ok) {
-      return message(form, { type: "error", msg: res?.statusText || "An error occurred while processing your request" }, { status: res?.status || 429 });
+      setFlash({ type: "error", msg: res?.statusText || "An error occurred while processing your request" }, event);
+      return fail(res?.status || 429, { form });
     }
 
-    await event.locals.session.update(async ({ recently_purchased }) => ({ recently_purchased: await res.json() }));
+    res = await res.json();
 
-    return redirect(303, "/store/successful");
+    await event.locals.session.update(async ({ recently_purchased }) => ({ recently_purchased: res }));
+
+    redirect("/store/successful", { type: "success", msg: res?.metadata?.message || "Purchase successful!" }, event.cookies);
   },
 };

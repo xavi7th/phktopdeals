@@ -38,6 +38,7 @@ declare global {
       type Message = {
         type: "grey" | "success" | "info" | "error" | "warning" | "white";
         msg: string;
+        errors?: string[];
       };
     }
     interface PageState {

@@ -21,7 +21,7 @@
         </g>
       </svg>
       <div class="flex max-w-screen-sm flex-col items-center justify-center gap-y-12 px-3">
-        <h2 class="mb-2 text-3xl font-bold text-gray-900">Congratulations {user.full_name} !</h2>
+        <h2 class="mb-2 text-3xl font-bold text-gray-900 dark:text-gray-500">Congratulations {user.full_name} !</h2>
 
         <p class="text-center text-lg dark:text-white">
           <span class="mb-4 block font-semibold">{@html message}</span>

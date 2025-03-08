@@ -73,10 +73,13 @@ export const VoucherCodeDefaults = {
 
 export const PurchaseItemSchema = type({
   product_id: type("string>4").describe("valid"),
-  email: type("string.email|undefined").describe("provided"),
+  email: type("string.email").configure({
+    problem: (ctx) => (ctx.code == "pattern" ? "Email supplied must be a valid email" : ctx.code == "domain" ? "An email is required" : ctx.propString + " must be " + ctx.description),
+  }),
   quantity: "number>=1",
   unit_price: "number>0",
   payment_method: "'crypto'|'bank payment'|null",
+  is_auth_purchase: "boolean",
 });
 
 export const PurchaseItemDefaults = {
@@ -85,6 +88,7 @@ export const PurchaseItemDefaults = {
   quantity: 1,
   unit_price: 0,
   payment_method: null,
+  is_auth_purchase: false,
 };
 
 export const productSchema = type({

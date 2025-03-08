@@ -1,7 +1,6 @@
 <script>
   import { dev } from "$app/environment";
   import { slide } from "svelte/transition";
-  import Toast from "$lib/Components/Toast.svelte";
   import { checkPlus } from "$lib/Components/iconPaths";
   import SuperDebug, { superForm } from "sveltekit-superforms";
   import { percentageCalculation, toCurrency } from "$lib/helpers";
@@ -14,7 +13,7 @@
 
   export let data;
 
-  const { form, errors, message, delayed, submitting, timeout, enhance } = superForm(data.form, {
+  const { form, errors, message } = superForm(data.form, {
     delayMs: 500,
     timeoutMs: 8000,
   });
@@ -32,12 +31,6 @@
   <title>Purchase {product?.product_name} | PHKHotDeals</title>
   <meta name="description" content="Purchase {product.product_name} from PHKHot Deals at very discounted prices. Blazing fast transactions and discreet are assured." />
 </svelte:head>
-
-{#if $message}
-  <div class="fixed end-3 top-24 z-50 space-y-3">
-    <Toast positioned={false} type={$message.type} msg={$message.msg} />
-  </div>
-{/if}
 
 <div class="container px-4 py-28 lg:py-40">
   <div class="fixed bottom-0 left-0 z-[60] max-w-md">
@@ -115,18 +108,19 @@
           <div class="absolute flex shrink-0 flex-col items-center justify-center gap-3" transition:slide={{ duration: 900 }}>
             <LoadingButton
               class="mt-10 bg-black px-10 py-4 font-medium hover:bg-gray-700 hover:text-neutral-50 focus:bg-gray-700"
-              {timeout}
-              {delayed}
-              {submitting}
-              disabled={totalPurchaseAmount > user?.wallet_balance || totalPurchaseAmount <= 0}
+              disabled={Number(totalPurchaseAmount) > user?.wallet_balance || totalPurchaseAmount <= 0 || (!user?.email && !$form.email)}
               aria-haspopup="dialog"
               aria-expanded="false"
               aria-controls="process-invoice-purchase-modal"
               data-hs-overlay="#process-invoice-purchase-modal">
-              Pay with Wallet Funds {toCurrency(totalPurchaseAmount)}
+              {#if !user?.email && !$form.email}
+                Enter email address to proceed
+              {:else}
+                Pay with Wallet Funds {toCurrency(totalPurchaseAmount)}
+              {/if}
             </LoadingButton>
 
-            <ProcessInvoicePurchase data={$form} {paymentAmount} />
+            <ProcessInvoicePurchase data={$form} {paymentAmount} {user} />
 
             {#if paymentAmount > user?.wallet_balance}
               <span class="pb-6 text-end text-sm font-medium text-red-700">You have exceeded your wallet balance of {toCurrency(user?.wallet_balance)}</span>

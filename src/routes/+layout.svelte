@@ -1,12 +1,11 @@
 <script>
   import { page } from "$app/stores";
-  import { onMount, tick } from "svelte";
   import { pageMounted } from "$stores";
+  import { onMount, tick } from "svelte";
+  import { getErrorString } from "$lib/helpers";
   import { afterNavigate } from "$app/navigation";
   import Toast from "$lib/Components/Toast.svelte";
   import { getFlash } from "sveltekit-flash-message";
-
-  const flash = getFlash(page);
 
   import "../app.scss";
   import "swiper/css";
@@ -14,6 +13,8 @@
   import "swiper/css/pagination";
 
   let { children } = $props();
+
+  const flash = getFlash(page);
 
   afterNavigate(async () => {
     try {
@@ -81,7 +82,11 @@
 
 {#if $flash}
   <div class="fixed end-3 top-24 z-[100] space-y-3">
-    <Toast positioned={false} type={$flash?.type} msg={$flash.msg} />
+    <Toast positioned={false} type={$flash?.type} msg={$flash.msg} dismissable on:toastClosed={() => ($flash = undefined)}>
+      {#if $flash.errors}
+        <ul class="ml-4 list-disc text-xs capitalize">{@html getErrorString($flash.errors)}</ul>
+      {/if}
+    </Toast>
   </div>
 {/if}
 
