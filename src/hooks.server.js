@@ -140,7 +140,7 @@ export const handleFetch = async ({ request, fetch, event }) => {
     console.log("----------HOOKS------------", response.url, response);
     await event.locals.session.destroy();
 
-    if (!response.url.includes("api/v1/user")) {
+    if (["/logout", "api/v1/user"].every((url) => ! response.url.includes(url))) {
       redirect(303, "/logout");
     }
   }
