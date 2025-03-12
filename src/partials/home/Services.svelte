@@ -41,7 +41,7 @@
 
           <h4 class="-mt-6 h-24 stroke-black text-lg font-medium text-gray-600 dark:text-neutral-200">{@html service.icon}</h4>
           <span class="text-xl font-bold text-gray-600 dark:text-neutral-200">{service.title}</span>
-          <p class="mt-7 line-clamp-4 text-xs text-gray-500 hover:line-clamp-none dark:text-neutral-500">{service.desc}</p>
+          <p class="mt-7 line-clamp-4 text-xs text-gray-500 hover:line-clamp-none dark:text-neutral-100">{service.desc}</p>
 
           <a
             class="mt-5 inline-flex items-center justify-center gap-x-2 rounded-full border px-4 py-3 text-sm font-medium shadow-sm focus:outline-none disabled:pointer-events-none disabled:opacity-50
