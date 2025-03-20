@@ -1,7 +1,9 @@
 <script>
   import { page } from "$app/stores";
   import Logo from "$lib/Components/Logo.svelte";
-  import { shoppingBagSVG, walletSVG, heartSVG, shareSVG, creditCardSVG, dollarCircleSVG, shieldTickSVG, gearsSVG, giftCardSVGAlt, eSimSVG, topUpSVGAlt } from "$lib/Components/iconPaths";
+  import SvgIcon from "$lib/Components/SvgIcon.svelte";
+  import { shoppingBagSVG, walletSVG, heartSVG, shareSVG, creditCardSVG, dollarCircleSVG, shieldTickSVG, gearsSVG, giftCardSVGAlt, eSimSVG, topUpSVGAlt, dollarCircle } from "$lib/Components/iconPaths";
+  import { toCurrency } from "$lib/helpers";
 
   /** @type {Object<string, string>}*/
   let icons = {
@@ -20,6 +22,7 @@
 
   /** @type {import('$lib/types').AdminNavMenuItem[]} */
   export let user_routes = [];
+  export let wallet_balance = 0;
 </script>
 
 <div
@@ -28,6 +31,18 @@
   role="dialog"
   tabindex="-1"
   aria-label="Sidebar">
+  <div class="relative">
+    <div class="absolute hidden items-center rounded-full border border-gray-200 bg-gray-200 p-0.5 lg:flex dark:border-white/20 dark:bg-neutral-800 right-[-50%] top-2">
+      <a
+        href="/user/transactions/top-up/choose-payment-method"
+        title=""
+        class="mr-4 inline-flex h-11 w-auto items-center justify-center justify-self-end rounded-full bg-gray-200 px-3 text-gray-800 dark:bg-neutral-800 dark:text-neutral-300">
+        <SvgIcon strokeWidth={1.5} class="size-5 shrink-0" slot={dollarCircle} />
+        <span class="ml-2 text-sm font-bold tracking-tighter">{toCurrency(wallet_balance)}</span>
+      </a>
+    </div>
+  </div>
+
   <div class="relative flex h-full max-h-full flex-col">
     <div class="px-6 pt-4">
       <Logo />

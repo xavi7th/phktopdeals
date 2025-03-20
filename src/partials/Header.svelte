@@ -106,7 +106,13 @@
               <a
                 href={user?.is_admin ? "/admin/dashboard" : "/user/orders"}
                 class="inline-flex size-11 items-center justify-center gap-x-2 rounded-full border border-transparent bg-gray-100 text-white focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:bg-black">
-                <img class="size-10 shrink-0 rounded-full" src={user?.avatar_url || PUBLIC_VITE_BASE_DOMAIN + "storage/user.png"} alt="Avatar" />
+                {#if user?.avatar_url}
+                  <img class="size-10 shrink-0 rounded-full" src={user?.avatar_url} alt="Avatar" />
+                {:else}
+                  <p class="text-2xl">
+                    {user?.full_name?.[0] || '?'}
+                  </p>
+                {/if}
               </a>
 
               {#if !user?.is_admin}
@@ -154,7 +160,13 @@
               <a
                 href={user?.is_admin ? "/admin/dashboard" : "/user/orders"}
                 class="inline-flex size-11 items-center justify-center gap-x-2 rounded-full border border-transparent bg-gray-100 text-white focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:bg-black">
-                <img class="size-10 shrink-0 rounded-full" src={user?.avatar_url || PUBLIC_VITE_BASE_DOMAIN + "storage/user.png"} alt="Avatar" />
+                {#if user?.avatar_url}
+                  <img class="size-10 shrink-0 rounded-full" src={user?.avatar_url} alt="Avatar" />
+                {:else}
+                  <p class="text-2xl">
+                    {user?.full_name?.[0] || '?'}
+                  </p>
+                {/if}
               </a>
               <span class="pl-4">{user?.full_name}</span>
             </div>

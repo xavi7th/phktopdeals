@@ -48,7 +48,7 @@
   </div>
 
   <div class="relative grid grid-cols-5">
-    <Sidebar {user_routes} />
+    <Sidebar {user_routes} {wallet_balance} />
 
     {#if $navigating}
       <PageSkeleton />

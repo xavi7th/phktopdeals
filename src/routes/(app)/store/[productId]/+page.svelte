@@ -141,8 +141,9 @@
               <div style="transform: translateX(165px) translateX(-50%); transition-duration: 0.3s;"></div>
             </div>
           </div>
-
-          {@html product.faqs}
+          <div class="!text-white">
+            {@html product.faqs}
+          </div>
         </div>
       </div>
     </div>

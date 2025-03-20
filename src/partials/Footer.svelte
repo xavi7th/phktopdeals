@@ -75,10 +75,16 @@
 
         <div class="mt-3 grid space-y-3">
           <p>
-            <a class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:text-gray-200 focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200" href="/games">Games</a>
+            <a
+              class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:text-gray-200 focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200"
+              href="/store/products/games">
+              Games
+            </a>
           </p>
           <p>
-            <a class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:text-gray-200 focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200" href="/gift-cards">
+            <a
+              class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:text-gray-200 focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200"
+              href="/store/products/gift-cards">
               Gift Cards
             </a>
           </p>

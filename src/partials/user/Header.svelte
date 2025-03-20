@@ -15,16 +15,6 @@
       <Logo />
     </div>
 
-    <div class="hidden items-center rounded-full border border-gray-200 bg-gray-200 p-0.5 lg:flex dark:border-white/20 dark:bg-neutral-800">
-      <a
-        href="/user/transactions/top-up/choose-payment-method"
-        title=""
-        class="mr-4 inline-flex h-11 w-auto items-center justify-center justify-self-end rounded-full bg-gray-200 px-3 text-gray-800 dark:bg-neutral-800 dark:text-neutral-300">
-        <SvgIcon strokeWidth={1.5} class="size-5 shrink-0" slot={dollarCircle} />
-        <span class="ml-2 text-sm font-bold tracking-tighter">{toCurrency(wallet_balance)}</span>
-      </a>
-    </div>
-
     <div class="ms-auto flex w-full items-center justify-end gap-x-1 md:gap-x-3">
       <div class="flex flex-row items-center gap-1">
         <div class="flex items-center rounded-full p-0.5 px-0 sm:order-3">
@@ -59,11 +49,17 @@
             <button
               id="hs-dropdown-account"
               type="button"
-              class="inline-flex size-[38px] items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold text-gray-800 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:text-white"
+              class="inline-flex size-[38px] items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold text-gray-800 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:bg-black"
               aria-haspopup="menu"
               aria-expanded="false"
               aria-label="Dropdown">
-              <img class="size-[38px] shrink-0 rounded-full" src={user?.avatar_url} alt="Avatar" />
+              {#if user?.avatar_url}
+                  <img class="size-[38px] shrink-0 rounded-full" src={user?.avatar_url} alt="Avatar" />
+              {:else}
+                <p class="text-2xl">
+                  {user?.full_name?.[0] || '?'}
+                </p>
+              {/if}
             </button>
 
             <div

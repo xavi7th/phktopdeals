@@ -8,5 +8,4 @@
 <Header wallet_balance={data.wallet_balance} />
 
 <slot></slot>
-
 <Footer />

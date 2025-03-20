@@ -21,7 +21,7 @@
     searchQuery = $state(undefined);
 
   pageData.then(async (pageData) => {
-    sliders = pageData.data.sliders;
+    sliders = pageData.data?.sliders;
     await tick();
     isLoaded = true;
   });
