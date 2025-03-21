@@ -51,7 +51,7 @@
               {#if user.avatar_url}
                 <img
                   class="size-10 shrink-0 rounded-full"
-                  src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=320&h=320&q=80"
+                  src={user.avatar_url}
                   alt="Avatar" />
               {:else}
                 <span class="rounded-full bg-brand-600 dark:bg-brand-900 text-white text-lg font-bold shadow-sm shadow-gray-500 dark:shadow-none h-12 w-12 flex items-center justify-center">{user.full_name?.charAt(0) || "U"}</span>
