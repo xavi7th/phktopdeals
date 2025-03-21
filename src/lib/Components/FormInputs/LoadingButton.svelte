@@ -11,15 +11,17 @@
   import { readable } from "svelte/store";
   import { animatedDotsSVG, spinnerSVG } from "../iconPaths";
 
-  let { class: className = "", timeout = readable(false), delayed = readable(false), submitting = $bindable(readable(false)), disabled = false, label = "", children = undefined, ...rest } = $props();
+  let { class: className = "", timeout = readable(false), delayed = readable(false), submitting = $bindable(readable(false)), disabled = false, label = "", children = undefined, overwriteStyles = false, ...rest } = $props();
+
+  let classes = overwriteStyles ? className : cn(
+    "inline-flex w-full items-center justify-center gap-x-2 rounded-lg border border-transparent bg-brand-600 px-4 py-3 text-sm font-medium text-white hover:bg-brand-700 focus:bg-brand-700 focus:outline-none disabled:pointer-events-none disabled:opacity-50",
+    className,
+  );
 </script>
 
 <button
   {...rest}
-  class={cn(
-    "inline-flex w-full items-center justify-center gap-x-2 rounded-lg border border-transparent bg-brand-600 px-4 py-3 text-sm font-medium text-white hover:bg-brand-700 focus:bg-brand-700 focus:outline-none disabled:pointer-events-none disabled:opacity-50",
-    className,
-  )}
+  class={classes}
   disabled={$submitting || disabled}
   on:click
   on:mouseover

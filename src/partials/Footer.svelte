@@ -89,7 +89,7 @@
             </a>
           </p>
           <p>
-            <a class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:text-gray-200 focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200" href="/softwares">
+            <a class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:text-gray-200 focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200" href="/store/products/softwares">
               Softwares
             </a>
           </p>
