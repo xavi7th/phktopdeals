@@ -79,7 +79,7 @@
           <div class="ps-6 lg:ps-3 xl:ps-0 pe-6 py-3">
             <div class="flex items-center gap-x-3 text-center">
               <div class="grow">
-                <span class="block text-xl text-gray-600 dark:text-neutral-200">THERE ARE NO BRANDS CREATED YET. CREATE BRANDS SO THAT YOU CAN CREATE PRODUCTS</span>
+                <span class="block text-xl text-gray-600 dark:text-neutral-400">THERE ARE NO BRANDS CREATED YET. CREATE BRANDS SO THAT YOU CAN CREATE PRODUCTS</span>
               </div>
             </div>
           </div>

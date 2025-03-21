@@ -130,7 +130,7 @@
           <div class="ps-6 lg:ps-3 xl:ps-0 pe-6 py-3">
             <div class="flex items-center gap-x-3 text-center">
               <div class="grow">
-                <span class="block text-xl text-gray-600 dark:text-neutral-200">THERE ARE NO TRANSACTIONS YET ON THE PLATFORM</span>
+                <span class="block text-xl text-gray-600 dark:text-neutral-400">THERE ARE NO TRANSACTIONS YET ON THE PLATFORM</span>
               </div>
             </div>
           </div>
@@ -199,7 +199,7 @@
           <div class="ps-6 lg:ps-3 xl:ps-0 pe-6 py-3">
             <div class="flex items-center gap-x-3 text-center">
               <div class="grow">
-                <span class="block text-xl text-gray-600 dark:text-neutral-200">THERE ARE NO PAYMENT TRANSACTIONS YET ON THE PLATFORM</span>
+                <span class="block text-xl text-gray-600 dark:text-neutral-400">THERE ARE NO PAYMENT TRANSACTIONS YET ON THE PLATFORM</span>
               </div>
             </div>
           </div>
@@ -212,7 +212,7 @@
     <div class="py-3 pe-6 ps-6 lg:ps-3 xl:ps-0">
       <div class="flex items-center gap-x-3 text-center">
         <div class="grow">
-          <span class="block text-xl text-gray-600 dark:text-neutral-200">THERE WAS AN ERROR WHILE TRYING TO LOAD THE TRANSACTIONS</span>
+          <span class="block text-xl text-gray-600 dark:text-neutral-400">THERE WAS AN ERROR WHILE TRYING TO LOAD THE TRANSACTIONS</span>
         </div>
       </div>
     </div>

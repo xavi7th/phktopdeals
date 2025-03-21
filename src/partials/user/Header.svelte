@@ -70,6 +70,7 @@
               <div class="rounded-t-lg bg-gray-100 px-5 py-3 dark:bg-neutral-700">
                 <p class="text-sm text-gray-500 dark:text-neutral-500">Signed in as</p>
                 <p class="text-sm font-medium text-gray-800 dark:text-neutral-200">{user?.full_name}</p>
+                <p class="text-xs font-medium text-gray-800 dark:text-neutral-200">{user?.email}</p>
               </div>
               <div class="space-y-0.5 p-1.5">
                 <!-- <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700 dark:focus:text-neutral-300" href="#">
