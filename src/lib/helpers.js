@@ -59,19 +59,26 @@ export const toCurrency = (amount, currencySymbol = "$") => {
 };
 
 export const percentageCalculation = (unit_price = 0, quantity = 1, commission = 0, discount = 0, numeric = false, shouldTopUp = false) => {
-  let amount_to_pay;
-
-  let amount = Number(unit_price) * Number(quantity);
+  let amount_to_pay = Number(unit_price) * Number(quantity);
 
   if (commission <= 0) {
-    amount = (Number(unit_price) + (shouldTopUp ? Number(PUBLIC_APP_COMMISSION_AMOUNT) : 0)) * Number(quantity);
+    amount_to_pay = (Number(unit_price) + (shouldTopUp ? Number(PUBLIC_APP_COMMISSION_AMOUNT) : 0)) * Number(quantity);
+  } else{
+    amount_to_pay = (Number(unit_price) + (shouldTopUp ? Number(commission) : 0)) * Number(quantity)
   }
 
+  /**
+   * @deprecated for now we will treat commissions as a flat amount and not a percentage
+   */
+  // if (discount) {
+  //   const discount_percent = Number(amount_to_pay) - (amount_to_pay * discount) / 100;
+  //   amount_to_pay = discount_percent - (discount_percent * commission) / 100;
+  // } else {
+  //   amount_to_pay = Number(amount_to_pay) + (amount_to_pay * commission) / 100;
+  // }
+
   if (discount) {
-    const discount_percent = Number(amount) - (amount * discount) / 100;
-    amount_to_pay = discount_percent - (discount_percent * commission) / 100;
-  } else {
-    amount_to_pay = Number(amount) + (amount * commission) / 100;
+    amount_to_pay = Number(amount_to_pay) - ((amount_to_pay * discount) / 100);
   }
 
   return numeric ? amount_to_pay : toCurrency(amount_to_pay);

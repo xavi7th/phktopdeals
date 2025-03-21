@@ -1,8 +1,8 @@
 <script>
-  import { toCurrency } from "$lib/helpers";
   import Modal from "$partials/Modal.svelte";
   import { superForm } from "sveltekit-superforms";
   import { PurchaseItemSchema } from "$lib/schemas";
+  import { percentageCalculation, toCurrency } from "$lib/helpers";
   import LoadingButton from "$lib/Components/FormInputs/LoadingButton.svelte";
 
   /** @type { import('sveltekit-superforms').SuperValidated<import('sveltekit-superforms').Infer<<typeof PurchaseItemSchema.infer>>> } */
@@ -19,10 +19,10 @@
 <Modal title="Are you sure?" name="process-invoice-purchase-modal">
   <div slot="content">
     <p class="mb-4 px-4 text-gray-600">
-      You are about to complete a purchase for {toCurrency(data.unit_price * data.quantity)}. There will be an additional charge of {toCurrency(paymentAmount - data.unit_price * data.quantity)}, so we will be paying a
+      You are about to complete a purchase for {percentageCalculation(data.unit_price, data.quantity, data.commission, data.discount)}. There will be an additional charge of {toCurrency((data.commission * data.quantity) - ((data.commission * data.quantity * data.discount)/100))}, so we will be paying a
       total of
-      <span class="font-bold">{toCurrency(paymentAmount)}</span>
-      . Please note that this action will deduct the amount from your available balance.
+      <span class="font-bold">{toCurrency(paymentAmount)}.</span>
+       Please note that this action will deduct the amount from your available balance.
     </p>
     <div class="mx-4 mb-4 rounded border border-red-400 bg-red-100 px-4 py-3 text-red-700">
       <p class="font-bold">Important Warning:</p>

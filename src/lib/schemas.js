@@ -78,6 +78,8 @@ export const PurchaseItemSchema = type({
   }),
   quantity: "number>=1",
   unit_price: "number>0",
+  "commission?": "number>=0",
+  "discount?": "number>=0",
   payment_method: "'crypto'|'bank payment'|null",
   is_auth_purchase: "boolean",
 });
@@ -87,6 +89,8 @@ export const PurchaseItemDefaults = {
   email: undefined,
   quantity: 1,
   unit_price: 0,
+  commission: 0,
+  discount: 0,
   payment_method: null,
   is_auth_purchase: false,
 };
