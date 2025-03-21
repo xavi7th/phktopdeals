@@ -3,6 +3,7 @@
   import Toast from "$lib/Components/Toast.svelte";
   import SuperDebug, { superForm } from "sveltekit-superforms";
   import CreateBrand from "$partials/brands/CreateBrand.svelte";
+  import CreateCategory from "$partials/categories/CreateCategory.svelte";
   import { animatedDotsSVG, spinnerSVG } from "$lib/Components/iconPaths";
   import WysiwygEditor from "$lib/Components/FormInputs/TipTapEditor.svelte";
   import FloatingTextInput from "$lib/Components/FormInputs/FloatingTextInput.svelte";
@@ -83,9 +84,10 @@
           msg={$errors.product_category?._errors}
           multiple>
           {#each categories || [] as cat}
-            <option value={cat}>{cat}</option>
+            <option value={cat.name}>{cat.name}</option>
           {/each}
         </FloatingSelectTagAltInput>
+        <CreateCategory categoryForm={brandForm} create />
       </div>
 
       <div class="col-span-12 flex gap-x-2">

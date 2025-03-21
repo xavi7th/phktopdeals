@@ -38,6 +38,12 @@ export async function load() {
       reload: false,
     },
     {
+      name: "Categories",
+      uri: "/admin/categories",
+      icon: "eSimSVG",
+      reload: false,
+    },
+    {
       name: "E-Sim",
       uri: "/admin/e-sim",
       icon: "eSimSVG",
