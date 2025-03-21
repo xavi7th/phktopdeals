@@ -1,4 +1,4 @@
-export async function load() {
+export async function load({ locals}) {
   /** @type { import('$lib/types').AdminNavMenuItem[] } */
   const admin_routes = [
     {
@@ -87,5 +87,8 @@ export async function load() {
     // },
   ];
 
-  return { admin_routes };
+  return {
+    admin_routes,
+    user: locals.session.data.user,
+   };
 }

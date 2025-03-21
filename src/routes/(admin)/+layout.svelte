@@ -8,11 +8,14 @@
 
   let { data, children } = $props();
 
-  const { admin_routes } = data;
+  const { admin_routes, user } = data;
+
+  console.log(data);
+
 </script>
 
 <section class="dark:bg-neutral-900">
-  <Header />
+  <Header {user}/>
 
   <div class="sticky inset-x-0 top-0 z-20 border-y bg-white px-4 sm:px-6 lg:hidden lg:px-8 dark:border-neutral-700 dark:bg-neutral-800">
     <div class="flex items-center py-2">
