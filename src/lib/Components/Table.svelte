@@ -14,7 +14,7 @@
   let itemsPerPage = navData?.items_count || 15;
 </script>
 
-<div class="mt-7 overflow-hidden rounded-xl bg-white shadow-lg sm:mx-10 dark:bg-gray-600 {$$slots.mobile ? 'hidden md:block' : ''}" {...$$restProps}>
+<div class="mt-7 overflow-hidden rounded-xl bg-white shadow-lg dark:bg-gray-600 {$$slots.mobile ? 'hidden md:block' : ''}" {...$$restProps}>
   <!-- <div class="flex flex-col items-center gap-5 border-b border-[#00000020] px-5 py-7 pb-9 sm:flex-row sm:px-10">
 		<div class="flex w-full sm:w-[280px]">
 			<input type="date" name="" id="" class="block w-full rounded-xl border" />

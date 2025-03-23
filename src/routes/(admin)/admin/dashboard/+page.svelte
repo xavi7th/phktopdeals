@@ -1,14 +1,12 @@
 <script>
-  import { checkMarkFilledAlt, warningIcon } from '$lib/Components/iconPaths';
-  import SvgIcon from '$lib/Components/SvgIcon.svelte';
   import Table from '$lib/Components/Table.svelte';
+  import SvgIcon from '$lib/Components/SvgIcon.svelte';
   import TableSkeleton from '$lib/Components/TableSkeleton.svelte';
+  import { checkMarkFilledAlt, warningIcon } from '$lib/Components/iconPaths';
 
   let { data } = $props()
 
   let { transactions } = data
-
-  $inspect(transactions)
 </script>
 
 
@@ -120,8 +118,6 @@
       </div>
     </div>
   </div>
-
-
 
   {#await transactions}
     <TableSkeleton />
