@@ -97,24 +97,24 @@
       <div class="flex w-full flex-col">
         <Typewriter mode="loop" element="h1" --cursor-color="white" --cursor-width="2px" interval={60} wordInterval={2000} unwriteInterval={80}>
           <span data-static>Buy</span>
-          <span>eSim</span>
-          <span>Software</span>
+          <!-- <span>eSim</span> -->
+          <!-- <span>Software</span> -->
           <span>Gift Cards</span>
           <span>Google Play</span>
-          <span>Phone Top-Up</span>
-          <span>Games</span>
+          <span>App Store</span>
+          <!-- <span>Phone Top-Up</span> -->
+          <!-- <span>Games</span> -->
           <span>Spotify</span>
           <span>Netflix</span>
-          <span>App Store</span>
-          <span>Airbnb</span>
+          <!-- <span>Airbnb</span> -->
 
           <SvgIcon svgHeight={25} svgWidth={568} data-static class="typewriter-stroke !w-[clamp(150px,25vw,300px)]">
             <path data-static opacity="0.7" d="M2 22.5972C104.5 10.5972 295 -16.4028 566 22.5972" stroke="#FFDA1C" stroke-opacity="0.42" stroke-width="3" stroke-linecap="round" />
           </SvgIcon>
         </Typewriter>
 
-        <h2>With Bitcoin and other Cryptos</h2>
-        <p class="hidden lg:block">Online shop with USDT, USDC, and other stable coins is also supported.</p>
+        <h2>Shop with ease and speed</h2>
+        <!-- <p class="hidden lg:block">Online shop with USDT, USDC, and other stable coins is also supported.</p> -->
 
         <div class="max-w-xl space-y-3">
           <form action="/store/products" method="GET" class="relative flex rounded-lg text-gray-600 shadow-sm dark:text-gray-400">
