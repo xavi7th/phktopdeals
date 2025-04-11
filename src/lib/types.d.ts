@@ -61,6 +61,7 @@ export type ProdSummary = {
   img_url: string;
   regions: string;
   min_price: number;
+  max_price: number;
   percentage_discount: number;
 };
 export type ProductPriceTag = {
