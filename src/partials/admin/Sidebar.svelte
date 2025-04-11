@@ -27,7 +27,7 @@
   aria-label="Sidebar">
   <div class="relative flex h-full max-h-full flex-col">
     <div class="px-6 pt-4">
-      <Logo />
+      <Logo location="/admin/dashboard" />
     </div>
 
     <div

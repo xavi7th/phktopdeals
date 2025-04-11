@@ -9,7 +9,7 @@
 <header class="sticky inset-x-0 top-0 z-[48] flex w-full flex-wrap border-b bg-white py-2.5 text-sm md:flex-nowrap md:justify-start lg:ps-[260px] dark:border-neutral-700 dark:bg-neutral-800">
   <nav class="mx-auto flex w-full basis-full items-center px-4 sm:px-6">
     <div class="me-5 lg:me-0 lg:hidden">
-      <Logo />
+      <Logo location="/admin/dashboard" />
     </div>
 
     <div class="ms-auto flex w-full items-center justify-end gap-x-1 md:gap-x-3">

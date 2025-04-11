@@ -10,7 +10,7 @@
 
   const { admin_routes, user } = data;
 
-  console.log(data);
+  $inspect(data);
 
 </script>
 
