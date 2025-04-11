@@ -63,8 +63,8 @@
                     <p class="text-sm text-gray-600 dark:text-gray-400">Make payments to out bank accounts manually and notify us. We will top up your account once payment has been confirmed</p>
                   </label>
                   <span class="inline-block rounded-lg border border-brand-600 bg-brand-100 px-4 py-2 text-sm font-semibold leading-none text-brand-600">
-                    <span class="text-nowrap">1 - 2</span>
-                    hours
+                    <span class="text-nowrap">15 - 20</span>
+                    mins
                   </span>
                 </div>
               </div>
