@@ -68,7 +68,7 @@ return [
 
   'allowed_methods' => ['*'],
 
-  'allowed_origins' => ['localhost', 'phkhotdeals.com', 'localhost:5173'],
+  'allowed_origins' => ['localhost', 'phkhotdeals.com', 'localhost:5179'],
 
   'allowed_origins_patterns' => [],
 
@@ -90,7 +90,7 @@ return [
 AUTH_GUARD=web
 AUTH_PASSWORD_BROKER=users
 AUTH_MODEL='Modules\AppUser\Models\AppUser'
-SANCTUM_STATEFUL_DOMAINS=localhost:5173,localhost #very very very important
+SANCTUM_STATEFUL_DOMAINS=localhost:5179,localhost #very very very important
 SESSION_DOMAIN=.localhost # this is also very important when you are using subdomains @see https://laravel.com/docs/10.x/sanctum#cors-and-cookies
 ```
 
