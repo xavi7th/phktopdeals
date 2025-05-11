@@ -4,7 +4,7 @@
   <div class="mt-8 space-y-4">
     <div class="rounded-xl border border-dashed p-6 text-slate-800 dark:text-slate-200">
       <div class="flex flex-col items-center">
-        <a href="#">CryptoMate Bulk Order.xlsx</a>
+        <a href="#">Bulk Order.xlsx</a>
       </div>
       <div class="mt-8 flex flex-col items-center justify-center">
         <div class="grid size-20 place-content-center rounded-full border">

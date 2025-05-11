@@ -94,7 +94,7 @@
 
   <HowItWorks />
 
-  <OurPartners />
+  <!-- <OurPartners /> -->
 </main>
 
 <div>

@@ -26,7 +26,7 @@
 
       <div class="mt-3">
         <p class="text-gray-500 dark:text-neutral-500">
-          Providing you the best deals in the <a class="font-medium text-brand-600 decoration-2 hover:underline focus:underline focus:outline-none dark:text-brand-500" href="#/">Crypto</a>
+          Providing you the best deals in the <a class="font-medium text-brand-600 decoration-2 hover:underline focus:underline focus:outline-none dark:text-brand-500" href="#/">online</a>
           space.
         </p>
         <p class="text-gray-500 dark:text-neutral-500">© Minds&Machines {new Date().getFullYear()}. All rights reserved.</p>

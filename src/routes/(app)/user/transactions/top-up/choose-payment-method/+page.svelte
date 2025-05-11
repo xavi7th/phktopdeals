@@ -9,7 +9,7 @@
 
 <svelte:head>
   <title>Choose Top Up Payment Method | PHKHotDeals</title>
-  <meta name="description" content="Choose between manual crypto currency payments or paystack payments to top up your wallet and ensure seamless transactions when making purchases." />
+  <meta name="description" content="Choose between manual currency payments or paystack payments to top up your wallet and ensure seamless transactions when making purchases." />
 </svelte:head>
 
 <div class="relative">
@@ -25,12 +25,12 @@
           <span class="bg-gradient-to-r from-brand-500 to-black bg-clip-text text-transparent dark:from-brand-300 dark:to-white">Choose a Payment Method</span>
         </h1>
         <p class="mt-5 text-base sm:text-lg dark:text-gray-400">
-          Top up your wallet easily using our different payment methods. We accept payments in Bitcoin, Ethereum, Litecoin, Bank Deposits, and various Online Payment channels for your convenience.
+          Top up your wallet easily using our different payment methods. We accept payments in various Online Payment channels for your convenience.
         </p>
 
         <div class="mx-auto mt-8 max-w-sm sm:mt-16">
           <div class="space-y-3">
-            <div
+            <!-- <div
               class="overflow-hidden rounded-md border-2 border-gray-200 bg-white transition-all duration-200 hover:bg-gray-100/80 dark:border-gray-200/30 dark:bg-white/10 hover:dark:bg-gray-50/20 {paymentMethod ===
               'crypto'
                 ? '!border-2 !border-brand'
@@ -46,7 +46,7 @@
                   </label>
                 </div>
               </div>
-            </div>
+            </div> -->
 
             <div
               class="overflow-hidden rounded-md border-2 border-gray-200 bg-white transition-all duration-200 hover:bg-gray-100/80 dark:border-gray-200/30 dark:bg-white/10 hover:dark:bg-gray-50/20 {paymentMethod ===

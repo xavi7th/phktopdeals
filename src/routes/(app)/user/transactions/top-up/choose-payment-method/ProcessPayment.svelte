@@ -67,13 +67,13 @@
       <form method="POST" class="space-y-3" {action} use:enhance id="payment-method-form">
         {#if paymentMethod === "crypto"}
           {#await currencies}
-            <p class="text-gray-600">Loading available crypto currencies ...</p>
+            <p class="text-gray-600">Loading available currencies ...</p>
           {:then result}
             <FloatingSearchableSelectInput name="payment_method" label="Select Payment Method" options={Object.keys(result)} bind:value={$form.payment_method} />
 
             <FloatingNumericTextInput name="amount" label="Top Up Amount in USD" size="p-3" min={50} placeholder="Amount to top (Minimum: $50)" bind:value={$form.amount} isError={!!$errors.amount} msg={$errors.amount} />
           {:catch error}
-            <p class="text-red-500">Available crypto currencies failed to load. Please refresh the page to try again. {error.message}</p>
+            <p class="text-red-500">Available currencies failed to load. Please refresh the page to try again. {error.message}</p>
           {/await}
         {:else}
           {#await rate}

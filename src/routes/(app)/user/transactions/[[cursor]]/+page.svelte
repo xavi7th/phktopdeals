@@ -56,7 +56,7 @@
 
 <svelte:head>
   <title>Top Up Wallet | PHKHotDeals</title>
-  <meta name="description" content="Top up your wallet in your favorite crypto currency or bank transfer to ensure seamless transactions when making purchases." />
+  <meta name="description" content="Top up your wallet in your favorite currency or bank transfer to ensure seamless transactions when making purchases." />
 </svelte:head>
 
 <!-- <div class="flex items-center justify-between rounded-lg bg-white p-3.5 shadow-md sm:mx-10 dark:bg-gray-700">
