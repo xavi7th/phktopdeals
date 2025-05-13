@@ -287,7 +287,7 @@ export const hasFile = (formData) => {
  *
  * @returns {Promise<Response|undefined>}
  */
-export async function api({ toBaseDomain, resource, event, method, data, logResponse = false, toJSON = true }) {
+export async function api({ toBaseDomain, resource, event, method, data, logResponse = true, toJSON = true }) {
   const base = PUBLIC_VITE_BASE_DOMAIN;
   const baseApi = PUBLIC_VITE_BASE_API;
   let fullurl = toBaseDomain ? base : baseApi;

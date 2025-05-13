@@ -1,10 +1,10 @@
-//TO RUN THIS SCRIPT RUN npm run push -- dev OR npm run push -- production OR npm run push
+//TO RUN THIS SCRIPT RUN bun run push -- dev OR bun run push -- production OR bun run push
 //When run without an option, it defaults to dev
 
 import fs from "fs";
 import { execSync } from "child_process";
 
-const server = process.argv[2]; // Get the argument passed from npm
+const server = process.argv[2]; // Get the argument passed from bun
 const branch = server === "production" ? "deploy/master" : "deployment";
 const remoteServerName = "namecheap"; // check this out with git remote
 const CONTINUE_FILE = ".deploy_continue";
@@ -32,13 +32,33 @@ if (!isResuming) {
   try {
     execSync("git merge development --no-edit", { stdio: "inherit" });
   } catch (_) {
-    console.error("❌ Merge conflict detected! Resolve conflicts, then re-run `npm run push`.");
+    console.error("❌ Merge conflict detected! Resolve conflicts, then re-run `bun run push`.");
     fs.writeFileSync(CONTINUE_FILE, "true"); // Mark that we're in the middle of a merge
     process.exit(1);
   }
 } else {
   console.log("✅ Resuming deployment after merge conflict resolution...");
   fs.unlinkSync(CONTINUE_FILE);
+}
+
+// Backup and replace .env file
+console.log("Backing up and replacing .env with .env.production...");
+
+try {
+  // Backup the current .env file if it exists
+  if (fs.existsSync(".env")) {
+    fs.copyFileSync(".env", ".env.bak");
+  }
+  // Replace with production version
+  if (fs.existsSync(".env.production")) {
+    fs.copyFileSync(".env.production", ".env");
+  } else {
+    console.error("❌ .env.production file not found!");
+    process.exit(1);
+  }
+} catch (error) {
+  console.error("❌ Failed to swap .env files:", error);
+  process.exit(1);
 }
 
 console.log("Creating build folder if not exists");
@@ -50,7 +70,7 @@ execSync("sed -i.bak '/build/d' ./.gitignore", { stdio: "inherit" });
 
 // Run the build process
 console.log("Running build...");
-execSync("npm run build", { stdio: "inherit" });
+execSync("bun run build", { stdio: "inherit" });
 
 console.log("Copying package.json and node loader script into build folder...");
 execSync("cp -f package.json src/loader.cjs build", { stdio: "inherit" });
@@ -71,7 +91,18 @@ console.log("Pushing changes...");
 try {
   execSync(`git push ${remoteServerName} --force --verbose`, { stdio: "inherit" });
 
-  console.log("Push successful. Switching back to development branch...");
+  console.log("Push successful. Restoring original .env file...");
+  try {
+    if (fs.existsSync(".env.bak")) {
+      fs.copyFileSync(".env.bak", ".env");
+      fs.unlinkSync(".env.bak");
+    }
+  } catch (error) {
+    console.error("❌ Failed to restore .env file:", error);
+  }
+
+  console.log("Switching back to development branch...");
+
   execSync("git switch development", { stdio: "inherit" });
 
   console.log("Switch successful.");
@@ -87,6 +118,17 @@ try {
   }
 } catch (_) {
   console.error("❌ Push failed. Rolling back the last commit...");
+
+  try {
+    if (fs.existsSync(".env.bak")) {
+      fs.copyFileSync(".env.bak", ".env");
+      fs.unlinkSync(".env.bak");
+    }
+  } catch (error) {
+    console.error("❌ Failed to restore .env file:", error);
+  }
+
+  console.error("Rolling back the last commit...");
   execSync("git reset --soft HEAD~1", { stdio: "inherit" });
   console.error("Changes kept in the staging area for review.");
 }

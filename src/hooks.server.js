@@ -177,7 +177,7 @@ export const handleError = async ({ event, error, message, status }) => {
       error,
       event: {
         url: event.url.href,
-        locals: JSON.stringify(event.locals, null, 4),
+        locals: JSON.stringify(event.locals.session.data, null, 4),
       },
       message,
       status,
