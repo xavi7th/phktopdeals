@@ -42,7 +42,7 @@
     }`;
 
   onMount(() => {
-    window.HSStaticMethods.autoInit();
+    window.HSStaticMethods?.autoInit();
   });
 </script>
 

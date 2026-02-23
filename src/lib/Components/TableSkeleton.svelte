@@ -7,7 +7,7 @@
 
   onDestroy(() => {
     if (browser) {
-      setTimeout(() => window.HSStaticMethods.autoInit(), 1500);
+      setTimeout(() => window.HSStaticMethods?.autoInit(), 1500);
     }
   });
 </script>
