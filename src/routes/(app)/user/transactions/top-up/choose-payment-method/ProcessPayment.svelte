@@ -148,7 +148,7 @@
                           <div class="mx-auto mt-3 w-full max-w-2xl rounded-md border-2 border-red-200 bg-red-50 p-2 dark:border-red-300 dark:bg-red-200">
                             <div class="text-[10px] leading-tight text-red-400 dark:text-red-600">
                               <strong>Note:</strong>
-                              Payment MUST be made to this account alone. PHK Hot Deals will not be responsible for any loss of funds due to payment to any other account.
+                              Payment MUST be made to this account alone. Hot Deals will not be responsible for any loss of funds due to payment to any other account.
                             </div>
                           </div>
                         </div>
@@ -207,7 +207,7 @@
                         <div class="ml-6">
                           <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300">Send us your Payment Receipt</h3>
                           <p class="mt-4 text-sm text-gray-600 dark:text-gray-400">
-                            Next send a copy of your payment receipt to <a href="mailto:hello@phkhotdeals.com" class="text-brand-600 dark:text-brand-400">hello@phkhotdeals.com</a>
+                            Next send a copy of your payment receipt to <a href="mailto:hello@hotdeals.stafr.pro" class="text-brand-600 dark:text-brand-400">hello@hotdeals.stafr.pro</a>
                             or via WhatsApp to
                             <a href="tel:+2348166272605" class="text-brand-600 dark:text-brand-400">+2348166272605</a>
                             .

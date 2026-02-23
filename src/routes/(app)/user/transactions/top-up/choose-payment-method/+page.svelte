@@ -8,7 +8,7 @@
 </script>
 
 <svelte:head>
-  <title>Choose Top Up Payment Method | PHKHotDeals</title>
+  <title>Choose Top Up Payment Method | HotDeals</title>
   <meta name="description" content="Choose between manual currency payments or paystack payments to top up your wallet and ensure seamless transactions when making purchases." />
 </svelte:head>
 

@@ -18,7 +18,7 @@
 </script>
 
 <svelte:head>
-  <title>Create Email Templates | PHKHotDeals</title>
+  <title>Create Email Templates | HotDeals</title>
   <meta name="description" content="Top up your wallet in your favorite currency or bank transfer to ensure seamless transactions when making purchases." />
 </svelte:head>
 

@@ -13,8 +13,8 @@
 </script>
 
 <svelte:head>
-  <title>Purchase {category?.replaceAll("-", " ")?.toLocaleUpperCase()} | PHKHotDeals</title>
-  <meta name="description" content="Purchase {category?.replaceAll('-', ' ')?.toLocaleUpperCase()} from PHK Hot Deals at very discounted prices. Blazing fast transactions and discreet are assured." />
+  <title>Purchase {category?.replaceAll("-", " ")?.toLocaleUpperCase()} | HotDeals</title>
+  <meta name="description" content="Purchase {category?.replaceAll('-', ' ')?.toLocaleUpperCase()} from Hot Deals at very discounted prices. Blazing fast transactions and discreet are assured." />
 </svelte:head>
 
 <div class="container">

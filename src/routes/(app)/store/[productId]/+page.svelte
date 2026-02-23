@@ -31,8 +31,8 @@
 </script>
 
 <svelte:head>
-  <title>Purchase {product?.product_name} | PHKHotDeals</title>
-  <meta name="description" content="Purchase {product.product_name} from PHKHot Deals at very discounted prices. Blazing fast transactions and discreet are assured." />
+  <title>Purchase {product?.product_name} | HotDeals</title>
+  <meta name="description" content="Purchase {product.product_name} from Hot Deals at very discounted prices. Blazing fast transactions and discreet are assured." />
 </svelte:head>
 
 <div class="container px-4 py-28 lg:py-40">

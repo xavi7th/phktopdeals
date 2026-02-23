@@ -39,42 +39,42 @@
 </script>
 
 <svelte:head>
-  <title>{($page.data?.seo?.title || "Welcome") + " | PHK Hot Deals"}</title>
+  <title>{($page.data?.seo?.title || "Welcome") + " | Hot Deals"}</title>
   <meta
     name="description"
     content={$page.data?.seo?.description ||
-      "Experience a groundbreaking e-commerce revolution with PHK Hot Deals, a subsidiary of MOZYFLEX LTD! We are  an online retailer specializing in the sale of digital gift cards, including popular brands such as iTunes, Google Play, Amazon, and more. Our platform allows customers to purchase and send digital gift cards instantly, making it the perfect solution for last-minute gifts, birthdays, holidays, and other special occasions. Our mission is to provide a seamless and convenient shopping experience for our customers, offering a wide selection of digital gift cards that can be easily purchased and sent to friends and loved ones. We strive to offer the best prices, fastest delivery, and exceptional customer service, ensuring that our customers return to us time and time again."} />
+      "Experience a groundbreaking e-commerce revolution with Hot Deals, a subsidiary of MOZYFLEX LTD! We are  an online retailer specializing in the sale of digital gift cards, including popular brands such as iTunes, Google Play, Amazon, and more. Our platform allows customers to purchase and send digital gift cards instantly, making it the perfect solution for last-minute gifts, birthdays, holidays, and other special occasions. Our mission is to provide a seamless and convenient shopping experience for our customers, offering a wide selection of digital gift cards that can be easily purchased and sent to friends and loved ones. We strive to offer the best prices, fastest delivery, and exceptional customer service, ensuring that our customers return to us time and time again."} />
 
   <meta
     name="abstract"
     content={$page.data?.seo?.description ||
-      "Experience a groundbreaking e-commerce revolution with PHK Hot Deals, a subsidiary of MOZYFLEX LTD! We are  an online retailer specializing in the sale of digital gift cards, including popular brands such as iTunes, Google Play, Amazon, and more. Our platform allows customers to purchase and send digital gift cards instantly, making it the perfect solution for last-minute gifts, birthdays, holidays, and other special occasions. Our mission is to provide a seamless and convenient shopping experience for our customers, offering a wide selection of digital gift cards that can be easily purchased and sent to friends and loved ones. We strive to offer the best prices, fastest delivery, and exceptional customer service, ensuring that our customers return to us time and time again."} />
+      "Experience a groundbreaking e-commerce revolution with Hot Deals, a subsidiary of MOZYFLEX LTD! We are  an online retailer specializing in the sale of digital gift cards, including popular brands such as iTunes, Google Play, Amazon, and more. Our platform allows customers to purchase and send digital gift cards instantly, making it the perfect solution for last-minute gifts, birthdays, holidays, and other special occasions. Our mission is to provide a seamless and convenient shopping experience for our customers, offering a wide selection of digital gift cards that can be easily purchased and sent to friends and loved ones. We strive to offer the best prices, fastest delivery, and exceptional customer service, ensuring that our customers return to us time and time again."} />
   <meta name="author" content="Ehikioya Daniel Akhile" />
 
-  <meta itemprop="name" content={$page.data?.seo?.title || "PHK Hot Deals Ltd"} />
-  <link itemprop="url" href={$page.data?.seo?.url || "https://www.phkhotdeals.com/"} />
+  <meta itemprop="name" content={$page.data?.seo?.title || "Hot Deals Ltd"} />
+  <link itemprop="url" href={$page.data?.seo?.url || "https://www.hotdeals.stafr.pro/"} />
   <meta name="theme-color" content="#facc15" />
   <meta name="apple-mobile-web-app-status-bar-style" content="#facc15" />
 
   <meta
     property="og:description"
     content={$page.data?.seo?.description ||
-      "Experience a groundbreaking e-commerce revolution with PHK Hot Deals, a subsidiary of MOZYFLEX LTD! We are  an online retailer specializing in the sale of digital gift cards, including popular brands such as iTunes, Google Play, Amazon, and more. Our platform allows customers to purchase and send digital gift cards instantly, making it the perfect solution for last-minute gifts, birthdays, holidays, and other special occasions. Our mission is to provide a seamless and convenient shopping experience for our customers, offering a wide selection of digital gift cards that can be easily purchased and sent to friends and loved ones. We strive to offer the best prices, fastest delivery, and exceptional customer service, ensuring that our customers return to us time and time again."} />
-  <meta property="og:title" content={$page.data?.seo?.title || "PHK Hot Deals Ltd"} />
-  <meta property="og:site_name" content="PHK Hot Deals" />
-  <meta property="og:url" content={$page.data?.seo?.url || "https://www.phkhotdeals.com/"} />
+      "Experience a groundbreaking e-commerce revolution with Hot Deals, a subsidiary of MOZYFLEX LTD! We are  an online retailer specializing in the sale of digital gift cards, including popular brands such as iTunes, Google Play, Amazon, and more. Our platform allows customers to purchase and send digital gift cards instantly, making it the perfect solution for last-minute gifts, birthdays, holidays, and other special occasions. Our mission is to provide a seamless and convenient shopping experience for our customers, offering a wide selection of digital gift cards that can be easily purchased and sent to friends and loved ones. We strive to offer the best prices, fastest delivery, and exceptional customer service, ensuring that our customers return to us time and time again."} />
+  <meta property="og:title" content={$page.data?.seo?.title || "Hot Deals Ltd"} />
+  <meta property="og:site_name" content="Hot Deals" />
+  <meta property="og:url" content={$page.data?.seo?.url || "https://www.hotdeals.stafr.pro/"} />
   <meta property="og:image" content={$page.data?.seo?.imgUrl || "/favicon.png"} />
   <meta property="og:type" content={$page.data?.seo?.pageType || "website"} />
 
   <meta name="twitter:card" content="summary_large_images" />
   <meta name="twitter:site" content="@phkhotdeals" />
   <meta name="twitter:creator" content="@leinad7th" />
-  <meta name="twitter:url" content={$page.data?.seo?.url || "https://www.phkhotdeals.com/"} />
+  <meta name="twitter:url" content={$page.data?.seo?.url || "https://www.hotdeals.stafr.pro/"} />
   <meta
     name="twitter:description"
     content={$page.data?.seo?.description ||
-      "Experience a groundbreaking e-commerce revolution with PHK Hot Deals, a subsidiary of MOZYFLEX LTD! We are  an online retailer specializing in the sale of digital gift cards, including popular brands such as iTunes, Google Play, Amazon, and more. Our platform allows customers to purchase and send digital gift cards instantly, making it the perfect solution for last-minute gifts, birthdays, holidays, and other special occasions. Our mission is to provide a seamless and convenient shopping experience for our customers, offering a wide selection of digital gift cards that can be easily purchased and sent to friends and loved ones. We strive to offer the best prices, fastest delivery, and exceptional customer service, ensuring that our customers return to us time and time again."} />
-  <meta name="twitter:title" content={$page.data?.seo?.title || "PHK Hot Deals Ltd"} />
+      "Experience a groundbreaking e-commerce revolution with Hot Deals, a subsidiary of MOZYFLEX LTD! We are  an online retailer specializing in the sale of digital gift cards, including popular brands such as iTunes, Google Play, Amazon, and more. Our platform allows customers to purchase and send digital gift cards instantly, making it the perfect solution for last-minute gifts, birthdays, holidays, and other special occasions. Our mission is to provide a seamless and convenient shopping experience for our customers, offering a wide selection of digital gift cards that can be easily purchased and sent to friends and loved ones. We strive to offer the best prices, fastest delivery, and exceptional customer service, ensuring that our customers return to us time and time again."} />
+  <meta name="twitter:title" content={$page.data?.seo?.title || "Hot Deals Ltd"} />
   <meta name="twitter:image" content={$page.data?.seo?.imgUrl || "/favicon.png"} />
 
   <meta name="robots" content="index,follow" />

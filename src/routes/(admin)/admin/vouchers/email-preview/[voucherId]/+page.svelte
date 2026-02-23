@@ -7,7 +7,7 @@
 </script>
 
 <svelte:head>
-  <title>Email Preview for Voucher | PHKHotDeals</title>
+  <title>Email Preview for Voucher | HotDeals</title>
   <meta name="description" content="Create Voucher Codes ahead that will get sent to the customers when purchases are made." />
 </svelte:head>
 

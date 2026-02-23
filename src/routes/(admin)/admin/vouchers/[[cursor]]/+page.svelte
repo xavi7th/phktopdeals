@@ -29,7 +29,7 @@
 </script>
 
 <svelte:head>
-  <title>Create Voucher Codes for Products | PHKHotDeals</title>
+  <title>Create Voucher Codes for Products | HotDeals</title>
   <meta name="description" content="Create Voucher Codes ahead that will get sent to the customers when purchases are made." />
 </svelte:head>
 

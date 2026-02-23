@@ -55,7 +55,7 @@
 {/if}
 
 <svelte:head>
-  <title>Top Up Wallet | PHKHotDeals</title>
+  <title>Top Up Wallet | HotDeals</title>
   <meta name="description" content="Top up your wallet in your favorite currency or bank transfer to ensure seamless transactions when making purchases." />
 </svelte:head>
 

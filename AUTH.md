@@ -68,7 +68,17 @@ return [
 
   'allowed_methods' => ['*'],
 
-  'allowed_origins' => ['localhost', 'phkhotdeals.com', 'localhost:5179'],
+  'allowed_origins' => array_merge(
+      ['http://localhost'],
+      array_map(
+          function ($domain) {
+            $domain = trim($domain);
+            $isLocal = str_starts_with($domain, 'localhost') || str_starts_with($domain, '127.0.0.');
+            return ($isLocal ? 'http://' : 'https://') . $domain;
+          },
+          explode(',', env('SANCTUM_STATEFUL_DOMAINS', ''))
+      )
+  ),
 
   'allowed_origins_patterns' => [],
 
@@ -109,9 +119,9 @@ SESSION_DOMAIN=.localhost # this is also very important when you are using subdo
 PUBLIC_VITE_BASE_DOMAIN="http://localhost/"
 PUBLIC_VITE_BASE_API="http://localhost/api/v1/"
 
-VITE_APP_NAME="PHKHotDeals"
-VITE_SESSION_NAME="phkhotdeals_session"
-VITE_AUTH_COOKIE_NAME="phkhotdeals_jwt_cookie"
+VITE_APP_NAME="HotDeals"
+VITE_SESSION_NAME="hotdeals_session"
+VITE_AUTH_COOKIE_NAME="hotdeals_jwt_cookie"
 VITE_LOGIN_PATH="/auth/login/"
 VITE_LOGOUT_PATH="/auth/logout/"
 ```

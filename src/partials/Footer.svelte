@@ -105,7 +105,7 @@
           <p>
             <a
               class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:text-gray-200 focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200"
-              href="mailto:hello@phkhotdeals.com">
+              href="mailto:hello@hotdeals.stafr.pro">
               Careers
             </a>
             <span class="ms-1 inline-block rounded-lg bg-blue-700 px-2 py-1 text-xs text-white">We're hiring</span>
