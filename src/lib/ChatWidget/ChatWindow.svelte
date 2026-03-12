@@ -3,18 +3,63 @@
 	import { chatStore, messages } from '$lib/ChatWidget/chatStore.js';
 	import { browser } from '$app/environment';
 	import { onMount } from 'svelte';
+	import { animate } from 'motion';
 
 	// PHK brand colors
 	const BRAND_COLOR = '#FF6B35';
 	const SECONDARY_COLOR = '#2D3436';
+	const ANIMATION_DURATION = 0.5; // 500ms
 
 	let shouldMount = $state(false);
 	let messagesContainer;
 	let inputValue = $state('');
+	let chatWindowElement;
+	let isAnimating = $state(false);
 
 	// Mount after hydration to avoid SSR issues
 	onMount(() => {
 		shouldMount = true;
+	});
+
+	// Animate open/close
+	$effect(() => {
+		if (!browser || !chatWindowElement || isAnimating) return;
+
+		if ($chatStore.isOpen) {
+			// Animate in
+			isAnimating = true;
+			animate(
+				chatWindowElement,
+				{
+					opacity: [0, 1],
+					scale: [0.9, 1],
+					y: [20, 0]
+				},
+				{
+					duration: ANIMATION_DURATION,
+					easing: 'ease-out'
+				}
+			).finished.then(() => {
+				isAnimating = false;
+			});
+		} else {
+			// Animate out
+			isAnimating = true;
+			animate(
+				chatWindowElement,
+				{
+					opacity: [1, 0],
+					scale: [1, 0.9],
+					y: [0, 20]
+				},
+				{
+					duration: ANIMATION_DURATION,
+					easing: 'ease-in'
+				}
+			).finished.then(() => {
+				isAnimating = false;
+			});
+		}
 	});
 
 	// Auto-scroll to bottom when new messages arrive
@@ -68,6 +113,7 @@
 <Portal {shouldMount}>
 	{#if $chatStore.isOpen}
 		<div
+			bind:this={chatWindowElement}
 			class="chat-window"
 			style="--brand-color: {BRAND_COLOR}; --secondary-color: {SECONDARY_COLOR}"
 			role="dialog"
