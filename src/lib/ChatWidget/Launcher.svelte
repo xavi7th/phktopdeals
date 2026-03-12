@@ -1,8 +1,8 @@
 <script>
-	import { chatStore, hasUnread, unreadCount } from '$lib/ChatWidget/chatStore.js';
+	import { chatStore, hasUnread, unreadCount } from "$lib/ChatWidget/chatStore.js";
 
 	// PHK brand color
-	const BRAND_COLOR = '#FF6B35';
+	const BRAND_COLOR = "#FF6B35";
 
 	let isHovered = $state(false);
 	let isPressed = $state(false);
@@ -12,7 +12,7 @@
 	}
 
 	function handleKeydown(event) {
-		if (event.key === 'Enter' || event.key === ' ') {
+		if (event.key === "Enter" || event.key === " ") {
 			event.preventDefault();
 			handleClick();
 		}
@@ -30,8 +30,8 @@
 	onmouseleave={() => (isHovered = false)}
 	onmousedown={() => (isPressed = true)}
 	onmouseup={() => (isPressed = false)}
-	aria-label={$hasUnread ? `Open chat, ${$unreadCount} unread messages` : 'Open chat'}
-	aria-expended={false}
+	aria-label={$hasUnread ? `Open chat, ${$unreadCount} unread messages` : "Open chat"}
+	aria-expanded={false}
 	type="button"
 >
 	<!-- Chat icon (when closed) -->
@@ -50,8 +50,8 @@
 
 	<!-- Unread badge -->
 	{#if $hasUnread && $unreadCount > 0}
-		<span class="unread-badge" aria-label="{$unreadCount} unread messages">
-			{$unreadCount > 9 ? '9+' : $unreadCount}
+		<span class="unread-badge" aria-label="Unread messages">
+			{$unreadCount > 9 ? "9+" : $unreadCount}
 		</span>
 	{/if}
 </button>

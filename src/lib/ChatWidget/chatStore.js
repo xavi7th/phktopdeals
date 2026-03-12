@@ -1,8 +1,8 @@
-import { writable, derived, get } from 'svelte/store';
-import { browser } from '$app/environment';
+import { writable, derived, get } from "svelte/store";
+import { browser } from "$app/environment";
 
-const STORAGE_KEY = 'phk-chat-widget-state';
-const BROADCAST_CHANNEL_NAME = 'phk-chat-widget-sync';
+const STORAGE_KEY = "phk-chat-widget-state";
+const BROADCAST_CHANNEL_NAME = "phk-chat-widget-sync";
 
 function createChatStore() {
 	// Initial state
@@ -23,7 +23,7 @@ function createChatStore() {
 				return { ...defaultState, ...parsed };
 			}
 		} catch (e) {
-			console.warn('Failed to load chat state from storage:', e);
+			console.warn("Failed to load chat state from storage:", e);
 		}
 		return defaultState;
 	}
@@ -42,13 +42,13 @@ function createChatStore() {
 			broadcastChannel = new BroadcastChannel(BROADCAST_CHANNEL_NAME);
 			broadcastChannel.onmessage = (event) => {
 				const { type, payload } = event.data;
-				if (type === 'STATE_SYNC') {
+				if (type === "STATE_SYNC") {
 					// Update store with state from another tab
 					set(payload);
 				}
 			};
 		} catch (e) {
-			console.warn('BroadcastChannel not supported:', e);
+			console.warn("BroadcastChannel not supported:", e);
 		}
 	}
 
@@ -58,7 +58,7 @@ function createChatStore() {
 		try {
 			sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 		} catch (e) {
-			console.warn('Failed to save chat state to storage:', e);
+			console.warn("Failed to save chat state to storage:", e);
 		}
 	}
 
@@ -67,12 +67,18 @@ function createChatStore() {
 		if (!browser || !broadcastChannel) return;
 		const currentState = get({ subscribe });
 		broadcastChannel.postMessage({
-			type: 'STATE_SYNC',
+			type: "STATE_SYNC",
 			payload: currentState,
 		});
 	}
 
-	// Initialize on client side
+	// Helper to persist and broadcast state
+	function persistAndBroadcast(state) {
+		saveToStorage(state);
+		broadcastState();
+	}
+
+	// Initialize BroadcastChannel
 	if (browser) {
 		initBroadcastChannel();
 	}
@@ -81,8 +87,7 @@ function createChatStore() {
 	function open() {
 		update((state) => {
 			const newState = { ...state, isOpen: true };
-			saveToStorage(newState);
-			broadcastState();
+			persistAndBroadcast(newState);
 			return newState;
 		});
 	}
@@ -90,8 +95,7 @@ function createChatStore() {
 	function close() {
 		update((state) => {
 			const newState = { ...state, isOpen: false };
-			saveToStorage(newState);
-			broadcastState();
+			persistAndBroadcast(newState);
 			return newState;
 		});
 	}
@@ -99,8 +103,7 @@ function createChatStore() {
 	function toggle() {
 		update((state) => {
 			const newState = { ...state, isOpen: !state.isOpen };
-			saveToStorage(newState);
-			broadcastState();
+			persistAndBroadcast(newState);
 			return newState;
 		});
 	}
@@ -108,8 +111,7 @@ function createChatStore() {
 	function setUnread(hasUnread, count = 0) {
 		update((state) => {
 			const newState = { ...state, hasUnread: hasUnread, unreadCount: count };
-			saveToStorage(newState);
-			broadcastState();
+			persistAndBroadcast(newState);
 			return newState;
 		});
 	}
@@ -120,8 +122,7 @@ function createChatStore() {
 				...state,
 				messages: [...state.messages, message],
 			};
-			saveToStorage(newState);
-			broadcastState();
+			persistAndBroadcast(newState);
 			return newState;
 		});
 	}
@@ -129,15 +130,9 @@ function createChatStore() {
 	function clearMessages() {
 		update((state) => {
 			const newState = { ...state, messages: [] };
-			saveToStorage(newState);
-			broadcastState();
+			persistAndBroadcast(newState);
 			return newState;
 		});
-	}
-
-	// Initialize BroadcastChannel
-	if (browser) {
-		initBroadcastChannel();
 	}
 
 	return {
