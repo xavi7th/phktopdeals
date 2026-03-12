@@ -9,9 +9,6 @@
   let { data, children } = $props();
 
   const { admin_routes, user } = data;
-
-  $inspect(data);
-
 </script>
 
 <section class="dark:bg-neutral-900">

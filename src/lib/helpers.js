@@ -337,9 +337,9 @@ export async function api({ toBaseDomain, resource, event, method, data, logResp
 
     const rsp = await response?.clone();
 
-    if (rsp?.status === 500) {
+    /*if (rsp?.status === 500) {
       error(423, await rsp?.text());
-    }
+    }*/
 
     console.error({ status: rsp?.status, body: [205, 204].includes(rsp?.status) ? null : await rsp?.text() }, "\n\n");
   }

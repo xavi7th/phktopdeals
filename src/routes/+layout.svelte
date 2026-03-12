@@ -18,11 +18,8 @@
 
   afterNavigate(async () => {
     try {
-      // setTimeout(() => window.HSStaticMethods?.autoInit(), 1500);
-
-      // await tick();
-
       let prelineInit = setInterval(() => {
+        // @ts-ignore
         window?.HSStaticMethods?.autoInit();
         clearInterval(prelineInit);
 

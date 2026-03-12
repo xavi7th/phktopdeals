@@ -49,7 +49,6 @@
           el.element.on("close", () => dispatch("close"));
 
           clearInterval(modalInt);
-          console.log(name + " modals initialized.....");
 
           return;
         }
