@@ -1,11 +1,23 @@
 <script>
 	import { chatStore, hasUnread, unreadCount } from "$lib/ChatWidget/chatStore.js";
+	import { onMount } from "svelte";
 
 	// PHK brand color
 	const BRAND_COLOR = "#FF6B35";
+	const LAUNCHER_DELAY_MS = 3000; // 3 seconds
 
+	let isVisible = $state(false);
 	let isHovered = $state(false);
 	let isPressed = $state(false);
+
+	onMount(() => {
+		// Delay showing the launcher
+		const timer = setTimeout(() => {
+			isVisible = true;
+		}, LAUNCHER_DELAY_MS);
+
+		return () => clearTimeout(timer);
+	});
 
 	function handleClick() {
 		chatStore.toggle();
@@ -19,6 +31,7 @@
 	}
 </script>
 
+{#if isVisible}
 <button
 	class="chat-launcher"
 	class:is-hovered={isHovered}
@@ -55,6 +68,7 @@
 		</span>
 	{/if}
 </button>
+{/if}
 
 <style>
 	.chat-launcher {
