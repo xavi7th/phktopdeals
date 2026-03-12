@@ -86,7 +86,7 @@ function createChatStore() {
 	// Actions
 	function open() {
 		update((state) => {
-			const newState = { ...state, isOpen: true };
+			const newState = { ...state, isOpen: true, hasUnread: false, unreadCount: 0 };
 			persistAndBroadcast(newState);
 			return newState;
 		});
@@ -118,9 +118,14 @@ function createChatStore() {
 
 	function addMessage(message) {
 		update((state) => {
+			const newMessages = [...state.messages, message];
+			// If message is from bot and chat is closed, mark as unread
+			const shouldSetUnread = message.sender === "bot" && !state.isOpen;
 			const newState = {
 				...state,
-				messages: [...state.messages, message],
+				messages: newMessages,
+				hasUnread: shouldSetUnread ? true : state.hasUnread,
+				unreadCount: shouldSetUnread ? state.unreadCount + 1 : state.unreadCount,
 			};
 			persistAndBroadcast(newState);
 			return newState;
