@@ -6,6 +6,7 @@
   import { afterNavigate } from "$app/navigation";
   import Toast from "$lib/Components/Toast.svelte";
   import { getFlash } from "sveltekit-flash-message";
+  import ChatWidget from "$lib/ChatWidget/ChatWidget.svelte";
 
   import "../app.scss";
   import "swiper/css";
@@ -13,6 +14,12 @@
   import "swiper/css/pagination";
 
   let { children } = $props();
+  let ChatWidgetComponent = $state(null);
+
+  onMount(async () => {
+    // Lazy load ChatWidget after initial page load
+    ChatWidgetComponent = ChatWidget;
+  });
 
   const flash = getFlash(page);
 
@@ -88,3 +95,7 @@
 {/if}
 
 {@render children()}
+
+{#if ChatWidgetComponent}
+  <svelte:component this={ChatWidgetComponent} />
+{/if}
