@@ -2,11 +2,8 @@ import { api } from "$lib/helpers";
 
 export async function load(event) {
   const fetchUserOrders = async () => {
-    let url = "manage/purchase-invoices";
-
-    if (event.params.cursor) {
-      url += "?cursor=" + event.params.cursor;
-    }
+    const cursor = event.url.searchParams.get("cursor");
+    const url = cursor ? `manage/purchase-invoices?cursor=${cursor}` : "manage/purchase-invoices";
 
     const res = await api({
       method: "get",

@@ -2,17 +2,14 @@ import { api } from "$lib/helpers";
 
 export async function load(event) {
   const fetchPaymentTransactions = async () => {
+    const cursor = event.url.searchParams.get("cursor");
+    const search = event.url.searchParams.get("search");
+
     let url = "transactions";
-
-    if (event.params.cursor) {
-      url += "?cursor=" + event.params.cursor;
-    }
-
-    if (event.params.cursor && event.url.searchParams.get("search")) {
-      url += "&trxref=" + event.url.searchParams.get("search");
-    } else if (!event.params.cursor && event.url.searchParams.get("search")) {
-      url += "?trxref=" + event.url.searchParams.get("search");
-    }
+    const params = [];
+    if (cursor) params.push(`cursor=${cursor}`);
+    if (search) params.push(`trxref=${search}`);
+    if (params.length > 0) url += "?" + params.join("&");
 
     const res = await api({
       method: "get",

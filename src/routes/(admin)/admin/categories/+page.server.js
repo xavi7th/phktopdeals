@@ -7,10 +7,13 @@ import { fail, setError, superValidate } from "sveltekit-superforms";
 export async function load(event) {
   const form = await superValidate(arktype(brandSchema, { defaults: brandDefaults }));
 
+  const cursor = event.url.searchParams.get("cursor");
+
   const fetchProductCategories = async () => {
+    const url = cursor ? `product-categories?cursor=${cursor}` : "product-categories";
     const res = await api({
       method: "get",
-      resource: "product-categories",
+      resource: url,
       event,
     });
 

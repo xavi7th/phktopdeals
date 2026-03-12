@@ -5,6 +5,17 @@
 
   /** @type { { basePageUrl: string;  total?: number; items_count?: number; next_page_cursor?: string; prev_page_cursor?: string; } } */
   export let navData;
+
+  // Build new search params, excluding existing cursor to avoid duplicates
+  function buildSearchParams(excludeCursor = false) {
+    const params = new URLSearchParams();
+    for (const [key, value] of $page.url.searchParams) {
+      if (excludeCursor && key === "cursor") continue;
+      params.append(key, value);
+    }
+    const str = params.toString();
+    return str ? "?" + str : "";
+  }
 </script>
 
 <div class="mt-4 flex items-center justify-end gap-x-4 py-4 md:mt-0 dark:border-neutral-700">
@@ -35,7 +46,7 @@
   <div>
     <div class="inline-flex gap-x-2">
       <a
-        href={`${navData.basePageUrl}/${navData.prev_page_cursor || "#"}${$page.url.search}`}
+        href={`${navData.basePageUrl}?cursor=${navData.prev_page_cursor || ""}${buildSearchParams(true)}`}
         class="inline-flex items-center gap-x-2 rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-50 focus:bg-gray-50 focus:outline-none dark:border-neutral-700 dark:bg-transparent dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800 {!navData.prev_page_cursor
           ? 'pointer-events-none opacity-50'
           : ''}">
@@ -44,7 +55,7 @@
       </a>
 
       <a
-        href={`${navData.basePageUrl}/${navData.next_page_cursor || "#"}${$page.url.search}`}
+        href={`${navData.basePageUrl}?cursor=${navData.next_page_cursor || ""}${buildSearchParams(true)}`}
         class="inline-flex items-center gap-x-2 rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-50 focus:bg-gray-50 focus:outline-none dark:border-neutral-700 dark:bg-transparent dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800 {!navData.next_page_cursor
           ? 'pointer-events-none opacity-50'
           : ''}">

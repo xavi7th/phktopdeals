@@ -8,10 +8,13 @@ import { message, superValidate, setError, fail } from "sveltekit-superforms";
 export async function load(event) {
   const form = await superValidate(arktype(VoucherCodeSchema, { defaults: VoucherCodeDefaults }));
 
+  const cursor = event.url.searchParams.get("cursor");
+
   const fetchVoucherCodes = async () => {
+    const url = cursor ? `voucher-codes?cursor=${cursor}` : "voucher-codes";
     const res = await api({
       method: "get",
-      resource: "voucher-codes?cursor=" + event.params.cursor,
+      resource: url,
       event,
     });
     return await res?.json();

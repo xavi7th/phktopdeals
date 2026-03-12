@@ -9,11 +9,8 @@ export async function load(event) {
   const form = await superValidate(arktype(sliderSchema, { defaults: sliderDefaults }));
 
   const fetchSliders = async () => {
-    let url = "slideshows";
-
-    if (event.params.cursor) {
-      url += "?cursor=" + event.params.cursor;
-    }
+    const cursor = event.url.searchParams.get("cursor");
+    const url = cursor ? `slideshows?cursor=${cursor}` : "slideshows";
 
     const res = await api({
       method: "get",

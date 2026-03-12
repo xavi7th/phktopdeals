@@ -7,10 +7,13 @@ import { redirect, setFlash } from "sveltekit-flash-message/server";
 export async function load(event) {
   const form = await superValidate(arktype(brandSchema, { defaults: brandDefaults }));
 
+  const cursor = event.url.searchParams.get("cursor");
+
   const fetchProductBrands = async () => {
+    const url = cursor ? `product-brands?cursor=${cursor}` : "product-brands";
     const res = await api({
       method: "get",
-      resource: "product-brands",
+      resource: url,
       event,
     });
 
