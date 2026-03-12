@@ -50,7 +50,7 @@ export async function getData(event, productDefaults) {
   const fetchProductBrands = async () => {
     const res = await api({
       method: "get",
-      resource: "product-brands",
+      resource: "product-brands?all=true",
       event,
     });
     return await res?.json();
