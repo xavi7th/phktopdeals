@@ -72,10 +72,6 @@
 		}
 	});
 
-	function handleClose() {
-		chatStore.close();
-	}
-
 	function handleMinimize() {
 		chatStore.close();
 	}
@@ -105,8 +101,8 @@
 	}
 
 	function handleKeydown(event) {
-		if (event.key === 'Escape') {
-			handleClose();
+		if (event.key === "Escape") {
+			handleMinimize();
 		}
 	}
 </script>
