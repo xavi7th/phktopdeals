@@ -1,29 +1,30 @@
 <script>
-	import Portal from '$lib/Components/Portal.svelte';
-	import { chatStore, messages } from '$lib/ChatWidget/chatStore.js';
-	import { browser } from '$app/environment';
-	import { onMount } from 'svelte';
-	import { animate } from 'motion';
+	import Portal from "$lib/Components/Portal.svelte";
+	import { chatStore, messages } from "$lib/ChatWidget/chatStore.js";
+	import { browser } from "$app/environment";
+	import { onMount } from "svelte";
+	import { animate } from "motion";
 
 	// PHK brand colors
-	const BRAND_COLOR = '#FF6B35';
-	const SECONDARY_COLOR = '#2D3436';
+	const BRAND_COLOR = "#FF6B35";
+	const SECONDARY_COLOR = "#2D3436";
 	const ANIMATION_DURATION = 0.5; // 500ms
 
 	let shouldMount = $state(false);
 	let messagesContainer;
-	let inputValue = $state('');
+	let inputValue = $state("");
 	let chatWindowElement;
 	let isAnimating = $state(false);
+	let messageInput;
 
 	// Mount after hydration to avoid SSR issues
 	onMount(() => {
 		shouldMount = true;
 	});
 
-	// Animate open/close
+	// Animate open/close and focus input
 	$effect(() => {
-		if (!browser || !chatWindowElement || isAnimating) return;
+		if (!browser || isAnimating) return;
 
 		if ($chatStore.isOpen) {
 			// Animate in
@@ -37,10 +38,12 @@
 				},
 				{
 					duration: ANIMATION_DURATION,
-					easing: 'ease-out'
+					easing: "ease-out"
 				}
 			).finished.then(() => {
 				isAnimating = false;
+				// Focus input when chat opens
+				messageInput?.focus();
 			});
 		} else {
 			// Animate out
@@ -54,7 +57,7 @@
 				},
 				{
 					duration: ANIMATION_DURATION,
-					easing: 'ease-in'
+					easing: "ease-in"
 				}
 			).finished.then(() => {
 				isAnimating = false;
@@ -163,6 +166,7 @@
 			<!-- Input -->
 			<form class="input-area" onsubmit={handleSubmit}>
 				<input
+					bind:this={messageInput}
 					type="text"
 					class="message-input"
 					placeholder="Type your message..."
