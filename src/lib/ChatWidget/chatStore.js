@@ -53,7 +53,7 @@ function createChatStore() {
 	}
 
 	// Save to sessionStorage
-	function saveToStorage(state: typeof defaultState) {
+	function saveToStorage(state) {
 		if (!browser) return;
 		try {
 			sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state));
@@ -105,7 +105,7 @@ function createChatStore() {
 		});
 	}
 
-	function setUnread(hasUnread: boolean, count = 0) {
+	function setUnread(hasUnread, count = 0) {
 		update((state) => {
 			const newState = { ...state, hasUnread: hasUnread, unreadCount: count };
 			saveToStorage(newState);
@@ -114,7 +114,7 @@ function createChatStore() {
 		});
 	}
 
-	function addMessage(message: { id: string; text: string; sender: 'user' | 'bot'; timestamp: number }) {
+	function addMessage(message) {
 		update((state) => {
 			const newState = {
 				...state,
