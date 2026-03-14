@@ -1,6 +1,6 @@
 <script>
   /** @type {"sending" | "sent" | "delivered" | "read"} */
-  export let status = "sending";
+  let { status = "sending" } = $props();
 
   const STATUS_ICONS = {
     sending: "clock",
