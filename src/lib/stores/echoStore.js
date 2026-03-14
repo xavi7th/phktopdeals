@@ -1,6 +1,6 @@
 import { writable, get } from "svelte/store";
 import { getEchoClient, disconnectEcho } from "./echoClient.js";
-import type { ChatMessage } from "$lib/types.d";
+import type { ChatMessage } from "$lib/types.d.ts";
 
 // Connection state
 export const connectionStatus = writable("disconnected");

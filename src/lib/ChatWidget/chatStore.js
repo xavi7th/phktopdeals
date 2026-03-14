@@ -1,154 +1,224 @@
 import { writable, derived, get } from "svelte/store";
 import { browser } from "$app/environment";
+import { getEchoClient, disconnectEcho } from "$lib/stores/echoClient.js";
+import * as echoStore from "$lib/stores/echoStore.js";
 
 const STORAGE_KEY = "phk-chat-widget-state";
 const BROADCAST_CHANNEL_NAME = "phk-chat-widget-sync";
 
 function createChatStore() {
-	// Initial state
-	const defaultState = {
-		isOpen: false,
-		hasUnread: false,
-		unreadCount: 0,
-		messages: [],
-	};
+  // Initial state
+  const defaultState = {
+    isOpen: false,
+    hasUnread: false,
+    unreadCount: 0,
+    messages: [],
+  };
 
-	// Load from sessionStorage
-	function loadFromStorage() {
-		if (!browser) return defaultState;
-		try {
-			const stored = sessionStorage.getItem(STORAGE_KEY);
-			if (stored) {
-				const parsed = JSON.parse(stored);
-				return { ...defaultState, ...parsed };
-			}
-		} catch (e) {
-			console.warn("Failed to load chat state from storage:", e);
-		}
-		return defaultState;
-	}
+  // Load from sessionStorage
+  function loadFromStorage() {
+    if (!browser) return defaultState;
+    try {
+      const stored = sessionStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        return { ...defaultState, ...parsed };
+      }
+    } catch (e) {
+      console.warn("Failed to load chat state from storage:", e);
+    }
+    return defaultState;
+  }
 
-	// Create the store
-	const initialState = loadFromStorage();
-	const { subscribe, set, update } = writable(initialState);
+  // Create the store
+  const initialState = loadFromStorage();
+  const { subscribe, set, update } = writable(initialState);
 
-	// BroadcastChannel for multi-tab sync
-	let broadcastChannel = null;
+  // BroadcastChannel for multi-tab sync
+  let broadcastChannel = null;
 
-	function initBroadcastChannel() {
-		if (!browser) return;
+  function initBroadcastChannel() {
+    if (!browser) return;
 
-		try {
-			broadcastChannel = new BroadcastChannel(BROADCAST_CHANNEL_NAME);
-			broadcastChannel.onmessage = (event) => {
-				const { type, payload } = event.data;
-				if (type === "STATE_SYNC") {
-					// Update store with state from another tab
-					set(payload);
-				}
-			};
-		} catch (e) {
-			console.warn("BroadcastChannel not supported:", e);
-		}
-	}
+    try {
+      broadcastChannel = new BroadcastChannel(BROADCAST_CHANNEL_NAME);
+      broadcastChannel.onmessage = (event) => {
+        const { type, payload } = event.data;
+        if (type === "STATE_SYNC") {
+          // Update store with state from another tab
+          set(payload);
+        }
+      };
+    } catch (e) {
+      console.warn("BroadcastChannel not supported:", e);
+    }
+  }
 
-	// Save to sessionStorage
-	function saveToStorage(state) {
-		if (!browser) return;
-		try {
-			sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-		} catch (e) {
-			console.warn("Failed to save chat state to storage:", e);
-		}
-	}
+  // Save to sessionStorage
+  function saveToStorage(state) {
+    if (!browser) return;
+    try {
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    } catch (e) {
+      console.warn("Failed to save chat state to storage:", e);
+    }
+  }
 
-	// Broadcast state to other tabs
-	function broadcastState() {
-		if (!browser || !broadcastChannel) return;
-		const currentState = get({ subscribe });
-		broadcastChannel.postMessage({
-			type: "STATE_SYNC",
-			payload: currentState,
-		});
-	}
+  // Broadcast state to other tabs
+  function broadcastState() {
+    if (!browser || !broadcastChannel) return;
+    const currentState = get({ subscribe });
+    broadcastChannel.postMessage({
+      type: "STATE_SYNC",
+      payload: currentState,
+    });
+  }
 
-	// Helper to persist and broadcast state
-	function persistAndBroadcast(state) {
-		saveToStorage(state);
-		broadcastState();
-	}
+  // Helper to persist and broadcast state
+  function persistAndBroadcast(state) {
+    saveToStorage(state);
+    broadcastState();
+  }
 
-	// Initialize BroadcastChannel
-	if (browser) {
-		initBroadcastChannel();
-	}
+  // Initialize BroadcastChannel
+  if (browser) {
+    initBroadcastChannel();
+  }
 
-	// Actions
-	function open() {
-		update((state) => {
-			const newState = { ...state, isOpen: true, hasUnread: false, unreadCount: 0 };
-			persistAndBroadcast(newState);
-			return newState;
-		});
-	}
+  // Actions
+  function open() {
+    update((state) => {
+      const newState = { ...state, isOpen: true, hasUnread: false, unreadCount: 0 };
+      persistAndBroadcast(newState);
+      return newState;
+    });
+  }
 
-	function close() {
-		update((state) => {
-			const newState = { ...state, isOpen: false };
-			persistAndBroadcast(newState);
-			return newState;
-		});
-	}
+  function close() {
+    update((state) => {
+      const newState = { ...state, isOpen: false };
+      persistAndBroadcast(newState);
+      return newState;
+    });
+  }
 
-	function toggle() {
-		update((state) => {
-			const newState = { ...state, isOpen: !state.isOpen };
-			persistAndBroadcast(newState);
-			return newState;
-		});
-	}
+  function toggle() {
+    update((state) => {
+      const newState = { ...state, isOpen: !state.isOpen };
+      persistAndBroadcast(newState);
+      return newState;
+    });
+  }
 
-	function setUnread(hasUnread, count = 0) {
-		update((state) => {
-			const newState = { ...state, hasUnread: hasUnread, unreadCount: count };
-			persistAndBroadcast(newState);
-			return newState;
-		});
-	}
+  function setUnread(hasUnread, count = 0) {
+    update((state) => {
+      const newState = { ...state, hasUnread: hasUnread, unreadCount: count };
+      persistAndBroadcast(newState);
+      return newState;
+    });
+  }
 
-	function addMessage(message) {
-		update((state) => {
-			const newMessages = [...state.messages, message];
-			// If message is from bot and chat is closed, mark as unread
-			const shouldSetUnread = message.sender === "bot" && !state.isOpen;
-			const newState = {
-				...state,
-				messages: newMessages,
-				hasUnread: shouldSetUnread ? true : state.hasUnread,
-				unreadCount: shouldSetUnread ? state.unreadCount + 1 : state.unreadCount,
-			};
-			persistAndBroadcast(newState);
-			return newState;
-		});
-	}
+  function addMessage(message) {
+    update((state) => {
+      const newMessages = [...state.messages, message];
+      // If message is from bot and chat is closed, mark as unread
+      const shouldSetUnread = message.sender === "bot" && !state.isOpen;
+      const newState = {
+        ...state,
+        messages: newMessages,
+        hasUnread: shouldSetUnread ? true : state.hasUnread,
+        unreadCount: shouldSetUnread ? state.unreadCount + 1 : state.unreadCount,
+      };
+      persistAndBroadcast(newState);
+      return newState;
+    });
+  }
 
-	function clearMessages() {
-		update((state) => {
-			const newState = { ...state, messages: [] };
-			persistAndBroadcast(newState);
-			return newState;
-		});
-	}
+  function clearMessages() {
+    update((state) => {
+      const newState = { ...state, messages: [] };
+      persistAndBroadcast(newState);
+      return newState;
+    });
+  }
 
-	return {
-		subscribe,
-		open,
-		close,
-		toggle,
-		setUnread,
-		addMessage,
-		clearMessages,
-	};
+  // WebSocket connection state
+  let echoConnection = null;
+  let currentChannel = null;
+  let messageQueue = [];
+
+  // WebSocket methods
+  async function initEcho() {
+    if (!browser) return;
+
+    try {
+      echoConnection = getEchoClient();
+      await echoConnection.connect();
+      console.log("Echo connected");
+    } catch (error) {
+      console.error("Failed to connect Echo:", error);
+    }
+  }
+
+  function subscribe(conversationId) {
+    if (!browser || !echoConnection) return;
+
+    currentChannel = `chat.${conversationId}`;
+    echoConnection.private(currentChannel)
+      .listen("MessageSent", (data) => {
+        addMessage({
+          id: data.message.id,
+          content: data.message.content,
+          sender: data.message.sender_type,
+          sender_id: data.message.sender_id,
+          created_at: data.message.created_at,
+        });
+      })
+      .listen("MessageRead", (data) => {
+        update((state) => {
+          const newMessages = state.messages.map((msg) =>
+            msg.id === data.message_id ? { ...msg, read_at: data.read_at } : msg
+          );
+          return { ...state, messages: newMessages };
+        });
+      });
+  }
+
+  function disconnect() {
+    if (!browser) return;
+
+    disconnectEcho();
+    echoConnection = null;
+    currentChannel = null;
+  }
+
+  function flushQueue(sendFn) {
+    if (messageQueue.length === 0) return;
+
+    for (const message of messageQueue) {
+      sendFn(message);
+    }
+    messageQueue = [];
+  }
+
+  function queueMessage(message) {
+    messageQueue.push(message);
+  }
+
+  return {
+    subscribe,
+    open,
+    close,
+    toggle,
+    setUnread,
+    addMessage,
+    clearMessages,
+    initEcho,
+    subscribeToChannel: subscribe,
+    disconnect,
+    flushQueue,
+    queueMessage,
+  };
 }
 
 export const chatStore = createChatStore();
