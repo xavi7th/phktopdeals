@@ -12,14 +12,14 @@ const REVERB_CONFIG = {
 
 let echoClient = null;
 
-export const getEchoClient = () => {
+export const getEchoClient = (): Echo => {
   if (!echoClient) {
     echoClient = new Echo(REVERB_CONFIG);
   }
   return echoClient;
 };
 
-export const disconnectEcho = () => {
+export const disconnectEcho = (): void => {
   if (echoClient) {
     echoClient.disconnect();
     echoClient = null;

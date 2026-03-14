@@ -1,15 +1,6 @@
 import { writable, get } from "svelte/store";
 import * as echoStore from "./echoStore.js";
-
-interface ChatMessage {
-  id?: string;
-  conversation_id?: string;
-  content: string;
-  sender_type?: string;
-  sender_id?: string;
-  created_at?: string;
-  read_at?: string;
-}
+import type { ChatMessage } from "$lib/types.d";
 
 // Chat state
 export const messages = writable<ChatMessage[]>([]);

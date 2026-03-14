@@ -9,6 +9,8 @@ export type ApiParams = {
   toBaseDomain?: boolean;
   toJSON?: boolean;
   logResponse?: boolean;
+  /** If true, returns undefined instead of mock error response when API is unreachable */
+  ignoreErrors?: boolean;
   data?: Record<string, unknown> | FormData | array | object | null;
 };
 export type ApiHeaders = {
@@ -177,3 +179,12 @@ export type Slider = {
   img_url: string;
   size: string;
 };
+export interface ChatMessage {
+  id?: string;
+  conversation_id?: string;
+  content: string;
+  sender_type?: string;
+  sender_id?: string;
+  created_at?: string;
+  read_at?: string;
+}

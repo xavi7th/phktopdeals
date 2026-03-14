@@ -1,15 +1,6 @@
 import { writable, get } from "svelte/store";
 import { getEchoClient, disconnectEcho } from "./echoClient.js";
-
-interface ChatMessage {
-  id?: string;
-  conversation_id?: string;
-  content: string;
-  sender_type?: string;
-  sender_id?: string;
-  created_at?: string;
-  read_at?: string;
-}
+import type { ChatMessage } from "$lib/types.d";
 
 // Connection state
 export const connectionStatus = writable("disconnected");
@@ -19,7 +10,7 @@ export const reconnectAttempts = writable(0);
 export const messageQueue = writable<ChatMessage[]>([]);
 
 // Actions
-export const connect = async () => {
+export const connect = async (): Promise<void> => {
   connectionStatus.set("connecting");
   reconnectAttempts.set(0);
 
@@ -35,18 +26,18 @@ export const connect = async () => {
   }
 };
 
-export const disconnect = () => {
+export const disconnect = (): void => {
   disconnectEcho();
   connectionStatus.set("disconnected");
   messageQueue.set([]);
 };
 
-export const subscribe = (channel: string, callback: (data: any) => void): void => {
+export const subscribe = (channel: string, callback: (data: ChatMessage) => void): void => {
   const echo = getEchoClient();
   if (echo) {
     echo.private(channel)
       .listen(callback)
-      .error((err: any) => {
+      .error((err: Error) => {
         console.error("Echo subscription failed:", err);
       });
   }
