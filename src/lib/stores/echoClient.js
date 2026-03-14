@@ -1,18 +1,27 @@
-import { Echo } from 'laravel-echo';
-import Pusher from 'pusher-js';
+import Echo from "laravel-echo";
+import Pusher from "pusher-js";
 
-// Reverb configuration
-const reverbConfig = {
-  broadcaster: 'reverb',
-  key: import.meta.reverb?.app_key,
-  wsHost: import.meta.reverb?.host ?? 'ws://localhost:6001',
-  wsPort: import.meta.reverb?.port ?? 6001,
+const REVERB_CONFIG = {
+  broadcaster: "reverb",
+  key: import.meta.env.VITE_REVERB_APP_KEY,
+  wsHost: import.meta.env.VITE_REVERB_HOST ?? "ws://localhost:6001",
+  wsPort: import.meta.env.VITE_REVERB_PORT ?? 6001,
   forceTLS: false,
-  enabledTransports: ['ws'],
-});
+  enabledTransports: ["ws"],
+};
 
-const echoClient = new Echo({
-  ...reverbConfig,
-});
+let echoClient = null;
 
-export const echoClient;
+export const getEchoClient = () => {
+  if (!echoClient) {
+    echoClient = new Echo(REVERB_CONFIG);
+  }
+  return echoClient;
+};
+
+export const disconnectEcho = () => {
+  if (echoClient) {
+    echoClient.disconnect();
+    echoClient = null;
+  }
+};

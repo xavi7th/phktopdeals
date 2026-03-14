@@ -1,60 +1,66 @@
-import { writable } from 'svelte/store';
-import { echoClient } from './echoClient.js';
-import type { Message } from './types';
-import { echoStore } from './echoStore.js';
+import { writable, get } from "svelte/store";
+import * as echoStore from "./echoStore.js";
+
+interface ChatMessage {
+  id?: string;
+  conversation_id?: string;
+  content: string;
+  sender_type?: string;
+  sender_id?: string;
+  created_at?: string;
+  read_at?: string;
+}
 
 // Chat state
-export const messages = writable<Message[]>([]);
-export const conversation = writable(null);
+export const messages = writable<ChatMessage[]>([]);
+export const conversation = writable<string | null>(null);
 export const typing = writable(false);
 export const unreadCount = writable(0);
 
 // Actions
-export const initConversation = async (conversationId: string) => {
+export const initConversation = async (conversationId: string): Promise<void> => {
   conversation.set(conversationId);
   messages.set([]);
   typing.set(false);
   unreadCount.set(0);
 
   // Subscribe to conversation channel
-  echoStore.subscribe(conversationId, (data) => {
-    messages.update(msgs => [...msgs, data]);
-    unreadCount.set(msgs.length);
+  echoStore.subscribe(`chat.${conversationId}`, (data: ChatMessage) => {
+    messages.update((msgs) => [...msgs, data]);
+    unreadCount.update((count) => count + 1);
   });
 };
 
-  echoStore.on('message', (data) => {
-    messages.update(msgs => [...msgs, data]);
-    unreadCount.set(prev => unreadCount);
-  });
+export const addMessage = (message: ChatMessage): void => {
+  messages.update((msgs) => [...msgs, message]);
+  unreadCount.update((count) => count + 1);
 };
 
-  echoStore.on('message.read', (data) => {
-    const message = messages.find(m => m.id === data.message_id);
-    if (message) {
-      messages.update(msgs => (msg);
-      unreadCount.set(unreadCount);
-    }
-  });
-};
-
-export const addMessage = (message: Message) => {
-  messages.update(msgs => [...msgs, message]);
-  unreadCount.set(messages.length);
-    scrollToBottom();
-
- }
-};
-
-export const setTyping = (isTyping: boolean) => {
+export const setTyping = (isTyping: boolean): void => {
   typing.set(isTyping);
-}
+};
 
-}
+export const markAsRead = (messageId: string): void => {
+  messages.update((msgs) =>
+    msgs.map((msg) =>
+      msg.id === messageId ? { ...msg, read_at: new Date().toISOString() } : msg
+    )
+  );
+  unreadCount.set(0);
+};
 
-export const reset = () => {
+export const reset = (): void => {
   conversation.set(null);
   messages.set([]);
   typing.set(false);
   unreadCount.set(0);
+};
+
+// Export for external use
+export const getMessages = (): ChatMessage[] => {
+  return get(messages);
+};
+
+export const getConversation = (): string | null => {
+  return get(conversation);
 };
