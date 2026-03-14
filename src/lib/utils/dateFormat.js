@@ -4,7 +4,7 @@
  * @param {boolean} showUTC - Whether to show UTC timezone indicator
  * @returns {string} Formatted time string (e.g., "3:45 PM" or "3:45 PM UTC")
  */
-export function formatMessageTime(timestamp, showUTC = false) {
+export function formatMessageTime(timestamp, showUTC = false): string {
   const date = new Date(timestamp);
 
   if (isNaN(date.getTime())) {
@@ -35,7 +35,7 @@ export function formatMessageTime(timestamp, showUTC = false) {
  * @param {string | number | Date} timestamp
  * @returns {string} Formatted date string (e.g., "Today", "Yesterday", or "Mar 14")
  */
-export function formatMessageDate(timestamp) {
+export function formatMessageDate(timestamp): string {
   const date = new Date(timestamp);
   const now = new Date();
 
