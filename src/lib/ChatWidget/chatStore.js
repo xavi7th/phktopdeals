@@ -13,6 +13,8 @@ function createChatStore() {
     hasUnread: false,
     unreadCount: 0,
     messages: [],
+    conversationId: null,
+    conversationStatus: null, // 'active' | 'resolved'
   };
 
   // Load from sessionStorage
@@ -142,6 +144,14 @@ function createChatStore() {
     });
   }
 
+  function setConversation(conversationId, status = "active") {
+    update((state) => {
+      const newState = { ...state, conversationId, conversationStatus: status };
+      persistAndBroadcast(newState);
+      return newState;
+    });
+  }
+
   // WebSocket connection state
   let echoConnection = null;
   let currentChannel = null;
@@ -160,11 +170,12 @@ function createChatStore() {
     }
   }
 
-  function subscribe(conversationId) {
+  function subscribeToChannel(conversationId) {
     if (!browser || !echoConnection) return;
 
     currentChannel = `chat.${conversationId}`;
-    echoConnection.private(currentChannel)
+    echoConnection
+      .private(currentChannel)
       .listen("MessageSent", (data) => {
         addMessage({
           id: data.message.id,
@@ -176,10 +187,15 @@ function createChatStore() {
       })
       .listen("MessageRead", (data) => {
         update((state) => {
-          const newMessages = state.messages.map((msg) =>
-            msg.id === data.message_id ? { ...msg, read_at: data.read_at } : msg
-          );
+          const newMessages = state.messages.map((msg) => (msg.id === data.message_id ? { ...msg, read_at: data.read_at } : msg));
           return { ...state, messages: newMessages };
+        });
+      })
+      .listen("ConversationResolved", (data) => {
+        update((state) => {
+          const newState = { ...state, conversationStatus: "resolved" };
+          persistAndBroadcast(newState);
+          return newState;
         });
       });
   }
@@ -213,6 +229,7 @@ function createChatStore() {
     setUnread,
     addMessage,
     clearMessages,
+    setConversation,
     initEcho,
     subscribeToChannel: subscribe,
     disconnect,
@@ -228,3 +245,5 @@ export const isChatOpen = derived(chatStore, ($chat) => $chat.isOpen);
 export const hasUnread = derived(chatStore, ($chat) => $chat.hasUnread);
 export const unreadCount = derived(chatStore, ($chat) => $chat.unreadCount);
 export const messages = derived(chatStore, ($chat) => $chat.messages);
+export const conversationStatus = derived(chatStore, ($chat) => $chat.conversationStatus);
+export const conversationId = derived(chatStore, ($chat) => $chat.conversationId);

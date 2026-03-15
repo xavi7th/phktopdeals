@@ -1,11 +1,12 @@
 <script>
   import Portal from "$lib/Components/Portal.svelte";
-  import { chatStore, messages } from "$lib/ChatWidget/chatStore.js";
+  import { chatStore, messages, conversationStatus, conversationId } from "$lib/ChatWidget/chatStore.js";
   import { browser } from "$app/environment";
   import { onMount } from "svelte";
   import { animate } from "motion";
   import TypingIndicator from "./TypingIndicator.svelte";
   import MessageStatus from "./MessageStatus.svelte";
+  import RatingModal from "./RatingModal.svelte";
 
   // PHK brand colors
   const BRAND_COLOR = "#FF6B35";
@@ -20,6 +21,8 @@
   let messageInput;
   let isOtherUserTyping = $state(false);
   let messageObserver;
+  let showRatingModal = $state(false);
+  let hasSubmittedRating = $state(false);
 
   // Mount after hydration to avoid SSR issues
   onMount(() => {
@@ -40,7 +43,7 @@
           }
         });
       },
-      { threshold: 0.5 }
+      { threshold: 0.5 },
     );
 
     return () => {
@@ -100,6 +103,13 @@
     }
   });
 
+  // Show rating modal when conversation is resolved
+  $effect(() => {
+    if ($conversationStatus === "resolved" && !hasSubmittedRating) {
+      showRatingModal = true;
+    }
+  });
+
   function handleMinimize() {
     chatStore.close();
   }
@@ -132,6 +142,15 @@
     if (event.key === "Escape") {
       handleMinimize();
     }
+  }
+
+  function handleRatingClose() {
+    showRatingModal = false;
+  }
+
+  function handleRatingSubmit() {
+    hasSubmittedRating = true;
+    showRatingModal = false;
   }
 </script>
 
@@ -169,12 +188,7 @@
           </div>
         {:else}
           {#each $messages as message (message.id)}
-            <div
-              class="message"
-              class:user={message.sender === "user"}
-              class:bot={message.sender === "bot"}
-              data-message-id={message.id}
-            >
+            <div class="message" class:user={message.sender === "user"} class:bot={message.sender === "bot"} data-message-id={message.id}>
               <div class="message-bubble">
                 {message.text}
               </div>
@@ -207,6 +221,10 @@
     </div>
   {/if}
 </Portal>
+
+{#if showRatingModal && $conversationId}
+  <RatingModal conversationId={$conversationId} onclose={handleRatingClose} onsubmit={handleRatingSubmit} />
+{/if}
 
 <style>
   .chat-window {
