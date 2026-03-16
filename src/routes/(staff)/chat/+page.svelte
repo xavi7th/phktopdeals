@@ -2,13 +2,14 @@
   import { onMount } from "svelte";
   import { staffInboxStore } from "$lib/stores/staffInboxStore.js";
   import { fetchStaffInbox, fetchConversationMessages, claimConversation, transferConversation, resolveConversation, sendStaffMessage } from "$lib/api/staffApi.js";
+  import { subscribeToStaffInbox, unsubscribeFromStaffInbox } from "$lib/stores/staffInboxEvents.js";
   import QueueSidebar from "./QueueSidebar.svelte";
   import ConversationPanel from "./ConversationPanel.svelte";
   import CustomerInfoPanel from "./CustomerInfoPanel.svelte";
 
   let { data } = $props();
 
-  // Initialize store with server data
+  // Initialize store with server data and WebSocket
   onMount(() => {
     if (data.inbox) {
       staffInboxStore.setInbox(data.inbox);
@@ -16,22 +17,13 @@
     if (data.staffList) {
       staffInboxStore.setStaffList(data.staffList);
     }
-  });
 
-  // Auto-refresh inbox every 30 seconds
-  let refreshInterval;
-  onMount(() => {
-    refreshInterval = setInterval(async () => {
-      const result = await fetchStaffInbox();
-      if (result?.success && result.data) {
-        staffInboxStore.setInbox(result.data);
-      }
-    }, 30000);
+    // Subscribe to WebSocket events for real-time updates
+    subscribeToStaffInbox();
 
+    // Cleanup WebSocket on unmount
     return () => {
-      if (refreshInterval) {
-        clearInterval(refreshInterval);
-      }
+      unsubscribeFromStaffInbox();
     };
   });
 
