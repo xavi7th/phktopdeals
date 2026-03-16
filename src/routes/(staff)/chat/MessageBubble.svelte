@@ -10,9 +10,9 @@
     return sender?.type === "user" && sender?.name;
   }
 
-  // Determine if this is a staff message or customer message
-  $: isStaff = isStaffMessage(message.sender);
-  $: senderName = message.sender?.name || "Guest";
+  // Determine if this is a staff message or customer message using Svelte 5 $derived
+  let isStaff = $derived(isStaffMessage(message.sender));
+  let senderName = $derived(message.sender?.name || "Guest");
 </script>
 
 <div class="flex {isStaff ? 'justify-end' : 'justify-start'}">
