@@ -1,0 +1,63 @@
+<script>
+  import { page } from "$app/state";
+  import { staffInboxStore } from "$lib/stores/staffInboxStore.js";
+  import { togglePresence } from "$lib/api/staffApi.js";
+
+  let { data, children } = $props();
+
+  const { user } = data;
+  let isOnline = $state(true);
+
+  async function handlePresenceToggle() {
+    const newStatus = !isOnline;
+    const result = await togglePresence(newStatus);
+    if (result?.success) {
+      isOnline = newStatus;
+      staffInboxStore.setOnline(newStatus);
+    }
+  }
+</script>
+
+<div class="min-h-screen bg-gray-50 dark:bg-neutral-900">
+  <!-- Staff Header -->
+  <header class="border-b border-gray-200 bg-white dark:border-neutral-700 dark:bg-neutral-800">
+    <div class="flex items-center justify-between px-4 py-3 sm:px-6">
+      <div class="flex items-center gap-3">
+        <div class="flex h-10 w-10 items-center justify-center rounded-full bg-orange-500 font-semibold text-white">
+          {user?.name?.charAt(0).toUpperCase() || "S"}
+        </div>
+        <div>
+          <h1 class="text-lg font-semibold text-gray-900 dark:text-white">Staff Dashboard</h1>
+          <p class="text-sm text-gray-500 dark:text-gray-400">
+            {user?.name}
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <!-- Online/Offline Toggle -->
+        <button
+          onclick={handlePresenceToggle}
+          class="flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-medium transition-colors {isOnline
+            ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
+            : 'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-400'}">
+          <span class="relative flex h-2.5 w-2.5">
+            {#if isOnline}
+              <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
+            {/if}
+            <span class="relative inline-flex h-2.5 w-2.5 rounded-full {isOnline ? 'bg-green-500' : 'bg-gray-400'}"></span>
+          </span>
+          {isOnline ? "Online" : "Offline"}
+        </button>
+
+        <!-- Navigation -->
+        <a href="/" class="text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">Back to Site</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    {@render children?.()}
+  </main>
+</div>
