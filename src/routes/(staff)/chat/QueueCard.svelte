@@ -2,15 +2,27 @@
   let { conversation, isSelected = false, showClaimButton = false, onSelect = () => {}, onClaim = () => {} } = $props();
 
   let isClaiming = $state(false);
+  let showConfirm = $state(false);
 
   async function handleClaim(event) {
     event.stopPropagation();
+    showConfirm = true;
+  }
+
+  async function confirmClaim(event) {
+    event.stopPropagation();
+    showConfirm = false;
     isClaiming = true;
     try {
       await onClaim();
     } finally {
       isClaiming = false;
     }
+  }
+
+  function cancelClaim(event) {
+    event.stopPropagation();
+    showConfirm = false;
   }
 
   function formatWaitTime(minutes) {
@@ -74,13 +86,26 @@
 
       <!-- Claim Button -->
       {#if showClaimButton}
-        <button
-          type="button"
-          onclick={handleClaim}
-          disabled={isClaiming}
-          class="mt-1 rounded bg-orange-500 px-2 py-1 text-xs font-medium text-white transition-colors hover:bg-orange-600 disabled:cursor-not-allowed disabled:opacity-50">
-          {isClaiming ? "Claiming..." : "Claim"}
-        </button>
+        {#if showConfirm}
+          <!-- Confirmation Dialog -->
+          <div class="mt-1 rounded bg-orange-50 p-2 dark:bg-orange-900/20" onclick={(e) => e.stopPropagation()}>
+            <p class="mb-2 text-xs text-orange-800 dark:text-orange-200">Claim this chat?</p>
+            <div class="flex gap-1">
+              <button type="button" onclick={confirmClaim} disabled={isClaiming} class="rounded bg-orange-500 px-2 py-1 text-xs font-medium text-white hover:bg-orange-600 disabled:opacity-50">
+                {isClaiming ? "..." : "Yes"}
+              </button>
+              <button type="button" onclick={cancelClaim} class="rounded bg-gray-200 px-2 py-1 text-xs font-medium text-gray-700 hover:bg-gray-300 dark:bg-gray-600 dark:text-gray-200">No</button>
+            </div>
+          </div>
+        {:else}
+          <button
+            type="button"
+            onclick={handleClaim}
+            disabled={isClaiming}
+            class="mt-1 rounded bg-orange-500 px-2 py-1 text-xs font-medium text-white transition-colors hover:bg-orange-600 disabled:cursor-not-allowed disabled:opacity-50">
+            {isClaiming ? "Claiming..." : "Claim"}
+          </button>
+        {/if}
       {/if}
 
       <!-- Assigned To (for active chats) -->
