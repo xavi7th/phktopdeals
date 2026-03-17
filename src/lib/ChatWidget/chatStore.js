@@ -15,6 +15,12 @@ function createChatStore() {
     messages: [],
     conversationId: null,
     conversationStatus: null, // 'active' | 'resolved'
+    // AI-specific state
+    isAiTyping: false,
+    aiMessageCount: 0,
+    lastUserMessageAt: null,
+    showEscalationPrompt: false,
+    escalationReason: null,
   };
 
   // Load from sessionStorage
@@ -125,11 +131,76 @@ function createChatStore() {
       const newMessages = [...state.messages, message];
       // If message is from bot and chat is closed, mark as unread
       const shouldSetUnread = message.sender === "bot" && !state.isOpen;
+
+      // Track AI message count
+      let newAiMessageCount = state.aiMessageCount;
+      if (message.sender === "ai") {
+        newAiMessageCount++;
+      }
+
+      // Check if should trigger escalation (30 message cap)
+      const shouldEscalate = newAiMessageCount >= 30;
+
       const newState = {
         ...state,
         messages: newMessages,
         hasUnread: shouldSetUnread ? true : state.hasUnread,
         unreadCount: shouldSetUnread ? state.unreadCount + 1 : state.unreadCount,
+        aiMessageCount: newAiMessageCount,
+        showEscalationPrompt: shouldEscalate ? true : state.showEscalationPrompt,
+        isAiTyping: message.sender === "ai" ? false : state.isAiTyping,
+      };
+      persistAndBroadcast(newState);
+      return newState;
+    });
+  }
+
+  // AI-specific actions
+  function setAiTyping(typing) {
+    update((state) => {
+      const newState = { ...state, isAiTyping: typing };
+      persistAndBroadcast(newState);
+      return newState;
+    });
+  }
+
+  function showEscalation(reason) {
+    update((state) => {
+      const newState = {
+        ...state,
+        showEscalationPrompt: true,
+        escalationReason: reason,
+        isAiTyping: false,
+      };
+      persistAndBroadcast(newState);
+      return newState;
+    });
+  }
+
+  function hideEscalation() {
+    update((state) => {
+      const newState = { ...state, showEscalationPrompt: false, escalationReason: null };
+      persistAndBroadcast(newState);
+      return newState;
+    });
+  }
+
+  function updateLastUserMessage() {
+    update((state) => {
+      const newState = { ...state, lastUserMessageAt: Date.now() };
+      persistAndBroadcast(newState);
+      return newState;
+    });
+  }
+
+  function resetAiState() {
+    update((state) => {
+      const newState = {
+        ...state,
+        isAiTyping: false,
+        aiMessageCount: 0,
+        showEscalationPrompt: false,
+        escalationReason: null,
       };
       persistAndBroadcast(newState);
       return newState;
@@ -235,6 +306,12 @@ function createChatStore() {
     disconnect,
     flushQueue,
     queueMessage,
+    // AI-specific actions
+    setAiTyping,
+    showEscalation,
+    hideEscalation,
+    updateLastUserMessage,
+    resetAiState,
   };
 }
 
@@ -247,3 +324,9 @@ export const unreadCount = derived(chatStore, ($chat) => $chat.unreadCount);
 export const messages = derived(chatStore, ($chat) => $chat.messages);
 export const conversationStatus = derived(chatStore, ($chat) => $chat.conversationStatus);
 export const conversationId = derived(chatStore, ($chat) => $chat.conversationId);
+
+// AI-specific derived stores
+export const isAiTyping = derived(chatStore, ($chat) => $chat.isAiTyping);
+export const aiMessageCount = derived(chatStore, ($chat) => $chat.aiMessageCount);
+export const showEscalationPrompt = derived(chatStore, ($chat) => $chat.showEscalationPrompt);
+export const escalationReason = derived(chatStore, ($chat) => $chat.escalationReason);

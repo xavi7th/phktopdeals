@@ -1,12 +1,13 @@
 <script>
   import Portal from "$lib/Components/Portal.svelte";
-  import { chatStore, messages, conversationStatus, conversationId } from "$lib/ChatWidget/chatStore.js";
+  import { chatStore, messages, conversationStatus, conversationId, isAiTyping, showEscalationPrompt } from "$lib/ChatWidget/chatStore.js";
   import { browser } from "$app/environment";
   import { onMount } from "svelte";
   import { animate } from "motion";
   import TypingIndicator from "./TypingIndicator.svelte";
   import MessageStatus from "./MessageStatus.svelte";
   import RatingModal from "./RatingModal.svelte";
+  import EscalationPrompt from "./components/EscalationPrompt.svelte";
 
   // PHK brand colors
   const BRAND_COLOR = "#FF6B35";
@@ -204,9 +205,12 @@
           {/each}
         {/if}
         <!-- Typing indicator -->
-        {#if isOtherUserTyping}
+        {#if isOtherUserTyping || $isAiTyping}
           <TypingIndicator isTyping={true} />
         {/if}
+
+        <!-- Escalation prompt -->
+        <EscalationPrompt />
       </div>
 
       <!-- Input -->
