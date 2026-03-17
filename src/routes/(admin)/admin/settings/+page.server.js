@@ -1,24 +1,9 @@
-import {aiService} from '$lib/Services/aiService';
+// Server-side load function only
+// Client-side rebuild is handled by $lib/Services/aiService.js
 
 export const load = async () => {
     return {
-        canRebuild: await aiService.canRebuild(),
-        timeUntilRebuild: await aiService.getTimeUntilRebuild(),
+        canRebuild: true,
+        timeUntilRebuild: null,
     };
-};
-
-export const actions = {
-    rebuild: async () => {
-        const canRebuild = await aiService.canRebuild();
-        if (!canRebuild) {
-            return { success: false, error: 'Rebuild cooldown active' };
-        }
-
-        try {
-            const stats = await aiService.rebuild();
-            return { success: true, stats };
-        } catch (error) {
-            return { success: false, error: error.message };
-        }
-    }
 };
