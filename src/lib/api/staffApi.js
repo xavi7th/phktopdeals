@@ -16,10 +16,12 @@ export async function fetchStaffInbox() {
 /**
  * Fetch messages for a conversation
  */
-export async function fetchConversationMessages(conversationId) {
+export async function fetchConversationMessages(conversationId, cursor = null) {
+  const url = cursor ? `/api/staff/chat/${conversationId}/messages?before=${encodeURIComponent(cursor)}` : `/api/staff/chat/${conversationId}/messages`;
+
   return safeApiCall(
     () =>
-      fetch(`/api/staff/chat/${conversationId}/messages`, {
+      fetch(url, {
         credentials: "include",
       }).then((res) => res.json()),
     "Failed to fetch conversation messages",

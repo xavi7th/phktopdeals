@@ -10,6 +10,7 @@ function createStaffInboxStore() {
     selectedConversation: null,
     messages: [],
     customer: null,
+    pagination: null, // Message pagination cursor info
     isLoading: false,
     isLoadingMessages: false,
     error: null,
@@ -37,6 +38,7 @@ function createStaffInboxStore() {
         selectedConversation: conversation,
         messages: [],
         customer: null,
+        pagination: null,
       })),
     setMessages: (data) =>
       update((state) => ({
@@ -44,6 +46,15 @@ function createStaffInboxStore() {
         messages: data.messages || [],
         customer: data.customer,
         conversation: data.conversation,
+        pagination: data.pagination || null,
+        isLoadingMessages: false,
+      })),
+    // Append older messages when loading more
+    appendMessages: (data) =>
+      update((state) => ({
+        ...state,
+        messages: [...(data.messages || []), ...state.messages],
+        pagination: data.pagination || null,
         isLoadingMessages: false,
       })),
     addMessage: (message) =>
@@ -83,6 +94,7 @@ function createStaffInboxStore() {
         selectedConversation: null,
         messages: [],
         customer: null,
+        pagination: null,
         isLoading: false,
         isLoadingMessages: false,
         error: null,

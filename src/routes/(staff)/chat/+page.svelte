@@ -83,6 +83,20 @@
     }
     return result;
   }
+
+  async function handleLoadMore(cursor) {
+    staffInboxStore.setLoadingMessages(true);
+    const result = await fetchConversationMessages($staffInboxStore.selectedConversationId, cursor);
+    if (result?.success && result.data) {
+      staffInboxStore.appendMessages(result.data);
+    }
+    return result;
+  }
+
+  function handleCannedResponseSelect(response) {
+    // Optional: track analytics or do something with selected canned response
+    console.log("Canned response selected:", response.title);
+  }
 </script>
 
 <div class="flex h-[calc(100vh-64px)]">
@@ -105,9 +119,12 @@
         messages={$staffInboxStore.messages}
         customer={$staffInboxStore.customer}
         staffList={$staffInboxStore.staffList}
+        pagination={$staffInboxStore.pagination}
+        onLoadMore={handleLoadMore}
         onTransfer={(staffId) => handleTransfer($staffInboxStore.selectedConversationId, staffId)}
         onResolve={() => handleResolve($staffInboxStore.selectedConversationId)}
-        onSendMessage={(content) => handleSendMessage($staffInboxStore.selectedConversationId, content)} />
+        onSendMessage={(content) => handleSendMessage($staffInboxStore.selectedConversationId, content)}
+        onCannedResponseSelect={handleCannedResponseSelect} />
     {:else}
       <div class="flex flex-1 items-center justify-center text-gray-500 dark:text-gray-400">
         <div class="text-center">
