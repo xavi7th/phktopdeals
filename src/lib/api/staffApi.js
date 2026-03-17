@@ -120,3 +120,78 @@ export async function sendStaffMessage(conversationId, content) {
     "Failed to send message",
   );
 }
+
+/**
+ * Fetch customer order history
+ */
+export async function fetchCustomerOrders(params = {}) {
+  const queryString = new URLSearchParams(params).toString();
+  const url = `/api/staff/orders${queryString ? "?" + queryString : ""}`;
+
+  return safeApiCall(
+    () =>
+      fetch(url, {
+        credentials: "include",
+      }).then((res) => res.json()),
+    "Failed to fetch customer orders",
+  );
+}
+
+/**
+ * Fetch order details by ID
+ */
+export async function fetchOrderDetails(orderId) {
+  return safeApiCall(
+    () =>
+      fetch(`/api/staff/orders/${orderId}`, {
+        credentials: "include",
+      }).then((res) => res.json()),
+    "Failed to fetch order details",
+  );
+}
+
+/**
+ * Fetch available order statuses
+ */
+export async function fetchOrderStatuses() {
+  return safeApiCall(
+    () =>
+      fetch("/api/staff/orders/statuses", {
+        credentials: "include",
+      }).then((res) => res.json()),
+    "Failed to fetch order statuses",
+  );
+}
+
+/**
+ * Fetch canned responses
+ */
+export async function fetchCannedResponses(category = null) {
+  const url = category ? `/api/staff/canned-responses?category=${encodeURIComponent(category)}` : "/api/staff/canned-responses";
+
+  return safeApiCall(
+    () =>
+      fetch(url, {
+        credentials: "include",
+      }).then((res) => res.json()),
+    "Failed to fetch canned responses",
+  );
+}
+
+/**
+ * Preview expanded macros for canned response
+ */
+export async function previewCannedResponse(content, variables = {}) {
+  return safeApiCall(
+    () =>
+      fetch("/api/staff/canned-responses/preview", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ content, ...variables }),
+        credentials: "include",
+      }).then((res) => res.json()),
+    "Failed to preview canned response",
+  );
+}
