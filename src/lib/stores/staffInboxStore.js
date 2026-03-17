@@ -6,6 +6,8 @@ function createStaffInboxStore() {
     queue: [], // Unassigned pending conversations
     myChats: [], // Conversations claimed by current staff
     otherActiveChats: [], // Conversations claimed by other staff
+    waitingHandoffs: [], // Conversations waiting for staff (handoff queue)
+    pendingEmailChats: [], // Conversations pending email (unreachable)
     selectedConversationId: null,
     selectedConversation: null,
     messages: [],
@@ -30,6 +32,36 @@ function createStaffInboxStore() {
         otherActiveChats: data.other_active_chats || [],
         isLoading: false,
         error: null,
+      })),
+    setWaitingHandoffs: (handoffs) =>
+      update((state) => ({
+        ...state,
+        waitingHandoffs: handoffs || [],
+      })),
+    setPendingEmailChats: (chats) =>
+      update((state) => ({
+        ...state,
+        pendingEmailChats: chats || [],
+      })),
+    addWaitingHandoff: (conversation) =>
+      update((state) => ({
+        ...state,
+        waitingHandoffs: [conversation, ...state.waitingHandoffs],
+      })),
+    removeWaitingHandoff: (conversationId) =>
+      update((state) => ({
+        ...state,
+        waitingHandoffs: state.waitingHandoffs.filter((c) => c.id !== conversationId),
+      })),
+    addToPendingEmailChats: (conversation) =>
+      update((state) => ({
+        ...state,
+        pendingEmailChats: [conversation, ...state.pendingEmailChats],
+      })),
+    removeFromPendingEmailChats: (conversationId) =>
+      update((state) => ({
+        ...state,
+        pendingEmailChats: state.pendingEmailChats.filter((c) => c.id !== conversationId),
       })),
     selectConversation: (conversationId, conversation) =>
       update((state) => ({
@@ -90,6 +122,8 @@ function createStaffInboxStore() {
         queue: [],
         myChats: [],
         otherActiveChats: [],
+        waitingHandoffs: [],
+        pendingEmailChats: [],
         selectedConversationId: null,
         selectedConversation: null,
         messages: [],
