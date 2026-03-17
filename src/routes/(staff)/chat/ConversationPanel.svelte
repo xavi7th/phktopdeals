@@ -1,13 +1,29 @@
 <script>
   import MessageBubble from "./MessageBubble.svelte";
+  import CannedResponseDropdown from "./CannedResponseDropdown.svelte";
 
-  let { conversation, messages = [], customer = null, staffList = [], onTransfer = () => {}, onResolve = () => {}, onSendMessage = () => {} } = $props();
+  let {
+    conversation,
+    messages = [],
+    customer = null,
+    staffList = [],
+    pagination = null,
+    onLoadMore = () => {},
+    onTransfer = () => {},
+    onResolve = () => {},
+    onSendMessage = () => {},
+    onCannedResponseSelect = () => {},
+  } = $props();
 
   let messageInput = $state("");
   let isSending = $state(false);
   let showTransferDropdown = $state(false);
   let showResolveConfirm = $state(false);
+  let showCannedDropdown = $state(false);
   let messagesContainer;
+  let isLoadingMore = $state(false);
+
+  const MAX_MESSAGE_LENGTH = 1000;
 
   // Auto-scroll to bottom when messages change
   $effect(() => {
@@ -17,6 +33,29 @@
       }, 50);
     }
   });
+
+  async function handleLoadMore() {
+    if (isLoadingMore || !pagination?.next_cursor) return;
+    isLoadingMore = true;
+    try {
+      await onLoadMore(pagination.next_cursor);
+    } finally {
+      isLoadingMore = false;
+    }
+  }
+
+  function handleCannedResponseSelect(response) {
+    messageInput = response.content;
+    showCannedDropdown = false;
+    onCannedResponseSelect(response);
+  }
+
+  function handleInput(event) {
+    messageInput = event.target.value;
+    // Resize textarea
+    event.target.style.height = "auto";
+    event.target.style.height = event.target.scrollHeight + "px";
+  }
 
   async function handleSendMessage(event) {
     event.preventDefault();
@@ -129,6 +168,18 @@
 
   <!-- Messages -->
   <div bind:this={messagesContainer} class="flex-1 space-y-4 overflow-y-auto p-4">
+    <!-- Load More -->
+    {#if pagination?.has_more}
+      <div class="flex justify-center py-2">
+        <button
+          onclick={handleLoadMore}
+          disabled={isLoadingMore}
+          class="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-600 dark:text-gray-300 dark:hover:bg-neutral-700">
+          {isLoadingMore ? "Loading..." : "Load older messages"}
+        </button>
+      </div>
+    {/if}
+
     {#if messages.length === 0}
       <div class="flex h-full items-center justify-center text-gray-500 dark:text-gray-400">
         <p>No messages yet</p>
@@ -143,12 +194,35 @@
   <!-- Message Input -->
   <form onsubmit={handleSendMessage} class="border-t border-gray-200 bg-white px-4 py-3 dark:border-neutral-700 dark:bg-neutral-800">
     <div class="flex items-end gap-2">
+      <!-- Canned Response Button -->
+      <div class="relative">
+        <button
+          type="button"
+          onclick={() => (showCannedDropdown = !showCannedDropdown)}
+          class="rounded-lg border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-neutral-600 dark:text-gray-300 dark:hover:bg-neutral-700"
+          title="Canned responses">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+          </svg>
+        </button>
+
+        {#if showCannedDropdown}
+          <CannedResponseDropdown {customer} onSelect={handleCannedResponseSelect} onClose={() => (showCannedDropdown = false)} />
+        {/if}
+      </div>
+
       <div class="flex-1">
         <textarea
-          bind:value={messageInput}
+          value={messageInput}
           placeholder="Type your reply..."
           rows="1"
+          maxlength={MAX_MESSAGE_LENGTH}
           class="w-full resize-none rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-orange-500 dark:border-neutral-600 dark:bg-neutral-700 dark:text-white"
+          oninput={handleInput}
           onkeydown={(e) => {
             if (e.key === "Enter" && !e.shiftKey) {
               e.preventDefault();
@@ -163,6 +237,12 @@
         class="rounded-lg bg-orange-500 px-4 py-2 font-medium text-white transition-colors hover:bg-orange-600 disabled:cursor-not-allowed disabled:opacity-50">
         {isSending ? "Sending..." : "Send"}
       </button>
+    </div>
+    <!-- Character Counter -->
+    <div class="mt-1 flex justify-end">
+      <span class="text-xs {messageInput.length > MAX_MESSAGE_LENGTH * 0.9 ? 'text-red-500' : 'text-gray-400'}">
+        {messageInput.length}/{MAX_MESSAGE_LENGTH}
+      </span>
     </div>
   </form>
 </div>
