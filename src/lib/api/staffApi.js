@@ -197,3 +197,30 @@ export async function previewCannedResponse(content, variables = {}) {
     "Failed to preview canned response",
   );
 }
+
+/**
+ * Fetch waiting handoffs (conversations waiting for staff)
+ */
+export async function fetchWaitingHandoffs() {
+  return safeApiCall(
+    () =>
+      fetch("/api/staff/handoffs", {
+        credentials: "include",
+      }).then((res) => res.json()),
+    "Failed to fetch waiting handoffs",
+  );
+}
+
+/**
+ * Claim a handoff (staff takes over waiting conversation)
+ */
+export async function claimHandoff(conversationId) {
+  return safeApiCall(
+    () =>
+      fetch(`/api/staff/chat/${conversationId}/handoff/claim`, {
+        method: "POST",
+        credentials: "include",
+      }).then((res) => res.json()),
+    "Failed to claim handoff",
+  );
+}

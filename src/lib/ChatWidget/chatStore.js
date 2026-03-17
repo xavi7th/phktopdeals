@@ -2,6 +2,7 @@ import { writable, derived, get } from "svelte/store";
 import { browser } from "$app/environment";
 import { getEchoClient, disconnectEcho } from "$lib/stores/echoClient.js";
 import * as echoStore from "$lib/stores/echoStore.js";
+import { playStaffJoinedPing } from "$lib/ChatWidget/audioService.js";
 
 const STORAGE_KEY = "phk-chat-widget-state";
 const BROADCAST_CHANNEL_NAME = "phk-chat-widget-sync";
@@ -21,6 +22,12 @@ function createChatStore() {
     lastUserMessageAt: null,
     showEscalationPrompt: false,
     escalationReason: null,
+    // Handoff state
+    handoffStatus: null, // null | 'waiting' | 'staff_joined' | 'timeout'
+    waitingStartedAt: null,
+    staffJoinedAt: null,
+    aiSummary: null,
+    flaggedTopics: [],
   };
 
   // Load from sessionStorage
@@ -207,6 +214,86 @@ function createChatStore() {
     });
   }
 
+  // Handoff actions
+  function requestHandoff() {
+    update((state) => {
+      const newState = {
+        ...state,
+        handoffStatus: "waiting",
+        waitingStartedAt: Date.now(),
+        isAiTyping: false, // AI stops when handoff requested
+      };
+      persistAndBroadcast(newState);
+      return newState;
+    });
+  }
+
+  function setHandoffStaffJoined(staffName) {
+    update((state) => {
+      const newState = {
+        ...state,
+        handoffStatus: "staff_joined",
+        staffJoinedAt: Date.now(),
+      };
+      persistAndBroadcast(newState);
+      return newState;
+    });
+  }
+
+  function setHandoffTimeout() {
+    update((state) => {
+      const newState = {
+        ...state,
+        handoffStatus: "timeout",
+      };
+      persistAndBroadcast(newState);
+      return newState;
+    });
+  }
+
+  function setHandoffContext(aiSummary, flaggedTopics) {
+    update((state) => {
+      const newState = {
+        ...state,
+        aiSummary,
+        flaggedTopics: flaggedTopics || [],
+      };
+      persistAndBroadcast(newState);
+      return newState;
+    });
+  }
+
+  function resetHandoffState() {
+    update((state) => {
+      const newState = {
+        ...state,
+        handoffStatus: null,
+        waitingStartedAt: null,
+        staffJoinedAt: null,
+        aiSummary: null,
+        flaggedTopics: [],
+      };
+      persistAndBroadcast(newState);
+      return newState;
+    });
+  }
+
+  // Add system message (for notifications)
+  function addSystemMessage(content) {
+    update((state) => {
+      const systemMessage = {
+        id: `system-${Date.now()}`,
+        content,
+        sender: "system",
+        created_at: new Date().toISOString(),
+      };
+      const newMessages = [...state.messages, systemMessage];
+      const newState = { ...state, messages: newMessages };
+      persistAndBroadcast(newState);
+      return newState;
+    });
+  }
+
   function clearMessages() {
     update((state) => {
       const newState = { ...state, messages: [] };
@@ -268,6 +355,17 @@ function createChatStore() {
           persistAndBroadcast(newState);
           return newState;
         });
+      })
+      .listen("StaffJoined", (data) => {
+        // Staff joined - show notification, play audio, and update state
+        addSystemMessage("A staff member has joined the chat");
+        playStaffJoinedPing(); // Play audio ping (always, per CONTEXT.md)
+        setHandoffStaffJoined(data.staff?.name);
+      })
+      .listen("HandoffTimeout", (data) => {
+        // Handoff timed out - show notification
+        addSystemMessage("Unfortunately no agents are available at the moment. We've sent an email to follow up.");
+        setHandoffTimeout();
       });
   }
 
@@ -312,6 +410,13 @@ function createChatStore() {
     hideEscalation,
     updateLastUserMessage,
     resetAiState,
+    // Handoff actions
+    requestHandoff,
+    setHandoffStaffJoined,
+    setHandoffTimeout,
+    setHandoffContext,
+    resetHandoffState,
+    addSystemMessage,
   };
 }
 
@@ -330,3 +435,12 @@ export const isAiTyping = derived(chatStore, ($chat) => $chat.isAiTyping);
 export const aiMessageCount = derived(chatStore, ($chat) => $chat.aiMessageCount);
 export const showEscalationPrompt = derived(chatStore, ($chat) => $chat.showEscalationPrompt);
 export const escalationReason = derived(chatStore, ($chat) => $chat.escalationReason);
+
+// Handoff-specific derived stores
+export const handoffStatus = derived(chatStore, ($chat) => $chat.handoffStatus);
+export const isWaitingForStaff = derived(chatStore, ($chat) => $chat.handoffStatus === "waiting");
+export const hasStaffJoined = derived(chatStore, ($chat) => $chat.handoffStatus === "staff_joined");
+export const isHandoffTimeout = derived(chatStore, ($chat) => $chat.handoffStatus === "timeout");
+export const waitingStartedAt = derived(chatStore, ($chat) => $chat.waitingStartedAt);
+export const aiSummary = derived(chatStore, ($chat) => $chat.aiSummary);
+export const flaggedTopics = derived(chatStore, ($chat) => $chat.flaggedTopics);
