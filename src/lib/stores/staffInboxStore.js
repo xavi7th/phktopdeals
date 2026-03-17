@@ -15,6 +15,8 @@ function createStaffInboxStore() {
     error: null,
     isOnline: true,
     staffList: [],
+    // AI escalation metadata
+    aiEscalation: null, // { ai_summary, flagged_topics, message_count, escalated_at }
   });
 
   return {
@@ -54,6 +56,9 @@ function createStaffInboxStore() {
     setError: (error) => update((state) => ({ ...state, error, isLoading: false })),
     setOnline: (isOnline) => update((state) => ({ ...state, isOnline })),
     setStaffList: (staffList) => update((state) => ({ ...state, staffList })),
+    // AI escalation methods
+    setAiEscalation: (escalationData) => update((state) => ({ ...state, aiEscalation: escalationData })),
+    clearAiEscalation: () => update((state) => ({ ...state, aiEscalation: null })),
     removeFromQueue: (conversationId) =>
       update((state) => ({
         ...state,
@@ -83,6 +88,7 @@ function createStaffInboxStore() {
         error: null,
         isOnline: true,
         staffList: [],
+        aiEscalation: null,
       }),
   };
 }
