@@ -1,4 +1,5 @@
 <script>
+  import { onMount } from "svelte";
   import { archiveStore } from "$lib/stores/archiveStore.js";
   import { fetchArchives, triggerManualArchive } from "$lib/api/archiveApi.js";
   import { goto } from "$app/navigation";
@@ -82,8 +83,6 @@
     });
   }
 
-  // Load on mount
-  import { onMount } from "svelte";
   onMount(() => {
     loadArchives();
   });
@@ -139,13 +138,13 @@
 
       <div class="flex items-end gap-2">
         <button
-          on:click={handleSearch}
+          onclick={handleSearch}
           class="rounded bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
         >
           Search
         </button>
         <button
-          on:click={handleReset}
+          onclick={handleReset}
           class="rounded border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-neutral-600 dark:text-neutral-300"
         >
           Reset
@@ -155,7 +154,7 @@
 
     <div class="mt-4 flex justify-end">
       <button
-        on:click={handleManualArchive}
+        onclick={handleManualArchive}
         class="rounded bg-green-600 px-4 py-2 text-sm font-medium text-white hover:bg-green-700"
       >
         Run Manual Archive
@@ -201,7 +200,7 @@
                 <td class="px-4 py-3">{formatDate(archive.archived_at)}</td>
                 <td class="px-4 py-3">
                   <button
-                    on:click={() => handleViewArchive(archive)}
+                    onclick={() => handleViewArchive(archive)}
                     class="text-blue-600 hover:text-blue-800 dark:text-blue-400"
                   >
                     View
@@ -223,7 +222,7 @@
           <div class="flex gap-2">
             {#if $archiveStore.pagination.prev_page_url}
               <button
-                on:click={() => loadArchives($archiveStore.pagination.current_page - 1)}
+                onclick={() => loadArchives($archiveStore.pagination.current_page - 1)}
                 class="rounded border border-gray-300 px-3 py-1 text-sm hover:bg-gray-50 dark:border-neutral-600"
               >
                 Previous
@@ -231,7 +230,7 @@
             {/if}
             {#if $archiveStore.pagination.next_page_url}
               <button
-                on:click={() => loadArchives($archiveStore.pagination.current_page + 1)}
+                onclick={() => loadArchives($archiveStore.pagination.current_page + 1)}
                 class="rounded border border-gray-300 px-3 py-1 text-sm hover:bg-gray-50 dark:border-neutral-600"
               >
                 Next

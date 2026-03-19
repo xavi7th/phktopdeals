@@ -60,7 +60,7 @@
 <div class="space-y-4">
   <!-- Back Button -->
   <button
-    on:click={handleBack}
+    onclick={handleBack}
     class="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-800 dark:text-neutral-400"
   >
     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
