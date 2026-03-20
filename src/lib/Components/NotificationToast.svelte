@@ -26,25 +26,7 @@
 
 <!-- NotificationToast extends Toast with notification-specific styling -->
 <div
-  class="notification-toast fixed end-3 top-20 z-50 max-w-xs cursor-pointer rounded-xl shadow-lg transition duration-300"
-  class:bg-teal-100={type === "success"}
-  class:border-teal-200={type === "success"}
-  class:text-teal-800={type === "success"}
-  class:dark:bg-teal-800/20={type === "success"}
-  class:dark:border-teal-900={type === "success"}
-  class:dark:text-teal-500={type === "success"}
-  class:bg-blue-100={type === "info"}
-  class:border-blue-200={type === "info"}
-  class:text-blue-800={type === "info"}
-  class:dark:bg-blue-800/20={type === "info"}
-  class:dark:border-blue-900={type === "info"}
-  class:dark:text-blue-500={type === "info"}
-  class:bg-red-100={type === "error" || type === "urgent"}
-  class:border-red-200={type === "error" || type === "urgent"}
-  class:text-red-800={type === "error" || type === "urgent"}
-  class:dark:bg-red-800/20={type === "error" || type === "urgent"}
-  class:dark:border-red-900={type === "error" || type === "urgent"}
-  class:dark:text-red-500={type === "error" || type === "urgent"}
+  class="notification-toast fixed end-3 top-20 z-50 max-w-xs cursor-pointer rounded-xl shadow-lg transition duration-300 {type === 'success' ? 'bg-teal-100 border-teal-200 text-teal-800 dark:bg-teal-800/20 dark:border-teal-900 dark:text-teal-500' : ''} {type === 'info' ? 'bg-blue-100 border-blue-200 text-blue-800 dark:bg-blue-800/20 dark:border-blue-900 dark:text-blue-500' : ''} {(type === 'error' || type === 'urgent') ? 'bg-red-100 border-red-200 text-red-800 dark:bg-red-800/20 dark:border-red-900 dark:text-red-500' : ''}"
   role="alert"
   tabindex="0"
   on:click={handleClick}
