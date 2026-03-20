@@ -5,7 +5,6 @@
   let { product } = $props();
 
   $inspect(product);
-
 </script>
 
 <div
@@ -37,7 +36,9 @@
     <a
       href={`/store/${product?.name_slug}_${product?.id}`}
       class="mt-1 rounded-b-xl border-t bg-brand px-2 py-1 text-center text-[0.7rem] tracking-tighter text-gray-700 transition-colors duration-300 hover:bg-brand-500 hover:text-white md:px-3 md:py-2 dark:border-brand-900 dark:bg-brand-700 dark:text-brand-50">
-      <span class="block pl-2 text-lg font-bold text-black dark:text-white">{percentageCalculation(product.min_price, 1, 0, product.percentage_discount)} - {percentageCalculation(product.max_price, 1, 0, product.percentage_discount)}</span>
+      <span class="block pl-2 text-lg font-bold text-black dark:text-white">
+        {percentageCalculation(product.min_price, 1, 0, product.percentage_discount)} - {percentageCalculation(product.max_price, 1, 0, product.percentage_discount)}
+      </span>
     </a>
   {/if}
 </div>

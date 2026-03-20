@@ -47,7 +47,7 @@
   aria-expanded="false"
   aria-controls="slider-modal"
   data-hs-overlay="#slider-modal"
-  on:click={() => {
+  onclick={() => {
     slider = { id: undefined };
   }}>
   {@html plusIcon}

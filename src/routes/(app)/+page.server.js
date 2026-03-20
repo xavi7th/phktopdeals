@@ -8,14 +8,22 @@ export async function load(event) {
       event,
     });
 
+    // Handle API unavailable - return null data instead of throwing
+    if (!res?.ok) {
+      return {
+        data: {
+          sections: [],
+          services: [],
+          sliders: [],
+        },
+        error: res ? await res.json() : { error: "API unavailable" },
+      };
+    }
+
     return await res?.json();
   };
 
   let noJS = !!event.url.searchParams.get("noJS");
-
-  event.setHeaders({
-    "Cache-Control": "public, max-age=3600, stale-while-revalidate=86400",
-  });
 
   /**
    * @typedef PageData

@@ -1,7 +1,9 @@
 import { api } from "$lib/helpers";
 import { fail } from "@sveltejs/kit";
+import { assertAdmin } from "$lib/server/auth";
 
 export async function load(event) {
+  assertAdmin(event);
   const fetchTopUps = async () => {
     const res = await api({
       method: "get",
@@ -9,24 +11,27 @@ export async function load(event) {
       event,
     });
 
-    return res?.json();
+    // Handle API unavailable
+    if (!res?.ok) {
+      return { data: [], metadata: { items_count: 0 }, apiError: true };
+    }
+
+    return res.json();
   };
 
   const [topUpData] = await Promise.all([fetchTopUps()]);
-
-  event.setHeaders({
-    "Cache-Control": "public, max-age=3600, stale-while-revalidate=86400",
-  });
 
   return {
     /** @type { import('$lib/types').Product[] } */
     topUps: topUpData.data,
     meta: topUpData.metadata,
+    apiError: topUpData.apiError,
   };
 }
 
 export const actions = {
   delete: async (event) => {
+    assertAdmin(event);
     const formData = await event.request.formData();
 
     const res = await api({

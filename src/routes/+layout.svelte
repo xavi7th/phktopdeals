@@ -5,7 +5,9 @@
   import { getErrorString } from "$lib/helpers";
   import { afterNavigate } from "$app/navigation";
   import Toast from "$lib/Components/Toast.svelte";
+  import ApiStatusBanner from "$lib/Components/ApiStatusBanner.svelte";
   import { getFlash } from "sveltekit-flash-message";
+  import { apiStatus } from "$lib/stores/apiStatus";
   import ChatWidget from "$lib/ChatWidget/ChatWidget.svelte";
 
   import "../app.scss";
@@ -22,6 +24,16 @@
   });
 
   const flash = getFlash(page);
+
+  // Sync API status with page data
+  $effect(() => {
+    if ($page.data?.apiError) {
+      apiStatus.setOffline("API error detected");
+    } else if ($page.data) {
+      // Page loaded successfully, API is working
+      apiStatus.setOnline();
+    }
+  });
 
   afterNavigate(async () => {
     try {
@@ -84,9 +96,11 @@
   <meta name="robots" content="index,follow" />
 </svelte:head>
 
+<ApiStatusBanner />
+
 {#if $flash}
   <div class="fixed end-3 top-24 z-[100] space-y-3">
-    <Toast positioned={false} type={$flash?.type} msg={$flash.msg} dismissable on:toastClosed={() => ($flash = undefined)}>
+    <Toast positioned={false} type={$flash?.type} msg={$flash.msg} dismissable ontoastClosed={() => ($flash = undefined)}>
       {#if $flash.errors}
         <ul class="ml-4 list-disc text-xs capitalize">{@html getErrorString($flash.errors)}</ul>
       {/if}
@@ -97,5 +111,5 @@
 {@render children()}
 
 {#if ChatWidgetComponent}
-  <svelte:component this={ChatWidgetComponent} />
+  <ChatWidgetComponent />
 {/if}

@@ -7,6 +7,23 @@
  */
 
 import { dev } from "$app/environment";
+import { initCache, cleanExpiredCache } from "$lib/cache";
+import { browser } from "$app/environment";
+
+// Initialize cache on client-side load
+if (browser) {
+  initCache().then(() => {
+    if (dev) console.log("IndexedDB cache initialized");
+
+    // Clean expired entries every 5 minutes
+    setInterval(
+      () => {
+        cleanExpiredCache();
+      },
+      5 * 60 * 1000,
+    );
+  });
+}
 
 /** @type {import('@sveltejs/kit').HandleClientError} */
 export const handleError = ({ event, error, message, status }) => {

@@ -1,6 +1,8 @@
-import { api } from '$lib/helpers.js';
+import { api } from "$lib/helpers.js";
+import { assertAdmin } from "$lib/server/auth";
 
 export async function load(event) {
+  assertAdmin(event);
   const fetchDashboardData = async () => {
     const res = await api({
       method: "get",
@@ -8,7 +10,12 @@ export async function load(event) {
       event,
     });
 
-    return await res?.json();
+    // Handle API unavailable
+    if (!res?.ok) {
+      return { data: { users: [], orders: [] }, apiError: true };
+    }
+
+    return await res.json();
   };
 
   let noJS = !!event.url.searchParams.get("noJS");

@@ -1,8 +1,7 @@
 <script>
   import { browser } from "$app/environment";
 
-  /** @type {boolean} */
-  export let isTyping = false;
+  let { isTyping = false } = $props();
 
   const DEBOUNCE_MS = 300;
   let showIndicator = $state(false);

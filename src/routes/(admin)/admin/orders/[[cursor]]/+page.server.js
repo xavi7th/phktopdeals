@@ -1,6 +1,8 @@
 import { api } from "$lib/helpers";
+import { assertAdmin } from "$lib/server/auth";
 
 export async function load(event) {
+  assertAdmin(event);
   const fetchUserOrders = async () => {
     const cursor = event.url.searchParams.get("cursor");
     const url = cursor ? `manage/purchase-invoices?cursor=${cursor}` : "manage/purchase-invoices";
@@ -10,12 +12,14 @@ export async function load(event) {
       resource: url,
       event,
     });
-    return await res?.json();
-  };
 
-  event.setHeaders({
-    "Cache-Control": "public, max-age=3600, stale-while-revalidate=86400",
-  });
+    // Handle API unavailable
+    if (!res?.ok) {
+      return { data: [], metadata: { items_count: 0 }, apiError: true };
+    }
+
+    return await res.json();
+  };
 
   let noJS = !!event.url.searchParams.get("noJS");
 

@@ -24,9 +24,7 @@
         <h1 class="text-2xl font-bold sm:text-4xl">
           <span class="bg-gradient-to-r from-brand-500 to-black bg-clip-text text-transparent dark:from-brand-300 dark:to-white">Choose a Payment Method</span>
         </h1>
-        <p class="mt-5 text-base sm:text-lg dark:text-gray-400">
-          Top up your wallet easily using our different payment methods. We accept payments in various Online Payment channels for your convenience.
-        </p>
+        <p class="mt-5 text-base sm:text-lg dark:text-gray-400">Top up your wallet easily using our different payment methods. We accept payments in various Online Payment channels for your convenience.</p>
 
         <div class="mx-auto mt-8 max-w-sm sm:mt-16">
           <div class="space-y-3">

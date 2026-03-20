@@ -1,4 +1,5 @@
 import { clsx } from "clsx";
+import { dev } from "$app/environment";
 import { error } from "@sveltejs/kit";
 import { twMerge } from "tailwind-merge";
 import { PUBLIC_APP_COMMISSION_AMOUNT, PUBLIC_VITE_BASE_API, PUBLIC_VITE_BASE_DOMAIN, PUBLIC_VITE_FRONT_END_DOMAIN } from "$env/static/public";
@@ -63,8 +64,8 @@ export const percentageCalculation = (unit_price = 0, quantity = 1, commission =
 
   if (commission <= 0) {
     amount_to_pay = (Number(unit_price) + (shouldTopUp ? Number(PUBLIC_APP_COMMISSION_AMOUNT) : 0)) * Number(quantity);
-  } else{
-    amount_to_pay = (Number(unit_price) + (shouldTopUp ? Number(commission) : 0)) * Number(quantity)
+  } else {
+    amount_to_pay = (Number(unit_price) + (shouldTopUp ? Number(commission) : 0)) * Number(quantity);
   }
 
   /**
@@ -78,7 +79,7 @@ export const percentageCalculation = (unit_price = 0, quantity = 1, commission =
   // }
 
   if (discount) {
-    amount_to_pay = Number(amount_to_pay) - ((amount_to_pay * discount) / 100);
+    amount_to_pay = Number(amount_to_pay) - (amount_to_pay * discount) / 100;
   }
 
   return numeric ? amount_to_pay : toCurrency(amount_to_pay);
@@ -287,7 +288,7 @@ export const hasFile = (formData) => {
  *
  * @returns {Promise<Response|undefined>}
  */
-export async function api({ toBaseDomain, resource, event, method, data, logResponse = true, toJSON = true }) {
+export async function api({ toBaseDomain, resource, event, method, data, logResponse = true, toJSON = true, ignoreErrors = false }) {
   const base = PUBLIC_VITE_BASE_DOMAIN;
   const baseApi = PUBLIC_VITE_BASE_API;
   let fullurl = toBaseDomain ? base : baseApi;
@@ -322,17 +323,38 @@ export async function api({ toBaseDomain, resource, event, method, data, logResp
     fullurl += resource;
   }
 
-  if (logResponse) {
+  if (dev && logResponse) {
     console.error("--------------- API Request: " + method.toUpperCase() + " " + fullurl);
   }
 
-  const response = await event?.fetch(fullurl, {
-    method: method,
-    headers,
-    body: data || null,
-  });
+  let response;
+  try {
+    response = await event?.fetch(fullurl, {
+      method: method,
+      headers,
+      body: data || null,
+    });
+  } catch (error) {
+    // API server is unreachable - return a mock error response instead of throwing
+    // This allows the frontend to handle the error gracefully
+    console.error("--------------- API Error: " + error.message);
 
-  if (logResponse) {
+    if (ignoreErrors) {
+      return undefined;
+    }
+
+    // Return a mock response object that mimics a fetch Response
+    return {
+      ok: false,
+      status: 503,
+      statusText: "Service Unavailable",
+      json: async () => ({ error: "API server is unavailable", message: error.message }),
+      text: async () => JSON.stringify({ error: "API server is unavailable", message: error.message }),
+      url: fullurl,
+    };
+  }
+
+  if (dev && logResponse) {
     console.error("--------------- API Response: ");
 
     const rsp = await response?.clone();

@@ -24,6 +24,7 @@
     msg = [],
     value = $bindable([]),
     options = [],
+    children,
     ...rest
   } = $props();
 </script>
@@ -69,7 +70,7 @@
         <option value={val.toString().toLowerCase()}>{val}</option>
       {/each}
     {:else}
-      <slot />
+      {@render children?.()}
     {/if}
   </select>
 
@@ -84,7 +85,7 @@
   <button
     type="button"
     class="inline-flex items-center gap-x-1 rounded-lg border border-gray-200 bg-white px-2 py-1 text-sm text-gray-800 hover:bg-gray-50 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-white dark:hover:bg-neutral-800"
-    on:click={() => window.HSSelect.getInstance(`#${name}`).setValue([])}>
+    onclick={() => window.HSSelect.getInstance(`#${name}`).setValue([])}>
     <SvgIcon class="size-3.5 shrink-0" svgHeight={24} slot={x} />
   </button>
 </div>

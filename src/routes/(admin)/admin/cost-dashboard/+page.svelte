@@ -1,5 +1,6 @@
 <script>
     import { goto } from '$app/navigation';
+    import { toCurrency } from '$lib/helpers';
     import CostTrendChart from '$lib/Components/CostTrendChart.svelte';
     import CostByPatternChart from '$lib/Components/CostByPatternChart.svelte';
     import CostByProviderChart from '$lib/Components/CostByProviderChart.svelte';
@@ -19,7 +20,7 @@
     }
 
     function formatUsd(value) {
-        return '$' + Number(value || 0).toFixed(4);
+        return toCurrency(Number(value || 0), '$');
     }
 
     function formatNumber(value) {

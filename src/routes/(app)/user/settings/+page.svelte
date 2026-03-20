@@ -1,7 +1,6 @@
 <script>
   import { dev } from "$app/environment";
   import Toast from "$lib/Components/Toast.svelte";
-  import DeleteUserForm from "./DeleteUserForm.svelte";
   import SuperDebug, { superForm } from "sveltekit-superforms";
   import { animatedDotsSVG, spinnerSVG } from "$lib/Components/iconPaths";
   import FloatingTextInput from "$lib/Components/FormInputs/FloatingTextInput.svelte";
@@ -160,8 +159,6 @@
       </section>
     </form>
 
-    <!-- <form method="POST" use:enhance>
-        <DeleteUserForm timeout={$timeout} delayed={$delayed} submitting={$submitting} errors={$errors} bind:value={$formData.verify_password} />
-      </form> -->
+    <!-- Account deletion disabled — re-enable with proper safeguards (2FA, grace period) -->
   </div>
 </div>

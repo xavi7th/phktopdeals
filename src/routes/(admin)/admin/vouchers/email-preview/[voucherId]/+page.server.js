@@ -7,7 +7,13 @@ export async function load(event) {
       resource: "voucher-codes/" + event.params.voucherId,
       event,
     });
-    return await res?.json();
+
+    // Handle API unavailable
+    if (!res?.ok) {
+      return { data: "", apiError: true };
+    }
+
+    return await res.json();
   };
 
   let noJS = !!event.url.searchParams.get("noJS");

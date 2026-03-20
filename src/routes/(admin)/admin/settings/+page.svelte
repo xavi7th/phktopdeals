@@ -1,15 +1,15 @@
 <script>
-  import { aiService } from '$lib/Services/aiService';
-  import { onMount } from 'svelte';
+  import { aiService } from "$lib/Services/aiService";
+  import { onMount } from "svelte";
 
   let { data } = $props();
 
   let canRebuild = $state(data.canRebuild);
   let isRebuilding = $state(false);
   let lastStats = $state(null);
-  let countdown = $state('');
-  let rebuildMessage = $state('');
-  let rebuildError = $state('');
+  let countdown = $state("");
+  let rebuildMessage = $state("");
+  let rebuildError = $state("");
 
   let countdownInterval;
 
@@ -34,7 +34,7 @@
 
     if (diff <= 0) {
       canRebuild = true;
-      countdown = '';
+      countdown = "";
       clearInterval(countdownInterval);
       return;
     }
@@ -48,12 +48,12 @@
 
   async function handleRebuild() {
     isRebuilding = true;
-    rebuildMessage = '';
-    rebuildError = '';
+    rebuildMessage = "";
+    rebuildError = "";
 
     try {
-      const response = await fetch('/api/admin/ai/rebuild', {
-        method: 'POST'
+      const response = await fetch("/api/admin/ai/rebuild", {
+        method: "POST",
       });
       const result = await response.json();
 
@@ -62,9 +62,9 @@
         canRebuild = false;
         lastStats = result.stats;
         // Set cooldown display
-        countdown = '4h 0m 0s';
+        countdown = "4h 0m 0s";
       } else {
-        rebuildError = result.error || 'Rebuild failed';
+        rebuildError = result.error || "Rebuild failed";
       }
     } catch (error) {
       rebuildError = error.message;
@@ -84,32 +84,25 @@
   <div class="rounded-xl border bg-white p-6 shadow-sm dark:border-neutral-700 dark:bg-neutral-800">
     <div class="mb-4">
       <h2 class="text-lg font-semibold text-gray-800 dark:text-neutral-200">AI Knowledge Base</h2>
-      <p class="mt-1 text-sm text-gray-500 dark:text-neutral-500">
-        Rebuild the AI knowledge base from Products, FAQs, and Policies.
-      </p>
+      <p class="mt-1 text-sm text-gray-500 dark:text-neutral-500">Rebuild the AI knowledge base from Products, FAQs, and Policies.</p>
     </div>
 
     <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
       <div class="flex flex-col gap-1">
         {#if countdown && !canRebuild}
-          <span class="text-sm text-gray-500 dark:text-neutral-400">
-            Next rebuild available in:
-          </span>
-          <span class="text-lg font-mono font-medium text-orange-600 dark:text-orange-400">
+          <span class="text-sm text-gray-500 dark:text-neutral-400">Next rebuild available in:</span>
+          <span class="font-mono text-lg font-medium text-orange-600 dark:text-orange-400">
             {countdown}
           </span>
         {:else}
-          <span class="text-sm text-green-600 dark:text-green-400">
-            Ready to rebuild
-          </span>
+          <span class="text-sm text-green-600 dark:text-green-400">Ready to rebuild</span>
         {/if}
       </div>
 
       <button
         onclick={handleRebuild}
         disabled={!canRebuild || isRebuilding}
-        class="inline-flex items-center gap-2 rounded-lg bg-brand-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-500 dark:disabled:bg-neutral-600 dark:disabled:text-neutral-400"
-      >
+        class="inline-flex items-center gap-2 rounded-lg bg-brand-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-500 dark:disabled:bg-neutral-600 dark:disabled:text-neutral-400">
         {#if isRebuilding}
           <svg class="size-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>

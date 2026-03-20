@@ -7,7 +7,13 @@ export async function load(event) {
       resource: "user/wallet-balance",
       event,
     });
-    return await res?.json();
+
+    // Handle API unavailable
+    if (!res?.ok) {
+      return { data: { wallet_balance: null }, apiError: true };
+    }
+
+    return await res.json();
   };
 
   const fetchTopUpTransactions = async () => {
@@ -16,7 +22,13 @@ export async function load(event) {
       resource: "user-transactions?cursor=" + event.params.cursor,
       event,
     });
-    return await res?.json();
+
+    // Handle API unavailable
+    if (!res?.ok) {
+      return { data: [], metadata: { items_count: 0 }, apiError: true };
+    }
+
+    return await res.json();
   };
 
   const [details] = await Promise.all([fetchWalletBalance()]);
@@ -25,5 +37,6 @@ export async function load(event) {
     wallet_balance: details.data?.wallet_balance,
     transactions: fetchTopUpTransactions(),
     redirectStatus: event.url.searchParams.get("status"),
+    apiError: details.apiError,
   };
 }

@@ -4,8 +4,10 @@ import { arktype } from "sveltekit-superforms/adapters";
 import { sliderDefaults, sliderSchema } from "$lib/schemas";
 import { redirect, setFlash } from "sveltekit-flash-message/server";
 import { fail, setError, superValidate } from "sveltekit-superforms";
+import { assertAdmin } from "$lib/server/auth";
 
 export async function load(event) {
+  assertAdmin(event);
   const form = await superValidate(arktype(sliderSchema, { defaults: sliderDefaults }));
 
   const fetchSliders = async () => {
@@ -17,12 +19,14 @@ export async function load(event) {
       resource: url,
       event,
     });
-    return await res?.json();
-  };
 
-  event.setHeaders({
-    "Cache-Control": "public, max-age=300, stale-while-revalidate=86400",
-  });
+    // Handle API unavailable
+    if (!res?.ok) {
+      return { data: [], metadata: { items_count: 0 }, apiError: true };
+    }
+
+    return await res.json();
+  };
 
   let noJS = !!event.url.searchParams.get("noJS");
 
@@ -35,6 +39,7 @@ export async function load(event) {
 
 export const actions = {
   create: async (event) => {
+    assertAdmin(event);
     const form = await superValidate(event, arktype(sliderSchema, { defaults: sliderDefaults }));
 
     if (!form.valid) {
@@ -83,6 +88,7 @@ export const actions = {
   },
 
   update: async (event) => {
+    assertAdmin(event);
     const form = await superValidate(
       event,
       arktype(
@@ -145,6 +151,7 @@ export const actions = {
   },
 
   delete: async (event) => {
+    assertAdmin(event);
     const form = await superValidate(arktype(sliderSchema, { defaults: sliderDefaults }));
     const formData = await event.request.formData();
 

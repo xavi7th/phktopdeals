@@ -8,10 +8,24 @@ export async function load(event) {
       resource: "transactions/" + event.params.transId,
       event,
     });
-    return await res?.json();
+
+    // Handle API unavailable
+    if (!res?.ok) {
+      return { data: null, apiError: true };
+    }
+
+    return await res.json();
   };
 
   let transaction = await fetchTransactionDetails();
+
+  if (transaction.apiError) {
+    return {
+      /** @type { import('$lib/types.js').UserOrder } */
+      transaction: null,
+      apiError: true,
+    };
+  }
 
   if (transaction.error && transaction.status == 404) {
     error(404, { code: 404, message: "Transaction not found" });

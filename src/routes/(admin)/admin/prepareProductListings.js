@@ -4,13 +4,16 @@ import { arktype } from "sveltekit-superforms/adapters";
 import { setFlash, redirect } from "sveltekit-flash-message/server";
 import { superValidate, fail, setError } from "sveltekit-superforms";
 import { productSchema, brandSchema, brandDefaults } from "$lib/schemas";
+import { assertAdmin } from "$lib/server/auth";
 
 /**
  * @param {import('@sveltejs/kit').ServerLoadEvent} event
  * @param {any} productDefaults
  */
 export async function getData(event, productDefaults) {
+  assertAdmin(event);
   let form;
+  let apiError = false;
 
   if (event.params.id) {
     const res = await api({
@@ -20,28 +23,35 @@ export async function getData(event, productDefaults) {
       logResponse: true,
     });
 
-    const product = await res?.json();
+    // Handle API unavailable
+    if (!res?.ok) {
+      apiError = true;
+    } else {
+      const product = await res.json();
 
-    const productData = {
-      id: product.data.id,
-      product_name: product.data.product_name,
-      product_type: product.data.product_type,
-      brand_id: product.data.brand_id,
-      product_image: product.data.product_image,
-      product_category: product.data.product_category,
-      regions: product.data.regions,
-      price_denominations: product.data.product_price.denominations,
-      product_min_price: product.data.min_price,
-      product_image_url: product.data.product_image_url,
-      percentage_discount: product.data.percentage_discount,
-      purchase_commission: product.data.product_price.commission,
-      variable_denomination: product.data.product_price.flexible,
-      discount_until: product.data.discount_until,
-      faqs: product.data.faqs,
-    };
+      const productData = {
+        id: product.data.id,
+        product_name: product.data.product_name,
+        product_type: product.data.product_type,
+        brand_id: product.data.brand_id,
+        product_image: product.data.product_image,
+        product_category: product.data.product_category,
+        regions: product.data.regions,
+        price_denominations: product.data.product_price.denominations,
+        product_min_price: product.data.min_price,
+        product_image_url: product.data.product_image_url,
+        percentage_discount: product.data.percentage_discount,
+        purchase_commission: product.data.product_price.commission,
+        variable_denomination: product.data.product_price.flexible,
+        discount_until: product.data.discount_until,
+        faqs: product.data.faqs,
+      };
 
-    form = await superValidate(productData, arktype(productSchema, { defaults: productDefaults }), { errors: false });
-  } else {
+      form = await superValidate(productData, arktype(productSchema, { defaults: productDefaults }), { errors: false });
+    }
+  }
+
+  if (!form) {
     form = await superValidate(arktype(productSchema, { defaults: productDefaults }));
   }
 
@@ -53,7 +63,13 @@ export async function getData(event, productDefaults) {
       resource: "product-brands?all=true",
       event,
     });
-    return await res?.json();
+
+    // Handle API unavailable
+    if (!res?.ok) {
+      return { data: [], apiError: true };
+    }
+
+    return await res.json();
   };
 
   const fetchCategories = async () => {
@@ -62,7 +78,13 @@ export async function getData(event, productDefaults) {
       resource: "product-categories",
       event,
     });
-    return await res?.json();
+
+    // Handle API unavailable
+    if (!res?.ok) {
+      return { data: [], apiError: true };
+    }
+
+    return await res.json();
   };
 
   const fetchRegions = async () => {
@@ -71,10 +93,19 @@ export async function getData(event, productDefaults) {
       resource: "regions",
       event,
     });
-    return await res?.json();
+
+    // Handle API unavailable
+    if (!res?.ok) {
+      return { data: [], apiError: true };
+    }
+
+    return await res.json();
   };
 
   const [categoriesData, brandsData, regionsData] = await Promise.all([fetchCategories(), fetchProductBrands(), fetchRegions()]);
+
+  // Track if any API call failed
+  apiError = apiError || categoriesData.apiError || brandsData.apiError || regionsData.apiError;
 
   return {
     form,
@@ -86,6 +117,7 @@ export async function getData(event, productDefaults) {
       brands: brandsData.data,
       /** @type {import('$lib/types').ProductRegions[]} } */
       regions: regionsData.data,
+      apiError,
     },
   };
 }
@@ -95,6 +127,7 @@ export async function getData(event, productDefaults) {
  * @param {any} productDefaults
  */
 export async function createAction(event, productDefaults) {
+  assertAdmin(event);
   const form = await superValidate(event, arktype(productSchema, { defaults: productDefaults }));
 
   if (!form.valid) {
@@ -151,6 +184,7 @@ export async function createAction(event, productDefaults) {
  * @param {any} productDefaults
  */
 export async function updateAction(event, productDefaults) {
+  assertAdmin(event);
   const form = await superValidate(event, arktype(productSchema, { defaults: productDefaults }));
 
   const formData = new FormData();

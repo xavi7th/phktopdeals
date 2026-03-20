@@ -8,10 +8,24 @@ export async function load(event) {
       resource: "purchase-invoices/i/" + event.params.orderId,
       event,
     });
-    return await res?.json();
+
+    // Handle API unavailable
+    if (!res?.ok) {
+      return { data: null, apiError: true };
+    }
+
+    return await res.json();
   };
 
   let order = await fetchOrderDetails();
+
+  if (order.apiError) {
+    return {
+      /** @type { import('$lib/types.js').UserOrder } */
+      order: null,
+      apiError: true,
+    };
+  }
 
   if (order.error && order.status == 404) {
     error(404, { code: 404, message: "Order not found" });

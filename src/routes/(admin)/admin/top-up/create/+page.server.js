@@ -1,12 +1,10 @@
 import { topUpDefaults } from "$lib/schemas";
 import { createAction, getData } from "../../prepareProductListings";
+import { assertAdmin } from "$lib/server/auth";
 
 export async function load(event) {
+  assertAdmin(event);
   let data = await getData(event, topUpDefaults);
-
-  event.setHeaders({
-    "Cache-Control": "public, max-age=604800",
-  });
 
   return {
     topUpForm: data.form,
@@ -15,5 +13,8 @@ export async function load(event) {
 }
 
 export const actions = {
-  default: (event) => createAction(event, topUpDefaults),
+  default: (event) => {
+    assertAdmin(event);
+    return createAction(event, topUpDefaults);
+  },
 };

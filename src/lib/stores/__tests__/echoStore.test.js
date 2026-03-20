@@ -1,17 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { get } from "svelte/store";
-import {
-  connectionStatus,
-  reconnectAttempts,
-  messageQueue,
-  connect,
-  disconnect,
-  subscribe,
-  unsubscribe,
-  sendMessage,
-  queueMessage,
-  processQueue,
-} from "$lib/stores/echoStore.js";
+import { connectionStatus, reconnectAttempts, messageQueue, connect, disconnect, subscribe, unsubscribe, sendMessage, queueMessage, processQueue } from "$lib/stores/echoStore.js";
 
 // Mock Echo client
 vi.mock("$lib/stores/echoClient.js", () => ({

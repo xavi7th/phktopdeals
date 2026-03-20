@@ -14,7 +14,7 @@
 </script>
 
 {#if form?.message || data.message}
-  <div class="fixed end-3 top-24 space-y-3">
+  <div class="fixed bottom-8 end-3 top-auto z-50 space-y-3 sm:bottom-auto sm:top-24">
     <Toast positioned={false} type={data.message ? "success" : "error"} msg={form?.body ?? form?.message ?? data.message} />
   </div>
 {/if}

@@ -23,7 +23,13 @@ export async function load(event) {
       resource: url,
       event,
     });
-    return await res?.json();
+
+    // Handle API unavailable
+    if (!res?.ok) {
+      return { data: [], metadata: { items_count: 0 }, apiError: true };
+    }
+
+    return await res.json();
   };
 
   const [cardsData] = await Promise.all([fetchGiftCards()]);
@@ -35,5 +41,6 @@ export async function load(event) {
     category: event.params.slug || "all",
     basePageUrl: "/store/products" + (event.params.slug ? "/" + event.params.slug + "/cursor" : ""),
     search: event.url.searchParams.get("s") || undefined,
+    apiError: cardsData.apiError,
   };
 }

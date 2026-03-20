@@ -7,10 +7,6 @@ import { message, superValidate, fail, setError } from "sveltekit-superforms";
 export async function load(event) {
   const form = await superValidate(event.locals.session.data?.user, arktype(AppUserSchema, { defaults: event.locals.session.data?.user }));
 
-  event.setHeaders({
-    "Cache-Control": "public, max-age=604800, stale-while-revalidate=86400",
-  });
-
   return {
     form,
     /** @type { import('$lib/types').AppUser } */

@@ -3,7 +3,7 @@
   import SvgIcon from "$lib/Components/SvgIcon.svelte";
   import { bell, crescentMoon, purchaseBag, sunRays } from "$lib/Components/iconPaths";
 
-  let {user = {} } = $props();
+  let { user = {} } = $props();
 </script>
 
 <header class="sticky inset-x-0 top-0 z-[48] flex w-full flex-wrap border-b bg-white py-2.5 text-sm md:flex-nowrap md:justify-start lg:ps-[260px] dark:border-neutral-700 dark:bg-neutral-800">
@@ -49,12 +49,11 @@
               aria-expanded="false"
               aria-label="Dropdown">
               {#if user.avatar_url}
-                <img
-                  class="size-10 shrink-0 rounded-full"
-                  src={user.avatar_url}
-                  alt="Avatar" />
+                <img class="size-10 shrink-0 rounded-full" src={user.avatar_url} alt="Avatar" />
               {:else}
-                <span class="rounded-full bg-brand-600 dark:bg-brand-900 text-white text-lg font-bold shadow-sm shadow-gray-500 dark:shadow-none h-12 w-12 flex items-center justify-center">{user.full_name?.charAt(0) || "U"}</span>
+                <span class="flex h-12 w-12 items-center justify-center rounded-full bg-brand-600 text-lg font-bold text-white shadow-sm shadow-gray-500 dark:bg-brand-900 dark:shadow-none">
+                  {user.full_name?.charAt(0) || "U"}
+                </span>
               {/if}
             </button>
 

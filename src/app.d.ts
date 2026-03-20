@@ -50,6 +50,14 @@ declare global {
     }
     interface Window {
       HSStaticMethods: IStaticMethods;
+      HSOverlay: {
+        open: (el: string | HTMLElement) => void;
+        close: (el: string | HTMLElement) => void;
+        getInstance: (el: string | HTMLElement) => unknown;
+      };
+      HSSelect: {
+        getInstance: (el: string | HTMLElement) => unknown;
+      };
     }
     // interface Platform {}
   }

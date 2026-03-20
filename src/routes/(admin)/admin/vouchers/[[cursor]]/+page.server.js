@@ -4,8 +4,10 @@ import { arktype } from "sveltekit-superforms/adapters";
 import { redirect, setFlash } from "sveltekit-flash-message/server";
 import { VoucherCodeDefaults, VoucherCodeSchema } from "$lib/schemas";
 import { message, superValidate, setError, fail } from "sveltekit-superforms";
+import { assertAdmin } from "$lib/server/auth";
 
 export async function load(event) {
+  assertAdmin(event);
   const form = await superValidate(arktype(VoucherCodeSchema, { defaults: VoucherCodeDefaults }));
 
   const cursor = event.url.searchParams.get("cursor");
@@ -17,7 +19,13 @@ export async function load(event) {
       resource: url,
       event,
     });
-    return await res?.json();
+
+    // Handle API unavailable
+    if (!res?.ok) {
+      return { data: { vouchers: [], products: [], email_templates: [] }, metadata: { items_count: 0 }, apiError: true };
+    }
+
+    return await res.json();
   };
 
   let noJS = !!event.url.searchParams.get("noJS");
@@ -31,6 +39,7 @@ export async function load(event) {
 
 export const actions = {
   create: async (event) => {
+    assertAdmin(event);
     const form = await superValidate(event, arktype(VoucherCodeSchema, { defaults: VoucherCodeDefaults }));
 
     if (!form.valid) {
@@ -72,6 +81,7 @@ export const actions = {
   },
 
   update: async (event) => {
+    assertAdmin(event);
     const form = await superValidate(event, arktype(VoucherCodeSchema, { defaults: VoucherCodeDefaults }));
     if (!form.valid) {
       return message(form, { type: "error", msg: "There was an error process this request. Refresh the browser and try again" }, { status: 422 });
@@ -110,6 +120,7 @@ export const actions = {
   },
 
   delete: async (event) => {
+    assertAdmin(event);
     const form = await superValidate(event, arktype(type({ id: type("string>3") }), { defaults: { id: "" } }));
 
     if (!form.valid) {

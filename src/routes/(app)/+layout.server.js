@@ -11,6 +11,12 @@ export async function load(event) {
       resource: "user/wallet-balance",
       event,
     });
+
+    // Handle API unavailable - return null balance instead of throwing
+    if (!res?.ok) {
+      return { data: { wallet_balance: null }, error: true };
+    }
+
     return await res?.json();
   };
 

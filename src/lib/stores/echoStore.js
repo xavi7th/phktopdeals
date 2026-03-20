@@ -1,16 +1,15 @@
 import { writable, get } from "svelte/store";
 import { getEchoClient, disconnectEcho } from "./echoClient.js";
-import type { ChatMessage } from "$lib/types.d.ts";
 
 // Connection state
 export const connectionStatus = writable("disconnected");
 export const reconnectAttempts = writable(0);
 
 // Message queue for offline scenarios
-export const messageQueue = writable<ChatMessage[]>([]);
+export const messageQueue = writable([]);
 
 // Actions
-export const connect = async (): Promise<void> => {
+export const connect = async () => {
   connectionStatus.set("connecting");
   reconnectAttempts.set(0);
 
@@ -26,31 +25,32 @@ export const connect = async (): Promise<void> => {
   }
 };
 
-export const disconnect = (): void => {
+export const disconnect = () => {
   disconnectEcho();
   connectionStatus.set("disconnected");
   messageQueue.set([]);
 };
 
-export const subscribe = (channel: string, callback: (data: ChatMessage) => void): void => {
+export const subscribe = (channel, callback) => {
   const echo = getEchoClient();
   if (echo) {
-    echo.private(channel)
+    echo
+      .private(channel)
       .listen(callback)
-      .error((err: Error) => {
+      .error((err) => {
         console.error("Echo subscription failed:", err);
       });
   }
 };
 
-export const unsubscribe = (channel: string): void => {
+export const unsubscribe = (channel) => {
   const echo = getEchoClient();
   if (echo) {
     echo.private(channel).stop();
   }
 };
 
-export const sendMessage = async (conversationId: string, message: ChatMessage): Promise<void> => {
+export const sendMessage = async (conversationId, message) => {
   const echo = getEchoClient();
   if (!echo) {
     console.error("Echo not connected");
@@ -62,12 +62,12 @@ export const sendMessage = async (conversationId: string, message: ChatMessage):
 };
 
 // Queue message for later sending
-export const queueMessage = (message: ChatMessage): void => {
+export const queueMessage = (message) => {
   messageQueue.update((msgs) => [...msgs, message]);
 };
 
 // Process queued messages on reconnect
-export const processQueue = async (): Promise<void> => {
+export const processQueue = async () => {
   const queue = get(messageQueue);
 
   for (const message of queue) {

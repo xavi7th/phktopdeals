@@ -17,36 +17,6 @@ export async function load(event) {
       icon: "walletSVG",
       reload: true,
     },
-    // {
-    //     name: 'Wishlists',
-    //     description: 'Track your desired items',
-    //     uri: '/user/wishlist',
-    //     icon: 'heartSVG',
-    // },
-    // {
-    //     name: 'Referrals',
-    //     description: 'Invite friends and track rewards',
-    //     uri: '/user/referrals',
-    //     icon: 'shareSVG',
-    // },
-    // {
-    //     name: 'Redeem Balance Card',
-    //     description: 'Top-up your balance wallet',
-    //     uri: '/user/wishlist',
-    //     icon: 'creditCardSVG',
-    // },
-    // {
-    //     name: 'Bulk Order',
-    //     description: 'Quick Bulk Purchase Submission',
-    //     uri: '/user/bulk-order',
-    //     icon: 'dollarCircleSVG',
-    // },
-    // {
-    //     name: 'Verify Account',
-    //     description: 'Submit for unrestricted shopping',
-    //     uri: '/user/verify-account',
-    //     icon: 'shieldTickSVG',
-    // },
     {
       name: "Gift Cards",
       description: "Variety of Gift Cards",
@@ -83,7 +53,13 @@ export async function load(event) {
       resource: "user/wallet-balance",
       event,
     });
-    return await res?.json();
+
+    // Handle API unavailable
+    if (!res?.ok) {
+      return { data: { wallet_balance: null }, apiError: true };
+    }
+
+    return await res.json();
   };
 
   const [details] = await Promise.all([fetchWalletBalance()]);
@@ -93,5 +69,6 @@ export async function load(event) {
     user: event.locals.session.data?.user || {},
     user_routes,
     wallet_balance: details.data?.wallet_balance,
+    apiError: details.apiError,
   };
 }

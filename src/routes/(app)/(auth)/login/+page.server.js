@@ -11,10 +11,6 @@ export async function load(event) {
     });
   }
 
-  event.setHeaders({
-    "Cache-Control": "max-age=604800, stale-while-revalidate=86400, immutable",
-  });
-
   return {
     message: event.url.searchParams.has("verification") ? "Your email account has been verified." : undefined,
   };
@@ -52,6 +48,7 @@ export const actions = {
      * @hack user was already logged in, logout so they can retry again since we cannot determine if this is a user or an admin
      */
     if (response?.status == 205) {
+      await event.locals.session.destroy();
       redirect(302, "/logout");
     }
 

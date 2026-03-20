@@ -15,6 +15,7 @@
     msg = [],
     value = $bindable([]),
     options = [],
+    children,
     ...rest
   } = $props();
 </script>
@@ -56,7 +57,7 @@
         <option value={val.toString().toLowerCase()}>{val}</option>
       {/each}
     {:else}
-      <slot />
+      {@render children?.()}
     {/if}
   </select>
 

@@ -1,12 +1,10 @@
 import { eSimDefaults } from "$lib/schemas";
 import { createAction, getData } from "../../prepareProductListings.js";
+import { assertAdmin } from "$lib/server/auth";
 
 export async function load(event) {
+  assertAdmin(event);
   let data = await getData(event, eSimDefaults);
-
-  event.setHeaders({
-    "Cache-Control": "public, max-age=604800",
-  });
 
   return {
     eSimForm: data.form,
@@ -15,5 +13,8 @@ export async function load(event) {
 }
 
 export const actions = {
-  default: (event) => createAction(event, eSimDefaults),
+  default: (event) => {
+    assertAdmin(event);
+    return createAction(event, eSimDefaults);
+  },
 };

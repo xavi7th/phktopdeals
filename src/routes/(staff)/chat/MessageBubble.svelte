@@ -1,5 +1,7 @@
 <script>
-  let { message } = $props();
+  import { fade, slide } from "svelte/transition";
+
+  let { message, isNew = false } = $props();
 
   function formatTime(dateString) {
     const date = new Date(dateString);
@@ -15,7 +17,7 @@
   let senderName = $derived(message.sender?.name || "Guest");
 </script>
 
-<div class="flex {isStaff ? 'justify-end' : 'justify-start'}">
+<div class="flex {isStaff ? 'justify-end' : 'justify-start'}" in:fade={{ duration: 200 }}>
   <div class="max-w-[70%] {isStaff ? 'order-2' : 'order-1'}">
     <!-- Sender Name (for customer messages) -->
     {#if !isStaff}
@@ -25,7 +27,7 @@
     {/if}
 
     <!-- Message Bubble -->
-    <div class="rounded-lg px-3 py-2 {isStaff ? 'rounded-br-sm bg-orange-500 text-white' : 'rounded-bl-sm bg-gray-100 text-gray-900 dark:bg-neutral-700 dark:text-white'}">
+    <div class="rounded-lg px-3 py-2 transition-all duration-200 {isStaff ? 'rounded-br-sm bg-orange-500 text-white' : 'rounded-bl-sm bg-gray-100 text-gray-900 dark:bg-neutral-700 dark:text-white'}">
       <p class="whitespace-pre-wrap break-words text-sm">
         {message.content}
       </p>

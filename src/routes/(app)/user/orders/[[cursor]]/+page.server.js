@@ -58,18 +58,20 @@ export async function load(event) {
       resource: url,
       event,
     });
-    return await res?.json();
-  };
 
-  event.setHeaders({
-    "Cache-Control": "public, max-age=3600, stale-while-revalidate=86400",
-  });
+    // Handle API unavailable
+    if (!res?.ok) {
+      return { data: [], metadata: { items_count: 0 }, apiError: true };
+    }
+
+    return await res.json();
+  };
 
   let noJS = !!event.url.searchParams.get("noJS");
 
   return {
     /** @type { Promise< { data: import('$lib/types.js').UserOrder[] , metadata: { items_count: number; next_page_cursor : string; previous_page_cursor: string; } } > } */
-    pageData: noJS ? await fetchUserOrders() : fetchUserOrders(), // This must come first to force awaiting in all noJS contexts
+    pageData: noJS ? await fetchUserOrders() : fetchUserOrders(),
     orderTabs,
     filter: event.url.searchParams.get("filter"),
   };

@@ -19,7 +19,7 @@ let echoClient = null;
 let reconnectAttempts = 0;
 let reconnectTimeout = null;
 
-export const getEchoClient = (): Echo => {
+export const getEchoClient = () => {
   if (!echoClient) {
     echoClient = new Echo({
       ...REVERB_CONFIG,
@@ -69,17 +69,14 @@ export const getEchoClient = (): Echo => {
   return echoClient;
 };
 
-function attemptReconnect(): void {
+function attemptReconnect() {
   if (reconnectAttempts >= RECONNECT_MAX_ATTEMPTS) {
     console.error("Max reconnect attempts reached");
     return;
   }
 
   // Calculate exponential backoff delay
-  const delay = Math.min(
-    RECONNECT_BASE_DELAY * Math.pow(2, reconnectAttempts),
-    RECONNECT_MAX_DELAY
-  );
+  const delay = Math.min(RECONNECT_BASE_DELAY * Math.pow(2, reconnectAttempts), RECONNECT_MAX_DELAY);
 
   console.log(`Attempting reconnect in ${delay}ms (attempt ${reconnectAttempts + 1})`);
 
@@ -92,7 +89,7 @@ function attemptReconnect(): void {
   }, delay);
 }
 
-export const disconnectEcho = (): void => {
+export const disconnectEcho = () => {
   if (reconnectTimeout) {
     clearTimeout(reconnectTimeout);
     reconnectTimeout = null;
@@ -105,10 +102,10 @@ export const disconnectEcho = (): void => {
   }
 };
 
-export const getReconnectAttempts = (): number => {
+export const getReconnectAttempts = () => {
   return reconnectAttempts;
 };
 
-export const resetReconnectAttempts = (): void => {
+export const resetReconnectAttempts = () => {
   reconnectAttempts = 0;
 };

@@ -16,24 +16,27 @@ export async function load(event) {
       event,
     });
 
-    return await res?.json();
+    // Handle API unavailable
+    if (!res?.ok) {
+      return { data: null, apiError: true };
+    }
+
+    return await res.json();
   };
 
   const [details] = await Promise.all([fetchProductDetails()]);
 
-  if (!details.data) {
+  // Only 404 if API was successful but product not found
+  if (!details.apiError && !details.data) {
     error(404);
   }
-
-  event.setHeaders({
-    "Cache-Control": "public, max-age=3600, stale-while-revalidate=86400",
-  });
 
   return {
     form,
     /** @type { import('$lib/types').Product } */
     product: details.data,
     user: event.locals.session.data?.user,
+    apiError: details.apiError,
   };
 }
 
@@ -46,12 +49,20 @@ export const actions = {
       return fail(422, { form });
     }
 
+    const isAuthenticated = !!event.locals.session.data?.user?.email;
+
     let res = await api({
       method: "post",
-      resource: form.data.is_auth_purchase ? "purchase-invoices" : "g/purchase-invoices",
+      resource: isAuthenticated ? "purchase-invoices" : "g/purchase-invoices",
       data: form.data,
       event,
     });
+
+    // Handle API unavailable (503)
+    if (res?.status === 503) {
+      setFlash({ type: "error", msg: "Our service is temporarily unavailable. Please try again later." }, event);
+      return fail(503, { form });
+    }
 
     if (res?.status == 422) {
       let errRes = await res.json();

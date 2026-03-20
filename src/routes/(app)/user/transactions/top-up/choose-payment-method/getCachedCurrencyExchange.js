@@ -22,7 +22,13 @@ export async function getCachedExchangeRate(event) {
   });
 
   if (!response.ok) {
-    throw new Error("Failed to fetch exchange rate");
+    // Return fallback instead of throwing
+    return {
+      rate: null,
+      fromCache: false,
+      lastUpdated: "Unavailable",
+      apiError: true,
+    };
   }
 
   /** @type {import('$lib/types').ExchangeRate} */
@@ -55,11 +61,12 @@ export async function getNOWAvailableCurrencies(event) {
     event,
   });
 
+  // Handle API unavailable - return empty array instead of throwing
   if (!res?.ok) {
-    throw new Error("Failed to fetch available crypto currencies.");
+    return [];
   }
 
-  const currencies = await res?.json();
+  const currencies = await res.json();
 
   lastFetchTime = now;
   cachedCurrencies = currencies;

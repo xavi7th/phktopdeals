@@ -17,6 +17,39 @@ import { PUBLIC_VITE_BASE_API } from "$env/static/public";
 import { handleDeviceDetector } from "sveltekit-device-detector";
 import { VITE_SESSION_NAME, APP_SESSION_KEY } from "$env/static/private";
 
+/**
+ * In-memory cache for authenticated user details.
+ * Avoids hitting the API on every single request.
+ *
+ * @type {Map<string, { user: import('$lib/types').AppUser, cachedAt: number }>}
+ */
+const userCache = new Map();
+const USER_CACHE_TTL_MS = 2 * 60 * 1000; // 2 minutes
+
+/**
+ * Evict stale entries periodically to prevent memory leaks.
+ * Runs at most once per minute.
+ */
+let lastEviction = 0;
+function evictStaleCache() {
+  const now = Date.now();
+  if (now - lastEviction < 60_000) return;
+  lastEviction = now;
+  for (const [key, entry] of userCache) {
+    if (now - entry.cachedAt > USER_CACHE_TTL_MS) {
+      userCache.delete(key);
+    }
+  }
+}
+
+/**
+ * Clear a specific user from cache (e.g. on logout or role change).
+ * @param {string} sessionKey
+ */
+export function clearUserCache(sessionKey) {
+  userCache.delete(sessionKey);
+}
+
 const sessionHandler = handleSession({
   secret: APP_SESSION_KEY,
   expires: 10, // 160 minutes
@@ -42,19 +75,37 @@ async function logger({ event, resolve }) {
 
 async function getUserDetails({ event, resolve }) {
   const cookies = parse(event.request.headers.get("cookie") || "");
-  await event.locals.session.update(({ api_session }) => ({ api_session: cookies[VITE_SESSION_NAME] }));
+  const apiSessionKey = cookies[VITE_SESSION_NAME];
+  await event.locals.session.update(() => ({ api_session: apiSessionKey }));
 
-  // console.log({reqUrl: event.url.pathname, user: event.locals.session.data, gettingDetails: !event.locals.session.data?.user?.email && !event.request.url.includes("assets")});
   if (!event.locals.session.data?.user?.email && !event.request.url.includes("assets")) {
-    const getUserDetails = await api({
-      method: "get",
-      resource: "user",
-      event,
-    });
+    evictStaleCache();
 
-    if (getUserDetails?.status == 200) {
-      //TODO: Set a localStorage with key user and expiration time for 5mins. If that key is present, no need to getUserDetails. @see https://www.sohamkamani.com/javascript/localstorage-with-ttl-expiry/
-      await event.locals.session.update(async ({ user }) => ({ user: (await getUserDetails?.json())?.data || { is_active: false } })); //use this to determine auth on frontend. Before accessing auth routes if this is null redirect to login page
+    // Check cache first — avoid hitting the API on every request
+    const cached = apiSessionKey ? userCache.get(apiSessionKey) : null;
+    if (cached && Date.now() - cached.cachedAt < USER_CACHE_TTL_MS) {
+      await event.locals.session.update(() => ({ user: cached.user }));
+    } else {
+      try {
+        const response = await api({
+          method: "get",
+          resource: "user",
+          event,
+        });
+
+        if (response?.ok) {
+          const user = (await response?.json())?.data || { is_active: false };
+          await event.locals.session.update(() => ({ user }));
+
+          // Cache the user for subsequent requests
+          if (apiSessionKey && user?.email) {
+            userCache.set(apiSessionKey, { user, cachedAt: Date.now() });
+          }
+        }
+      } catch (error) {
+        // API unavailable - continue without user details, don't block the request
+        console.error("Failed to get user details:", error.message);
+      }
     }
   }
 
@@ -65,36 +116,46 @@ async function getUserDetails({ event, resolve }) {
   return resolve(event);
 }
 
-function authorize({ event, resolve }) {
+async function authorize({ event, resolve }) {
+  const user = event.locals.session.data?.user;
+  const isAuthenticated = !!user?.email;
+  const isAdmin = !!user?.is_admin;
+  const path = event.url.pathname;
+
   /**
    * @auth Protect routes that need authentication
    * NOTE: 303 will always redirect with GET, 307 will redirect with the original request method, while 302 is just 303 made popular
    */
-  if (["/user", "/admin"].some((forbiddenUrlPattern) => event.url.pathname.startsWith(forbiddenUrlPattern)) && !event.locals.session.data?.user?.full_name) {
+  if (["/user", "/admin"].some((prefix) => path.startsWith(prefix)) && !isAuthenticated) {
     redirect(303, "/login");
   }
 
   /**
-   * @guest Protect guest routes
+   * @guest Protect guest routes — redirect authenticated users away
    */
-  if (["/login", "/register"].some((guestRoutes) => event.route.id?.includes(guestRoutes)) && event.locals.session.data?.user?.full_name) {
-    if (event.locals.session.data?.user?.is_admin) {
-      redirect(303, "/admin/dashboard");
-    }
-    redirect(303, "/store/products");
-  }
-  /**
-   * @authorize Protect User routes from admins
-   */
-  if (event.url.pathname.startsWith("/user") && event.locals.session.data?.user?.is_admin) {
-    redirect(303, "/admin/dashboard");
+  if (["/login", "/register"].some((route) => event.route.id?.includes(route)) && isAuthenticated) {
+    redirect(303, isAdmin ? "/admin/dashboard" : "/store/products");
   }
 
   /**
-   * @authorize Protect Admin routes
+   * @authorize Admin accessing user routes → force logout & re-login
+   * Admins must not operate under user context. Destroy session so they
+   * re-authenticate with the correct role/account.
    */
-  if (event.url.pathname.startsWith("/admin") && !event.locals.session.data?.user?.is_admin) {
-    redirect(303, "/logout");
+  if (path.startsWith("/user") && isAdmin) {
+    const apiSessionKey = event.locals.session.data?.api_session;
+    if (apiSessionKey) clearUserCache(apiSessionKey);
+    await event.locals.session.destroy();
+    event.cookies.delete(VITE_SESSION_NAME, { path: "/" });
+    redirect(303, "/login");
+  }
+
+  /**
+   * @authorize User accessing admin routes → redirect to user area
+   * Regular users are silently bounced back to the store.
+   */
+  if (path.startsWith("/admin") && !isAdmin) {
+    redirect(303, "/store/products");
   }
 
   return resolve(event);
@@ -120,6 +181,24 @@ async function addSecurityHeaders({ event, resolve }) {
 
   Object.entries(securityHeaders).forEach(([header, value]) => response.headers.set(header, value));
 
+  /**
+   * Centralized Cache-Control headers.
+   * Individual routes should NOT set their own Cache-Control.
+   *
+   * - Vite hashed assets (/_app/immutable/): cache forever — filenames change on rebuild
+   * - Other static files (.js, .css, images, fonts): short cache with revalidation
+   * - HTML pages: always revalidate so new deploys are picked up immediately
+   */
+  const path = event.url.pathname;
+  if (path.startsWith("/_app/immutable/")) {
+    response.headers.set("Cache-Control", "public, max-age=31536000, immutable");
+  } else if (/\.(js|css|png|jpg|jpeg|gif|svg|ico|woff2?|ttf|eot)$/.test(path)) {
+    response.headers.set("Cache-Control", "public, max-age=3600");
+  } else if (!response.headers.has("Cache-Control") || response.headers.get("Cache-Control")?.includes("public")) {
+    // Override any per-route public caching on HTML pages
+    response.headers.set("Cache-Control", "private, no-cache");
+  }
+
   return response;
 }
 
@@ -142,6 +221,8 @@ export const handleFetch = async ({ request, fetch, event }) => {
     }
 
     if (["logout", "api/v1/user"].every((url) => !response.url.includes(url))) {
+      const apiSessionKey = event.locals.session.data?.api_session;
+      if (apiSessionKey) clearUserCache(apiSessionKey);
       await event.locals.session.destroy();
 
       redirect(303, "/logout");
@@ -158,8 +239,9 @@ export const handleFetch = async ({ request, fetch, event }) => {
       cookies.forEach((cookie) => {
         event.cookies.set(cookie.name, cookie.value, {
           ...cookie,
-          sameSite: cookie.sameSite,
+          sameSite: cookie.sameSite || "Lax",
           secure: !dev,
+          httpOnly: cookie.httpOnly ?? true,
         });
       });
     }
@@ -177,7 +259,7 @@ export const handleError = async ({ event, error, message, status }) => {
       error,
       event: {
         url: event.url.href,
-        locals: JSON.stringify(event.locals.session.data, null, 4),
+        userEmail: event.locals.session.data?.user?.email || "anonymous",
       },
       message,
       status,

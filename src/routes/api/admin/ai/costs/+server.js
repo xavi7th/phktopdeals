@@ -1,10 +1,10 @@
-import { json } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
 
 /** @type {import('./$types').RequestHandler} */
 export async function GET({ url, locals, fetch }) {
     const token = locals.user?.token;
     if (!token) {
-        return json({ error: 'Unauthorized' }, { status: 401 });
+        error(401, 'Unauthorized');
     }
 
     const from = url.searchParams.get('from') || '';
@@ -26,5 +26,8 @@ export async function GET({ url, locals, fetch }) {
     );
 
     const data = await response.json();
-    return json(data, { status: response.status });
+    return new Response(JSON.stringify(data), {
+        status: response.status,
+        headers: { 'content-type': 'application/json' }
+    });
 }

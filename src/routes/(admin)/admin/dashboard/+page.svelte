@@ -1,14 +1,13 @@
 <script>
-  import Table from '$lib/Components/Table.svelte';
-  import SvgIcon from '$lib/Components/SvgIcon.svelte';
-  import TableSkeleton from '$lib/Components/TableSkeleton.svelte';
-  import { checkMarkFilledAlt, warningIcon } from '$lib/Components/iconPaths';
+  import Table from "$lib/Components/Table.svelte";
+  import SvgIcon from "$lib/Components/SvgIcon.svelte";
+  import TableSkeleton from "$lib/Components/TableSkeleton.svelte";
+  import { checkMarkFilledAlt, warningIcon } from "$lib/Components/iconPaths";
 
-  let { data } = $props()
+  let { data } = $props();
 
-  let { transactions } = data
+  let { transactions } = data;
 </script>
-
 
 <div class="space-y-4 p-4 sm:space-y-6 sm:p-6">
   <div class="grid gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
@@ -127,7 +126,9 @@
         <div class="grid gap-3 md:flex md:items-center md:justify-between">
           <div>
             <div class="inline-flex gap-x-2">
-              <a class="inline-flex items-center gap-x-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-50 focus:bg-gray-50 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-transparent dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800" href="#">
+              <a
+                class="inline-flex items-center gap-x-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-50 focus:bg-gray-50 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-transparent dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
+                href="#">
                 View all
               </a>
             </div>
@@ -187,19 +188,19 @@
           </td>
           <td class="size-px whitespace-nowrap">
             <div class="px-6 py-3 text-start">
-              <span class="text-sm font-semibold text-gray-800 dark:text-neutral-200 mb-1 block">{new Date(transaction.transaction_date).toLocaleDateString()}</span>
+              <span class="mb-1 block text-sm font-semibold text-gray-800 dark:text-neutral-200">{new Date(transaction.transaction_date).toLocaleDateString()}</span>
 
               <span
-                    class="inline-flex items-center gap-x-1 px-1.5 py-1 text-xs font-medium {transaction.status == 'finished' || transaction.status == 'confirmed'
-                      ? 'bg-teal-100 text-teal-800 dark:bg-teal-500/10 dark:text-teal-500'
-                      : (transaction.status == 'waiting' || transaction.status == 'confirming' || transaction.status == 'partially paid') && !transaction.is_processed
-                        ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-500/10 dark:text-yellow-500'
-                        : transaction.status == 'processing' || transaction.status == 'sending'
-                          ? 'bg-purple-200 text-purple-800 dark:bg-purple-500/10 dark:text-purple-500'
-                          : 'bg-red-100 text-red-800 dark:bg-red-500/10 dark:text-red-500'} rounded-full">
-                    <SvgIcon class="size-2.5" svgHeight={16} slot={transaction.is_processed ? checkMarkFilledAlt : warningIcon} />
-                    {transaction?.is_processed ? "Finished" : transaction?.status}
-                  </span>
+                class="inline-flex items-center gap-x-1 px-1.5 py-1 text-xs font-medium {transaction.status == 'finished' || transaction.status == 'confirmed'
+                  ? 'bg-teal-100 text-teal-800 dark:bg-teal-500/10 dark:text-teal-500'
+                  : (transaction.status == 'waiting' || transaction.status == 'confirming' || transaction.status == 'partially paid') && !transaction.is_processed
+                    ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-500/10 dark:text-yellow-500'
+                    : transaction.status == 'processing' || transaction.status == 'sending'
+                      ? 'bg-purple-200 text-purple-800 dark:bg-purple-500/10 dark:text-purple-500'
+                      : 'bg-red-100 text-red-800 dark:bg-red-500/10 dark:text-red-500'} rounded-full">
+                <SvgIcon class="size-2.5" svgHeight={16} slot={transaction.is_processed ? checkMarkFilledAlt : warningIcon} />
+                {transaction?.is_processed ? "Finished" : transaction?.status}
+              </span>
             </div>
           </td>
           <td class="size-px whitespace-nowrap">

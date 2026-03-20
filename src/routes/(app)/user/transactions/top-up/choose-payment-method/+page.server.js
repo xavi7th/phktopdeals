@@ -8,10 +8,6 @@ import { getCachedExchangeRate, getNOWAvailableCurrencies } from "./getCachedCur
 export async function load(event) {
   const form = await superValidate(arktype(TopUpAccountSchema, { defaults: TopUpAccountDefaults }));
 
-  event.setHeaders({
-    "Cache-Control": "public, max-age=3600, stale-while-revalidate=86400",
-  });
-
   return {
     form,
     /** @type { Promise<import('$lib/types').NowCryptoCurrency[]> } */
@@ -29,7 +25,11 @@ export const actions = {
       return fail(422, { form });
     }
 
-    redirect(303, `/user/transactions/top-up?currency=${form.data.payment_method}&amount=${form.data.amount}`);
+    await event.locals.session.update(() => ({
+      pending_topup: { currency: form.data.payment_method, amount: form.data.amount },
+    }));
+
+    redirect(303, `/user/transactions/top-up`);
 
     return message(form, { type: "error", msg: "There was an unknown error." }, { status: 400 });
   },

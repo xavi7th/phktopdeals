@@ -2,8 +2,10 @@ import { type } from "arktype";
 import { api } from "$lib/helpers";
 import { arktype } from "sveltekit-superforms/adapters";
 import { message, superValidate, fail, setError } from "sveltekit-superforms";
+import { assertAdmin } from "$lib/server/auth";
 
 export async function load(event) {
+  assertAdmin(event);
   const form = await superValidate(
     arktype(
       type({
@@ -21,7 +23,13 @@ export async function load(event) {
       resource: "product-email-templates",
       event,
     });
-    return await res?.json();
+
+    // Handle API unavailable
+    if (!res?.ok) {
+      return { data: [], apiError: true };
+    }
+
+    return await res.json();
   };
 
   const [templates] = await Promise.all([fetchEmailTemplates()]);
@@ -30,11 +38,13 @@ export async function load(event) {
     form,
     /** @type { { alias: string, instructions: string, id: string|undefined }[] } */
     templates: templates.data || [],
+    apiError: templates.apiError,
   };
 }
 
 export const actions = {
   createEmailTemplate: async (event) => {
+    assertAdmin(event);
     const form = await superValidate(event, arktype(type({ alias: type("string"), instructions: type("string") }), { defaults: { alias: "", instructions: "" } }));
 
     if (!form.valid) {
@@ -74,6 +84,7 @@ export const actions = {
   },
 
   updateEmailTemplate: async (event) => {
+    assertAdmin(event);
     const form = await superValidate(event, arktype(type({ alias: type("string"), instructions: type("string"), id: type("string>3") }), { defaults: { alias: "", instructions: "", id: "" } }));
 
     if (!form.valid) {
@@ -113,6 +124,7 @@ export const actions = {
   },
 
   deleteEmailTemplate: async (event) => {
+    assertAdmin(event);
     const form = await superValidate(event, arktype(type({ id: type("string>3") }), { defaults: { id: "" } }));
 
     if (!form.valid) {

@@ -6,7 +6,7 @@
                 msg={form?.success || form?.errors?.password_confirmation && form?.errors?.password_confirmation[0]} label="Confirm Password *"
                 togglePw='["#password-confirmation", "#hs-floating-input-password-value"]'/> -->
 <script>
-  import { eyeOpen } from "../iconPaths";
+  import { eyeOpen, eyeClosed } from "../iconPaths";
   import SvgIcon from "../SvgIcon.svelte";
   import FormMessage from "$lib/Components/FormMessage.svelte";
 
@@ -24,6 +24,9 @@
     msg = [],
     ...rest
   } = $props();
+
+  let showPassword = $state(false);
+  let inputType = $derived(showPassword ? "text" : rest.type || "text");
 </script>
 
 <div class="relative flex-1 {className}">
@@ -32,6 +35,7 @@
     id={name}
     {placeholder}
     {...rest}
+    type={inputType}
     bind:value
     class="peer block w-full rounded-lg border-gray-200 {size} text-sm placeholder:text-transparent autofill:pb-2 autofill:pt-6
       focus:border-brand-500/50 focus:pb-2 focus:pt-6 focus:ring-brand-500/50 disabled:pointer-events-none
@@ -53,11 +57,18 @@
   {#if togglePw}
     <button
       type="button"
-      data-hs-toggle-password={`{"target": ${togglePw} }`}
+      onclick={() => (showPassword = !showPassword)}
       class="absolute top-0 {msg?.toString()
         ? 'bottom-7'
         : 'bottom-0'} end-0 z-20 flex cursor-pointer items-center rounded-e-md px-3 text-gray-400 focus:text-blue-600 focus:outline-none dark:text-neutral-600 dark:focus:text-blue-500">
-      <SvgIcon class="size-3.5 shrink-0 {msg?.toString() ? 'text-red-500' : ''}" svgHeight={24} stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" slot={eyeOpen} />
+      <SvgIcon
+        class="size-3.5 shrink-0 {msg?.toString() ? 'text-red-500' : ''}"
+        svgHeight={24}
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        slot={showPassword ? eyeClosed : eyeOpen} />
     </button>
   {/if}
 

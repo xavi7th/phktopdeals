@@ -3,8 +3,8 @@
   import Table from "$lib/Components/Table.svelte";
   import TableSkeleton from "$lib/Components/TableSkeleton.svelte";
   import CreateCategory from "$partials/categories/CreateCategory.svelte";
-  import ConfirmAction from '$lib/Components/ConfirmAction.svelte';
-  import LoadingButton from '$lib/Components/FormInputs/LoadingButton.svelte';
+  import ConfirmAction from "$lib/Components/ConfirmAction.svelte";
+  import LoadingButton from "$lib/Components/FormInputs/LoadingButton.svelte";
 
   let { data } = $props();
 
@@ -73,7 +73,10 @@
                 <input type="text" name="id" class="hidden" value={category.id} />
               </div>
 
-              <LoadingButton class="inline-flex items-center gap-x-1 text-sm font-medium text-red-600 decoration-2 hover:underline focus:underline focus:outline-none dark:text-red-500 m-0 border-0 bg-transparent p-0 shadow-none" label="Delete" overwriteStyles />
+              <LoadingButton
+                class="m-0 inline-flex items-center gap-x-1 border-0 bg-transparent p-0 text-sm font-medium text-red-600 decoration-2 shadow-none hover:underline focus:underline focus:outline-none dark:text-red-500"
+                label="Delete"
+                overwriteStyles />
             </ConfirmAction>
 
             <!-- <form method="POST" action="?/deleteCategory" class="inline-flex items-center gap-x-1 text-sm font-medium text-red-600 decoration-2 hover:underline focus:underline focus:outline-none dark:text-red-500">

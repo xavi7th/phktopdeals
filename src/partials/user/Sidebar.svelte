@@ -32,7 +32,7 @@
   tabindex="-1"
   aria-label="Sidebar">
   <div class="relative">
-    <div class="absolute hidden items-center rounded-full border border-gray-200 bg-gray-200 p-0.5 lg:flex dark:border-white/20 dark:bg-neutral-800 right-[-50%] top-2">
+    <div class="absolute right-[-50%] top-2 hidden items-center rounded-full border border-gray-200 bg-gray-200 p-0.5 lg:flex dark:border-white/20 dark:bg-neutral-800">
       <a
         href="/user/transactions/top-up/choose-payment-method"
         title=""

@@ -1,20 +1,32 @@
 import QRCode from "qrcode";
 import { api } from "$lib/helpers";
+import { redirect } from "@sveltejs/kit";
 
 export async function load(event) {
+  const pending = event.locals.session.data?.pending_topup;
+
+  if (!pending?.amount || !pending?.currency) {
+    redirect(303, "/user/transactions/top-up/choose-payment-method");
+  }
+
   const fetchPaymentDetails = async () => {
     const res = await api({
       method: "post",
       resource: "user-transactions",
       data: {
-        price_amount: event.url.searchParams.get("amount"),
-        payment_method: event.url.searchParams.get("currency"),
+        price_amount: pending.amount,
+        payment_method: pending.currency,
         description: "Crypto wallet balance top up",
       },
       event,
     });
 
-    return await res?.json();
+    // Handle API unavailable
+    if (!res?.ok) {
+      return { data: null, apiError: true };
+    }
+
+    return await res.json();
   };
 
   /** @param {string} text */
@@ -28,11 +40,15 @@ export async function load(event) {
 
   const [details] = await Promise.all([fetchPaymentDetails()]);
 
+  // Clear session data after use
+  await event.locals.session.update(() => ({ pending_topup: null }));
+
   return {
-    amount: event.url.searchParams.get("amount"),
-    currency: event.url.searchParams.get("currency"),
+    amount: pending.amount,
+    currency: pending.currency,
     user: event.locals.session.data?.user,
     details: details.data,
     qrCode: await generateQR(details.data?.pay_address || "invalid address"),
+    apiError: details.apiError,
   };
 }

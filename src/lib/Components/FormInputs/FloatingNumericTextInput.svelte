@@ -60,7 +60,7 @@
           class="inline-flex size-6 items-center justify-center gap-x-2 rounded-md border border-gray-200 bg-white text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-50 focus:bg-gray-50 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
           tabindex="-1"
           aria-label="Decrease"
-          on:click={decrement}>
+          onclick={decrement}>
           {@html minusIcon}
         </button>
         <input
@@ -79,7 +79,7 @@
           class="inline-flex size-6 items-center justify-center gap-x-2 rounded-md border border-gray-200 bg-white text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-50 focus:bg-gray-50 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
           tabindex="-1"
           aria-label="Increase"
-          on:click={increment}>
+          onclick={increment}>
           {@html plusIcon}
         </button>
       </div>

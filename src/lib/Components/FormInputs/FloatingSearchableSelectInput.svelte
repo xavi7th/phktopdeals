@@ -24,6 +24,7 @@
     hasSearch = true,
     msg = [],
     options = [],
+    children,
     ...rest
   } = $props();
 
@@ -70,7 +71,7 @@
         <option value={val.toString().toLowerCase()}>{val}</option>
       {/each}
     {:else}
-      <slot />
+      {@render children?.()}
     {/if}
 
     <!-- <option value="AF" data-hs-select-option={`{"icon": "<img class='inline-block size-4 rounded-full' src='https://cdn.pixabay.com/photo/2021/04/30/16/47/binance-logo-6219389_1280.png' alt='Af' />"}`} selected>

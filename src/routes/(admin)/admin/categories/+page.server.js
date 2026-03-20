@@ -3,8 +3,10 @@ import { arktype } from "sveltekit-superforms/adapters";
 import { brandDefaults, brandSchema } from "$lib/schemas";
 import { redirect, setFlash } from "sveltekit-flash-message/server";
 import { fail, setError, superValidate } from "sveltekit-superforms";
+import { assertAdmin } from "$lib/server/auth";
 
 export async function load(event) {
+  assertAdmin(event);
   const form = await superValidate(arktype(brandSchema, { defaults: brandDefaults }));
 
   const cursor = event.url.searchParams.get("cursor");
@@ -17,7 +19,12 @@ export async function load(event) {
       event,
     });
 
-    return await res?.json();
+    // Handle API unavailable
+    if (!res?.ok) {
+      return { data: [], metadata: { items_count: 0 }, apiError: true };
+    }
+
+    return await res.json();
   };
 
   let noJS = !!event.url.searchParams.get("noJS");
@@ -31,6 +38,7 @@ export async function load(event) {
 
 export const actions = {
   createCategory: async (event) => {
+    assertAdmin(event);
     const form = await superValidate(event, arktype(brandSchema, { defaults: brandDefaults }));
 
     if (!form.valid) {
@@ -73,6 +81,7 @@ export const actions = {
   },
 
   editCategory: async (event) => {
+    assertAdmin(event);
     const form = await superValidate(event, arktype(brandSchema, { defaults: brandDefaults }));
 
     console.log(form);
@@ -123,6 +132,7 @@ export const actions = {
 
   /** @param {import('@sveltejs/kit').RequestEvent} event */
   deleteCategory: async (event) => {
+    assertAdmin(event);
     const form = await superValidate(arktype(brandSchema, { defaults: brandDefaults }));
     const formData = await event.request.formData();
 

@@ -1,7 +1,7 @@
 import { redirect } from "@sveltejs/kit";
 
 export async function load({ locals }) {
-  if (!locals.session.data.recently_purchased && !locals.session.data.recently_purchased?.success) {
+  if (!locals.session.data.recently_purchased || !locals.session.data.recently_purchased?.success) {
     redirect(303, "/");
   }
 

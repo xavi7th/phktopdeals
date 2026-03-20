@@ -1,7 +1,9 @@
 import { api } from "$lib/helpers";
 import { fail } from "@sveltejs/kit";
+import { assertAdmin } from "$lib/server/auth";
 
 export async function load(event) {
+  assertAdmin(event);
   const fetchESimCards = async () => {
     const res = await api({
       method: "get",
@@ -9,24 +11,27 @@ export async function load(event) {
       event,
     });
 
-    return await res?.json();
+    // Handle API unavailable
+    if (!res?.ok) {
+      return { data: [], metadata: { items_count: 0 }, apiError: true };
+    }
+
+    return await res.json();
   };
 
   const [eSimsData] = await Promise.all([fetchESimCards()]);
-
-  event.setHeaders({
-    "Cache-Control": "public, max-age=3600, stale-while-revalidate=86400",
-  });
 
   return {
     /** @type { import('$lib/types').Product[] } */
     eSims: eSimsData.data,
     meta: eSimsData.metadata,
+    apiError: eSimsData.apiError,
   };
 }
 
 export const actions = {
   delete: async (event) => {
+    assertAdmin(event);
     const formData = await event.request.formData();
 
     const res = await api({

@@ -49,15 +49,15 @@
             <button
               id="hs-dropdown-account"
               type="button"
-              class="inline-flex size-[38px] items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold text-gray-800 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:bg-black"
+              class="inline-flex size-[38px] items-center justify-center gap-x-2 rounded-full border border-transparent text-sm font-semibold text-gray-800 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:bg-black dark:text-white"
               aria-haspopup="menu"
               aria-expanded="false"
               aria-label="Dropdown">
               {#if user?.avatar_url}
-                  <img class="size-[38px] shrink-0 rounded-full" src={user?.avatar_url} alt="Avatar" />
+                <img class="size-[38px] shrink-0 rounded-full" src={user?.avatar_url} alt="Avatar" />
               {:else}
                 <p class="text-2xl">
-                  {user?.full_name?.[0] || '?'}
+                  {user?.full_name?.[0] || "?"}
                 </p>
               {/if}
             </button>

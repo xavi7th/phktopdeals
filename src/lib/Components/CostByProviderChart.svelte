@@ -1,7 +1,5 @@
 <script>
-    import { Chart, registerables } from 'chart.js';
-
-    Chart.register(...registerables);
+    import { createChart, destroyChart } from '$lib/utils/chartUtils.js';
 
     let { providers = [] } = $props();
     let canvas;
@@ -14,37 +12,27 @@
     $effect(() => {
         if (!canvas) return;
 
-        if (chartInstance) {
-            chartInstance.destroy();
-        }
+        destroyChart(chartInstance);
 
-        chartInstance = new Chart(canvas, {
-            type: 'bar',
-            data: {
-                labels: providers.map((p) => p.provider),
-                datasets: [
-                    {
-                        label: 'Cost (USD)',
-                        data: providers.map((p) => Number(p.total_cost)),
-                        backgroundColor: providers.map(
-                            (p) => colors[p.provider] || '#6b7280'
-                        ),
-                    },
-                ],
-            },
+        chartInstance = createChart(canvas, 'bar', {
+            labels: providers.map((p) => p.provider),
+            datasets: [
+                {
+                    label: 'Cost (USD)',
+                    data: providers.map((p) => Number(p.total_cost)),
+                    backgroundColor: providers.map(
+                        (p) => colors[p.provider] || '#6b7280'
+                    ),
+                },
+            ],
             options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
                 scales: {
                     y: { beginAtZero: true, ticks: { callback: (v) => '$' + v } },
                 },
             },
         });
 
-        return () => {
-            if (chartInstance) chartInstance.destroy();
-        };
+        return () => destroyChart(chartInstance);
     });
 </script>
 

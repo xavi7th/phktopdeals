@@ -2,10 +2,10 @@
   import Header from "$partials/Header.svelte";
   import Footer from "$partials/Footer.svelte";
 
-  let { data } = $props();
+  let { data, children } = $props();
 </script>
 
 <Header wallet_balance={data.wallet_balance} />
 
-<slot></slot>
+{@render children?.()}
 <Footer />

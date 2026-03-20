@@ -110,7 +110,7 @@
                   <img class="size-10 shrink-0 rounded-full" src={user?.avatar_url} alt="Avatar" />
                 {:else}
                   <p class="text-2xl">
-                    {user?.full_name?.[0] || '?'}
+                    {user?.full_name?.[0] || "?"}
                   </p>
                 {/if}
               </a>
@@ -164,7 +164,7 @@
                   <img class="size-10 shrink-0 rounded-full" src={user?.avatar_url} alt="Avatar" />
                 {:else}
                   <p class="text-2xl">
-                    {user?.full_name?.[0] || '?'}
+                    {user?.full_name?.[0] || "?"}
                   </p>
                 {/if}
               </a>

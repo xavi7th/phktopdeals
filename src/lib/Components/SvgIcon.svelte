@@ -26,7 +26,7 @@
    * @see {@link FormMessage.svelte} for further information on usage.
    */
 
-  let { slot = undefined, fill = "none", minHeight = "10%", svgHeight = 24, svgWidth = svgHeight, stroke = "currentColor", strokeWidth = 2, ...rest } = $props();
+  let { slot = undefined, fill = "none", minHeight = "10%", svgHeight = 24, svgWidth = svgHeight, stroke = "currentColor", strokeWidth = 2, children, ...rest } = $props();
 </script>
 
 <svg
@@ -40,12 +40,11 @@
   stroke-linejoin="round"
   stroke-width={strokeWidth}
   {...rest}
-  style="--min-height:{minHeight}"
-  on:click>
+  style="--min-height:{minHeight}">
   {#if slot}
     {@html slot}
   {:else}
-    <slot />
+    {@render children?.()}
   {/if}
 </svg>
 

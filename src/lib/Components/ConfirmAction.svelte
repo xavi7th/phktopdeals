@@ -26,7 +26,7 @@ const { form, errors, message, delayed, submitting, timeout, enhance} = superFor
    */
 
   /** @type {Props} */
-  let { action, formData, msg = "Are you sure you want to proceed?" } = $props();
+  let { action, formData, msg = "Are you sure you want to proceed?", children } = $props();
   let name = "form-" + crypto.randomUUID().replaceAll("-", "").substring(0, 10);
 
   const { form, errors, message, delayed, submitting, timeout, enhance, constraints } = superForm(formData, { delayMs: 500, timeoutMs: 8000 });
@@ -67,7 +67,7 @@ const { form, errors, message, delayed, submitting, timeout, enhance} = superFor
     <div class="flex justify-end space-x-3">
       <button
         class="rounded-lg bg-gray-100 px-4 py-2 text-xs font-medium text-gray-700 ring-2 ring-gray-500 hover:bg-gray-200 focus:ring-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
-        on:click={cancelSubmit}>
+        onclick={cancelSubmit}>
         Cancel
       </button>
       <LoadingButton
@@ -75,12 +75,12 @@ const { form, errors, message, delayed, submitting, timeout, enhance} = superFor
         {timeout}
         {delayed}
         {submitting}
-        on:click={confirmSubmit}
+        onclick={confirmSubmit}
         label="Yes, Continue" />
     </div>
   </div>
 </dialog>
 
 <form method="POST" bind:this={formElement} {action} use:enhance={{ onSubmit: handleSubmit }} {name} id={name}>
-  <slot {form} {errors} {constraints} {message} />
+  {@render children?.({ form: $form, errors: $errors, constraints, message: $message })}
 </form>

@@ -49,7 +49,7 @@
             aria-expanded="false"
             aria-controls="slider-modal"
             data-hs-overlay="#slider-modal"
-            on:click={() => {
+            onclick={() => {
               curSlider = slider;
             }}>
             EDIT
@@ -85,7 +85,7 @@
 <Modal
   title="Details"
   name="view-order-details"
-  on:close={() => {
+  onclose={() => {
     setTimeout(() => history.back(), 600);
   }}>
   <div slot="content"></div>
