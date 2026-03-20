@@ -56,5 +56,5 @@
 {:else if view === "email"}
   <EmailCapture onsuccess={handleEmailSuccess} />
 {:else}
-  <ChatWindow />
+  <ChatWindow {isAuthenticated} />
 {/if}

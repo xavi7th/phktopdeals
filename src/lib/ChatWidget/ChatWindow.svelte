@@ -9,11 +9,15 @@
   import RatingModal from "./RatingModal.svelte";
   import EscalationPrompt from "./components/EscalationPrompt.svelte";
 
+  // Props
+  let { isAuthenticated = false } = $props();
+
   // PHK brand colors
   const BRAND_COLOR = "#FF6B35";
   const SECONDARY_COLOR = "#2D3436";
   const ANIMATION_DURATION = 0.5; // 500ms
 
+  let userEmail = $state("");
   let shouldMount = $state(false);
   let messagesContainer;
   let inputValue = $state("");
@@ -28,6 +32,18 @@
   // Mount after hydration to avoid SSR issues
   onMount(() => {
     shouldMount = true;
+
+    // Fetch user email if authenticated
+    if (isAuthenticated) {
+      fetch("/api/v1/user", { credentials: "include" })
+        .then((res) => res.json())
+        .then((data) => {
+          userEmail = data.email || "";
+        })
+        .catch(() => {
+          // User fetch failed, ignore
+        });
+    }
 
     // Set up IntersectionObserver for read receipts
     messageObserver = new IntersectionObserver(
@@ -170,8 +186,14 @@
             </svg>
           </div>
           <div class="header-text">
-            <h3 class="title">PHK Support</h3>
-            <p class="subtitle">We typically reply within minutes</p>
+            <h3 class="title">{isAuthenticated && userEmail ? userEmail : "PHK Support"}</h3>
+            <p class="subtitle">
+              {#if isAuthenticated && userEmail}
+                <span class="badge authenticated">Logged in</span>
+              {:else}
+                <span class="badge guest">Guest</span> • We typically reply within minutes
+              {/if}
+            </p>
           </div>
         </div>
         <button class="close-btn" onclick={handleMinimize} aria-label="Minimize chat" type="button">
@@ -295,6 +317,26 @@
     font-size: 0.75rem;
     opacity: 0.9;
     margin: 0;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 0.125rem 0.375rem;
+    border-radius: 0.25rem;
+    font-size: 0.625rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-right: 0.25rem;
+  }
+
+  .badge.authenticated {
+    background: rgba(16, 185, 129, 0.2);
+    color: #10b981;
+  }
+
+  .badge.guest {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
   }
 
   .close-btn {
