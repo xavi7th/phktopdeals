@@ -76,6 +76,7 @@
   "dependencies": {
     "@playwright/test": "^1.58.2",
     "@testing-library/svelte": "^5.3.1",
+    "chart.js": "^4.5.1",
     "dompurify": "^3.3.3",
     "laravel-echo": "^2.3.1",
     "motion": "^12.36.0",
