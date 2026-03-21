@@ -63,7 +63,7 @@
 <style>
   .chat-launcher {
     position: fixed;
-    bottom: 1.5rem;
+    bottom: 5.5rem;
     right: 1.5rem;
     width: 4rem;
     height: 4rem;
@@ -78,7 +78,7 @@
     transition:
       transform 0.2s ease,
       box-shadow 0.2s ease;
-    z-index: 50;
+    z-index: 1000;
   }
 
   .chat-launcher:hover,

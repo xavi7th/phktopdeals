@@ -265,7 +265,7 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    z-index: 50;
+    z-index: 1000;
     /* Glassmorphism effect */
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
