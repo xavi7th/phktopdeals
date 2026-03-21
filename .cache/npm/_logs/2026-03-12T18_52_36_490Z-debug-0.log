@@ -10,3 +10,9 @@
 9 verbose logfile logs-max:10 dir:/Users/leinad/Work/htdocs/phk-chatbot/frontend/.cache/npm/_logs/2026-03-12T18_52_36_490Z-
 10 verbose logfile /Users/leinad/Work/htdocs/phk-chatbot/frontend/.cache/npm/_logs/2026-03-12T18_52_36_490Z-debug-0.log
 11 silly logfile done cleaning log files
+12 verbose cwd /Users/leinad/Work/htdocs/phk-chatbot/frontend
+13 verbose os Darwin 25.2.0
+14 verbose node v25.8.0
+15 verbose npm  v11.11.0
+16 verbose exit 143
+17 verbose code 143
