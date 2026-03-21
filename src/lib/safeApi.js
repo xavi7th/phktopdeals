@@ -145,6 +145,23 @@ export async function backgroundRefresh(params) {
 }
 
 /**
+ * Generic safe wrapper for raw fetch callbacks
+ * Use for staff/internal calls that use raw fetch (not the api() helper)
+ *
+ * @param {() => Promise<any>} fn - Callback returning a fetch promise (pre-parsed)
+ * @param {string} [errorMessage] - Message to log on failure
+ * @returns {Promise<any>}
+ */
+export async function safeApiCall(fn, errorMessage = "API call failed") {
+  try {
+    return await fn();
+  } catch (err) {
+    console.error(errorMessage, err);
+    return null;
+  }
+}
+
+/**
  * Prefetch data into cache
  * Call this when you know user will need data soon
  *
