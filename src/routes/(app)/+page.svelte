@@ -53,22 +53,26 @@
   {#await pageData}
     {@render skeleton()}
   {:then pageData}
-    {#if pageData?.data?.sections && Object.entries(pageData.data.sections)}
-      {#each Object.entries(pageData.data.sections.top) as [sectionTitle, content]}
-        <ProductSection {sectionTitle} {content} />
-      {/each}
-
-      {#each Object.entries(pageData.data.sections.misc) as [sectionTitle, content], idx}
-        {#if idx <= 2}
+    {#if pageData?.data?.sections}
+      {#if pageData.data.sections.top}
+        {#each Object.entries(pageData.data.sections.top) as [sectionTitle, content]}
           <ProductSection {sectionTitle} {content} />
-        {/if}
-      {/each}
+        {/each}
+      {/if}
 
-      {#each Object.entries(pageData.data.sections.misc) as [sectionTitle, content], idx}
-        {#if idx > 2}
-          <ProductSection {sectionTitle} {content} />
-        {/if}
-      {/each}
+      {#if pageData.data.sections.misc}
+        {#each Object.entries(pageData.data.sections.misc) as [sectionTitle, content], idx}
+          {#if idx <= 2}
+            <ProductSection {sectionTitle} {content} />
+          {/if}
+        {/each}
+
+        {#each Object.entries(pageData.data.sections.misc) as [sectionTitle, content], idx}
+          {#if idx > 2}
+            <ProductSection {sectionTitle} {content} />
+          {/if}
+        {/each}
+      {/if}
     {/if}
   {/await}
 

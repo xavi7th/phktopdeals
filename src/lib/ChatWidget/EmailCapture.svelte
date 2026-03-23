@@ -1,9 +1,10 @@
 <script>
-  import { onMount } from "svelte";
   import { animate } from "motion";
+  import { onMount, untrack } from "svelte";
   import { chatStore } from "./chatStore.js";
   import { browser } from "$app/environment";
   import { setGuestEmail } from "./guestStore.js";
+  import { startGuestChat } from "./chat.remote.js";
   import Portal from "$lib/Components/Portal.svelte";
 
   let email = $state("");
@@ -13,7 +14,7 @@
   let shouldMount = $state(false);
   let isAnimating = $state(false);
 
-  const BRAND_COLOR = "#FF6B35";
+  const BRAND_COLOR = "#6C5702";
   const ANIMATION_DURATION = 0.5;
 
   onMount(() => {
@@ -22,7 +23,7 @@
 
   // Animate open/close
   $effect(() => {
-    if (!browser || !emailCaptureElement || isAnimating) return;
+    if (!browser || !emailCaptureElement || untrack(() => isAnimating)) return;
 
     if ($chatStore.isOpen) {
       isAnimating = true;
@@ -62,16 +63,10 @@
     loading = true;
 
     try {
-      const response = await fetch("/api/v1/chat/guest/start", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: email.trim() }),
-      });
+      const result = await startGuestChat({ email: email.trim() });
 
-      const result = await response.json();
-
-      if (!response.ok) {
-        error = result.message || "Failed to start chat. Please try again.";
+      if (!result.success) {
+        error = result.error || "Failed to start chat. Please try again.";
         return;
       }
 

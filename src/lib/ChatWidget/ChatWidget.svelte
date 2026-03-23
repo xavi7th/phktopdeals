@@ -1,10 +1,11 @@
 <script>
   import { onMount } from "svelte";
   import Launcher from "./Launcher.svelte";
-  import ChatWindow from "./ChatWindow.svelte";
-  import EmailCapture from "./EmailCapture.svelte";
-  import { guestStore, setGuestEmail, getGuestEmail, getGuestToken } from "./guestStore.js";
   import { chatStore } from "./chatStore.js";
+  import ChatWindow from "./ChatWindow.svelte";
+  import { checkAuth } from "./chat.remote.js";
+  import EmailCapture from "./EmailCapture.svelte";
+  import { guestStore, setGuestEmail, getGuestEmail, getGuestToken, getGuestConversationId } from "./guestStore.js";
 
   let view = $state("loading"); // 'loading' | 'email' | 'chat'
   let isAuthenticated = $state(false);
@@ -13,10 +14,7 @@
   onMount(async () => {
     // Check if user is authenticated
     try {
-      const response = await fetch("/api/v1/user", {
-        credentials: "include",
-      });
-      isAuthenticated = response.ok;
+      isAuthenticated = await checkAuth();
     } catch {
       isAuthenticated = false;
     }
@@ -29,9 +27,12 @@
       // Has valid session (auth or guest)
       view = "chat";
 
-      // If guest, set conversation in chatStore
+      // If guest, restore conversation into chatStore
       if (!isAuthenticated && guestToken) {
-        // Could fetch existing conversation here
+        const guestConversationId = getGuestConversationId();
+        if (guestConversationId) {
+          chatStore.setConversation(guestConversationId, "active");
+        }
       }
     } else {
       // No session, show email capture

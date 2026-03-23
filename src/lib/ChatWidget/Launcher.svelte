@@ -3,7 +3,7 @@
   import { onMount } from "svelte";
 
   // PHK brand color
-  const BRAND_COLOR = "#FF6B35";
+  const BRAND_COLOR = "#6C5702";
   const LAUNCHER_DELAY_MS = 3000; // 3 seconds
 
   let isVisible = $state(false);

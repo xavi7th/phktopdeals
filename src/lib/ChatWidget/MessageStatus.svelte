@@ -27,8 +27,8 @@
     </svg>
   {:else if status === "read"}
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="icon read">
-      <polyline points="18 6 9 17 4 12" stroke="#FF6B35"></polyline>
-      <polyline points="22 6 13 17" stroke="#FF6B35"></polyline>
+      <polyline points="18 6 9 17 4 12" stroke="#6C5702"></polyline>
+      <polyline points="22 6 13 17" stroke="#6C5702"></polyline>
     </svg>
   {/if}
 </span>
@@ -60,7 +60,7 @@
   }
 
   .status-read .icon {
-    color: #ff6b35;
+    color: #6C5702;
   }
 
   @keyframes pulse {

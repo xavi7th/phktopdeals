@@ -1,29 +1,30 @@
 <script>
-  import Portal from "$lib/Components/Portal.svelte";
-  import { chatStore, messages, conversationStatus, conversationId, isAiTyping, showEscalationPrompt } from "$lib/ChatWidget/chatStore.js";
-  import { browser } from "$app/environment";
-  import { onMount } from "svelte";
   import { animate } from "motion";
-  import TypingIndicator from "./TypingIndicator.svelte";
-  import MessageStatus from "./MessageStatus.svelte";
+  import { onMount, untrack } from "svelte";
+  import { browser } from "$app/environment";
   import RatingModal from "./RatingModal.svelte";
+  import { sendAiMessage } from "./chat.remote.js";
+  import Portal from "$lib/Components/Portal.svelte";
+  import MessageStatus from "./MessageStatus.svelte";
+  import TypingIndicator from "./TypingIndicator.svelte";
   import EscalationPrompt from "./components/EscalationPrompt.svelte";
+  import { chatStore, isChatOpen, messages, conversationStatus, conversationId, isAiTyping, showEscalationPrompt } from "$lib/ChatWidget/chatStore.js";
 
   // Props
   let { isAuthenticated = false } = $props();
 
   // PHK brand colors
-  const BRAND_COLOR = "#FF6B35";
+  const BRAND_COLOR = "#6C5702";
   const SECONDARY_COLOR = "#2D3436";
   const ANIMATION_DURATION = 0.5; // 500ms
 
   let userEmail = $state("");
   let shouldMount = $state(false);
-  let messagesContainer;
+  let messagesContainer = $state();
   let inputValue = $state("");
-  let chatWindowElement;
+  let chatWindowElement = $state();
   let isAnimating = $state(false);
-  let messageInput;
+  let messageInput = $state();
   let isOtherUserTyping = $state(false);
   let messageObserver;
   let showRatingModal = $state(false);
@@ -72,9 +73,9 @@
 
   // Animate open/close and focus input
   $effect(() => {
-    if (!browser || isAnimating) return;
+    if (!browser || untrack(() => isAnimating)) return;
 
-    if ($chatStore.isOpen) {
+    if ($isChatOpen) {
       // Animate in
       isAnimating = true;
       animate(
@@ -115,9 +116,14 @@
 
   // Auto-scroll to bottom when new messages arrive
   $effect(() => {
-    if (messagesContainer && $messages) {
-      messagesContainer.scrollTop = messagesContainer.scrollHeight;
-    }
+    const msgs = $messages; // track dependency
+    if (!messagesContainer || !msgs.length) return;
+
+    requestAnimationFrame(() => {
+      if (messagesContainer) {
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+      }
+    });
   });
 
   // Show rating modal when conversation is resolved
@@ -131,28 +137,53 @@
     chatStore.close();
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
-    if (!inputValue.trim()) return;
-
-    chatStore.addMessage({
-      id: crypto.randomUUID(),
-      text: inputValue.trim(),
-      sender: "user",
-      timestamp: Date.now(),
-    });
+    const text = inputValue.trim();
+    if (!text || !$conversationId) return;
 
     inputValue = "";
 
-    // Simulate bot response after a short delay
-    setTimeout(() => {
+    chatStore.addMessage({
+      id: crypto.randomUUID(),
+      content: text,
+      sender: "user",
+      created_at: new Date().toISOString(),
+    });
+
+    chatStore.setAiTyping(true);
+
+    try {
+      const result = await sendAiMessage({ conversationId: $conversationId, message: text });
+
+      if (result.success) {
+        chatStore.addMessage({
+          id: result.data.message.id,
+          content: result.data.message.content,
+          sender: "ai",
+          created_at: result.data.message.created_at,
+        });
+        if (result.metadata?.should_escalate) {
+          chatStore.showEscalation(result.metadata.reason);
+        }
+      } else {
+        chatStore.addMessage({
+          id: crypto.randomUUID(),
+          content: result.error || "Sorry, something went wrong. Please try again.",
+          sender: "ai",
+          created_at: new Date().toISOString(),
+        });
+      }
+    } catch {
       chatStore.addMessage({
         id: crypto.randomUUID(),
-        text: "Thanks for your message! Our team will get back to you soon.",
-        sender: "bot",
-        timestamp: Date.now(),
+        content: "Sorry, something went wrong. Please try again.",
+        sender: "ai",
+        created_at: new Date().toISOString(),
       });
-    }, 1000);
+    } finally {
+      chatStore.setAiTyping(false);
+    }
   }
 
   function handleKeydown(event) {
@@ -174,7 +205,7 @@
 <svelte:window onkeydown={handleKeydown} />
 
 <Portal {shouldMount}>
-  {#if $chatStore.isOpen}
+  {#if $isChatOpen}
     <div bind:this={chatWindowElement} class="chat-window" style="--brand-color: {BRAND_COLOR}; --secondary-color: {SECONDARY_COLOR}" role="dialog" aria-label="Chat window" aria-modal="true">
       <!-- Header -->
       <header class="chat-header">
@@ -211,13 +242,13 @@
           </div>
         {:else}
           {#each $messages as message (message.id)}
-            <div class="message" class:user={message.sender === "user"} class:bot={message.sender === "bot"} data-message-id={message.id}>
+            <div class="message" class:user={message.sender === "user"} class:bot={message.sender === "bot" || message.sender === "ai"} data-message-id={message.id}>
               <div class="message-bubble">
-                {message.text}
+                {message.content || message.text}
               </div>
               <div class="message-meta">
                 <span class="message-time">
-                  {new Date(message.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                  {new Date(message.created_at || message.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                 </span>
                 {#if message.sender === "user"}
                   <MessageStatus status={message.status || "sent"} />

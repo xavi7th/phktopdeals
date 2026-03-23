@@ -1,5 +1,6 @@
 <script>
   import StarRating from "./StarRating.svelte";
+  import { submitRating } from "./chat.remote.js";
 
   let { conversationId = null, onsubmit = null, onclose = null } = $props();
 
@@ -22,21 +23,14 @@
     error = "";
 
     try {
-      const response = await fetch(`/api/v1/chat/conversations/${conversationId}/rate`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          stars: rating,
-          comment: comment.trim() || null,
-        }),
+      const result = await submitRating({
+        conversationId,
+        stars: rating,
+        comment: comment.trim() || undefined,
       });
 
-      const result = await response.json();
-
-      if (!response.ok) {
-        error = result.message || "Failed to submit rating";
+      if (!result.success) {
+        error = result.error || "Failed to submit rating";
         return;
       }
 

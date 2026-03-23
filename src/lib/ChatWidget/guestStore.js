@@ -117,6 +117,16 @@ export function clearGuest() {
 }
 
 /**
+ * Get current guest conversation ID.
+ * @returns {string|null}
+ */
+export function getGuestConversationId() {
+  let currentData = null;
+  guestStore.subscribe((v) => (currentData = v))();
+  return currentData?.conversationId ?? null;
+}
+
+/**
  * Check if guest session is valid (not expired).
  * @returns {boolean}
  */

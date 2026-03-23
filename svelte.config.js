@@ -61,7 +61,15 @@ const config = {
       $partials: "./src/partials",
       $stores: "./src/stores",
     },
+    experimental: {
+      remoteFunctions: true,
+    },
   },
+  compilerOptions: {
+		experimental: {
+			async: true
+		}
+	}
 };
 
 export default config;
