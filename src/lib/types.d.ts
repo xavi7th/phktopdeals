@@ -12,6 +12,8 @@ export type ApiParams = {
   /** If true, returns undefined instead of mock error response when API is unreachable */
   ignoreErrors?: boolean;
   data?: Record<string, unknown> | FormData | array | object | null;
+  /** Additional headers to include in the request */
+  extraHeaders?: Record<string, string>;
 };
 export type ApiHeaders = {
   accept: "application/json" | "plain/text";

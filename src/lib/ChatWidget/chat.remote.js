@@ -111,3 +111,126 @@ export const checkAuth = query(async () => {
 
   return response?.ok ?? false;
 });
+
+/**
+ * Request handoff from AI to human agent.
+ * Supports both authenticated users and guests (via guestToken parameter).
+ */
+export const requestHandoff = command(
+  v.object({
+    conversationId: v.pipe(v.string(), v.minLength(1)),
+    guestToken: v.optional(v.string()),
+  }),
+  async ({ conversationId, guestToken }) => {
+    const event = getRequestEvent();
+
+    console.log("[DEBUG] requestHandoff remote - guestToken:", guestToken ? "present" : "null");
+
+    /** @type {Record<string, string>} */
+    const extraHeaders = {};
+
+    // Add guest token header if provided
+    if (guestToken) {
+      extraHeaders["X-Guest-Token"] = guestToken;
+    }
+
+    console.log("[DEBUG] requestHandoff remote - extraHeaders:", Object.keys(extraHeaders));
+
+    const response = await api({
+      resource: `chat/${conversationId}/handoff/request`,
+      method: "post",
+      data: { trigger_type: "customer_request" },
+      event,
+      extraHeaders: Object.keys(extraHeaders).length > 0 ? extraHeaders : undefined,
+    });
+
+    if (!response?.ok) {
+      const result = await response?.json();
+      return {
+        success: false,
+        error: result?.message || "Failed to request handoff",
+      };
+    }
+
+    const result = await response.json();
+    return {
+      success: true,
+      data: result.data,
+    };
+  }
+);
+
+/**
+ * Record user activity (heartbeat).
+ * Called periodically to indicate user is still active.
+ * Supports both authenticated users and guests (via guestToken parameter).
+ */
+export const recordActivity = command(
+  v.object({
+    conversationId: v.pipe(v.string(), v.minLength(1)),
+    guestToken: v.optional(v.string()),
+  }),
+  async ({ conversationId, guestToken }) => {
+    const event = getRequestEvent();
+
+    /** @type {Record<string, string>} */
+    const extraHeaders = {};
+
+    if (guestToken) {
+      extraHeaders["X-Guest-Token"] = guestToken;
+    }
+
+    const response = await api({
+      resource: `chat/${conversationId}/activity`,
+      method: "post",
+      data: {},
+      event,
+      extraHeaders: Object.keys(extraHeaders).length > 0 ? extraHeaders : undefined,
+    });
+
+    if (!response?.ok) {
+      return { success: false };
+    }
+
+    return { success: true };
+  }
+);
+
+/**
+ * Abandon conversation using fetch with keepalive (alternative to beacon).
+ * Use this when you need response confirmation.
+ */
+export const abandonConversation = command(
+  v.object({
+    conversationId: v.pipe(v.string(), v.minLength(1)),
+    guestToken: v.optional(v.string()),
+  }),
+  async ({ conversationId, guestToken }) => {
+    const event = getRequestEvent();
+
+    /** @type {Record<string, string>} */
+    const extraHeaders = {};
+
+    if (guestToken) {
+      extraHeaders["X-Guest-Token"] = guestToken;
+    }
+
+    const response = await api({
+      resource: `chat/${conversationId}/abandon`,
+      method: "post",
+      data: guestToken ? { guest_token: guestToken } : {},
+      event,
+      extraHeaders: Object.keys(extraHeaders).length > 0 ? extraHeaders : undefined,
+    });
+
+    if (!response?.ok) {
+      return { success: false };
+    }
+
+    const result = await response.json();
+    return {
+      success: true,
+      abandoned: result.data?.abandoned ?? false,
+    };
+  }
+);
