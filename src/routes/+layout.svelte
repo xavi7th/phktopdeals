@@ -36,14 +36,20 @@
   });
 
   afterNavigate(async () => {
+    // Preline v2.4.1 delays its own init by 2000ms, so we poll until it's ready
+    // rather than using a one-shot timer that fires before HSStaticMethods exists.
     try {
-      let prelineInit = setInterval(() => {
+      let attempts = 0;
+      const maxAttempts = 25; // 25 × 200ms = 5s max wait
+      const prelineInit = setInterval(() => {
         // @ts-ignore
-        window?.HSStaticMethods?.autoInit();
-        clearInterval(prelineInit);
-
-        console.log("---------------HSStaticMethods initialized!-----------------");
-      }, 600);
+        if (window?.HSStaticMethods?.autoInit) {
+          window.HSStaticMethods.autoInit();
+          clearInterval(prelineInit);
+        } else if (++attempts >= maxAttempts) {
+          clearInterval(prelineInit);
+        }
+      }, 200);
     } catch (e) {
       console.log("---------------HSStaticMethods initialisation failed!-----------------");
     }
