@@ -292,7 +292,7 @@
   .chat-window {
     position: fixed;
     bottom: 6.5rem;
-    right: 1.5rem;
+    right: 1.25rem;
     width: 23.75rem;
     height: 31.25rem;
     background: white;
@@ -514,6 +514,14 @@
   .send-btn .icon {
     width: 1rem;
     height: 1rem;
+  }
+
+  /* On desktop, align with the repositioned launcher above WhatsApp */
+  @media (min-width: 48rem) {
+    .chat-window {
+      bottom: 9.5rem;
+      right: 2.5rem;
+    }
   }
 
   /* Responsive: Full-screen on mobile */

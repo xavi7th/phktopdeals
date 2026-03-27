@@ -64,7 +64,7 @@
   .chat-launcher {
     position: fixed;
     bottom: 5.5rem;
-    right: 1.5rem;
+    right: 1.25rem;
     width: 4rem;
     height: 4rem;
     border-radius: 50%;
@@ -114,6 +114,14 @@
     align-items: center;
     justify-content: center;
     animation: pulse 2s infinite;
+  }
+
+  /* On desktop, stack above the WhatsApp button (which sits at bottom-10 / right-10 = 2.5rem) */
+  @media (min-width: 768px) {
+    .chat-launcher {
+      bottom: 8rem;
+      right: 2.5rem;
+    }
   }
 
   @keyframes pulse {
