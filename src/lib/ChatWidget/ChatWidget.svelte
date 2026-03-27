@@ -5,7 +5,7 @@
   import ChatWindow from "./ChatWindow.svelte";
   import { checkAuth } from "./chat.remote.js";
   import EmailCapture from "./EmailCapture.svelte";
-  import { guestStore, setGuestEmail, getGuestEmail, getGuestToken, getGuestConversationId } from "./guestStore.js";
+  import { getGuestEmail, getGuestToken, getGuestConversationId } from "./guestStore.js";
   import { inactivityStore } from "./inactivityStore.js";
 
   let view = $state("loading"); // 'loading' | 'email' | 'chat'

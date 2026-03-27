@@ -8,7 +8,7 @@
   import MessageStatus from "./MessageStatus.svelte";
   import TypingIndicator from "./TypingIndicator.svelte";
   import EscalationPrompt from "./components/EscalationPrompt.svelte";
-  import { chatStore, isChatOpen, messages, conversationStatus, conversationId, isAiTyping, showEscalationPrompt } from "$lib/ChatWidget/chatStore.js";
+  import { chatStore, isChatOpen, messages, conversationStatus, conversationId, isAiTyping } from "$lib/ChatWidget/chatStore.js";
   import { inactivityStore } from "./inactivityStore.js";
 
   // Props
@@ -227,7 +227,7 @@
                 <span class="badge authenticated">Logged in</span>
               {:else}
                 <span class="badge guest">Guest</span>
-                 • We typically reply within minutes
+                • We typically reply within minutes
               {/if}
             </p>
           </div>
