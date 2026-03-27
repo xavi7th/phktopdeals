@@ -9,6 +9,7 @@
 
   let email = $state("");
   let error = $state("");
+  let isConnectionError = $state(false);
   let emailCaptureElement;
   let loading = $state(false);
   let shouldMount = $state(false);
@@ -27,18 +28,10 @@
 
     if ($chatStore.isOpen) {
       isAnimating = true;
-      animate(
-        emailCaptureElement,
-        { opacity: [0, 1], scale: [0.9, 1], y: [20, 0] },
-        { duration: ANIMATION_DURATION, easing: "ease-out" }
-      ).finished.then(() => (isAnimating = false));
+      animate(emailCaptureElement, { opacity: [0, 1], scale: [0.9, 1], y: [20, 0] }, { duration: ANIMATION_DURATION, easing: "ease-out" }).finished.then(() => (isAnimating = false));
     } else {
       isAnimating = true;
-      animate(
-        emailCaptureElement,
-        { opacity: [1, 0], scale: [1, 0.9], y: [0, 20] },
-        { duration: ANIMATION_DURATION, easing: "ease-in" }
-      ).finished.then(() => (isAnimating = false));
+      animate(emailCaptureElement, { opacity: [1, 0], scale: [1, 0.9], y: [0, 20] }, { duration: ANIMATION_DURATION, easing: "ease-in" }).finished.then(() => (isAnimating = false));
     }
   });
 
@@ -49,6 +42,7 @@
   async function handleSubmit(e) {
     e.preventDefault();
     error = "";
+    isConnectionError = false;
 
     if (!email.trim()) {
       error = "Email is required";
@@ -66,7 +60,14 @@
       const result = await startGuestChat({ email: email.trim() });
 
       if (!result.success) {
-        error = result.error || "Failed to start chat. Please try again.";
+        // Check if it's a connection-related error
+        const errorMsg = (result.error || "").toLowerCase();
+        if (errorMsg.includes("network") || errorMsg.includes("failed to fetch") || errorMsg.includes("503") || errorMsg.includes("unavailable")) {
+          isConnectionError = true;
+          error = "Unable to connect to server. Please check your connection and try again.";
+        } else {
+          error = result.error || "Failed to start chat. Please try again.";
+        }
         return;
       }
 
@@ -77,7 +78,8 @@
         isNew: result.data.is_new,
       });
     } catch {
-      error = "Network error. Please try again.";
+      isConnectionError = true;
+      error = "Unable to connect to server. Please check your connection and try again.";
     } finally {
       loading = false;
     }
@@ -92,18 +94,13 @@
 
 <Portal {shouldMount}>
   {#if $chatStore.isOpen}
-    <div
-      bind:this={emailCaptureElement}
-      class="email-capture-window"
-      style="--brand-color: {BRAND_COLOR}"
-      role="dialog"
-      aria-label="Start chat"
-      aria-modal="true">
+    <div bind:this={emailCaptureElement} class="email-capture-window" style="--brand-color: {BRAND_COLOR}" role="dialog" aria-label="Start chat" aria-modal="true">
       <header class="email-capture-header">
         <div class="header-content">
           <div class="avatar">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="avatar-icon">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
             </svg>
           </div>
           <div class="header-text">
@@ -125,15 +122,16 @@
         <form onsubmit={handleSubmit}>
           <div class="mb-4">
             <label for="guest-email" class="label">Email Address</label>
-            <input
-              type="email"
-              id="guest-email"
-              bind:value={email}
-              placeholder="you@example.com"
-              disabled={loading}
-              class="input" />
+            <input type="email" id="guest-email" bind:value={email} placeholder="you@example.com" disabled={loading} class="input" />
             {#if error}
-              <p class="error-text">{error}</p>
+              <p class="error-text" class:connection-error={isConnectionError}>
+                {error}
+              </p>
+              {#if isConnectionError}
+                <button type="button" onclick={() => handleSubmit(new Event("submit"))} disabled={loading} class="retry-btn">
+                  Try Again
+                </button>
+              {/if}
             {/if}
           </div>
 
@@ -263,7 +261,9 @@
     padding: 0.625rem 0.875rem;
     font-size: 0.875rem;
     outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    transition:
+      border-color 0.2s,
+      box-shadow 0.2s;
   }
 
   .input:focus {
@@ -281,6 +281,35 @@
     color: #dc2626;
   }
 
+  .error-text.connection-error {
+    background: #fef2f2;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    border-left: 3px solid #dc2626;
+  }
+
+  .retry-btn {
+    margin-top: 0.5rem;
+    width: 100%;
+    padding: 0.5rem;
+    background: #fee2e2;
+    border: 1px solid #fca5a5;
+    border-radius: 0.375rem;
+    color: #dc2626;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .retry-btn:hover:not(:disabled) {
+    background: #fecaca;
+  }
+
+  .retry-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
   .submit-btn {
     width: 100%;
     border-radius: 0.5rem;
@@ -290,7 +319,9 @@
     color: white;
     border: none;
     cursor: pointer;
-    transition: background 0.2s, opacity 0.2s;
+    transition:
+      background 0.2s,
+      opacity 0.2s;
   }
 
   .submit-btn:hover:not(:disabled) {
