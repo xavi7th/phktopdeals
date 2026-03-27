@@ -32,7 +32,7 @@ export const startGuestChat = command(
       success: true,
       data: result.data,
     };
-  }
+  },
 );
 
 /**
@@ -65,7 +65,7 @@ export const sendAiMessage = command(
       data: result.data,
       metadata: result.metadata,
     };
-  }
+  },
 );
 
 /**
@@ -95,7 +95,7 @@ export const submitRating = command(
     }
 
     return { success: true };
-  }
+  },
 );
 
 /**
@@ -157,7 +157,7 @@ export const requestHandoff = command(
       success: true,
       data: result.data,
     };
-  }
+  },
 );
 
 /**
@@ -193,7 +193,7 @@ export const recordActivity = command(
     }
 
     return { success: true };
-  }
+  },
 );
 
 /**
@@ -232,5 +232,5 @@ export const abandonConversation = command(
       success: true,
       abandoned: result.data?.abandoned ?? false,
     };
-  }
+  },
 );

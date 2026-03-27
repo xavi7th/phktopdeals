@@ -3,6 +3,8 @@ import { browser } from "$app/environment";
 import { getEchoClient, disconnectEcho } from "$lib/stores/echoClient.js";
 import * as echoStore from "$lib/stores/echoStore.js";
 import { playStaffJoinedPing } from "$lib/ChatWidget/audioService.js";
+import { requestHandoff as requestHandoffApi } from "$lib/ChatWidget/chat.remote.js";
+import { getGuestToken } from "$lib/ChatWidget/guestStore.js";
 
 const STORAGE_KEY = "phk-chat-widget-state";
 const BROADCAST_CHANNEL_NAME = "phk-chat-widget-sync";
@@ -215,17 +217,66 @@ function createChatStore() {
   }
 
   // Handoff actions
-  function requestHandoff() {
+  async function requestHandoff() {
+    const currentState = get(chatStore);
+    const conversationId = currentState.conversationId;
+
+    if (!conversationId) {
+      console.error("Cannot request handoff: no conversation ID");
+      return { success: false, error: "No active conversation" };
+    }
+
+    // Get guest token if available (for guest users)
+    const guestToken = getGuestToken();
+    console.log("[DEBUG] Guest token from store:", guestToken ? "present" : "null");
+    console.log("[DEBUG] Conversation ID:", conversationId);
+
+    // Optimistically update UI
     update((state) => {
       const newState = {
         ...state,
         handoffStatus: "waiting",
         waitingStartedAt: Date.now(),
         isAiTyping: false, // AI stops when handoff requested
+        showEscalationPrompt: false, // Hide escalation prompt
+        escalationReason: null,
       };
       persistAndBroadcast(newState);
       return newState;
     });
+
+    // Call API
+    try {
+      const result = await requestHandoffApi({ conversationId, guestToken: guestToken || undefined });
+      if (!result.success) {
+        // Revert on failure
+        update((state) => {
+          const newState = {
+            ...state,
+            handoffStatus: null,
+            waitingStartedAt: null,
+          };
+          persistAndBroadcast(newState);
+          return newState;
+        });
+        console.error("Handoff request failed:", result.error);
+        return { success: false, error: result.error };
+      }
+      return { success: true };
+    } catch (error) {
+      // Revert on error
+      update((state) => {
+        const newState = {
+          ...state,
+          handoffStatus: null,
+          waitingStartedAt: null,
+        };
+        persistAndBroadcast(newState);
+        return newState;
+      });
+      console.error("Handoff request error:", error);
+      return { success: false, error: "Failed to request handoff" };
+    }
   }
 
   function setHandoffStaffJoined(staffName) {
@@ -276,6 +327,24 @@ function createChatStore() {
       persistAndBroadcast(newState);
       return newState;
     });
+  }
+
+  /**
+   * Handle abandoned conversation - clear all state.
+   * Called when conversation is marked as abandoned (from server event).
+   */
+  function handleAbandoned() {
+    // Clear session storage
+    if (browser) {
+      try {
+        sessionStorage.removeItem(STORAGE_KEY);
+      } catch (e) {
+        console.warn("Failed to clear chat storage:", e);
+      }
+    }
+
+    // Reset to default state
+    set(defaultState);
   }
 
   // Add system message (for notifications)
@@ -366,6 +435,10 @@ function createChatStore() {
         // Handoff timed out - show notification
         addSystemMessage("Unfortunately no agents are available at the moment. We've sent an email to follow up.");
         setHandoffTimeout();
+      })
+      .listen("ConversationAbandoned", (data) => {
+        // Conversation was abandoned (user inactive)
+        handleAbandoned();
       });
   }
 
@@ -417,6 +490,8 @@ function createChatStore() {
     setHandoffContext,
     resetHandoffState,
     addSystemMessage,
+    // Abandoned conversation
+    handleAbandoned,
   };
 }
 

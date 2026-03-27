@@ -288,7 +288,7 @@ export const hasFile = (formData) => {
  *
  * @returns {Promise<Response|undefined>}
  */
-export async function api({ toBaseDomain, resource, event, method, data, logResponse = true, toJSON = true, ignoreErrors = false }) {
+export async function api({ toBaseDomain, resource, event, method, data, logResponse = true, toJSON = true, ignoreErrors = false, extraHeaders = {} }) {
   const base = PUBLIC_VITE_BASE_DOMAIN;
   const baseApi = PUBLIC_VITE_BASE_API;
   let fullurl = toBaseDomain ? base : baseApi;
@@ -309,6 +309,7 @@ export async function api({ toBaseDomain, resource, event, method, data, logResp
     "sec-ch-ua-platform": event.cookies?.get("sec-ch-ua-platform") || "",
     "user-agent": event.cookies?.get("user-agent") || "",
     "x-sveltekit-action": event.cookies?.get("x-sveltekit-action") || false,
+    ...extraHeaders,
   };
 
   const isFormData = data instanceof FormData;
