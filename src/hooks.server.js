@@ -225,7 +225,7 @@ export const handleFetch = async ({ request, fetch, event }) => {
       if (apiSessionKey) clearUserCache(apiSessionKey);
       await event.locals.session.destroy();
 
-      redirect(303, "/logout");
+      redirect(303, event.url.pathname.startsWith("/admin") ? "/login" : "/logout");
     }
   }
 
