@@ -1,5 +1,6 @@
 import { fail } from "@sveltejs/kit";
-import { api, getErrorString } from "$lib/helpers";
+import { api } from "$lib/server/api-helpers";
+import { getErrorString } from "$lib/helpers";
 import { redirect, setFlash } from "sveltekit-flash-message/server";
 import { assertAdmin } from "$lib/server/auth";
 

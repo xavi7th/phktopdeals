@@ -1,5 +1,5 @@
 import { assertAdmin } from "$lib/server/auth";
-import { api } from "$lib/helpers";
+import { api } from "$lib/server/api-helpers";
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load(event) {

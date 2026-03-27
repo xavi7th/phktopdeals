@@ -1,4 +1,4 @@
-import { api } from "$lib/helpers.js";
+import { api } from "$lib/server/api-helpers";
 import { assertAdmin } from "$lib/server/auth";
 
 export async function load(event) {

@@ -1,4 +1,5 @@
-import { api } from "$lib/helpers";
+import { api } from "$lib/server/api-helpers";
+import { logWithLocation as serverLog } from "$lib/server/dev-logger";
 
 let lastFetchTime = 0;
 let cachedData = null;
@@ -16,8 +17,8 @@ export async function getCachedExchangeRate(event) {
     };
   }
 
-  const response = await event.fetch("https://api.exchangerate-api.com/v4/latest/USD").catch((error) => {
-    console.error("api.exchangerate-api NOT AVAILABLE AT THE MOMENT", error);
+  const response = await event.fetch("https://api.exchangerate-api.com/v4/latest/USD").catch((err) => {
+    serverLog("Exchange rate API unreachable", { error: err.message });
     return { ok: false, error: "Exchange rate API unavailable" };
   });
 

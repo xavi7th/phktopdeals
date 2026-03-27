@@ -1,4 +1,4 @@
-import { api } from "$lib/helpers";
+import { api } from "$lib/server/api-helpers";
 
 const orderTabs = [
   {

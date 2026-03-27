@@ -1,4 +1,4 @@
-import { api } from "$lib/helpers";
+import { api } from "$lib/server/api-helpers";
 import { error } from "@sveltejs/kit";
 
 export async function load(event) {

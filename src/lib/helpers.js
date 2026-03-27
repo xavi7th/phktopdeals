@@ -1,8 +1,47 @@
 import { clsx } from "clsx";
-import { dev } from "$app/environment";
-import { error } from "@sveltejs/kit";
 import { twMerge } from "tailwind-merge";
-import { PUBLIC_APP_COMMISSION_AMOUNT, PUBLIC_VITE_BASE_API, PUBLIC_VITE_BASE_DOMAIN, PUBLIC_VITE_FRONT_END_DOMAIN } from "$env/static/public";
+
+/**
+ * Checks if a FormData object contains any File instances.
+ * @param {FormData} formData - The FormData object to check.
+ * @returns {boolean} - True if the FormData contains at least one File, false otherwise.
+ */
+export function hasFile(formData) {
+  for (const value of formData.values()) {
+    if (value instanceof File) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
+ * @param {number | string} amount The number to convert to currency
+ * @param {string} currencySymbol The currency symbol to use. Default Naira
+ * @returns {string}
+ */
+export const toCurrency = (amount, currencySymbol = "$") => {
+  if (isNaN(Number(amount))) {
+    return "Invalid Amount";
+  }
+
+  if (currencySymbol == "NGN") {
+    currencySymbol = "₦";
+  }
+
+  return (
+    currencySymbol +
+    Number(amount)
+      .toFixed(2)
+      .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
+  );
+};
+
+/**
+ * @param {object} data The Non-POJO object to convert
+ * @returns {object}
+ */
+export const convertNonPOJOsToPOJOs = (data) => JSON.parse(JSON.stringify(data));
 
 /**
  * Transforms an error object into HTML string
@@ -38,45 +77,25 @@ export const getErrorString = (errors) => {
 };
 
 /**
- * @param {number | string} amount The number to convert to currency
- * @param {string} currencySymbol The currency symbol to use. Default Naira
- * @returns {string}
+ * Client-safe percentage calculation (no server env dependencies).
+ * For server-side calculations with commission support, use `percentageCalculation` from `$lib/server/api-helpers`.
+ *
+ * @param {number | string} unit_price
+ * @param {number | string} quantity
+ * @param {number | string} commission
+ * @param {number | string} discount
+ * @param {boolean} numeric - if true, return raw number instead of currency string
+ * @param {boolean} shouldTopUp
+ * @returns {string | number}
  */
-export const toCurrency = (amount, currencySymbol = "$") => {
-  if (isNaN(Number(amount))) {
-    return "Invalid Amount";
-  }
-
-  if (currencySymbol == "NGN") {
-    currencySymbol = "₦";
-  }
-
-  return (
-    currencySymbol +
-    Number(amount)
-      .toFixed(2)
-      .replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
-  );
-};
-
 export const percentageCalculation = (unit_price = 0, quantity = 1, commission = 0, discount = 0, numeric = false, shouldTopUp = false) => {
   let amount_to_pay = Number(unit_price) * Number(quantity);
 
   if (commission <= 0) {
-    amount_to_pay = (Number(unit_price) + (shouldTopUp ? Number(PUBLIC_APP_COMMISSION_AMOUNT) : 0)) * Number(quantity);
+    amount_to_pay = Number(unit_price) * Number(quantity);
   } else {
     amount_to_pay = (Number(unit_price) + (shouldTopUp ? Number(commission) : 0)) * Number(quantity);
   }
-
-  /**
-   * @deprecated for now we will treat commissions as a flat amount and not a percentage
-   */
-  // if (discount) {
-  //   const discount_percent = Number(amount_to_pay) - (amount_to_pay * discount) / 100;
-  //   amount_to_pay = discount_percent - (discount_percent * commission) / 100;
-  // } else {
-  //   amount_to_pay = Number(amount_to_pay) + (amount_to_pay * commission) / 100;
-  // }
 
   if (discount) {
     amount_to_pay = Number(amount_to_pay) - (amount_to_pay * discount) / 100;
@@ -84,6 +103,7 @@ export const percentageCalculation = (unit_price = 0, quantity = 1, commission =
 
   return numeric ? amount_to_pay : toCurrency(amount_to_pay);
 };
+
 
 /**
  *
@@ -267,108 +287,7 @@ export const getFirstElement = (str, elem = "p") => {
   return "";
 };
 
-/**
- * Checks if a FormData object contains any File instances.
- * @param {FormData} formData - The FormData object to check.
- * @returns {boolean} - True if the FormData contains at least one File, false otherwise.
- */
-export const hasFile = (formData) => {
-  for (const value of formData.values()) {
-    if (value instanceof File) {
-      return true;
-    }
-  }
-  return false;
-};
 
-/**
- * Custom function to set API headers and make API calls
- *
- * @param {import('$lib/types').ApiParams} params
- *
- * @returns {Promise<Response|undefined>}
- */
-export async function api({ toBaseDomain, resource, event, method, data, logResponse = true, toJSON = true, ignoreErrors = false, extraHeaders = {} }) {
-  const base = PUBLIC_VITE_BASE_DOMAIN;
-  const baseApi = PUBLIC_VITE_BASE_API;
-  let fullurl = toBaseDomain ? base : baseApi;
-
-  /** @type {import('$lib/types').ApiHeaders} */
-  let headers = {
-    accept: "application/json",
-    "accept-encoding": event.request?.headers?.get("accept-encoding") || "",
-    "accept-language": event.request?.headers?.get("accept-language") || "",
-    connection: event.request?.headers?.get("connection") || "",
-    cookie: event.request?.headers?.get("cookie") || "",
-    host: event.request?.headers?.get("host") || "",
-    referer: event.request?.headers?.get("referer") || event.request?.url || "",
-    origin: event.request?.headers?.get("origin") || PUBLIC_VITE_FRONT_END_DOMAIN,
-    "x-xsrf-token": event.cookies?.get("XSRF-TOKEN") || "",
-    "sec-ch-ua": event.cookies?.get("sec-ch-ua") || "",
-    "sec-ch-ua-mobile": event.cookies?.get("sec-ch-ua-mobile") || "",
-    "sec-ch-ua-platform": event.cookies?.get("sec-ch-ua-platform") || "",
-    "user-agent": event.cookies?.get("user-agent") || "",
-    "x-sveltekit-action": event.cookies?.get("x-sveltekit-action") || false,
-    ...extraHeaders,
-  };
-
-  const isFormData = data instanceof FormData;
-  const hasFiles = isFormData && hasFile(data);
-
-  if (!hasFiles) {
-    headers["content-type"] = "application/json";
-    data = data ? JSON.stringify(isFormData ? Object.fromEntries(data) : data) : null;
-  }
-
-  if (resource) {
-    fullurl += resource;
-  }
-
-  if (dev && logResponse) {
-    console.error("--------------- API Request: " + method.toUpperCase() + " " + fullurl);
-  }
-
-  let response;
-  try {
-    response = await event?.fetch(fullurl, {
-      method: method,
-      headers,
-      body: data || null,
-    });
-  } catch (error) {
-    // API server is unreachable - return a mock error response instead of throwing
-    // This allows the frontend to handle the error gracefully
-    console.error("--------------- API Error: " + error.message);
-
-    if (ignoreErrors) {
-      return undefined;
-    }
-
-    // Return a mock response object that mimics a fetch Response
-    return {
-      ok: false,
-      status: 503,
-      statusText: "Service Unavailable",
-      json: async () => ({ error: "API server is unavailable", message: error.message }),
-      text: async () => JSON.stringify({ error: "API server is unavailable", message: error.message }),
-      url: fullurl,
-    };
-  }
-
-  if (dev && logResponse) {
-    console.error("--------------- API Response: ");
-
-    const rsp = await response?.clone();
-
-    /*if (rsp?.status === 500) {
-      error(423, await rsp?.text());
-    }*/
-
-    console.error({ status: rsp?.status, body: [205, 204].includes(rsp?.status) ? null : await rsp?.text() }, "\n\n");
-  }
-
-  return response;
-}
 
 /**
  * Retrieves input data from a form and returns it as a JSON object.
@@ -448,12 +367,6 @@ export const formToJSON = (elements) =>
 export const formDataToObject = (form) => {
   return Object.fromEntries(Array.from(form.keys()).map((key) => [key, form.getAll(key).length > 1 ? form.getAll(key) : form.get(key)]));
 };
-
-/**
- * @param {object} data The Non-POJO object to convert
- * @returns {object}
- */
-export const convertNonPOJOsToPOJOs = (data) => JSON.parse(JSON.stringify(data));
 
 /**
  * @param  {import('clsx').ClassValue[]} inputs

@@ -1,4 +1,4 @@
-import { api } from "$lib/helpers";
+import { api } from "$lib/server/api-helpers";
 import { fail } from "@sveltejs/kit";
 import { assertAdmin } from "$lib/server/auth";
 

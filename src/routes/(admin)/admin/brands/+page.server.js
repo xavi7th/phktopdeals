@@ -1,4 +1,6 @@
-import { api, getErrorString } from "$lib/helpers";
+import { api } from "$lib/server/api-helpers";
+import { getErrorString } from "$lib/helpers";
+import { logWithLocation as serverLog } from "$lib/server/dev-logger";
 import { arktype } from "sveltekit-superforms/adapters";
 import { brandDefaults, brandSchema } from "$lib/schemas";
 import { fail, setError, superValidate } from "sveltekit-superforms";
@@ -84,7 +86,7 @@ export const actions = {
     assertAdmin(event);
     const form = await superValidate(event, arktype(brandSchema, { defaults: brandDefaults }));
 
-    console.log(form);
+    serverLog("editBrand: form submitted", { valid: form.valid, id: form.data?.id });
 
     if (!form.valid) {
       setFlash({ type: "error", msg: "There are errors in your form." }, event);

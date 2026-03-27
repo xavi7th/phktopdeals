@@ -23,6 +23,8 @@ declare global {
       deviceType: DevicePayload;
       deviceName?: string;
       session: Session<SessionData>;
+      requestId?: string;
+      __contextStore?: { requestId: string; user: AppUser | null };
     }
     interface PageData {
       deviceType?: DevicePayload;

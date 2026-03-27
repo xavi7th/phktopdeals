@@ -1,9 +1,11 @@
-import { api, getErrorString } from "$lib/helpers";
+import { api } from "$lib/server/api-helpers";
+import { getErrorString } from "$lib/helpers";
 import { redirect } from "@sveltejs/kit";
 import { arktype } from "sveltekit-superforms/adapters";
 import { message, superValidate, fail, setError } from "sveltekit-superforms";
 import { TopUpAccountDefaults, TopUpAccountSchema } from "$lib/schemas";
 import { getCachedExchangeRate, getNOWAvailableCurrencies } from "./getCachedCurrencyExchange";
+import { logWithLocation as serverLog } from "$lib/server/dev-logger";
 
 export async function load(event) {
   const form = await superValidate(arktype(TopUpAccountSchema, { defaults: TopUpAccountDefaults }));
@@ -72,7 +74,7 @@ export const actions = {
   processBankPayment: async (event) => {
     const form = await superValidate(event, arktype(TopUpAccountSchema, { defaults: TopUpAccountDefaults }));
 
-    console.log({ form });
+    serverLog("processBankPayment: form submitted", { valid: form.valid, data: form.data });
 
     /**
      * Makes a POST request to the `user-transactions` resource to
@@ -100,7 +102,7 @@ export const actions = {
 
     const details = await res.json();
 
-    console.log(details);
+    serverLog("processBankPayment: response received", { status: res?.status, hasError: !!details.error });
 
     if (details.error) {
       return message(form, { type: "error", msg: details.metadata.message }, { status: 400 });

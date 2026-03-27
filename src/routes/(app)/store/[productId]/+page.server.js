@@ -1,4 +1,4 @@
-import { api } from "$lib/helpers";
+import { api } from "$lib/server/api-helpers";
 import { error } from "@sveltejs/kit";
 import { getErrorString } from "$lib/helpers";
 import { arktype } from "sveltekit-superforms/adapters";

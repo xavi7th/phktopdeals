@@ -1,5 +1,5 @@
 import QRCode from "qrcode";
-import { api } from "$lib/helpers";
+import { api } from "$lib/server/api-helpers";
 import { redirect } from "@sveltejs/kit";
 
 export async function load(event) {

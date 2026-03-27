@@ -1,5 +1,6 @@
 import { type } from "arktype";
-import { api, getErrorString } from "$lib/helpers";
+import { api } from "$lib/server/api-helpers";
+import { getErrorString } from "$lib/helpers";
 import { arktype } from "sveltekit-superforms/adapters";
 import { sliderDefaults, sliderSchema } from "$lib/schemas";
 import { redirect, setFlash } from "sveltekit-flash-message/server";

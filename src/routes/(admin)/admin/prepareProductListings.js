@@ -1,4 +1,4 @@
-import { api } from "$lib/helpers";
+import { api } from "$lib/server/api-helpers";
 import { getErrorString } from "$lib/helpers";
 import { arktype } from "sveltekit-superforms/adapters";
 import { setFlash, redirect } from "sveltekit-flash-message/server";

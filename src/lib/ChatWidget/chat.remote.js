@@ -1,6 +1,7 @@
-import { command, query, getRequestEvent } from "$app/server";
-import { api } from "$lib/helpers";
 import * as v from "valibot";
+import { api } from "$lib/server/api-helpers";
+import { command, query, getRequestEvent } from "$app/server";
+import { logWithLocation as serverLog } from "$lib/server/dev-logger";
 
 /**
  * Start a guest chat session.
@@ -124,7 +125,10 @@ export const requestHandoff = command(
   async ({ conversationId, guestToken }) => {
     const event = getRequestEvent();
 
-    console.log("[DEBUG] requestHandoff remote - guestToken:", guestToken ? "present" : "null");
+    serverLog(`[DEBUG] requestHandoff remote - guestToken:", ${guestToken ? "present" : "null"}`, {
+      conversationId,
+      hasGuestToken: !!guestToken,
+    });
 
     /** @type {Record<string, string>} */
     const extraHeaders = {};
@@ -133,9 +137,9 @@ export const requestHandoff = command(
     if (guestToken) {
       extraHeaders["X-Guest-Token"] = guestToken;
     }
-
-    console.log("[DEBUG] requestHandoff remote - extraHeaders:", Object.keys(extraHeaders));
-
+    serverLog("[DEBUG] requestHandoff remote - extraHeaders:", {
+      headers: Object.keys(extraHeaders),
+    });
     const response = await api({
       resource: `chat/${conversationId}/handoff/request`,
       method: "post",

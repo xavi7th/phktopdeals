@@ -1,7 +1,8 @@
-import { api } from "$lib/helpers";
+import { api } from "$lib/server/api-helpers";
 import { redirect } from "@sveltejs/kit";
 import { clearUserCache } from "../../../../hooks.server.js";
 import { VITE_SESSION_NAME } from "$env/static/private";
+import { logWithLocation as serverLog } from "$lib/server/dev-logger";
 
 export async function load(event) {
   const apiSessionKey = event.locals.session.data?.api_session;
@@ -13,7 +14,7 @@ export async function load(event) {
   });
 
   if (!response?.ok) {
-    console.error("Backend logout failed:", response?.status, "— proceeding with local cleanup");
+    serverLog("Backend logout failed — proceeding with local cleanup", { status: response?.status });
   }
 
   if (apiSessionKey) clearUserCache(apiSessionKey);

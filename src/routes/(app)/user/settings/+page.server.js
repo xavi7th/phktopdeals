@@ -1,5 +1,5 @@
 import { type } from "arktype";
-import { api } from "$lib/helpers";
+import { api } from "$lib/server/api-helpers";
 import { arktype } from "sveltekit-superforms/adapters";
 import { AppUserDefaults, AppUserSchema } from "$lib/schemas";
 import { message, superValidate, fail, setError } from "sveltekit-superforms";
