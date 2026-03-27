@@ -60,7 +60,7 @@
   }
 
   .status-read .icon {
-    color: #6C5702;
+    color: #6c5702;
   }
 
   @keyframes pulse {

@@ -66,10 +66,10 @@ const config = {
     },
   },
   compilerOptions: {
-		experimental: {
-			async: true
-		}
-	}
+    experimental: {
+      async: true,
+    },
+  },
 };
 
 export default config;

@@ -83,7 +83,7 @@ function createInactivityStore() {
     boundHandleUserInteraction = handleUserInteraction;
     boundHandleVisibilityChange = handleVisibilityChange;
     boundHandleBrowserClose = handleBrowserClose;
-    boundHandleTyping = handleTyping;
+    // Note: boundHandleTyping is set inside setupTypingDetection()
 
     // Start heartbeat interval (only leader tab sends)
     heartbeatInterval = setInterval(() => {

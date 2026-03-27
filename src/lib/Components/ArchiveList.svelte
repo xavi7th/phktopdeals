@@ -101,8 +101,7 @@
           type="text"
           bind:value={filters.conversation_id}
           placeholder="Search by ID..."
-          class="w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none dark:border-neutral-600 dark:bg-neutral-700 dark:text-neutral-200"
-        />
+          class="w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none dark:border-neutral-600 dark:bg-neutral-700 dark:text-neutral-200" />
       </div>
 
       <div>
@@ -111,8 +110,7 @@
           id="date_from"
           type="date"
           bind:value={filters.date_from}
-          class="w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none dark:border-neutral-600 dark:bg-neutral-700 dark:text-neutral-200"
-        />
+          class="w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none dark:border-neutral-600 dark:bg-neutral-700 dark:text-neutral-200" />
       </div>
 
       <div>
@@ -121,8 +119,7 @@
           id="date_to"
           type="date"
           bind:value={filters.date_to}
-          class="w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none dark:border-neutral-600 dark:bg-neutral-700 dark:text-neutral-200"
-        />
+          class="w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none dark:border-neutral-600 dark:bg-neutral-700 dark:text-neutral-200" />
       </div>
 
       <div>
@@ -132,33 +129,17 @@
           type="text"
           bind:value={filters.customer}
           placeholder="Name or email..."
-          class="w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none dark:border-neutral-600 dark:bg-neutral-700 dark:text-neutral-200"
-        />
+          class="w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none dark:border-neutral-600 dark:bg-neutral-700 dark:text-neutral-200" />
       </div>
 
       <div class="flex items-end gap-2">
-        <button
-          onclick={handleSearch}
-          class="rounded bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
-        >
-          Search
-        </button>
-        <button
-          onclick={handleReset}
-          class="rounded border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-neutral-600 dark:text-neutral-300"
-        >
-          Reset
-        </button>
+        <button onclick={handleSearch} class="rounded bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">Search</button>
+        <button onclick={handleReset} class="rounded border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-neutral-600 dark:text-neutral-300">Reset</button>
       </div>
     </div>
 
     <div class="mt-4 flex justify-end">
-      <button
-        onclick={handleManualArchive}
-        class="rounded bg-green-600 px-4 py-2 text-sm font-medium text-white hover:bg-green-700"
-      >
-        Run Manual Archive
-      </button>
+      <button onclick={handleManualArchive} class="rounded bg-green-600 px-4 py-2 text-sm font-medium text-white hover:bg-green-700">Run Manual Archive</button>
     </div>
   </div>
 
@@ -199,12 +180,7 @@
                 </td>
                 <td class="px-4 py-3">{formatDate(archive.archived_at)}</td>
                 <td class="px-4 py-3">
-                  <button
-                    onclick={() => handleViewArchive(archive)}
-                    class="text-blue-600 hover:text-blue-800 dark:text-blue-400"
-                  >
-                    View
-                  </button>
+                  <button onclick={() => handleViewArchive(archive)} class="text-blue-600 hover:text-blue-800 dark:text-blue-400">View</button>
                 </td>
               </tr>
             {/each}
@@ -221,20 +197,10 @@
           </div>
           <div class="flex gap-2">
             {#if $archiveStore.pagination.prev_page_url}
-              <button
-                onclick={() => loadArchives($archiveStore.pagination.current_page - 1)}
-                class="rounded border border-gray-300 px-3 py-1 text-sm hover:bg-gray-50 dark:border-neutral-600"
-              >
-                Previous
-              </button>
+              <button onclick={() => loadArchives($archiveStore.pagination.current_page - 1)} class="rounded border border-gray-300 px-3 py-1 text-sm hover:bg-gray-50 dark:border-neutral-600">Previous</button>
             {/if}
             {#if $archiveStore.pagination.next_page_url}
-              <button
-                onclick={() => loadArchives($archiveStore.pagination.current_page + 1)}
-                class="rounded border border-gray-300 px-3 py-1 text-sm hover:bg-gray-50 dark:border-neutral-600"
-              >
-                Next
-              </button>
+              <button onclick={() => loadArchives($archiveStore.pagination.current_page + 1)} class="rounded border border-gray-300 px-3 py-1 text-sm hover:bg-gray-50 dark:border-neutral-600">Next</button>
             {/if}
           </div>
         </div>

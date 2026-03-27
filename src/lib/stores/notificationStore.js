@@ -17,10 +17,7 @@ export const hasNewNotifications = writable(false);
 const MAX_VISIBLE_NOTIFICATIONS = 3;
 
 /** @type {import("svelte/store").Readable<Array>} */
-export const visibleNotifications = derived(
-  notificationQueue,
-  ($queue) => $queue.slice(0, MAX_VISIBLE_NOTIFICATIONS)
-);
+export const visibleNotifications = derived(notificationQueue, ($queue) => $queue.slice(0, MAX_VISIBLE_NOTIFICATIONS));
 
 /**
  * Add a new notification to the queue

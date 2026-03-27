@@ -13,9 +13,7 @@
 
 {#if count > 0}
   <span class="relative inline-flex">
-    <span
-      class="flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1.5 text-xs font-medium text-white"
-      class:animate-pulse={showPulse}>
+    <span class="flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1.5 text-xs font-medium text-white" class:animate-pulse={showPulse}>
       {displayCount}
     </span>
     {#if showPulse}

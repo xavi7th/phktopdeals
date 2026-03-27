@@ -1,4 +1,4 @@
-import { Chart, registerables } from 'chart.js';
+import { Chart, registerables } from "chart.js";
 
 // Register Chart.js components once
 Chart.register(...registerables);
@@ -7,15 +7,15 @@ Chart.register(...registerables);
  * Default chart options for consistent styling
  */
 export const getDefaultChartOptions = () => ({
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: { legend: { display: false } },
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: { legend: { display: false } },
 });
 
 /**
  * Format USD values for chart tooltips/labels
  */
-export const formatCurrency = (value) => '$' + value;
+export const formatCurrency = (value) => "$" + value;
 
 /**
  * Create a chart instance with proper cleanup
@@ -26,13 +26,13 @@ export const formatCurrency = (value) => '$' + value;
  * @returns {Chart} The chart instance
  */
 export function createChart(canvas, type, data, options = {}) {
-    const chart = new Chart(canvas, {
-        type,
-        data,
-        options: { ...getDefaultChartOptions(), ...options },
-    });
+  const chart = new Chart(canvas, {
+    type,
+    data,
+    options: { ...getDefaultChartOptions(), ...options },
+  });
 
-    return chart;
+  return chart;
 }
 
 /**
@@ -40,7 +40,7 @@ export function createChart(canvas, type, data, options = {}) {
  * @param {Chart|null} chartInstance - The chart instance to destroy
  */
 export function destroyChart(chartInstance) {
-    if (chartInstance) {
-        chartInstance.destroy();
-    }
+  if (chartInstance) {
+    chartInstance.destroy();
+  }
 }

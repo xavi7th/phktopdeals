@@ -126,15 +126,9 @@ export async function subscribe() {
 async function saveSubscription(subscription) {
   const subscriptionData = {
     endpoint: subscription.endpoint,
-    public_key: subscription.getKey("p256dh")
-      ? btoa(String.fromCharCode(...new Uint8Array(subscription.getKey("p256dh"))))
-      : null,
-    auth_token: subscription.getKey("auth")
-      ? btoa(String.fromCharCode(...new Uint8Array(subscription.getKey("auth"))))
-      : null,
-    expires_at: subscription.expirationTime
-      ? new Date(subscription.expirationTime).toISOString()
-      : null,
+    public_key: subscription.getKey("p256dh") ? btoa(String.fromCharCode(...new Uint8Array(subscription.getKey("p256dh")))) : null,
+    auth_token: subscription.getKey("auth") ? btoa(String.fromCharCode(...new Uint8Array(subscription.getKey("auth")))) : null,
+    expires_at: subscription.expirationTime ? new Date(subscription.expirationTime).toISOString() : null,
   };
 
   const response = await fetch(`${API_BASE}/staff/push/subscribe`, {

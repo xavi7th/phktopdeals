@@ -59,10 +59,7 @@
 
 <div class="space-y-4">
   <!-- Back Button -->
-  <button
-    onclick={handleBack}
-    class="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-800 dark:text-neutral-400"
-  >
+  <button onclick={handleBack} class="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-800 dark:text-neutral-400">
     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
     </svg>
@@ -83,9 +80,7 @@
       <div class="flex items-center justify-between">
         <div>
           <div class="flex items-center gap-3">
-            <span class="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-800 dark:bg-neutral-700 dark:text-neutral-200">
-              Archived
-            </span>
+            <span class="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-800 dark:bg-neutral-700 dark:text-neutral-200">Archived</span>
             <h2 class="text-lg font-semibold text-gray-900 dark:text-neutral-100">
               {conversation?.subject || "No Subject"}
             </h2>
@@ -101,7 +96,7 @@
 
       <!-- Metadata -->
       {#if archiveData.metadata}
-        <div class="mt-4 grid gap-4 border-t border-gray-200 pt-4 dark:border-neutral-700 md:grid-cols-3">
+        <div class="mt-4 grid gap-4 border-t border-gray-200 pt-4 md:grid-cols-3 dark:border-neutral-700">
           <div>
             <p class="text-xs text-gray-500 dark:text-neutral-400">Message Count</p>
             <p class="font-medium text-gray-900 dark:text-neutral-100">{archiveData.metadata.message_count || 0}</p>
