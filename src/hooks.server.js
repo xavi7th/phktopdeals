@@ -103,12 +103,7 @@ async function logger({ event, resolve }) {
     const duration = Date.now() - start_time;
     const log = getLogger();
     if (log) {
-      log.info("SLOW REQUEST", {
-        duration_ms: duration,
-        device: event.locals.deviceName,
-        method: event.request.method,
-        route: event.url.pathname,
-      });
+      log.info(`INTERNAL REQUEST: ${duration}ms ${event.locals.deviceName} ${event.request.method} ${event.url.pathname}`);
     } else {
       console.log(`INTERNAL REQUEST: ${duration}ms ${event.locals.deviceName} ${event.request.method} ${event.url.pathname}`);
     }

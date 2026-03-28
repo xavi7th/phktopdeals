@@ -6,12 +6,7 @@
  */
 
 import { dev } from "$app/environment";
-import {
-  PUBLIC_APP_COMMISSION_AMOUNT,
-  PUBLIC_VITE_BASE_API,
-  PUBLIC_VITE_BASE_DOMAIN,
-  PUBLIC_VITE_FRONT_END_DOMAIN,
-} from "$env/static/public";
+import { PUBLIC_APP_COMMISSION_AMOUNT, PUBLIC_VITE_BASE_API, PUBLIC_VITE_BASE_DOMAIN, PUBLIC_VITE_FRONT_END_DOMAIN } from "$env/static/public";
 import { hasFile, toCurrency } from "$lib/helpers";
 import { getLogger } from "./dev-logger";
 

@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import util from "node:util";
+import { AsyncLocalStorage } from "node:async_hooks";
 
 /**
  * Extract caller information from stack trace.
@@ -14,14 +15,7 @@ function getCallerInfo() {
   // Start at frame 5 (after Error, getCallerInfo, formatArgs, the logger fn, and the call site)
   for (let i = 5; i < stackLines.length; i++) {
     const line = stackLines[i];
-    if (
-      !line ||
-      line.includes("node_modules") ||
-      line.includes("internal/") ||
-      line.includes("logger-core") ||
-      line.includes("dev-logger") ||
-      line.includes("loader.cjs")
-    ) {
+    if (!line || line.includes("node_modules") || line.includes("internal/") || line.includes("logger-core") || line.includes("dev-logger") || line.includes("loader.cjs")) {
       continue;
     }
     // Match: at functionName (or anonymous) at file:line:column
@@ -107,40 +101,34 @@ function cleanupOldLogs(logDir, baseName, maxAgeDays = 90) {
  * Stack trace:
  * #0 file(line): function()
  * ...
- * {"context_json"}
+ * {"user":null}
  *
  * @param {string} level - Log level e.g. 'ERROR', 'INFO'
  * @param {any[]} args - Log arguments
- * @param {object|null} context - User context object or null
+ * @param {object|null} userContext - User context object or null
  * @param {string|null} requestId - Request ID or null
- * @param {Error|null} error - Error instance if present
  * @returns {string}
  */
-function formatLogEntry(level, args, context = null, requestId = null, error = null) {
+function formatLogEntry(level, args, userContext = null, requestId = null) {
   const timestamp = new Date().toISOString().slice(0, 19).replace("T", " ");
   const rawEnv = process.env.NODE_ENV || "production";
   const env = rawEnv === "development" ? "local" : rawEnv;
 
   let message = "";
   let stack = "";
+  let extraContext = {};
 
-  // Extract context from last arg if it's a plain object
   let logArgs = [...args];
-  if (args.length > 1) {
-    const lastArg = args[args.length - 1];
-    if (
-      typeof lastArg === "object" &&
-      lastArg !== null &&
-      !(lastArg instanceof Error) &&
-      !Array.isArray(lastArg)
-    ) {
-      context = { ...context, ...lastArg };
-      logArgs = logArgs.slice(0, -1);
-    }
+
+  // Extract context from last arg if it's a plain object (and not the only arg)
+  const lastArg = logArgs.length > 0 ? logArgs[logArgs.length - 1] : undefined;
+  const isLastArgContext = typeof lastArg === "object" && lastArg !== null && !(lastArg instanceof Error) && !Array.isArray(lastArg);
+  if (isLastArgContext && logArgs.length > 1) {
+    extraContext = logArgs.pop();
   }
 
-  // Extract Error from args
-  const foundError = error || logArgs.find((a) => a instanceof Error);
+  // Extract Error from remaining args
+  const foundError = logArgs.find((a) => a instanceof Error);
   const nonErrorArgs = logArgs.filter((a) => !(a instanceof Error));
   message = formatArgs(nonErrorArgs);
 
@@ -174,13 +162,9 @@ function formatLogEntry(level, args, context = null, requestId = null, error = n
     fullMessage = `${message} in ${callerInfo.file}:${callerInfo.line}`;
   }
 
-  // Build context JSON
-  let contextString;
-  if (context && Object.keys(context).length > 0) {
-    contextString = JSON.stringify(context);
-  } else {
-    contextString = '{"user":null}';
-  }
+  // Build context JSON - wrap user under "user" key, spread any extra context alongside it
+  const contextPayload = { user: userContext ?? null, ...extraContext };
+  const contextString = JSON.stringify(contextPayload);
 
   return `[${timestamp}] ${env}.${level}: ${fullMessage}${stack} ${contextString}\n`;
 }
@@ -235,18 +219,15 @@ function createLogger(baseLogPath, { getUserContext, getRequestId, cleanupDays =
   const logger = {};
 
   for (const level of levels) {
-    logger[level] = (/** @type {any} */ message, /** @type {any} */ extra = null) => {
+    logger[level] = (/** @type {any} */ message, /** @type {any} */ error = null) => {
       ensureDatedStream();
-      // If second arg is an Error, pass it explicitly for stack trace
-      const isError = extra instanceof Error;
-      const ctx = getUserContext();
+      const args = [message, error].filter(Boolean);
+      const userContext = getUserContext();
       const reqId = getRequestId();
-      const entry = isError
-        ? formatLogEntry(level.toUpperCase(), [message], ctx, reqId, extra)
-        : formatLogEntry(level.toUpperCase(), [message, extra].filter(Boolean), ctx, reqId, null);
-      stream.write(entry);
+      const entry = formatLogEntry(level.toUpperCase(), args, userContext, reqId);
       const output = stderrLevels.includes(level) ? process.stderr : process.stdout;
-      output.write(`${level.toUpperCase()}: ${formatArgs([message])}\n`);
+      stream.write(entry);
+      output.write(entry + "\n");
     };
   }
 
@@ -258,11 +239,13 @@ function createLogger(baseLogPath, { getUserContext, getRequestId, cleanupDays =
    */
   logger.logError = (message, error, extraContext = null) => {
     ensureDatedStream();
-    const ctx = extraContext ? { ...getUserContext(), ...extraContext } : getUserContext();
+    const userContext = getUserContext();
     const reqId = getRequestId();
-    const entry = formatLogEntry("ERROR", [message], ctx, reqId, error);
+    // Pass extraContext as the last arg so formatLogEntry extracts it alongside userContext
+    const args = extraContext ? [message, error, extraContext] : [message, error];
+    const entry = formatLogEntry("ERROR", args, userContext, reqId);
     stream.write(entry);
-    process.stderr.write(`ERROR: ${message} — ${error.message}\n`);
+    process.stderr.write(entry + "\n");
   };
 
   /**
@@ -276,41 +259,41 @@ function createLogger(baseLogPath, { getUserContext, getRequestId, cleanupDays =
     // console.log -> INFO
     console.log = (/** @type {any[]} */ ...args) => {
       ensureDatedStream();
-      const ctx = getUserContext();
+      const userContext = getUserContext();
       const reqId = getRequestId();
-      const entry = formatLogEntry("INFO", args, ctx, reqId);
+      const entry = formatLogEntry("INFO", args, userContext, reqId);
       stream.write(entry);
-      originalStdoutWrite(util.format(...args) + "\n");
+      originalStdoutWrite(entry + "\n");
     };
 
     // console.error -> ERROR
     console.error = (/** @type {any[]} */ ...args) => {
       ensureDatedStream();
-      const ctx = getUserContext();
+      const userContext = getUserContext();
       const reqId = getRequestId();
-      const entry = formatLogEntry("ERROR", args, ctx, reqId);
+      const entry = formatLogEntry("ERROR", args, userContext, reqId);
       stream.write(entry);
-      originalStderrWrite(util.format(...args) + "\n");
+      originalStderrWrite(entry + "\n");
     };
 
     // console.warn -> WARNING
     console.warn = (/** @type {any[]} */ ...args) => {
       ensureDatedStream();
-      const ctx = getUserContext();
+      const userContext = getUserContext();
       const reqId = getRequestId();
-      const entry = formatLogEntry("WARNING", args, ctx, reqId);
+      const entry = formatLogEntry("WARNING", args, userContext, reqId);
       stream.write(entry);
-      originalStdoutWrite(util.format(...args) + "\n");
+      originalStdoutWrite(entry + "\n");
     };
 
     // console.info -> INFO
     console.info = (/** @type {any[]} */ ...args) => {
       ensureDatedStream();
-      const ctx = getUserContext();
+      const userContext = getUserContext();
       const reqId = getRequestId();
-      const entry = formatLogEntry("INFO", args, ctx, reqId);
+      const entry = formatLogEntry("INFO", args, userContext, reqId);
       stream.write(entry);
-      originalStdoutWrite(util.format(...args) + "\n");
+      originalStdoutWrite(entry + "\n");
     };
   };
 

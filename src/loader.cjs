@@ -71,10 +71,7 @@ const path = require("path");
    * Logged to file via the global logger, then process exits.
    */
   process.on("uncaughtException", (err) => {
-    console.error(
-      `CRITICAL: Uncaught Exception: ${err.message} in ${err.stack ? err.stack.split("\n")[1] : "unknown location"}:`,
-      err
-    );
+    console.error(`CRITICAL: Uncaught Exception: ${err.message} in ${err.stack ? err.stack.split("\n")[1] : "unknown location"}:`, err);
     process.exit(1);
   });
 
@@ -84,13 +81,7 @@ const path = require("path");
    */
   process.on("unhandledRejection", (reason, promise) => {
     const error = reason instanceof Error ? reason : new Error(String(reason));
-    console.error(
-      `CRITICAL: Unhandled Promise Rejection: ${error.message}`,
-      promise,
-      "reason:",
-      reason,
-      { promise: "unhandled promise", reason: String(reason) }
-    );
+    console.error(`CRITICAL: Unhandled Promise Rejection: ${error.message}`, promise, "reason:", reason, { promise: "unhandled promise", reason: String(reason) });
   });
 
   /**
