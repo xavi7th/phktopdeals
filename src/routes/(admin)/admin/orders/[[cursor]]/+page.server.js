@@ -23,7 +23,6 @@ export async function load(event) {
       method: "get",
       resource: "manage/purchase-invoices" + queryParams,
       event,
-      logResponse: true,
     });
 
     // Handle API unavailable

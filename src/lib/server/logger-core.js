@@ -12,8 +12,8 @@ function getCallerInfo() {
   const stack = new Error().stack;
   if (!stack) return null;
   const stackLines = stack.split("\n");
-  // Start at frame 5 (after Error, getCallerInfo, formatArgs, the logger fn, and the call site)
-  for (let i = 5; i < stackLines.length; i++) {
+  // Start at frame 1 (skip "Error" header); filters below skip logger internals
+  for (let i = 1; i < stackLines.length; i++) {
     const line = stackLines[i];
     if (!line || line.includes("node_modules") || line.includes("internal/") || line.includes("logger-core") || line.includes("dev-logger") || line.includes("loader.cjs")) {
       continue;

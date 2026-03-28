@@ -6,6 +6,7 @@
  */
 
 import { dev } from "$app/environment";
+import { APP_LOG_API_RESPONSES_BY_DEFAULT } from '$env/static/private';
 import { PUBLIC_APP_COMMISSION_AMOUNT, PUBLIC_VITE_BASE_API, PUBLIC_VITE_BASE_DOMAIN, PUBLIC_VITE_FRONT_END_DOMAIN } from "$env/static/public";
 import { hasFile, toCurrency } from "$lib/helpers";
 import { getLogger } from "./dev-logger";
@@ -19,7 +20,7 @@ export { hasFile, toCurrency };
  * @param {import('$lib/types').ApiParams} params
  * @returns {Promise<Response|undefined>}
  */
-export async function api({ toBaseDomain, resource, event, method, data, logResponse = false, ignoreErrors = false, extraHeaders = {} }) {
+export async function api({ toBaseDomain, resource, event, method, data, logResponse = JSON.parse(APP_LOG_API_RESPONSES_BY_DEFAULT), ignoreErrors = false, extraHeaders = {} }) {
   const base = PUBLIC_VITE_BASE_DOMAIN;
   const baseApi = PUBLIC_VITE_BASE_API;
   let fullurl = toBaseDomain ? base : baseApi;

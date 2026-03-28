@@ -14,7 +14,7 @@ import { dev } from "$app/environment";
 import { redirect } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
 import { handleSession } from "svelte-kit-cookie-session";
-import { PUBLIC_VITE_BASE_API } from "$env/static/public";
+import { PUBLIC_VITE_BASE_API, PUBLIC_DEV_LOG_DETAILED } from "$env/static/public";
 import { handleDeviceDetector } from "sveltekit-device-detector";
 import { VITE_SESSION_NAME, APP_SESSION_KEY } from "$env/static/private";
 import { initDevLogger, getLogger } from "$lib/server/dev-logger";
@@ -99,13 +99,23 @@ async function logger({ event, resolve }) {
   //Await here. Run other hooks AND LOAD FUNCTIONS then come back here to continue
   const response = await resolve(event);
 
-  if (dev && !event.request.url.includes("assets")) {
-    const duration = Date.now() - start_time;
-    const log = getLogger();
-    if (log) {
-      log.info(`INTERNAL REQUEST: ${duration}ms ${event.locals.deviceName} ${event.request.method} ${event.url.pathname}`);
-    } else {
-      console.log(`INTERNAL REQUEST: ${duration}ms ${event.locals.deviceName} ${event.request.method} ${event.url.pathname}`);
+  if (dev) {
+    const path = event.url.pathname;
+    const isPageRequest = !path.startsWith("/api/") && !path.startsWith("/.well-known/") && !path.includes("assets");
+    const isDetailed = PUBLIC_DEV_LOG_DETAILED === "true";
+
+    // Overview mode (default): one log per top-level page request only.
+    // Detailed mode (PUBLIC_DEV_LOG_DETAILED=true): log every sub-request too,
+    // useful for profiling which internal fetch is slow.
+    if (isPageRequest && (isDetailed || !event.isSubRequest)) {
+      const duration = Date.now() - start_time;
+      const label = isDetailed && event.isSubRequest ? "SUB-REQ" : "REQUEST";
+      const log = getLogger();
+      if (log) {
+        log.info(`${label}: ${duration}ms ${event.locals.deviceName} ${event.request.method} ${path}`);
+      } else {
+        console.log(`${label}: ${duration}ms ${event.locals.deviceName} ${event.request.method} ${path}`);
+      }
     }
   }
   return response;

@@ -20,7 +20,6 @@ export async function getData(event, productDefaults) {
       method: "get",
       resource: "products/" + event.params.id,
       event,
-      logResponse: true,
     });
 
     // Handle API unavailable
@@ -203,7 +202,6 @@ export async function updateAction(event, productDefaults) {
     resource: "products/" + form.data.id,
     data: formData,
     event,
-    logResponse: true,
   });
 
   if (res?.status == 422) {
