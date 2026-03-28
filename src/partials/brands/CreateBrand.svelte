@@ -52,8 +52,6 @@ const brandForm = await superValidate(event, arktype(brandSchema, { defaults: br
     delayMs: 500,
     timeoutMs: 8000,
     async onResult({ result }) {
-      console.log(result);
-
       if (result.type === "redirect") {
         // @ts-ignore
         window.HSOverlay?.close(`#brand-modal`);

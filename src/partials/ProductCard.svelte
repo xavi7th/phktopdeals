@@ -3,8 +3,6 @@
 
   /** @type { {product: import('$lib/types').ProdSummary} } */
   let { product } = $props();
-
-  $inspect(product);
 </script>
 
 <div

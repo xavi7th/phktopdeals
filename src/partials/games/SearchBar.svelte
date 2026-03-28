@@ -35,7 +35,6 @@
     try {
       const regionSelect = window.HSSelect.getInstance(regionSelectEl);
       const platformSelect = window.HSSelect.getInstance(platformSelectEl);
-      console.log(regionSelect);
 
       regionSelect?.destroy();
       platformSelect?.destroy();

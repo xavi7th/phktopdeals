@@ -2,8 +2,6 @@
   import { page } from "$app/state";
 
   let location = page.url.pathname.includes("/admin") ? "/admin/dashboard" : "/";
-
-  $inspect("page", page);
 </script>
 
 <main class="error-page py-40">
