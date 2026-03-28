@@ -3,10 +3,14 @@ import { assertAdmin } from "$lib/server/auth";
 
 export async function load(event) {
   assertAdmin(event);
+  const dateFrom = event.url.searchParams.get("date_from");
+  const dateTo = event.url.searchParams.get("date_to");
+  const queryParams = dateFrom && dateTo ? `?date_from=${dateFrom}&date_to=${dateTo}` : "";
+
   const fetchProducts = async () => {
     const res = await api({
       method: "get",
-      resource: "products",
+      resource: "products" + queryParams,
       event,
     });
 

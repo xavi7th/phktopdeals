@@ -1,5 +1,5 @@
 import { api } from "$lib/server/api-helpers";
-import { getErrorString } from "$lib/helpers";
+import { getErrorString, extractErrorMessage } from "$lib/helpers";
 import { arktype } from "sveltekit-superforms/adapters";
 import { setFlash, redirect } from "sveltekit-flash-message/server";
 import { superValidate, fail, setError } from "sveltekit-superforms";
@@ -172,7 +172,7 @@ export async function createAction(event, productDefaults) {
   }
 
   if (!res?.ok) {
-    setFlash({ type: "error", msg: res?.statusText || "An error occurred while processing your request" }, event);
+    setFlash({ type: "error", msg: await extractErrorMessage(res) }, event);
     return fail(res?.status || 429, { form });
   }
 
@@ -226,7 +226,7 @@ export async function updateAction(event, productDefaults) {
   }
 
   if (!res?.ok) {
-    setFlash({ type: "error", msg: res?.statusText || "An error occurred while processing your request" }, event);
+    setFlash({ type: "error", msg: await extractErrorMessage(res) }, event);
     return fail(res?.status || 429, { form });
   }
 

@@ -1,6 +1,6 @@
 import { type } from "arktype";
 import { api } from "$lib/server/api-helpers";
-import { getErrorString } from "$lib/helpers";
+import { getErrorString, extractErrorMessage } from "$lib/helpers";
 import { arktype } from "sveltekit-superforms/adapters";
 import { sliderDefaults, sliderSchema } from "$lib/schemas";
 import { redirect, setFlash } from "sveltekit-flash-message/server";
@@ -81,7 +81,7 @@ export const actions = {
     }
 
     if (!res?.ok) {
-      setFlash({ type: "error", msg: res?.statusText || "An error occurred while processing your request" }, event);
+      setFlash({ type: "error", msg: await extractErrorMessage(res) }, event);
       return fail(res?.status || 429, { form });
     }
 
@@ -144,7 +144,7 @@ export const actions = {
     }
 
     if (!res?.ok) {
-      setFlash({ type: "error", msg: res?.statusText || "An error occurred while processing your request" }, event);
+      setFlash({ type: "error", msg: await extractErrorMessage(res) }, event);
       return fail(res?.status || 429, { form });
     }
 
@@ -175,7 +175,7 @@ export const actions = {
     }
 
     if (!res?.ok) {
-      setFlash({ type: "error", msg: res?.statusText || "An error occurred while processing your request" }, event);
+      setFlash({ type: "error", msg: await extractErrorMessage(res) }, event);
       return fail(res?.status || 429, { form });
     }
 

@@ -104,7 +104,6 @@ export const percentageCalculation = (unit_price = 0, quantity = 1, commission =
   return numeric ? amount_to_pay : toCurrency(amount_to_pay);
 };
 
-
 /**
  *
  * @param {String} timeString the time string to convert to 12hr format eg 13:45
@@ -287,8 +286,6 @@ export const getFirstElement = (str, elem = "p") => {
   return "";
 };
 
-
-
 /**
  * Retrieves input data from a form and returns it as a JSON object.
  * @param  {HTMLFormControlsCollection} elements  the form elements
@@ -382,6 +379,22 @@ export function cn(...inputs) {
  * @param {number} wait number of seconds to debounce for.
  * @returns {Function}
  */
+/**
+ * Extracts a human-readable error message from an API response.
+ * Handles both ErrorRequestResponse shape ({metadata.message}) and Laravel abort() shape ({message}).
+ *
+ * @param {Response} res - The fetch Response object
+ * @returns {Promise<string>}
+ */
+export async function extractErrorMessage(res) {
+  try {
+    const body = await res?.json();
+    return body?.metadata?.message || body?.message || res?.statusText || "An error occurred while processing your request";
+  } catch {
+    return res?.statusText || "An error occurred while processing your request";
+  }
+}
+
 export function debounce(func, wait) {
   /**
    * @type {string | number | NodeJS.Timeout | undefined}

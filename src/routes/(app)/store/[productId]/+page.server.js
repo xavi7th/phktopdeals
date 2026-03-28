@@ -1,6 +1,6 @@
 import { api } from "$lib/server/api-helpers";
 import { error } from "@sveltejs/kit";
-import { getErrorString } from "$lib/helpers";
+import { getErrorString, extractErrorMessage } from "$lib/helpers";
 import { arktype } from "sveltekit-superforms/adapters";
 import { setFlash, redirect } from "sveltekit-flash-message/server";
 import { setError, superValidate, fail } from "sveltekit-superforms";
@@ -83,7 +83,7 @@ export const actions = {
     }
 
     if (!res?.ok) {
-      setFlash({ type: "error", msg: res?.statusText || "An error occurred while processing your request" }, event);
+      setFlash({ type: "error", msg: await extractErrorMessage(res) }, event);
       return fail(res?.status || 429, { form });
     }
 

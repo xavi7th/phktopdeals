@@ -1,5 +1,5 @@
 import { api } from "$lib/server/api-helpers";
-import { getErrorString } from "$lib/helpers";
+import { getErrorString, extractErrorMessage } from "$lib/helpers";
 import { error } from "@sveltejs/kit";
 
 export async function load(event) {
@@ -60,7 +60,7 @@ export const actions = {
     }
 
     if (!res?.ok) {
-      return { message: { type: "error", msg: "There was an error confirming the transaction. Reload the page and try again." } };
+      return { message: { type: "error", msg: await extractErrorMessage(res) } };
     }
 
     return { message: { type: "success", msg: (await res.json()).metadata.message } };

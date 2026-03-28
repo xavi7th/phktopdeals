@@ -1,5 +1,6 @@
 import { type } from "arktype";
 import { api } from "$lib/server/api-helpers";
+import { extractErrorMessage } from "$lib/helpers";
 import { arktype } from "sveltekit-superforms/adapters";
 import { message, superValidate, fail, setError } from "sveltekit-superforms";
 import { assertAdmin } from "$lib/server/auth";
@@ -77,7 +78,7 @@ export const actions = {
     }
 
     if (!res?.ok) {
-      return message(form, { type: "error", msg: res?.statusText || "An error occurred while processing your request" }, { status: res?.status || 429 });
+      return message(form, { type: "error", msg: await extractErrorMessage(res) }, { status: res?.status || 429 });
     }
 
     return message(form, { type: "success", msg: (await res.json())?.metadata?.message });
@@ -117,7 +118,7 @@ export const actions = {
     }
 
     if (!res?.ok) {
-      return message(form, { type: "error", msg: res?.statusText || "An error occurred while processing your request" }, { status: res?.status || 429 });
+      return message(form, { type: "error", msg: await extractErrorMessage(res) }, { status: res?.status || 429 });
     }
 
     return message(form, { type: "success", msg: (await res.json())?.metadata?.message });
@@ -149,7 +150,7 @@ export const actions = {
     }
 
     if (!res?.ok) {
-      return message(form, { type: "error", msg: res?.statusText || "An error occurred while processing your request" }, { status: res?.status || 429 });
+      return message(form, { type: "error", msg: await extractErrorMessage(res) }, { status: res?.status || 429 });
     }
 
     return message(form, { type: "success", msg: (await res.json())?.metadata?.message });

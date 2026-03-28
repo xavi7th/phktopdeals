@@ -1,5 +1,6 @@
 import { type } from "arktype";
 import { api } from "$lib/server/api-helpers";
+import { extractErrorMessage } from "$lib/helpers";
 import { arktype } from "sveltekit-superforms/adapters";
 import { AppUserDefaults, AppUserSchema } from "$lib/schemas";
 import { message, superValidate, fail, setError } from "sveltekit-superforms";
@@ -57,7 +58,7 @@ export const actions = {
     }
 
     if (!res?.ok) {
-      return message(form, { type: "error", msg: res?.statusText || "An error occurred while processing your request" }, { status: res?.status || 429 });
+      return message(form, { type: "error", msg: await extractErrorMessage(res) }, { status: res?.status || 429 });
     }
 
     await event.locals.session.update(async ({ user }) => ({ user: (await res?.json())?.data || {} }));
@@ -111,7 +112,7 @@ export const actions = {
     }
 
     if (!res?.ok) {
-      return message(form, { type: "error", msg: res?.statusText || "An error occurred while processing your request" }, { status: res?.status || 429 });
+      return message(form, { type: "error", msg: await extractErrorMessage(res) }, { status: res?.status || 429 });
     }
 
     return message(form, { type: "success", msg: "Password changed successfully!" });

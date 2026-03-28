@@ -1,5 +1,5 @@
 import { api } from "$lib/server/api-helpers";
-import { getErrorString } from "$lib/helpers";
+import { getErrorString, extractErrorMessage } from "$lib/helpers";
 import { redirect } from "@sveltejs/kit";
 import { arktype } from "sveltekit-superforms/adapters";
 import { message, superValidate, fail, setError } from "sveltekit-superforms";
@@ -60,7 +60,7 @@ export const actions = {
     }
 
     if (!res?.ok) {
-      return message(form, { type: "error", msg: res?.statusText || "An error occurred while processing your request" }, { status: res?.status || 429 });
+      return message(form, { type: "error", msg: await extractErrorMessage(res) }, { status: res?.status || 429 });
     }
 
     const details = await res.json();
@@ -97,7 +97,7 @@ export const actions = {
     }
 
     if (!res?.ok) {
-      return message(form, { type: "error", msg: res?.statusText || "An error occurred while processing your request" }, { status: res?.status || 429 });
+      return message(form, { type: "error", msg: await extractErrorMessage(res) }, { status: res?.status || 429 });
     }
 
     const details = await res.json();

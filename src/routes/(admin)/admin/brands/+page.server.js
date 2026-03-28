@@ -1,5 +1,5 @@
 import { api } from "$lib/server/api-helpers";
-import { getErrorString } from "$lib/helpers";
+import { getErrorString, extractErrorMessage } from "$lib/helpers";
 import { logWithLocation as serverLog } from "$lib/server/dev-logger";
 import { arktype } from "sveltekit-superforms/adapters";
 import { brandDefaults, brandSchema } from "$lib/schemas";
@@ -75,7 +75,7 @@ export const actions = {
     }
 
     if (!res?.ok) {
-      setFlash({ type: "error", msg: res?.statusText || "An error occurred while processing your request" }, event);
+      setFlash({ type: "error", msg: await extractErrorMessage(res) }, event);
       return fail(res?.status || 429, { form });
     }
 
@@ -125,7 +125,7 @@ export const actions = {
     }
 
     if (!res?.ok) {
-      setFlash({ type: "error", msg: res?.statusText || "An error occurred while processing your request" }, event);
+      setFlash({ type: "error", msg: await extractErrorMessage(res) }, event);
       return fail(res?.status || 429, { form });
     }
 
@@ -152,7 +152,7 @@ export const actions = {
     }
 
     if (!res?.ok) {
-      setFlash({ type: "error", msg: res?.statusText || "An error occurred while processing your request" }, event);
+      setFlash({ type: "error", msg: await extractErrorMessage(res) }, event);
       return fail(res?.status || 429, { form });
     }
 

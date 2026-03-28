@@ -1,4 +1,5 @@
 import { api } from "$lib/server/api-helpers";
+import { extractErrorMessage } from "$lib/helpers";
 import { fail } from "@sveltejs/kit";
 import { redirect, setFlash } from "sveltekit-flash-message/server";
 import { assertAdmin } from "$lib/server/auth";
@@ -52,7 +53,7 @@ export const actions = {
     }
 
     if (!res?.ok) {
-      return fail(res?.status || 500, { message: res?.statusText || "An error occured while processing your request" });
+      return fail(res?.status || 500, { message: await extractErrorMessage(res) });
     }
 
     return { type: "success", msg: "Card created successfully!" };
@@ -69,8 +70,9 @@ export const actions = {
     });
 
     if (!res?.ok) {
-      setFlash({ type: "error", msg: res?.statusText || "An error occurred while archiving" }, event);
-      return fail(res?.status || 429, { message: res?.statusText || "An error occurred while archiving" });
+      const errorMsg = await extractErrorMessage(res);
+      setFlash({ type: "error", msg: errorMsg }, event);
+      return fail(res?.status || 429, { message: errorMsg });
     }
 
     redirect({ type: "success", msg: (await res?.json())?.metadata?.message || "Top Up archived!" }, event);
@@ -87,8 +89,9 @@ export const actions = {
     });
 
     if (!res?.ok) {
-      setFlash({ type: "error", msg: res?.statusText || "An error occurred while restoring" }, event);
-      return fail(res?.status || 429, { message: res?.statusText || "An error occurred while restoring" });
+      const errorMsg = await extractErrorMessage(res);
+      setFlash({ type: "error", msg: errorMsg }, event);
+      return fail(res?.status || 429, { message: errorMsg });
     }
 
     redirect({ type: "success", msg: (await res?.json())?.metadata?.message || "Top Up restored!" }, event);
