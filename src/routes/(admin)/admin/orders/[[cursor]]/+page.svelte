@@ -4,6 +4,7 @@
   import Modal from "$partials/Modal.svelte";
   import Toast from "$lib/Components/Toast.svelte";
   import Table from "$lib/Components/Table.svelte";
+  import DateFilterChips from "$lib/Components/DateFilterChips.svelte";
   import { applyAction, enhance } from "$app/forms";
   import SvgIcon from "$lib/Components/SvgIcon.svelte";
   import { preloadData, pushState, goto } from "$app/navigation";
@@ -49,6 +50,15 @@
 {#await transactions}
   <TableSkeleton />
 {:then transactions}
+  <div class="mb-4 flex items-center justify-between px-2">
+    <DateFilterChips baseUrl="/admin/orders" showMonthPicker />
+    <a
+      class="inline-flex items-center gap-x-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700"
+      href="/admin/orders/archived">
+      View Archived
+    </a>
+  </div>
+
   <Table tCaption="List of Orders" tDescription="Your order history will be listed here. You can also view your vouchers for completed transactions." navData={{ ...transactions.metadata, basePageUrl: "/admin/orders" }}>
     <svelte:fragment slot="thead">
       <th scope="col" class="px-6 py-3 text-start">
@@ -57,6 +67,10 @@
 
       <th scope="col" class="px-6 py-3 text-start">
         <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">Payment Details</span>
+      </th>
+
+      <th scope="col" class="px-6 py-3 text-start">
+        <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">Actions</span>
       </th>
     </svelte:fragment>
 
@@ -139,6 +153,18 @@
             </div>
           </div>
         </td>
+        <td class="size-px whitespace-nowrap">
+          <div class="flex gap-3 px-6 py-1.5">
+            <form action="?/archive" method="POST" use:enhance>
+              <input type="text" class="hidden" name="id" value={order.id} />
+              <button
+                type="submit"
+                class="m-0 inline-flex items-center gap-x-1 border-0 bg-transparent p-0 text-sm font-medium text-yellow-600 shadow-none decoration-2 hover:underline focus:underline focus:outline-none dark:text-yellow-500">
+                Archive
+              </button>
+            </form>
+          </div>
+        </td>
       </tr>
     {:else}
       <tr>
@@ -162,6 +188,14 @@
               <span class="text-base font-light">Order ID:</span>
               <span class="font-bold capitalize">#{order.id}</span>
             </h2>
+            <form action="?/archive" method="POST" use:enhance>
+              <input type="text" class="hidden" name="id" value={order.id} />
+              <button
+                type="submit"
+                class="m-0 inline-flex items-center gap-x-1 rounded border-0 bg-yellow-50 p-2 text-xs font-medium text-yellow-700 shadow-none dark:bg-yellow-500/10 dark:text-yellow-500">
+                Archive
+              </button>
+            </form>
           </div>
           <div class="mt-4 py-3 pe-6 ps-6 lg:ps-3 xl:ps-0">
             <div class="flex items-center gap-x-3">

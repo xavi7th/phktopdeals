@@ -3,6 +3,7 @@
   import { toCurrency } from "$lib/helpers";
   import SvgIcon from "$lib/Components/SvgIcon.svelte";
   import PageNavigation from "$lib/Components/PageNavigation.svelte";
+  import DateFilterChips from "$lib/Components/DateFilterChips.svelte";
   import { checkMarkCircle, plusIcon, search } from "$lib/Components/iconPaths";
 
   /** @type { import('$lib/types').Product[] } */
@@ -14,10 +15,11 @@
    * @property {string} basePageUrl
    * @property {boolean} [hasAction]
    * @property {string} cardType
+   * @property {boolean} [isArchivedView]
    */
 
   /** @type {Props} */
-  let { products = [], meta = {}, basePageUrl = "", hasAction = true, cardType = "All Products" } = $props();
+  let { products = [], meta = {}, basePageUrl = "", hasAction = true, cardType = "All Products", isArchivedView = false } = $props();
 </script>
 
 <div class="space-y-4 p-4 sm:space-y-6 sm:p-6">
@@ -27,8 +29,8 @@
         <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm dark:border-neutral-700 dark:bg-neutral-800">
           <div class="grid gap-3 border-b border-gray-200 px-6 py-4 md:flex md:items-center md:justify-between dark:border-neutral-700">
             <div>
-              <h2 class="text-xl font-semibold text-gray-800 dark:text-neutral-200">{cardType}</h2>
-              <p class="text-sm text-gray-600 dark:text-neutral-400">Add {cardType}, edit and more.</p>
+              <h2 class="text-xl font-semibold text-gray-800 dark:text-neutral-200">{isArchivedView ? `Archived ${cardType}s` : cardType}</h2>
+              <p class="text-sm text-gray-600 dark:text-neutral-400">{isArchivedView ? "View and restore archived items." : `Add ${cardType}, edit and more.`}</p>
             </div>
 
             <div class="px-4 py-3">
@@ -49,15 +51,33 @@
             <div>
               {#if hasAction}
                 <div class="inline-flex gap-x-2">
-                  <a
-                    class="inline-flex items-center gap-x-2 rounded-lg border border-transparent bg-brand-600 px-3 py-2 text-sm font-medium text-white hover:bg-brand-700 focus:bg-brand-700 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-                    href={`${basePageUrl}/create`}>
-                    {@html plusIcon}
-                    Add {cardType}
-                  </a>
+                  {#if !isArchivedView}
+                    <a
+                      class="inline-flex items-center gap-x-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700"
+                      href={`${basePageUrl}/archived`}>
+                      View Archived
+                    </a>
+                    <a
+                      class="inline-flex items-center gap-x-2 rounded-lg border border-transparent bg-brand-600 px-3 py-2 text-sm font-medium text-white hover:bg-brand-700 focus:bg-brand-700 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+                      href={`${basePageUrl}/create`}>
+                      {@html plusIcon}
+                      Add {cardType}
+                    </a>
+                  {:else}
+                    <a
+                      class="inline-flex items-center gap-x-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700"
+                      href={basePageUrl}>
+                      View Active
+                    </a>
+                  {/if}
                 </div>
               {/if}
             </div>
+          </div>
+
+          <!-- Date filter chips -->
+          <div class="border-b border-gray-200 px-6 py-3 dark:border-neutral-700">
+            <DateFilterChips baseUrl={isArchivedView ? `${basePageUrl}/archived` : basePageUrl} />
           </div>
 
           <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
@@ -145,14 +165,41 @@
                           href={`${basePageUrl}/edit/${card.id}`}>
                           Edit
                         </a>
-                        <form
-                          action="?/delete"
-                          method="POST"
-                          class="inline-flex items-center gap-x-1 text-sm font-medium text-red-600 decoration-2 hover:underline focus:underline focus:outline-none dark:text-red-500"
-                          use:enhance>
-                          <input type="text" class="hidden" name="id" value={card.id} />
-                          <button type="submit" class="m-0 border-0 bg-transparent p-0 shadow-none">Delete</button>
-                        </form>
+                        {#if isArchivedView}
+                          <form
+                            action="?/unarchive"
+                            method="POST"
+                            use:enhance>
+                            <input type="text" class="hidden" name="id" value={card.id} />
+                            <button
+                              type="submit"
+                              class="m-0 inline-flex items-center gap-x-1 border-0 bg-transparent p-0 text-sm font-medium text-teal-600 shadow-none decoration-2 hover:underline focus:underline focus:outline-none dark:text-teal-500">
+                              Unarchive
+                            </button>
+                          </form>
+                        {:else}
+                          <form
+                            action="?/archive"
+                            method="POST"
+                            use:enhance>
+                            <input type="text" class="hidden" name="id" value={card.id} />
+                            <button
+                              type="submit"
+                              class="m-0 inline-flex items-center gap-x-1 border-0 bg-transparent p-0 text-sm font-medium text-yellow-600 shadow-none decoration-2 hover:underline focus:underline focus:outline-none dark:text-yellow-500">
+                              Archive
+                            </button>
+                          </form>
+                          {#if !card.has_transactions}
+                            <form
+                              action="?/delete"
+                              method="POST"
+                              class="inline-flex items-center gap-x-1 text-sm font-medium text-red-600 decoration-2 hover:underline focus:underline focus:outline-none dark:text-red-500"
+                              use:enhance>
+                              <input type="text" class="hidden" name="id" value={card.id} />
+                              <button type="submit" class="m-0 border-0 bg-transparent p-0 shadow-none">Delete</button>
+                            </form>
+                          {/if}
+                        {/if}
                       </div>
                     </td>
                   {/if}
@@ -163,7 +210,7 @@
                     <div class="ps-6 lg:ps-3 xl:ps-0 pe-6 py-3">
                       <div class="flex items-center gap-x-3 text-center">
                         <div class="grow">
-                          <span class="block text-xl text-gray-600 dark:text-neutral-400 uppercase">NO {cardType}S CREATED</span>
+                          <span class="block text-xl text-gray-600 dark:text-neutral-400 uppercase">{isArchivedView ? `NO ARCHIVED ${cardType.toUpperCase()}S` : `NO ${cardType.toUpperCase()}S CREATED`}</span>
                         </div>
                       </div>
                     </div>
@@ -173,7 +220,7 @@
             </tbody>
           </table>
 
-          <PageNavigation navData={{ ...meta, basePageUrl }} />
+          <PageNavigation navData={{ ...meta, basePageUrl: isArchivedView ? `${basePageUrl}/archived` : basePageUrl }} />
         </div>
       </div>
     </div>

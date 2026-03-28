@@ -1,13 +1,18 @@
 import { api } from "$lib/server/api-helpers";
 import { fail } from "@sveltejs/kit";
+import { redirect, setFlash } from "sveltekit-flash-message/server";
 import { assertAdmin } from "$lib/server/auth";
 
 export async function load(event) {
   assertAdmin(event);
+  const dateFrom = event.url.searchParams.get("date_from");
+  const dateTo = event.url.searchParams.get("date_to");
+  const queryParams = dateFrom && dateTo ? `?date_from=${dateFrom}&date_to=${dateTo}` : "";
+
   const fetchESimCards = async () => {
     const res = await api({
       method: "get",
-      resource: "products/type/esim",
+      resource: "products/type/esim" + queryParams,
       event,
     });
 
@@ -50,5 +55,41 @@ export const actions = {
     }
 
     return { type: "success", msg: "Card deleted successfully!" };
+  },
+
+  archive: async (event) => {
+    assertAdmin(event);
+    const formData = await event.request.formData();
+
+    const res = await api({
+      method: "post",
+      resource: "products/" + formData.get("id") + "/archive",
+      event,
+    });
+
+    if (!res?.ok) {
+      setFlash({ type: "error", msg: res?.statusText || "An error occurred while archiving" }, event);
+      return fail(res?.status || 429, { message: res?.statusText || "An error occurred while archiving" });
+    }
+
+    redirect({ type: "success", msg: (await res?.json())?.metadata?.message || "E-Sim archived!" }, event);
+  },
+
+  unarchive: async (event) => {
+    assertAdmin(event);
+    const formData = await event.request.formData();
+
+    const res = await api({
+      method: "delete",
+      resource: "products/" + formData.get("id") + "/archive",
+      event,
+    });
+
+    if (!res?.ok) {
+      setFlash({ type: "error", msg: res?.statusText || "An error occurred while restoring" }, event);
+      return fail(res?.status || 429, { message: res?.statusText || "An error occurred while restoring" });
+    }
+
+    redirect({ type: "success", msg: (await res?.json())?.metadata?.message || "E-Sim restored!" }, event);
   },
 };
