@@ -228,7 +228,8 @@
               e.preventDefault();
               handleSendMessage(e);
             }
-          }}></textarea>
+          }}>
+        </textarea>
       </div>
       <button
         type="submit"

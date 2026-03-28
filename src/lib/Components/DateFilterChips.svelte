@@ -69,8 +69,8 @@
       type="button"
       onclick={() => handleFilterClick(filter.days)}
       class="inline-flex items-center rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors {activeFilter === i
-        ? "border-brand-500 bg-brand-50 text-brand-700 dark:bg-brand-500/10 dark:text-brand-400"
-        : "border-gray-200 bg-white text-gray-600 hover:bg-gray-50 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-400 dark:hover:bg-neutral-700"}">
+        ? 'border-brand-500 bg-brand-50 text-brand-700 dark:bg-brand-500/10 dark:text-brand-400'
+        : 'border-gray-200 bg-white text-gray-600 hover:bg-gray-50 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-400 dark:hover:bg-neutral-700'}">
       {filter.label}
     </button>
   {/each}

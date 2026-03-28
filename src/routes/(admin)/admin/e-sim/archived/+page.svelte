@@ -2,7 +2,8 @@
   import ProductListings from "../../ProductListings.svelte";
 
   let { data } = $props();
-  let { eSims, meta } = data;
+  let eSims = $derived(data.eSims);
+  let meta = $derived(data.meta);
 </script>
 
-<ProductListings products={eSims} {meta} basePageUrl="/admin/e-sim" cardType="E-Sim" {hasAction} isArchivedView />
+<ProductListings products={eSims} {meta} basePageUrl="/admin/e-sim" cardType="E-Sim" hasAction={true} isArchivedView />

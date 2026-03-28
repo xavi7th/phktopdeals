@@ -112,7 +112,7 @@
               <input type="text" class="hidden" name="id" value={order.id} />
               <button
                 type="submit"
-                class="m-0 inline-flex items-center gap-x-1 border-0 bg-transparent p-0 text-sm font-medium text-teal-600 shadow-none decoration-2 hover:underline focus:underline focus:outline-none dark:text-teal-500">
+                class="m-0 inline-flex items-center gap-x-1 border-0 bg-transparent p-0 text-sm font-medium text-teal-600 decoration-2 shadow-none hover:underline focus:underline focus:outline-none dark:text-teal-500">
                 Unarchive
               </button>
             </form>

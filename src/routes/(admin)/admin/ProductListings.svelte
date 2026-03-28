@@ -166,26 +166,20 @@
                           Edit
                         </a>
                         {#if isArchivedView}
-                          <form
-                            action="?/unarchive"
-                            method="POST"
-                            use:enhance>
+                          <form action="?/unarchive" method="POST" use:enhance>
                             <input type="text" class="hidden" name="id" value={card.id} />
                             <button
                               type="submit"
-                              class="m-0 inline-flex items-center gap-x-1 border-0 bg-transparent p-0 text-sm font-medium text-teal-600 shadow-none decoration-2 hover:underline focus:underline focus:outline-none dark:text-teal-500">
+                              class="m-0 inline-flex items-center gap-x-1 border-0 bg-transparent p-0 text-sm font-medium text-teal-600 decoration-2 shadow-none hover:underline focus:underline focus:outline-none dark:text-teal-500">
                               Unarchive
                             </button>
                           </form>
                         {:else}
-                          <form
-                            action="?/archive"
-                            method="POST"
-                            use:enhance>
+                          <form action="?/archive" method="POST" use:enhance>
                             <input type="text" class="hidden" name="id" value={card.id} />
                             <button
                               type="submit"
-                              class="m-0 inline-flex items-center gap-x-1 border-0 bg-transparent p-0 text-sm font-medium text-yellow-600 shadow-none decoration-2 hover:underline focus:underline focus:outline-none dark:text-yellow-500">
+                              class="m-0 inline-flex items-center gap-x-1 border-0 bg-transparent p-0 text-sm font-medium text-yellow-600 decoration-2 shadow-none hover:underline focus:underline focus:outline-none dark:text-yellow-500">
                               Archive
                             </button>
                           </form>

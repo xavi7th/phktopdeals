@@ -159,7 +159,7 @@
               <input type="text" class="hidden" name="id" value={order.id} />
               <button
                 type="submit"
-                class="m-0 inline-flex items-center gap-x-1 border-0 bg-transparent p-0 text-sm font-medium text-yellow-600 shadow-none decoration-2 hover:underline focus:underline focus:outline-none dark:text-yellow-500">
+                class="m-0 inline-flex items-center gap-x-1 border-0 bg-transparent p-0 text-sm font-medium text-yellow-600 decoration-2 shadow-none hover:underline focus:underline focus:outline-none dark:text-yellow-500">
                 Archive
               </button>
             </form>
@@ -190,9 +190,7 @@
             </h2>
             <form action="?/archive" method="POST" use:enhance>
               <input type="text" class="hidden" name="id" value={order.id} />
-              <button
-                type="submit"
-                class="m-0 inline-flex items-center gap-x-1 rounded border-0 bg-yellow-50 p-2 text-xs font-medium text-yellow-700 shadow-none dark:bg-yellow-500/10 dark:text-yellow-500">
+              <button type="submit" class="m-0 inline-flex items-center gap-x-1 rounded border-0 bg-yellow-50 p-2 text-xs font-medium text-yellow-700 shadow-none dark:bg-yellow-500/10 dark:text-yellow-500">
                 Archive
               </button>
             </form>

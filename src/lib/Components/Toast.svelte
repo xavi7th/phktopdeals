@@ -110,7 +110,7 @@
               class="inline-flex size-5 shrink-0 items-center justify-center rounded-lg opacity-50 hover:opacity-100 focus:opacity-100 focus:outline-none {toastClasses[`${type}`]?.close}"
               aria-label="Close"
               data-hs-remove-element={`#${toastId}`}
-              on:click={() => (showToast = false)}>
+              on:click={() => { showToast = false; dispatch("toastClosed"); }}>
               <span class="sr-only">Close</span>
               <SvgIcon class="size-4 shrink-0" svgHeight={24} stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" slot={x} />
             </button>

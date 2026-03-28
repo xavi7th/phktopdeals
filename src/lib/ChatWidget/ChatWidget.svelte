@@ -10,6 +10,7 @@
 
   let view = $state("loading"); // 'loading' | 'email' | 'chat'
   let isAuthenticated = $state(false);
+  let warningDismissed = $state(false);
 
   // Check auth state and guest session
   onMount(async () => {
@@ -85,8 +86,11 @@
 {/if}
 
 <!-- Show connection warning if disconnected -->
-{#if $inactivityStore.connectionStatus === "disconnected"}
-  <div class="connection-warning">Connection unstable. Your session may timeout.</div>
+{#if $inactivityStore.connectionStatus === "disconnected" && !warningDismissed}
+  <div class="connection-warning">
+    Connection unstable. Your session may timeout.
+    <button class="dismiss-btn" onclick={() => (warningDismissed = true)}>&times;</button>
+  </div>
 {/if}
 
 <style>

@@ -104,15 +104,17 @@
 
 <ApiStatusBanner />
 
-{#if $flash}
-  <div class="fixed end-3 top-24 z-[100] space-y-3">
-    <Toast positioned={false} type={$flash?.type} msg={$flash.msg} dismissable ontoastClosed={() => ($flash = undefined)}>
-      {#if $flash.errors}
-        <ul class="ml-4 list-disc text-xs capitalize">{@html getErrorString($flash.errors)}</ul>
-      {/if}
-    </Toast>
-  </div>
-{/if}
+{#key $flash}
+  {#if $flash}
+    <div class="fixed end-3 top-24 z-[100] space-y-3">
+      <Toast positioned={false} type={$flash?.type} msg={$flash.msg} dismissable on:toastClosed={() => ($flash = undefined)}>
+        {#if $flash.errors}
+          <ul class="ml-4 list-disc text-xs capitalize">{@html getErrorString($flash.errors)}</ul>
+        {/if}
+      </Toast>
+    </div>
+  {/if}
+{/key}
 
 {@render children()}
 

@@ -128,9 +128,7 @@
                 {error}
               </p>
               {#if isConnectionError}
-                <button type="button" onclick={() => handleSubmit(new Event("submit"))} disabled={loading} class="retry-btn">
-                  Try Again
-                </button>
+                <button type="button" onclick={() => handleSubmit(new Event("submit"))} disabled={loading} class="retry-btn">Try Again</button>
               {/if}
             {/if}
           </div>
