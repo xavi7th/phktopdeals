@@ -5,8 +5,9 @@
   import ChatWindow from "./ChatWindow.svelte";
   import { checkAuth } from "./chat.remote.js";
   import EmailCapture from "./EmailCapture.svelte";
-  import { getGuestEmail, getGuestToken, getGuestConversationId } from "./guestStore.js";
+  import { getGuestEmail, getGuestToken, getGuestConversationId, clearGuest } from "./guestStore.js";
   import { inactivityStore } from "./inactivityStore.js";
+  import { browser } from "$app/environment";
 
   let view = $state("loading"); // 'loading' | 'email' | 'chat'
   let isAuthenticated = $state(false);
@@ -73,6 +74,28 @@
       inactivityStore.stopTracking();
     };
   });
+
+  // Handle invalid conversation (expired/deleted on server)
+  $effect(() => {
+    if (!browser) return;
+
+    function handleInvalidConversation() {
+      chatStore.setConversation(null, null);
+      clearGuest();
+      warningDismissed = false;
+      view = "email";
+    }
+
+    window.addEventListener("conversation:invalid", handleInvalidConversation);
+    return () => window.removeEventListener("conversation:invalid", handleInvalidConversation);
+  });
+
+  // Reset warning dismiss when connection recovers
+  $effect(() => {
+    if ($inactivityStore.connectionStatus === "connected") {
+      warningDismissed = false;
+    }
+  });
 </script>
 
 <Launcher />
@@ -106,5 +129,23 @@
     font-size: 0.75rem;
     color: #92400e;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .dismiss-btn {
+    background: none;
+    border: none;
+    color: #92400e;
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1;
+    padding: 0 0.25rem;
+    opacity: 0.7;
+  }
+
+  .dismiss-btn:hover {
+    opacity: 1;
   }
 </style>

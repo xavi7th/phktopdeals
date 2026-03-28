@@ -218,6 +218,12 @@ function createInactivityStore() {
         if (heartbeatChannel && tabId) {
           heartbeatChannel.postMessage({ type: "heartbeat", tabId });
         }
+      } else if (result.status === 404 || result.status === 403) {
+        // Conversation no longer valid — stop tracking and notify UI
+        stopTracking();
+        if (browser) {
+          window.dispatchEvent(new CustomEvent("conversation:invalid"));
+        }
       } else {
         handleHeartbeatFailure();
       }

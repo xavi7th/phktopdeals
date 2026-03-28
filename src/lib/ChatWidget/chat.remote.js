@@ -193,10 +193,10 @@ export const recordActivity = command(
     });
 
     if (!response?.ok) {
-      return { success: false };
+      return { success: false, status: response?.status };
     }
 
-    return { success: true };
+    return { success: true, status: response.status };
   },
 );
 
