@@ -103,7 +103,10 @@
 
         <div class="mt-3 grid space-y-3">
           <p><a class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:text-gray-200 focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200" href="/">About us</a></p>
-          <!-- <p><a class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:outline-none focus:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200" href="#">Blog</a></p> -->
+          <p><a class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:text-gray-200 focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200" href="/faq">FAQ</a></p>
+          <p><a class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:text-gray-200 focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200" href="/privacy-policy">Privacy Policy</a></p>
+          <p><a class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:text-gray-200 focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200" href="/returns-policy">Returns Policy</a></p>
+          <p><a class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:text-gray-200 focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200" href="/terms-and-conditions">Terms & Conditions</a></p>
           <p>
             <a
               class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:text-gray-200 focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200"
@@ -111,9 +114,6 @@
               Careers
             </a>
             <span class="ms-1 inline-block rounded-lg bg-blue-700 px-2 py-1 text-xs text-white">We're hiring</span>
-          </p>
-          <p>
-            <a class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:text-gray-200 focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200" href="/">Customers</a>
           </p>
         </div>
       </div>
