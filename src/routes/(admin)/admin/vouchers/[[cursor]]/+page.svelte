@@ -23,6 +23,9 @@
         // @ts-ignore
         window.HSOverlay?.close(`#manage-vouchers`);
         await new Promise((r) => setTimeout(r, 600));
+      } else if (result.type === "success" || result.type === "failure") {
+        // @ts-ignore
+        window.HSOverlay?.close(`#delete-voucher`);
       }
     },
   });
@@ -113,8 +116,7 @@
           class="w-auto bg-red-700 px-3 py-2 font-medium transition-opacity duration-300 hover:bg-red-800 hover:text-neutral-50 focus:bg-red-800"
           {timeout}
           {delayed}
-          {submitting}
-          data-hs-overlay="#delete-voucher">
+          {submitting}>
           Delete Voucher
         </LoadingButton>
       </form>

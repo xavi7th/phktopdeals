@@ -23,6 +23,7 @@ export async function load(event) {
       method: "get",
       resource: "manage/purchase-invoices" + queryParams,
       event,
+      logResponse: true,
     });
 
     // Handle API unavailable
@@ -57,7 +58,7 @@ export const actions = {
       return fail(res?.status || 429, { message: res?.statusText || "An error occurred while archiving" });
     }
 
-    redirect({ type: "success", msg: (await res?.json())?.metadata?.message || "Order archived!" }, event);
+    return redirect({ type: "success", msg: (await res?.json())?.metadata?.message || "Order archived!" }, event);
   },
 
   unarchive: async (event) => {
@@ -75,6 +76,6 @@ export const actions = {
       return fail(res?.status || 429, { message: res?.statusText || "An error occurred while restoring" });
     }
 
-    redirect({ type: "success", msg: (await res?.json())?.metadata?.message || "Order restored!" }, event);
+    return redirect({ type: "success", msg: (await res?.json())?.metadata?.message || "Order restored!" }, event);
   },
 };

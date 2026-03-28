@@ -1,6 +1,6 @@
 import { type } from "arktype";
 import { api } from "$lib/server/api-helpers";
-import { getErrorString } from "$lib/helpers";
+import { getErrorString, extractErrorMessage } from "$lib/helpers";
 import { arktype } from "sveltekit-superforms/adapters";
 import { redirect, setFlash } from "sveltekit-flash-message/server";
 import { VoucherCodeDefaults, VoucherCodeSchema } from "$lib/schemas";
@@ -74,7 +74,7 @@ export const actions = {
     }
 
     if (!res?.ok) {
-      setFlash({ type: "error", msg: res?.statusText || "An error occurred while processing your request" }, event);
+      setFlash({ type: "error", msg: await extractErrorMessage(res) }, event);
       return fail(res?.status || 429, { form });
     }
 
@@ -114,7 +114,7 @@ export const actions = {
     }
 
     if (!res?.ok) {
-      return message(form, { type: "error", msg: res?.statusText || "An error occurred while processing your request" }, { status: res?.status || 429 });
+      return message(form, { type: "error", msg: await extractErrorMessage(res) }, { status: res?.status || 429 });
     }
 
     return message(form, { type: "success", msg: (await res.json())?.metadata?.message });
@@ -138,15 +138,17 @@ export const actions = {
     if (res?.status == 422) {
       let errRes = await res.json();
 
-      for (const [fieldName, errs] of Object.entries(errRes.errors)) {
-        setError(form, fieldName, errs[0], { overwrite: true });
+      if (errRes.errors) {
+        for (const [fieldName, errs] of Object.entries(errRes.errors)) {
+          setError(form, fieldName, errs[0], { overwrite: true });
+        }
       }
 
-      return message(form, { type: "error", msg: errRes.message }, { status: res?.status || 400 });
+      return message(form, { type: "error", msg: errRes.metadata?.message || errRes.message }, { status: res?.status || 400 });
     }
 
     if (!res?.ok) {
-      return message(form, { type: "error", msg: res?.statusText || "An error occurred while processing your request" }, { status: res?.status || 429 });
+      return message(form, { type: "error", msg: await extractErrorMessage(res) }, { status: res?.status || 429 });
     }
 
     return message(form, { type: "success", msg: (await res.json())?.metadata?.message });
