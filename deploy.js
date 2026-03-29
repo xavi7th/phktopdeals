@@ -74,6 +74,8 @@ execSync("bun run build", { stdio: "inherit" });
 
 console.log("Copying package.json and node loader script into build folder...");
 execSync("cp -f package.json src/loader.cjs build", { stdio: "inherit" });
+execSync("mkdir -p build/lib/server", { stdio: "inherit" });
+execSync("cp -f src/lib/server/logger-core.js build/lib/server/", { stdio: "inherit" });
 
 // Check if there are new changes after the build
 const postBuildStatus = execSync("git status --porcelain").toString().trim();
