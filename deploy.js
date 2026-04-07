@@ -69,8 +69,25 @@ console.log("Updating .gitignore to allow public files...");
 execSync("sed -i.bak '/build/d' ./.gitignore", { stdio: "inherit" });
 
 // Run the build process
+// NOTE: Bun pre-loads .env into process.env when this script starts, so inherited env vars
+// (localhost dev values) would override .env.production values inside the child build process.
+// We explicitly parse .env.production and pass it via the env option to override inherited values.
 console.log("Running build...");
-execSync("bun run build", { stdio: "inherit" });
+const prodEnvContent = fs.readFileSync(".env.production", "utf8");
+const prodEnvOverrides = Object.fromEntries(
+  prodEnvContent
+    .split("\n")
+    .filter((line) => line.includes("=") && !line.trim().startsWith("#"))
+    .map((line) => {
+      const eqIdx = line.indexOf("=");
+      const key = line.substring(0, eqIdx).trim();
+      const raw = line.substring(eqIdx + 1).trim();
+      // Strip surrounding quotes and trailing inline comments
+      const value = raw.replace(/^["'](.*)["']\s*(#.*)?$/, "$1").split(/\s+#/)[0].trim();
+      return [key, value];
+    })
+);
+execSync("bun run build", { stdio: "inherit", env: { ...process.env, ...prodEnvOverrides } });
 
 console.log("Copying package.json and node loader script into build folder...");
 execSync("cp -f package.json src/loader.cjs build", { stdio: "inherit" });
