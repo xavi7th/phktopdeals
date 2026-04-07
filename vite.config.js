@@ -5,9 +5,10 @@ import { enhancedImages } from "@sveltejs/enhanced-img";
 export default defineConfig({
   plugins: [enhancedImages(), sveltekit()],
   ssr: {
-    // pusher-js and laravel-echo are browser-only packages — bundle them into the SSR
-    // output so Node.js doesn't try to resolve them as external runtime packages and fail.
-    noExternal: ["pusher-js", "laravel-echo"],
+    // The production server (Namecheap/LiteSpeed Node) cannot resolve modern ESM package
+    // exports at runtime. Bundle all dependencies into the SSR output to avoid runtime
+    // "Cannot find package" errors for any npm package.
+    noExternal: true,
   },
   server: {
     port: 5131,
