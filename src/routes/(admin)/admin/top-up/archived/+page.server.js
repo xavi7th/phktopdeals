@@ -1,5 +1,6 @@
 import { fail } from "@sveltejs/kit";
 import { api } from "$lib/server/api-helpers";
+import { extractErrorMessage } from "$lib/helpers";
 import { redirect, setFlash } from "sveltekit-flash-message/server";
 import { assertAdmin } from "$lib/server/auth";
 
@@ -45,8 +46,9 @@ export const actions = {
     });
 
     if (!res?.ok) {
-      setFlash({ type: "error", msg: res?.statusText || "An error occurred while restoring" }, event);
-      return fail(res?.status || 429, { message: res?.statusText || "An error occurred while restoring" });
+      const msg = await extractErrorMessage(res);
+      setFlash({ type: "error", msg }, event);
+      return fail(res?.status || 429, { message: msg });
     }
 
     redirect({ type: "success", msg: (await res?.json())?.metadata?.message || "Top Up restored!" }, event);

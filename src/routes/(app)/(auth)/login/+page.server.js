@@ -1,4 +1,5 @@
 import { api } from "$lib/server/api-helpers";
+import { extractErrorMessage } from "$lib/helpers";
 import { redirect, fail } from "@sveltejs/kit";
 
 export async function load(event) {
@@ -41,7 +42,7 @@ export const actions = {
     }
 
     if (!response?.ok) {
-      return fail(response?.status || 500, { message: response?.statusText || "An error occurred while processing your request" });
+      return fail(response?.status || 500, { message: await extractErrorMessage(response) });
     }
 
     /**
@@ -89,7 +90,7 @@ export const actions = {
     }
 
     if (!response?.ok) {
-      return fail(response?.status || 500, { message: response?.statusText || "An error occurred while processing your request", body: await response?.text() });
+      return fail(response?.status || 500, { message: await extractErrorMessage(response), body: await response?.text() });
     }
 
     if (response?.status == 201) {
