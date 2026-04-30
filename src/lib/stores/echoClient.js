@@ -1,5 +1,4 @@
-import Echo from "laravel-echo";
-import Pusher from "pusher-js";
+import { browser } from "$app/environment";
 
 const REVERB_CONFIG = {
   broadcaster: "reverb",
@@ -19,8 +18,17 @@ let echoClient = null;
 let reconnectAttempts = 0;
 let reconnectTimeout = null;
 
-export const getEchoClient = () => {
+export const getEchoClient = async () => {
+  if (!browser) {
+    return null;
+  }
+
   if (!echoClient) {
+    const { default: Echo } = await import("laravel-echo");
+    const { default: Pusher } = await import("pusher-js");
+
+    window.Pusher = Pusher;
+
     echoClient = new Echo({
       ...REVERB_CONFIG,
       authorizer: (channel, options) => {
@@ -70,7 +78,7 @@ export const getEchoClient = () => {
 };
 
 function attemptReconnect() {
-  if (reconnectAttempts >= RECONNECT_MAX_ATTEMPTS) {
+  if (!browser || reconnectAttempts >= RECONNECT_MAX_ATTEMPTS) {
     console.error("Max reconnect attempts reached");
     return;
   }
@@ -82,14 +90,15 @@ function attemptReconnect() {
 
   reconnectTimeout = setTimeout(() => {
     reconnectAttempts++;
-    const echo = getEchoClient();
-    if (echo && echo.connector.pusher) {
-      echo.connector.pusher.connect();
+    if (echoClient && echoClient.connector.pusher) {
+      echoClient.connector.pusher.connect();
     }
   }, delay);
 }
 
 export const disconnectEcho = () => {
+  if (!browser) return;
+
   if (reconnectTimeout) {
     clearTimeout(reconnectTimeout);
     reconnectTimeout = null;
