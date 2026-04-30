@@ -16,7 +16,7 @@ import { sequence } from "@sveltejs/kit/hooks";
 import { handleSession } from "svelte-kit-cookie-session";
 import { PUBLIC_VITE_BASE_API, PUBLIC_DEV_LOG_DETAILED } from "$env/static/public";
 import { handleDeviceDetector } from "sveltekit-device-detector";
-import { VITE_SESSION_NAME, APP_SESSION_KEY } from "$env/static/private";
+import { VITE_SESSION_NAME, APP_SESSION_KEY, APP_LOG_REQUEST_DURATION_TIMING } from "$env/static/private";
 import { initDevLogger, getLogger } from "$lib/server/dev-logger";
 
 // Initialize dev logger on server startup.
@@ -94,6 +94,11 @@ async function requestContext({ event, resolve }) {
 }
 
 async function logger({ event, resolve }) {
+
+  if (! JSON.parse(APP_LOG_REQUEST_DURATION_TIMING)) {
+    return resolve(event);
+  }
+
   const start_time = Date.now();
 
   //Await here. Run other hooks AND LOAD FUNCTIONS then come back here to continue
@@ -133,8 +138,7 @@ async function getUserDetails({ event, resolve }) {
     const cached = apiSessionKey ? userCache.get(apiSessionKey) : null;
     if (cached && Date.now() - cached.cachedAt < USER_CACHE_TTL_MS) {
       await event.locals.session.update(() => ({ user: cached.user }));
-      if (event.locals.__contextStore) {
-        event.locals.__contextStore.user = cached.user;
+      if (event.locals.__contextStore) { event.locals.__contextStore.user = cached.user;
       }
     } else {
       try {
