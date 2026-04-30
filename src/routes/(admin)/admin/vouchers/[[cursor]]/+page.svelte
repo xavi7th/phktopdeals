@@ -42,6 +42,28 @@
   </div>
 {/if}
 
+{#snippet err(serverDown)}
+  <div class="flex items-center justify-center min-h-96 border-t border-neutral-200 bg-neutral-200/50 p-4 text-sm text-gray-500 dark:border-neutral-700 dark:bg-neutral-600/10">
+    <div class="flex items-center justify-center py-6">
+      <div class="text-center">
+        <!-- Icon: Optional but helps visual cues -->
+        <div class="mx-auto mb-3 flex size-12 items-center justify-center rounded-full bg-gray-100 dark:bg-neutral-800">
+          <svg class="size-6 text-gray-400 dark:text-neutral-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" />
+          </svg>
+        </div>
+
+        <h3 class="text-base font-semibold uppercase text-gray-800 dark:text-white">
+          No Vouchers Found
+        </h3>
+        <p class="mt-1 text-sm text-gray-500 dark:text-neutral-400">
+          There was an error loading the data {`${serverDown ? '. The API server is currently unavailable': ''}`}. Reload the page to try again
+        </p>
+      </div>
+    </div>
+  </div>
+{/snippet}
+
 <div class="fixed bottom-0 left-0 z-[60] max-w-md">
   <SuperDebug data={{ $message, $form, $errors }} label="Create Voucher Form" collapsible={true} display={dev} />
 </div>
@@ -49,7 +71,11 @@
 {#await pageData}
   <TableSkeleton />
 {:then pageData}
-  <VoucherTableData vouchers={pageData.data?.vouchers || []} metadata={pageData.metadata} on:create={() => ($form = VoucherCodeDefaults)} on:edit={(e) => ($form = e.detail)} on:delete={(e) => ($form = e.detail)} />
+  {#if pageData.apiError}
+    {@render err(pageData.apiError)}
+  {:else}
+    <VoucherTableData vouchers={pageData.data?.vouchers || []} metadata={pageData.metadata} on:create={() => ($form = VoucherCodeDefaults)} on:edit={(e) => ($form = e.detail)} on:delete={(e) => ($form = e.detail)} />
+  {/if}
 
   <Modal title="{$form.id ? 'Update' : 'Create'} Product Voucher" name="manage-vouchers">
     <div slot="content">
@@ -87,15 +113,7 @@
     </LoadingButton>
   </Modal>
 {:catch}
-  <tr>
-    <td class="js-enabled size-px whitespace-nowrap" colspan="4">
-      <div class="py-3 pe-6 ps-6 lg:ps-3 xl:ps-0">
-        <div class="flex items-center justify-center">
-          <span class="inline-flex text-xl text-gray-600 dark:text-neutral-200">There was an error loading the data. reload the page to try again</span>
-        </div>
-      </div>
-    </td>
-  </tr>
+ {@render err(pageData.apiError)}
 {/await}
 
 <Modal name="delete-voucher" title="Are you sure?">

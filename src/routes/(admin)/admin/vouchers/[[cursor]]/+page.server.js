@@ -98,7 +98,7 @@ export const actions = {
     if (res?.status == 422) {
       let errRes = await res.json();
 
-      for (const [fieldName, errs] of Object.entries(errRes.errors)) {
+      for (const [fieldName, errs] of Object.entries(errRes.errors || {})) {
         if (fieldName.includes(".")) {
           setError(form, fieldName.split(".")[0], errs[0], {
             overwrite: true,
@@ -110,7 +110,7 @@ export const actions = {
         }
       }
 
-      return message(form, { type: "error", msg: errRes.message }, { status: res?.status || 400 });
+      return message(form, { type: "error", msg: errRes.message || errRes.metadata?.message }, { status: res?.status || 400 });
     }
 
     if (!res?.ok) {
