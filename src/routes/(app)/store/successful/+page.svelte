@@ -1,7 +1,19 @@
 <script>
-  export let data;
+  import { browser } from "$app/environment";
+  import { page } from "$app/state";
+  import { onMount } from "svelte";
+  import { clearCachePattern } from "$lib/cache";
 
-  $: ({ user, message } = data);
+  let { data } = $props();
+  let { user, message } = $derived(data);
+
+  onMount(async () => {
+    if (!browser) return;
+    const productId = page.url.searchParams.get("productId");
+    if (productId) {
+      await clearCachePattern(`api:GET:products/${productId}`);
+    }
+  });
 </script>
 
 <main class="container">
