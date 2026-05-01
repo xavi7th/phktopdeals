@@ -1,5 +1,6 @@
 import { type } from "arktype";
-import { api } from "$lib/server/api-helpers";
+import { cachedApiGet } from "$lib/server/cached-api";
+import { invalidateShared, invalidateSharedPattern } from "$lib/server/cache-store";
 import { getErrorString, extractErrorMessage } from "$lib/helpers";
 import { arktype } from "sveltekit-superforms/adapters";
 import { sliderDefaults, sliderSchema } from "$lib/schemas";
@@ -14,19 +15,15 @@ export async function load(event) {
   const fetchSliders = async () => {
     const cursor = event.url.searchParams.get("cursor");
     const url = cursor ? `slideshows?cursor=${cursor}` : "slideshows";
-
-    const res = await api({
-      method: "get",
-      resource: url,
-      event,
-    });
+    const cacheKey = `admin:sliders:${cursor || "first"}`;
+    const data = await cachedApiGet({ resource: url, event, cacheKey });
 
     // Handle API unavailable
-    if (!res?.ok) {
+    if (!data) {
       return { data: [], metadata: { items_count: 0 }, apiError: true };
     }
 
-    return await res.json();
+    return data;
   };
 
   let noJS = !!event.url.searchParams.get("noJS");
@@ -84,6 +81,10 @@ export const actions = {
       setFlash({ type: "error", msg: await extractErrorMessage(res) }, event);
       return fail(res?.status || 429, { form });
     }
+
+    // Invalidate relevant shared cache entries
+    invalidateSharedPattern("^admin:sliders");
+    invalidateShared("home");
 
     redirect({ type: "success", msg: (await res?.json())?.metadata?.message || "Slider created!" }, event);
   },
@@ -148,6 +149,10 @@ export const actions = {
       return fail(res?.status || 429, { form });
     }
 
+    // Invalidate relevant shared cache entries
+    invalidateSharedPattern("^admin:sliders");
+    invalidateShared("home");
+
     redirect({ type: "success", msg: (await res?.json())?.metadata?.message || "Slider updated!" }, event);
   },
 
@@ -178,6 +183,10 @@ export const actions = {
       setFlash({ type: "error", msg: await extractErrorMessage(res) }, event);
       return fail(res?.status || 429, { form });
     }
+
+    // Invalidate relevant shared cache entries
+    invalidateSharedPattern("^admin:sliders");
+    invalidateShared("home");
 
     redirect(
       // (res?.status || 200),

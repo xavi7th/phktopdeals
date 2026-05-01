@@ -1,4 +1,5 @@
-import { api } from "$lib/server/api-helpers";
+import { cachedApiGet } from "$lib/server/cached-api";
+import { invalidateShared, invalidateSharedPattern } from "$lib/server/cache-store";
 import { getErrorString, extractErrorMessage } from "$lib/helpers";
 import { logWithLocation as serverLog } from "$lib/server/dev-logger";
 import { arktype } from "sveltekit-superforms/adapters";
@@ -15,18 +16,15 @@ export async function load(event) {
 
   const fetchProductCategories = async () => {
     const url = cursor ? `product-categories?cursor=${cursor}` : "product-categories";
-    const res = await api({
-      method: "get",
-      resource: url,
-      event,
-    });
+    const cacheKey = `admin:categories:${cursor || "first"}`;
+    const data = await cachedApiGet({ resource: url, event, cacheKey });
 
     // Handle API unavailable
-    if (!res?.ok) {
+    if (!data) {
       return { data: [], metadata: { items_count: 0 }, apiError: true };
     }
 
-    return await res.json();
+    return data;
   };
 
   let noJS = !!event.url.searchParams.get("noJS");
@@ -79,6 +77,10 @@ export const actions = {
       return fail(res?.status || 429, { form });
     }
 
+    // Invalidate relevant shared cache entries
+    invalidateSharedPattern("^admin:categories");
+    invalidateShared("home");
+
     redirect(event.request.headers.get("referer") || "/admin/categories", { type: "success", msg: (await res?.json())?.metadata?.message || "Category created!" }, event);
   },
 
@@ -129,6 +131,10 @@ export const actions = {
       return fail(res?.status || 429, { form });
     }
 
+    // Invalidate relevant shared cache entries
+    invalidateSharedPattern("^admin:categories");
+    invalidateShared("home");
+
     redirect(event.request.headers.get("referer") || "/admin/categories", { type: "success", msg: (await res?.json())?.metadata?.message || "Category updated!" }, event);
   },
 
@@ -155,6 +161,10 @@ export const actions = {
       setFlash({ type: "error", msg: await extractErrorMessage(res) }, event);
       return fail(res?.status || 429, { form });
     }
+
+    // Invalidate relevant shared cache entries
+    invalidateSharedPattern("^admin:categories");
+    invalidateShared("home");
 
     redirect(event.request.headers.get("referer") || "/admin/categories", { type: "success", msg: (await res?.json())?.metadata?.message || "Category deleted!" }, event);
   },

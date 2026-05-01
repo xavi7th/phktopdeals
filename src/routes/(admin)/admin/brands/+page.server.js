@@ -1,4 +1,5 @@
-import { api } from "$lib/server/api-helpers";
+import { cachedApiGet } from "$lib/server/cached-api";
+import { invalidateShared, invalidateSharedPattern } from "$lib/server/cache-store";
 import { assertAdmin } from "$lib/server/auth";
 import { arktype } from "sveltekit-superforms/adapters";
 import { brandDefaults, brandSchema } from "$lib/schemas";
@@ -13,16 +14,14 @@ export async function load(event) {
   const cursor = event.url.searchParams.get("cursor");
   const fetchProductBrands = async () => {
     const url = cursor ? `product-brands?cursor=${cursor}` : "product-brands";
-    const res = await api({
-      method: "get",
-      resource: url,
-      event,
-    });
+    const cacheKey = `admin:brands:${cursor || "first"}`;
+    const data = await cachedApiGet({ resource: url, event, cacheKey });
+
     // Handle API unavailable
-    if (!res?.ok) {
+    if (!data) {
       return { data: [], metadata: { items_count: 0 }, apiError: true };
     }
-    return await res.json();
+    return data;
   };
   let noJS = !!event.url.searchParams.get("noJS");
   return {
@@ -66,6 +65,11 @@ export const actions = {
       setFlash({ type: "error", msg: await extractErrorMessage(res) }, event);
       return fail(res?.status || 429, { form });
     }
+
+    // Invalidate relevant shared cache entries
+    invalidateSharedPattern("^admin:brands");
+    invalidateShared("home");
+
     redirect(event.request.headers.get("referer") || "/admin/brands", { type: "success", msg: (await res?.json())?.metadata?.message || "Brand created!" }, event);
   },
   editBrand: async (event) => {
@@ -106,6 +110,11 @@ export const actions = {
       setFlash({ type: "error", msg: await extractErrorMessage(res) }, event);
       return fail(res?.status || 429, { form });
     }
+
+    // Invalidate relevant shared cache entries
+    invalidateSharedPattern("^admin:brands");
+    invalidateShared("home");
+
     redirect(event.request.headers.get("referer") || "/admin/brands", { type: "success", msg: (await res?.json())?.metadata?.message || "Brand updated!" }, event);
   },
   /** @param {import('@sveltejs/kit').RequestEvent} event */
@@ -127,6 +136,11 @@ export const actions = {
       setFlash({ type: "error", msg: await extractErrorMessage(res) }, event);
       return fail(res?.status || 429, { form });
     }
+
+    // Invalidate relevant shared cache entries
+    invalidateSharedPattern("^admin:brands");
+    invalidateShared("home");
+
     redirect(event.request.headers.get("referer") || "/admin/brands", { type: "success", msg: (await res?.json())?.metadata?.message || "Brand deleted!" }, event);
   },
 };
