@@ -82,7 +82,7 @@ export async function api({ toBaseDomain, resource, event, method, data, logResp
     if (log) {
       log.warning("API unreachable", { url: fullurl, error: err.message });
     } else {
-      console.error("--------------- API Error: " + err.message);
+      if (dev) console.error("--------------- API Error: " + err.message);
     }
 
     return {

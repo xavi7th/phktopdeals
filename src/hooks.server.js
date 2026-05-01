@@ -172,7 +172,7 @@ async function getUserDetails({ event, resolve }) {
             sessionPresent: !!apiSessionKey,
           });
         } else {
-          console.error("Failed to get user details:", err.message);
+          if (dev) console.error("Failed to get user details:", err.message);
         }
       }
     }
