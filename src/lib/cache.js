@@ -156,6 +156,20 @@ export async function getStaleCache(key) {
 }
 
 /**
+ * Returns fresh cache if available, then stale, then null.
+ * Also signals whether the result is stale.
+ * @param {string} key
+ * @returns {Promise<{ data: any, stale: boolean }>}
+ */
+export async function getCachedOrStale(key) {
+  const fresh = await getCache(key);
+  if (fresh !== null) return { data: fresh, stale: false };
+  const stale = await getStaleCache(key);
+  if (stale !== null) return { data: stale, stale: true };
+  return { data: null, stale: false };
+}
+
+/**
  * Clear specific key
  * @param {string} key - Cache key
  * @returns {Promise<void>}
@@ -280,9 +294,9 @@ export async function getCacheStats() {
 
 // TTL constants by endpoint type
 export const CACHE_TTL = {
-  STATIC: 3600, // 1 hour - sliders, categories, brands
-  PRODUCTS: 300, // 5 min - product listings
-  USER_DATA: 60, // 1 min - wallet balance, profile
+  STATIC: 3600, // 1 hour - sliders, categories, brands, home
+  PRODUCTS: 3600, // 1 hour - product listings (updated from 5 min)
+  USER_DATA: 0, // NEVER - wallet, profile (removed from IndexedDB entirely)
   NONE: 0, // No cache - orders, transactions
 };
 
@@ -292,30 +306,18 @@ export const CACHE_TTL = {
  * @returns {number} TTL in seconds
  */
 export function getTtlForEndpoint(resource) {
-  if (!resource) return CACHE_TTL.STATIC;
+  if (!resource) return CACHE_TTL.STATIC; // home
 
-  // Static content - cache for 1 hour
-  if (
-    resource.includes("sliders") ||
-    resource.includes("categories") ||
-    resource.includes("brands") ||
-    resource === "" // Home page
-  ) {
-    return CACHE_TTL.STATIC;
-  }
-
-  // User-specific data - cache for 1 min
-  if (resource.includes("wallet") || resource.includes("user")) {
-    return CACHE_TTL.USER_DATA;
-  }
-
-  // Orders and transactions - no cache
-  if (resource.includes("purchase-invoices") || resource.includes("orders") || resource.includes("transactions")) {
+  // Never cache user-specific data in IndexedDB
+  if (resource.includes("wallet") || resource.includes("user") || resource.includes("orders") || resource.includes("transactions") || resource.includes("purchase-invoices")) {
     return CACHE_TTL.NONE;
   }
 
-  // Default - products and other listings
-  return CACHE_TTL.PRODUCTS;
+  if (resource.includes("sliders") || resource.includes("categories") || resource.includes("brands")) {
+    return CACHE_TTL.STATIC;
+  }
+
+  return CACHE_TTL.PRODUCTS; // product listings and detail
 }
 
 /**
