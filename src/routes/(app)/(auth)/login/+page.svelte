@@ -60,6 +60,8 @@
                 return async ({ update }) => {
                   loading = false;
                   update();
+                  // Set flag for guest cart merge on next page load
+                  if (browser) sessionStorage.setItem("phk_just_logged_in", "1");
                 };
               }}>
               <div class="space-y-8">
@@ -98,6 +100,8 @@
                 return async ({ update }) => {
                   loading = false;
                   update();
+                  // Set flag for guest cart merge on next page load
+                  if (browser) sessionStorage.setItem("phk_just_logged_in", "1");
                 };
               }}>
               <FloatingTextInput name="full_name" isError={!form?.success} msg={form?.success || (form?.errors?.full_name && form?.errors?.full_name[0])} label="Full Name *" />
