@@ -51,10 +51,13 @@ export const actions = {
 
     const isAuthenticated = !!event.locals.session.data?.user?.email;
 
+    // Determine is_auth_purchase from server session, never from client input
+    const formData = { ...form.data, is_auth_purchase: isAuthenticated };
+
     let res = await api({
       method: "post",
       resource: isAuthenticated ? "purchase-invoices" : "g/purchase-invoices",
-      data: form.data,
+      data: formData,
       event,
     });
 

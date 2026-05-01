@@ -6,7 +6,7 @@
  */
 
 import { dev } from "$app/environment";
-import { APP_LOG_API_RESPONSES_BY_DEFAULT } from '$env/static/private';
+import { APP_LOG_API_RESPONSES_BY_DEFAULT } from "$env/static/private";
 import { PUBLIC_APP_COMMISSION_AMOUNT, PUBLIC_VITE_BASE_API, PUBLIC_VITE_BASE_DOMAIN, PUBLIC_VITE_FRONT_END_DOMAIN } from "$env/static/public";
 import { hasFile, toCurrency } from "$lib/helpers";
 import { getLogger } from "./dev-logger";
@@ -61,7 +61,9 @@ export async function api({ toBaseDomain, resource, event, method, data, logResp
     if (log) {
       log.info("API Request", { method: method.toUpperCase(), url: fullurl });
     } else {
-      console.error("--------------- API Request: " + method.toUpperCase() + " " + fullurl);
+      if (dev) {
+        console.error("--------------- API Request: " + method.toUpperCase() + " " + fullurl);
+      }
     }
   }
 
@@ -99,8 +101,10 @@ export async function api({ toBaseDomain, resource, event, method, data, logResp
     if (log) {
       log.info("API Response", { status: rsp?.status, url: fullurl, body });
     } else {
-      console.error("--------------- API Response: ");
-      console.error({ status: rsp?.status, body }, "\n\n");
+      if (dev) {
+        console.error("--------------- API Response: ");
+        console.error({ status: rsp?.status, body }, "\n\n");
+      }
     }
   }
 

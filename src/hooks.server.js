@@ -94,8 +94,7 @@ async function requestContext({ event, resolve }) {
 }
 
 async function logger({ event, resolve }) {
-
-  if (! JSON.parse(APP_LOG_REQUEST_DURATION_TIMING)) {
+  if (!JSON.parse(APP_LOG_REQUEST_DURATION_TIMING)) {
     return resolve(event);
   }
 
@@ -138,7 +137,8 @@ async function getUserDetails({ event, resolve }) {
     const cached = apiSessionKey ? userCache.get(apiSessionKey) : null;
     if (cached && Date.now() - cached.cachedAt < USER_CACHE_TTL_MS) {
       await event.locals.session.update(() => ({ user: cached.user }));
-      if (event.locals.__contextStore) { event.locals.__contextStore.user = cached.user;
+      if (event.locals.__contextStore) {
+        event.locals.__contextStore.user = cached.user;
       }
     } else {
       try {
@@ -337,11 +337,22 @@ export const handleError = async ({ event, error, message, status }) => {
     if (log) {
       log.logError("Server error", err, {
         status: status ?? 500,
-        route: event.url.pathname,
-        userEmail: event.locals.session?.data?.user?.email || null,
+        event: {
+          url: event.url.href,
+          userEmail: event.locals.session?.data?.user?.email || "anonymous",
+        },
+        message,
       });
     } else {
-      console.error("SERVER ERROR:", { error: err.message, status, route: event.url.pathname });
+      console.error({
+        error: err,
+        event: {
+          url: event.url.href,
+          userEmail: event.locals.session?.data?.user?.email || "anonymous",
+        },
+        message,
+        status: status ?? 500,
+      });
     }
 
     return {
