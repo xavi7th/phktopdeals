@@ -1,4 +1,5 @@
 import { browser } from "$app/environment";
+import { trackedFetch } from "$lib/api/clientFetch.js";
 
 const API_BASE = "/api/v1";
 
@@ -14,7 +15,7 @@ async function getVapidPublicKey() {
     return vapidPublicKey;
   }
 
-  const response = await fetch(`${API_BASE}/staff/push/public-key`);
+  const response = await trackedFetch(`${API_BASE}/staff/push/public-key`);
   if (!response.ok) {
     throw new Error("Failed to get VAPID public key");
   }
@@ -95,7 +96,7 @@ export async function subscribe() {
 
   try {
     // Register service worker
-    const registration = await navigator.serviceWorker.register("/service-worker.js");
+    const registration = await navigator.serviceWorker.ready;
     console.log("Service Worker registered:", registration);
 
     // Get VAPID public key
@@ -131,7 +132,7 @@ async function saveSubscription(subscription) {
     expires_at: subscription.expirationTime ? new Date(subscription.expirationTime).toISOString() : null,
   };
 
-  const response = await fetch(`${API_BASE}/staff/push/subscribe`, {
+  const response = await trackedFetch(`${API_BASE}/staff/push/subscribe`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -164,7 +165,7 @@ export async function unsubscribe() {
     }
 
     // Remove from server
-    await fetch(`${API_BASE}/staff/push/unsubscribe`, {
+    await trackedFetch(`${API_BASE}/staff/push/unsubscribe`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

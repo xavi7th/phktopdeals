@@ -1,4 +1,5 @@
 import { safeApiCall } from "$lib/safeApi.js";
+import { trackedFetch } from "$lib/api/clientFetch.js";
 
 /**
  * Fetch paginated list of archived conversations
@@ -9,7 +10,7 @@ export async function fetchArchives(params = {}) {
 
   return safeApiCall(
     () =>
-      fetch(url, {
+      trackedFetch(url, {
         credentials: "include",
       }).then((res) => res.json()),
     "Failed to fetch archives",
@@ -22,7 +23,7 @@ export async function fetchArchives(params = {}) {
 export async function fetchArchive(conversationId) {
   return safeApiCall(
     () =>
-      fetch(`/api/admin/chat/archives/${conversationId}`, {
+      trackedFetch(`/api/admin/chat/archives/${conversationId}`, {
         credentials: "include",
       }).then((res) => res.json()),
     "Failed to fetch archive",
@@ -35,7 +36,7 @@ export async function fetchArchive(conversationId) {
 export async function triggerManualArchive(batchSize = 100) {
   return safeApiCall(
     () =>
-      fetch("/api/admin/chat/archives/trigger", {
+      trackedFetch("/api/admin/chat/archives/trigger", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

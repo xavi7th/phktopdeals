@@ -1,4 +1,5 @@
 import { safeApiCall } from "$lib/safeApi.js";
+import { trackedFetch } from "$lib/api/clientFetch.js";
 
 /**
  * Fetch staff inbox data
@@ -6,7 +7,7 @@ import { safeApiCall } from "$lib/safeApi.js";
 export async function fetchStaffInbox() {
   return safeApiCall(
     () =>
-      fetch("/api/staff/inbox", {
+      trackedFetch("/api/staff/inbox", {
         credentials: "include",
       }).then((res) => res.json()),
     "Failed to fetch staff inbox",
@@ -21,7 +22,7 @@ export async function fetchConversationMessages(conversationId, cursor = null) {
 
   return safeApiCall(
     () =>
-      fetch(url, {
+      trackedFetch(url, {
         credentials: "include",
       }).then((res) => res.json()),
     "Failed to fetch conversation messages",
@@ -34,7 +35,7 @@ export async function fetchConversationMessages(conversationId, cursor = null) {
 export async function claimConversation(conversationId) {
   return safeApiCall(
     () =>
-      fetch(`/api/staff/chat/${conversationId}/claim`, {
+      trackedFetch(`/api/staff/chat/${conversationId}/claim`, {
         method: "POST",
         credentials: "include",
       }).then((res) => res.json()),
@@ -48,7 +49,7 @@ export async function claimConversation(conversationId) {
 export async function transferConversation(conversationId, staffId) {
   return safeApiCall(
     () =>
-      fetch(`/api/staff/chat/${conversationId}/transfer`, {
+      trackedFetch(`/api/staff/chat/${conversationId}/transfer`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -66,7 +67,7 @@ export async function transferConversation(conversationId, staffId) {
 export async function resolveConversation(conversationId) {
   return safeApiCall(
     () =>
-      fetch(`/api/staff/chat/${conversationId}/resolve`, {
+      trackedFetch(`/api/staff/chat/${conversationId}/resolve`, {
         method: "POST",
         credentials: "include",
       }).then((res) => res.json()),
@@ -80,7 +81,7 @@ export async function resolveConversation(conversationId) {
 export async function togglePresence(isOnline) {
   return safeApiCall(
     () =>
-      fetch("/api/staff/presence", {
+      trackedFetch("/api/staff/presence", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -98,7 +99,7 @@ export async function togglePresence(isOnline) {
 export async function fetchStaffList() {
   return safeApiCall(
     () =>
-      fetch("/api/staff", {
+      trackedFetch("/api/staff", {
         credentials: "include",
       }).then((res) => res.json()),
     "Failed to fetch staff list",
@@ -111,7 +112,7 @@ export async function fetchStaffList() {
 export async function sendStaffMessage(conversationId, content) {
   return safeApiCall(
     () =>
-      fetch(`/api/chat/${conversationId}/messages`, {
+      trackedFetch(`/api/chat/${conversationId}/messages`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -132,7 +133,7 @@ export async function fetchCustomerOrders(params = {}) {
 
   return safeApiCall(
     () =>
-      fetch(url, {
+      trackedFetch(url, {
         credentials: "include",
       }).then((res) => res.json()),
     "Failed to fetch customer orders",
@@ -145,7 +146,7 @@ export async function fetchCustomerOrders(params = {}) {
 export async function fetchOrderDetails(orderId) {
   return safeApiCall(
     () =>
-      fetch(`/api/staff/orders/${orderId}`, {
+      trackedFetch(`/api/staff/orders/${orderId}`, {
         credentials: "include",
       }).then((res) => res.json()),
     "Failed to fetch order details",
@@ -158,7 +159,7 @@ export async function fetchOrderDetails(orderId) {
 export async function fetchOrderStatuses() {
   return safeApiCall(
     () =>
-      fetch("/api/staff/orders/statuses", {
+      trackedFetch("/api/staff/orders/statuses", {
         credentials: "include",
       }).then((res) => res.json()),
     "Failed to fetch order statuses",
@@ -173,7 +174,7 @@ export async function fetchCannedResponses(category = null) {
 
   return safeApiCall(
     () =>
-      fetch(url, {
+      trackedFetch(url, {
         credentials: "include",
       }).then((res) => res.json()),
     "Failed to fetch canned responses",
@@ -186,7 +187,7 @@ export async function fetchCannedResponses(category = null) {
 export async function previewCannedResponse(content, variables = {}) {
   return safeApiCall(
     () =>
-      fetch("/api/staff/canned-responses/preview", {
+      trackedFetch("/api/staff/canned-responses/preview", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -204,7 +205,7 @@ export async function previewCannedResponse(content, variables = {}) {
 export async function fetchWaitingHandoffs() {
   return safeApiCall(
     () =>
-      fetch("/api/staff/handoffs", {
+      trackedFetch("/api/staff/handoffs", {
         credentials: "include",
       }).then((res) => res.json()),
     "Failed to fetch waiting handoffs",
@@ -217,7 +218,7 @@ export async function fetchWaitingHandoffs() {
 export async function claimHandoff(conversationId) {
   return safeApiCall(
     () =>
-      fetch(`/api/staff/chat/${conversationId}/handoff/claim`, {
+      trackedFetch(`/api/staff/chat/${conversationId}/handoff/claim`, {
         method: "POST",
         credentials: "include",
       }).then((res) => res.json()),

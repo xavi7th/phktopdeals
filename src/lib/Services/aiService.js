@@ -1,4 +1,5 @@
 import { writable } from "svelte/store";
+import { trackedFetch } from "$lib/api/clientFetch.js";
 
 function createAiService() {
   const canRebuild = writable(true);
@@ -14,7 +15,7 @@ function createAiService() {
 
     async checkRebuildStatus() {
       try {
-        const response = await fetch("/api/admin/ai/status");
+        const response = await trackedFetch("/api/admin/ai/status");
         const data = await response.json();
         canRebuild.set(data.can_rebuild);
         timeUntilRebuild.set(data.time_until_rebuild);
@@ -28,7 +29,7 @@ function createAiService() {
     async rebuild() {
       isRebuilding.set(true);
       try {
-        const response = await fetch("/api/admin/ai/rebuild", {
+        const response = await trackedFetch("/api/admin/ai/rebuild", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
