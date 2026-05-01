@@ -1,3 +1,4 @@
+import { cachedApiGet } from "$lib/server/cached-api";
 import { api } from "$lib/server/api-helpers";
 import { error } from "@sveltejs/kit";
 import { getErrorString, extractErrorMessage } from "$lib/helpers";
@@ -8,20 +9,21 @@ import { PurchaseItemDefaults, PurchaseItemSchema } from "$lib/schemas";
 
 export async function load(event) {
   const form = await superValidate(arktype(PurchaseItemSchema, { defaults: PurchaseItemDefaults }));
+  const productId = event.params.productId.split("_")[1];
 
   const fetchProductDetails = async () => {
-    const res = await api({
-      method: "get",
-      resource: "products/" + event.params.productId.split("_")[1],
+    const data = await cachedApiGet({
+      resource: "products/" + productId,
       event,
+      cacheKey: `products:${productId}`,
     });
 
     // Handle API unavailable
-    if (!res?.ok) {
+    if (!data) {
       return { data: null, apiError: true };
     }
 
-    return await res.json();
+    return data;
   };
 
   const [details] = await Promise.all([fetchProductDetails()]);
@@ -94,6 +96,6 @@ export const actions = {
 
     await event.locals.session.update(async ({ recently_purchased }) => ({ recently_purchased: res }));
 
-    redirect("/store/successful", { type: "success", msg: res?.metadata?.message || "Purchase successful!" }, event.cookies);
+    redirect("/store/successful?productId=" + productId, { type: "success", msg: res?.metadata?.message || "Purchase successful!" }, event.cookies);
   },
 };

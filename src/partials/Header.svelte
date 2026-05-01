@@ -29,13 +29,22 @@
   import SvgIcon from "$lib/Components/SvgIcon.svelte";
   import { PUBLIC_VITE_BASE_DOMAIN } from "$env/static/public";
   import { crescentMoon, dollarCircle, sunRays, x } from "$lib/Components/iconPaths";
+  import { goto } from "$app/navigation";
+  import { clearSwPageCache } from "$lib/swCache";
+  import { clearAllCache } from "$lib/cache";
 
   let user = $derived(page.data?.user);
 
   let showMenu = $state(false);
-  let { wallet_balance } = $props();
+  let { wallet_balance, cart_count = 0 } = $props();
 
   beforeNavigate(() => (showMenu = false));
+
+  async function handleLogout(e) {
+    e.preventDefault();
+    await Promise.all([clearSwPageCache(), clearAllCache()]);
+    goto("/logout");
+  }
 </script>
 
 <header class="fixed z-30 w-full bg-transparent">
@@ -61,6 +70,22 @@
               class="mr-4 inline-flex h-11 w-auto items-center justify-center justify-self-end rounded-full bg-gray-200 px-3 text-gray-800 dark:bg-neutral-800 dark:text-neutral-300">
               <SvgIcon strokeWidth={1.5} class="size-5 shrink-0" slot={dollarCircle} />
               <span class="ml-2 text-sm font-bold tracking-tighter">{toCurrency(wallet_balance)}</span>
+            </a>
+          {/if}
+
+          {#if !user?.is_admin}
+            <a href="/store/cart" title="Cart" class="relative mr-2 inline-flex size-11 items-center justify-center rounded-full bg-gray-200 text-gray-800 dark:bg-neutral-800 dark:text-neutral-300">
+              <svg xmlns="http://www.w3.org/2000/svg" class="size-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+              </svg>
+              {#if cart_count > 0}
+                <span class="absolute -right-1 -top-1 flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-brand-600 px-1 text-[10px] font-bold text-white">
+                  {cart_count > 99 ? "99+" : cart_count}
+                </span>
+              {/if}
             </a>
           {/if}
 
@@ -95,7 +120,7 @@
         <div class="hidden lg:flex lg:items-center lg:space-x-6">
           {#if user?.full_name}
             <a href="/user/orders" class="text-base font-medium tracking-tighter text-gray-700 hover:text-brand-600 dark:text-neutral-300">Dashboard</a>
-            <a href="/logout" class="text-base font-medium tracking-tighter text-gray-700 hover:text-brand-600 dark:text-neutral-300" data-sveltekit-reload>Logout</a>
+            <a href="/logout" class="text-base font-medium tracking-tighter text-gray-700 hover:text-brand-600 dark:text-neutral-300" data-sveltekit-reload onclick={handleLogout}>Logout</a>
           {:else}
             <a href="/login#register" class="text-base font-medium tracking-tighter text-gray-700 hover:text-brand-600 dark:text-neutral-300">Sign Up</a>
             <a href="/login" class="text-base font-medium tracking-tighter text-gray-700 hover:text-brand-600 dark:text-neutral-300">Sign In</a>
@@ -122,6 +147,25 @@
                   class="inline-flex h-11 w-auto items-center justify-center rounded-full bg-gray-200 px-3 text-gray-800 dark:bg-neutral-800 dark:text-neutral-300">
                   <SvgIcon strokeWidth={1.5} class="size-5 shrink-0" slot={dollarCircle} />
                   <span class="ml-2 text-sm font-bold tracking-tighter">{toCurrency(wallet_balance)}</span>
+                </a>
+              {/if}
+
+              {#if !user?.is_admin}
+                <a
+                  href="/store/cart"
+                  title="Cart"
+                  class="relative inline-flex size-11 items-center justify-center rounded-full bg-gray-200 text-gray-800 hover:bg-brand-200 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="size-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                  </svg>
+                  {#if cart_count > 0}
+                    <span class="absolute -right-1 -top-1 flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-brand-600 px-1 text-[10px] font-bold text-white">
+                      {cart_count > 99 ? "99+" : cart_count}
+                    </span>
+                  {/if}
                 </a>
               {/if}
             {/if}
@@ -187,7 +231,7 @@
           <div class="flex flex-col space-y-2">
             {#if user?.full_name}
               <a href="/user/orders" class="py-2 text-base font-medium text-black transition-all duration-200 hover:text-brand-600 focus:text-brand-600">Dashboard</a>
-              <a href="/logout" class="py-2 text-base font-medium text-black transition-all duration-200 hover:text-brand-600 focus:text-brand-600" data-sveltekit-reload>Logout</a>
+              <a href="/logout" class="py-2 text-base font-medium text-black transition-all duration-200 hover:text-brand-600 focus:text-brand-600" data-sveltekit-reload onclick={handleLogout}>Logout</a>
             {:else}
               <a href="/login#register" class="py-2 text-base font-medium text-black transition-all duration-200 hover:text-brand-600 focus:text-brand-600">Sign up</a>
               <a href="/login" class="py-2 text-base font-medium text-black transition-all duration-200 hover:text-brand-600 focus:text-brand-600">Sign in</a>

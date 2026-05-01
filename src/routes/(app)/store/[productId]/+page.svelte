@@ -1,6 +1,7 @@
 <script>
   import { dev } from "$app/environment";
   import { slide } from "svelte/transition";
+  import { onMount } from "svelte";
   import { checkPlus } from "$lib/Components/iconPaths";
   import SuperDebug, { superForm } from "sveltekit-superforms";
   import { percentageCalculation, toCurrency } from "$lib/helpers";
@@ -8,6 +9,12 @@
   import LoadingButton from "$lib/Components/FormInputs/LoadingButton.svelte";
   import FloatingTextInput from "$lib/Components/FormInputs/FloatingTextInput.svelte";
   import FloatingNumericTextInput from "$lib/Components/FormInputs/FloatingNumericTextInput.svelte";
+  import { recordView } from "$stores/recentlyViewed";
+  import { enhance } from "$app/forms";
+  import { cartStore } from "$stores/cartStore.js";
+  import { page } from "$app/stores";
+  import { addToCart } from "$lib/cart.remote.js";
+  import { invalidateAll } from "$app/navigation";
 
   let selectedDenomination = "btn-0";
 
@@ -19,6 +26,78 @@
   });
 
   $: ({ product, user } = data);
+
+  let cartActionLoading = false;
+  let cartMessage = "";
+  let addToCartLoading = $state(false);
+  let addToCartMessage = $state("");
+  let addToCartType = $state("success"); // 'success' | 'error'
+
+  onMount(() => {
+    if (product) {
+      recordView({
+        productId: product.id,
+        title: product.product_name,
+        imageUrl: product.product_image_url,
+        price: product.product_price?.denominations?.[0] || 0,
+      });
+    }
+    // Initialize cart store from localStorage for guests
+    // (auth users' counts come from server via layout)
+    if (!data.user?.email) {
+      cartStore.initialize();
+    }
+  });
+
+  // Handle the addToCart form action result
+  // For guests: the server returns product data, we update localStorage
+  $: if ($page.form?.cartAction === "guest") {
+    cartStore.guestAdd({
+      product_id: $page.form.product_id,
+      product_name: $page.form.product_name,
+      product_image_url: $page.form.product_image_url,
+      unit_price: $page.form.unit_price,
+      quantity: $page.form.quantity,
+    });
+    cartMessage = "Item added to cart!";
+    setTimeout(() => (cartMessage = ""), 3000);
+  }
+
+  async function handleAddToCart() {
+    addToCartLoading = true;
+    try {
+      const result = await addToCart({
+        product_id: $form.product_id,
+        unit_price: $form.unit_price,
+        quantity: $form.quantity,
+        product_name: product?.product_name || "",
+        product_image_url: product?.product_image_url || "",
+      });
+
+      if (result.cartAction === "guest") {
+        cartStore.guestAdd({
+          product_id: result.product_id,
+          product_name: result.product_name,
+          product_image_url: result.product_image_url,
+          unit_price: result.unit_price,
+          quantity: result.quantity,
+        });
+        addToCartMessage = "Item added to cart!";
+        addToCartType = "success";
+      } else {
+        addToCartMessage = result.message || "Item added to your cart!";
+        addToCartType = "success";
+        // Refresh layout data to update cart count badge
+        await invalidateAll();
+      }
+    } catch (err) {
+      addToCartMessage = err?.message || "Could not add item to cart.";
+      addToCartType = "error";
+    } finally {
+      addToCartLoading = false;
+      setTimeout(() => (addToCartMessage = ""), 3000);
+    }
+  }
 
   $: $form.unit_price = product?.product_price?.denominations?.length ? Number(product.product_price.denominations[0]) : 0;
   $: $form.product_id = product?.id;
@@ -101,6 +180,23 @@
             isError={!!$errors.quantity}
             msg={$errors.quantity} />
         </div>
+      </div>
+
+      <!-- Add to Cart button (Phase 21 — command-based) -->
+      <div class="mt-5 overflow-hidden rounded-xl rounded-ss-3xl bg-brand-200 px-4 pb-6 pt-6 md:px-10 dark:bg-brand-900 dark:text-white">
+        {#if addToCartMessage}
+          <p class="mb-3 text-sm font-medium {addToCartType === 'error' ? 'text-red-700 dark:text-red-400' : 'text-green-700 dark:text-green-400'}">
+            {addToCartMessage}
+          </p>
+        {/if}
+
+        <button
+          type="button"
+          onclick={handleAddToCart}
+          disabled={addToCartLoading || $form.unit_price <= 0}
+          class="w-full bg-brand-200 px-10 py-4 font-medium text-brand-900 hover:bg-brand-300 focus:bg-brand-300 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-brand-700 dark:text-white dark:hover:bg-brand-600">
+          {addToCartLoading ? "Adding..." : "Add to Cart"}
+        </button>
       </div>
 
       <div class="relative mt-5 overflow-hidden rounded-xl rounded-ss-3xl bg-brand-200 py-8 md:px-10 dark:bg-brand-900 dark:text-white" transition:slide={{ duration: 500 }}>
