@@ -9,9 +9,12 @@
 import { dev } from "$app/environment";
 import { initCache, cleanExpiredCache } from "$lib/cache";
 import { browser } from "$app/environment";
+import { registerServiceWorker } from "$lib/registerServiceWorker";
 
 // Initialize cache on client-side load
 if (browser) {
+  registerServiceWorker();
+
   initCache().then(() => {
     if (dev) console.log("IndexedDB cache initialized");
 

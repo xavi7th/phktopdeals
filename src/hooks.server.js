@@ -15,9 +15,9 @@ import { redirect } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
 import { handleSession } from "svelte-kit-cookie-session";
 import { PUBLIC_VITE_BASE_API, PUBLIC_DEV_LOG_DETAILED } from "$env/static/public";
-import { handleDeviceDetector } from "sveltekit-device-detector";
 import { VITE_SESSION_NAME, APP_SESSION_KEY, APP_LOG_REQUEST_DURATION_TIMING } from "$env/static/private";
 import { initDevLogger, getLogger } from "$lib/server/dev-logger";
+import { getUserCache, setUserCache, clearUserCache, evictStaleCache } from "$lib/server/cache-store";
 
 // Initialize dev logger on server startup.
 // In dev: Uses getRequestEvent() via dev-logger.js to get request-scoped context.
@@ -27,39 +27,6 @@ initDevLogger();
 
 function generateRequestId() {
   return crypto.randomBytes(4).toString("hex");
-}
-
-/**
- * In-memory cache for authenticated user details.
- * Avoids hitting the API on every single request.
- *
- * @type {Map<string, { user: import('$lib/types').AppUser, cachedAt: number }>}
- */
-const userCache = new Map();
-const USER_CACHE_TTL_MS = 2 * 60 * 1000; // 2 minutes
-
-/**
- * Evict stale entries periodically to prevent memory leaks.
- * Runs at most once per minute.
- */
-let lastEviction = 0;
-function evictStaleCache() {
-  const now = Date.now();
-  if (now - lastEviction < 60_000) return;
-  lastEviction = now;
-  for (const [key, entry] of userCache) {
-    if (now - entry.cachedAt > USER_CACHE_TTL_MS) {
-      userCache.delete(key);
-    }
-  }
-}
-
-/**
- * Clear a specific user from cache (e.g. on logout or role change).
- * @param {string} sessionKey
- */
-export function clearUserCache(sessionKey) {
-  userCache.delete(sessionKey);
 }
 
 const sessionHandler = handleSession({
@@ -134,11 +101,11 @@ async function getUserDetails({ event, resolve }) {
     evictStaleCache();
 
     // Check cache first — avoid hitting the API on every request
-    const cached = apiSessionKey ? userCache.get(apiSessionKey) : null;
-    if (cached && Date.now() - cached.cachedAt < USER_CACHE_TTL_MS) {
-      await event.locals.session.update(() => ({ user: cached.user }));
+    const cached = apiSessionKey ? getUserCache(apiSessionKey) : null;
+    if (cached) {
+      await event.locals.session.update(() => ({ user: cached }));
       if (event.locals.__contextStore) {
-        event.locals.__contextStore.user = cached.user;
+        event.locals.__contextStore.user = cached;
       }
     } else {
       try {
@@ -159,7 +126,7 @@ async function getUserDetails({ event, resolve }) {
 
           // Cache the user for subsequent requests
           if (apiSessionKey && user?.email) {
-            userCache.set(apiSessionKey, { user, cachedAt: Date.now() });
+            setUserCache(apiSessionKey, user);
           }
         }
       } catch (err) {
