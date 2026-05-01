@@ -293,7 +293,7 @@ export const handleFetch = async ({ request, fetch, event }) => {
           responseUrl: response?.url,
           eventRoute: event.url.pathname,
         });
-      } else {
+      } else if (dev) {
         console.log("----------HOOKS------------", response.url, response);
       }
     }
@@ -343,7 +343,7 @@ export const handleError = async ({ event, error, message, status }) => {
         },
         message,
       });
-    } else {
+    } else if (dev) {
       console.error({
         error: err,
         event: {
