@@ -147,10 +147,7 @@
           </svg>
         </div>
 
-
-        <h3 class="text-base font-semibold uppercase text-gray-800 dark:text-white">
-          No Vouchers Found
-        </h3>
+        <h3 class="text-base font-semibold uppercase text-gray-800 dark:text-white">No Vouchers Found</h3>
         <p class="mt-1 text-sm text-gray-500 dark:text-neutral-400">
           {#if apiError}
             There are currently no voucher codes associated with this order.

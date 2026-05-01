@@ -24,7 +24,7 @@
       items: [
         {
           q: "How do I create an account?",
-          a: "Click the \"Sign Up\" button at the top of the page. You'll need to provide your name, email address, and create a password. You can also sign up using your Google account for faster access.",
+          a: 'Click the "Sign Up" button at the top of the page. You\'ll need to provide your name, email address, and create a password. You can also sign up using your Google account for faster access.',
         },
         {
           q: "How does the wallet work?",
@@ -32,7 +32,7 @@
         },
         {
           q: "How do I top up my wallet?",
-          a: "Go to your account dashboard and click \"Top Up Wallet.\" Choose your preferred payment method (bank transfer, card payment, or cryptocurrency), enter the amount, and complete the transaction. Your balance updates immediately after confirmation.",
+          a: 'Go to your account dashboard and click "Top Up Wallet." Choose your preferred payment method (bank transfer, card payment, or cryptocurrency), enter the amount, and complete the transaction. Your balance updates immediately after confirmation.',
         },
         {
           q: "Can I withdraw my wallet balance as cash?",
@@ -132,7 +132,7 @@
 <div class="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
   {#each categories as category, ci (category.name)}
     <div class="mb-10">
-      <h2 class="mb-4 border-b-2 border-brand-400 pb-2 text-xl font-bold text-gray-900 dark:text-white sm:text-2xl">
+      <h2 class="mb-4 border-b-2 border-brand-400 pb-2 text-xl font-bold text-gray-900 sm:text-2xl dark:text-white">
         {category.name}
       </h2>
 
@@ -173,9 +173,7 @@
                 <path d="m18 15-6-6-6 6"></path>
               </svg>
             </button>
-            <div
-              class="hs-accordion-content overflow-hidden transition-[height] duration-300 {isOpen ? '' : 'hidden'}"
-              role="region">
+            <div class="hs-accordion-content overflow-hidden transition-[height] duration-300 {isOpen ? '' : 'hidden'}" role="region">
               <div class="px-5 pb-5 text-gray-600 dark:text-neutral-400">
                 <p>{item.a}</p>
               </div>
@@ -190,9 +188,7 @@
     <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Still have questions?</h3>
     <p class="mt-2 text-gray-600 dark:text-neutral-400">Can't find what you're looking for? Reach out to our support team.</p>
     <div class="mt-4 flex flex-wrap items-center justify-center gap-3">
-      <a
-        href="mailto:hello@hotdeals.stafr.pro"
-        class="inline-flex items-center gap-x-2 rounded-lg bg-brand-400 px-4 py-2.5 text-sm font-semibold text-gray-900 hover:bg-brand-500 focus:outline-none focus:bg-brand-500">
+      <a href="mailto:hello@hotdeals.stafr.pro" class="inline-flex items-center gap-x-2 rounded-lg bg-brand-400 px-4 py-2.5 text-sm font-semibold text-gray-900 hover:bg-brand-500 focus:bg-brand-500 focus:outline-none">
         Email Us
       </a>
       <a

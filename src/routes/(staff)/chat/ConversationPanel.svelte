@@ -229,7 +229,6 @@
               handleSendMessage(e);
             }
           }} />
-
       </div>
       <button
         type="submit"

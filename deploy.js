@@ -83,9 +83,12 @@ const prodEnvOverrides = Object.fromEntries(
       const key = line.substring(0, eqIdx).trim();
       const raw = line.substring(eqIdx + 1).trim();
       // Strip surrounding quotes and trailing inline comments
-      const value = raw.replace(/^["'](.*)["']\s*(#.*)?$/, "$1").split(/\s+#/)[0].trim();
+      const value = raw
+        .replace(/^["'](.*)["']\s*(#.*)?$/, "$1")
+        .split(/\s+#/)[0]
+        .trim();
       return [key, value];
-    })
+    }),
 );
 execSync("bun run build", { stdio: "inherit", env: { ...process.env, ...prodEnvOverrides } });
 

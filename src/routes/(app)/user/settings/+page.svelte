@@ -158,7 +158,5 @@
         </div>
       </section>
     </form>
-
-    <!-- Account deletion disabled — re-enable with proper safeguards (2FA, grace period) -->
   </div>
 </div>

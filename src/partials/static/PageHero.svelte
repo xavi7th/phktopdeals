@@ -5,11 +5,7 @@
 </script>
 
 <section class="page-hero relative flex min-h-[260px] items-center justify-center overflow-hidden bg-gray-900 sm:min-h-[320px]">
-  <img
-    class="absolute inset-0 h-full w-full object-cover"
-    src={heroImg}
-    alt=""
-    aria-hidden="true" />
+  <img class="absolute inset-0 h-full w-full object-cover" src={heroImg} alt="" aria-hidden="true" />
   <div class="absolute inset-0 bg-black/60"></div>
 
   <div class="relative z-10 mx-auto w-full max-w-[85rem] px-4 py-16 text-center sm:px-6 sm:py-20 lg:px-8">

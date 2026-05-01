@@ -43,7 +43,7 @@
 {/if}
 
 {#snippet err(serverDown)}
-  <div class="flex items-center justify-center min-h-96 border-t border-neutral-200 bg-neutral-200/50 p-4 text-sm text-gray-500 dark:border-neutral-700 dark:bg-neutral-600/10">
+  <div class="flex min-h-96 items-center justify-center border-t border-neutral-200 bg-neutral-200/50 p-4 text-sm text-gray-500 dark:border-neutral-700 dark:bg-neutral-600/10">
     <div class="flex items-center justify-center py-6">
       <div class="text-center">
         <!-- Icon: Optional but helps visual cues -->
@@ -53,11 +53,9 @@
           </svg>
         </div>
 
-        <h3 class="text-base font-semibold uppercase text-gray-800 dark:text-white">
-          No Vouchers Found
-        </h3>
+        <h3 class="text-base font-semibold uppercase text-gray-800 dark:text-white">No Vouchers Found</h3>
         <p class="mt-1 text-sm text-gray-500 dark:text-neutral-400">
-          There was an error loading the data {`${serverDown ? '. The API server is currently unavailable': ''}`}. Reload the page to try again
+          There was an error loading the data {`${serverDown ? ". The API server is currently unavailable" : ""}`}. Reload the page to try again
         </p>
       </div>
     </div>
@@ -113,7 +111,7 @@
     </LoadingButton>
   </Modal>
 {:catch}
- {@render err(pageData.apiError)}
+  {@render err(pageData.apiError)}
 {/await}
 
 <Modal name="delete-voucher" title="Are you sure?">
@@ -130,11 +128,7 @@
     <div class="flex justify-end space-x-4">
       <form action="?/delete" method="POST" use:enhance>
         <input type="text" name="id" hidden bind:value={$form.id} readonly class="hidden" />
-        <LoadingButton
-          class="w-auto bg-red-700 px-3 py-2 font-medium transition-opacity duration-300 hover:bg-red-800 hover:text-neutral-50 focus:bg-red-800"
-          {timeout}
-          {delayed}
-          {submitting}>
+        <LoadingButton class="w-auto bg-red-700 px-3 py-2 font-medium transition-opacity duration-300 hover:bg-red-800 hover:text-neutral-50 focus:bg-red-800" {timeout} {delayed} {submitting}>
           Delete Voucher
         </LoadingButton>
       </form>
