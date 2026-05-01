@@ -1,4 +1,4 @@
-import { api } from "$lib/server/api-helpers";
+import { cachedApiGet } from "$lib/server/cached-api";
 
 export async function load(event) {
   let url = "store";
@@ -18,18 +18,15 @@ export async function load(event) {
   }
 
   const fetchGiftCards = async () => {
-    const res = await api({
-      method: "get",
-      resource: url,
-      event,
-    });
+    const cacheKey = `products:${event.params.slug || "all"}:${event.url.searchParams.toString()}`;
+    const data = await cachedApiGet({ resource: url, event, cacheKey });
 
     // Handle API unavailable
-    if (!res?.ok) {
+    if (!data) {
       return { data: [], metadata: { items_count: 0 }, apiError: true };
     }
 
-    return await res.json();
+    return data;
   };
 
   const [cardsData] = await Promise.all([fetchGiftCards()]);

@@ -1,20 +1,15 @@
-import { api } from "$lib/server/api-helpers";
+import { getShared, setShared } from "$lib/server/cache-store";
+import { cachedApiGet } from "$lib/server/cached-api";
 import { logWithLocation as serverLog } from "$lib/server/dev-logger";
 
-let lastFetchTime = 0;
-let cachedData = null;
-let cachedCurrencies = null;
-const CACHE_DURATION = 1000 * 60 * 60 * 5; // 5 hours in milliseconds
+const EXCHANGE_RATE_KEY = "exchange-rates:USD";
+const EXCHANGE_RATE_TTL_MS = 1000 * 60 * 60 * 5; // 5 hours
 
 /** @param {import('./$types').PageServerLoadEvent} event */
 export async function getCachedExchangeRate(event) {
-  const now = Date.now();
-
-  if (cachedData && lastFetchTime && now - lastFetchTime < CACHE_DURATION) {
-    return {
-      ...cachedData,
-      fromCache: true,
-    };
+  const cached = getShared(EXCHANGE_RATE_KEY);
+  if (cached) {
+    return { ...cached, fromCache: true };
   }
 
   const response = await event.fetch("https://api.exchangerate-api.com/v4/latest/USD").catch((err) => {
@@ -23,11 +18,10 @@ export async function getCachedExchangeRate(event) {
   });
 
   if (!response.ok) {
-    // Return fallback instead of throwing
     return {
       rate: null,
-      fromCache: false,
       lastUpdated: "Unavailable",
+      fromCache: false,
       apiError: true,
     };
   }
@@ -35,42 +29,27 @@ export async function getCachedExchangeRate(event) {
   /** @type {import('$lib/types').ExchangeRate} */
   const data = await response.json();
 
-  cachedData = {
+  const rateData = {
     rate: data.rates.NGN + 150,
     lastUpdated: new Date().toLocaleTimeString(),
   };
 
-  lastFetchTime = now;
+  setShared(EXCHANGE_RATE_KEY, rateData, EXCHANGE_RATE_TTL_MS);
 
   return {
-    ...cachedData,
+    ...rateData,
     fromCache: false,
   };
 }
 
 /** @param {import('./$types').PageServerLoadEvent} event */
 export async function getNOWAvailableCurrencies(event) {
-  const now = Date.now();
-
-  if (cachedCurrencies && lastFetchTime && now - lastFetchTime < CACHE_DURATION) {
-    return cachedCurrencies.data;
-  }
-
-  const res = await api({
-    method: "get",
+  const data = await cachedApiGet({
     resource: "user-transactions/available-currencies",
     event,
+    cacheKey: "currencies",
   });
 
-  // Handle API unavailable - return empty array instead of throwing
-  if (!res?.ok) {
-    return [];
-  }
-
-  const currencies = await res.json();
-
-  lastFetchTime = now;
-  cachedCurrencies = currencies;
-
-  return currencies.data;
+  if (!data) return [];
+  return data.data;
 }

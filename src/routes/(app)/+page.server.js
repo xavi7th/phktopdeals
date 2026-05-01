@@ -1,26 +1,23 @@
-import { api } from "$lib/server/api-helpers";
+import { cachedApiGet } from "$lib/server/cached-api";
 
 export async function load(event) {
   const fetchPageData = async () => {
-    const res = await api({
-      method: "get",
-      resource: "",
-      event,
-    });
+    const data = await cachedApiGet({ resource: "", event, cacheKey: "home" });
 
-    // Handle API unavailable - return null data instead of throwing
-    if (!res?.ok) {
+    // Handle API unavailable
+    if (!data) {
       return {
         data: {
           sections: [],
           services: [],
           sliders: [],
         },
-        error: res ? await res.json() : { error: "API unavailable" },
+        error: { error: "API unavailable" },
+        apiError: true,
       };
     }
 
-    return await res?.json();
+    return data;
   };
 
   let noJS = !!event.url.searchParams.get("noJS");

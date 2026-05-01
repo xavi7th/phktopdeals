@@ -6,10 +6,40 @@
   import ProductCard from "$partials/ProductCard.svelte";
   import Sidebar from "$partials/gift-cards/Sidebar.svelte";
   import PageNavigation from "$lib/Components/PageNavigation.svelte";
+  import { getPrefs, setPrefs } from "$stores/userPreferences";
+  import { onMount } from "svelte";
 
   export let data;
 
   $: ({ cards, category, meta, basePageUrl, search } = data);
+
+  let sortOrder = $state("default");
+  let viewMode = $state("grid");
+
+  onMount(() => {
+    const prefs = getPrefs();
+    sortOrder = prefs.productSortOrder || "default";
+    viewMode = prefs.productViewMode || "grid";
+  });
+
+  function updateSortOrder(newSort) {
+    sortOrder = newSort;
+    setPrefs({ productSortOrder: newSort });
+  }
+
+  function toggleViewMode() {
+    const newMode = viewMode === "grid" ? "list" : "grid";
+    viewMode = newMode;
+    setPrefs({ productViewMode: newMode });
+  }
+
+  let sortedCards = $derived(
+    (cards || []).slice().sort((a, b) => {
+      if (sortOrder === "price_asc") return (a.product_price?.denominations?.[0] || 0) - (b.product_price?.denominations?.[0] || 0);
+      if (sortOrder === "price_desc") return (b.product_price?.denominations?.[0] || 0) - (a.product_price?.denominations?.[0] || 0);
+      return 0;
+    }),
+  );
 </script>
 
 <svelte:head>
@@ -39,8 +69,22 @@
           </div>
         </div>
 
-        <div class="mb-8 grid grid-cols-3 gap-4 lg:grid-cols-5 lg:gap-5 xl:gap-3">
-          {#each cards || [] as product}
+        <div class="mb-4 flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <label class="text-sm text-gray-600 dark:text-neutral-400">Sort:</label>
+            <select class="rounded border border-gray-300 bg-white px-2 py-1 text-sm dark:border-neutral-600 dark:bg-neutral-800" on:change={(e) => updateSortOrder(e.target.value)}>
+              <option value="default" selected={sortOrder === "default"}>Default</option>
+              <option value="price_asc" selected={sortOrder === "price_asc"}>Price: Low to High</option>
+              <option value="price_desc" selected={sortOrder === "price_desc"}>Price: High to Low</option>
+            </select>
+          </div>
+          <button class="rounded border border-gray-300 p-1.5 text-sm hover:bg-gray-100 dark:border-neutral-600 dark:hover:bg-neutral-800" onclick={toggleViewMode}>
+            {viewMode === "grid" ? "List" : "Grid"}
+          </button>
+        </div>
+
+        <div class={viewMode === "grid" ? "mb-8 grid grid-cols-3 gap-4 lg:grid-cols-5 lg:gap-5 xl:gap-3" : "mb-8 flex flex-col gap-4"}>
+          {#each sortedCards || [] as product}
             <ProductCard {product} />
           {:else}
             <div class="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8 col-span-3 lg:col-start-2">
