@@ -79,7 +79,7 @@
       <h2 id="introduction">Introduction</h2>
       <p>
         PHK Factor ("we", "our", "us") is a digital marketplace operated by <strong>MOZYFLEX LTD</strong>
-         (RC 1577964), registered in Nigeria. We are committed to protecting and respecting your privacy.
+        (RC 1577964), registered in Nigeria. We are committed to protecting and respecting your privacy.
       </p>
       <p>
         This Privacy Policy explains how we collect, use, store, and share your personal information when you use our website, mobile applications, and services (collectively, the "Service"). It also outlines your rights
@@ -110,7 +110,7 @@
       </ul>
       <p>
         We do <strong>not</strong>
-         store full credit/debit card numbers on our servers. Payment processing is handled by secure third-party payment providers.
+        store full credit/debit card numbers on our servers. Payment processing is handled by secure third-party payment providers.
       </p>
 
       <h3>Device & Usage Information</h3>
@@ -135,31 +135,31 @@
       <ul>
         <li>
           <strong>Service Delivery:</strong>
-           Process orders, deliver digital products, manage your wallet, and provide customer support.
+          Process orders, deliver digital products, manage your wallet, and provide customer support.
         </li>
         <li>
           <strong>Account Management:</strong>
-           Create and maintain your account, verify your identity, and handle password recovery.
+          Create and maintain your account, verify your identity, and handle password recovery.
         </li>
         <li>
           <strong>Communication:</strong>
-           Send order confirmations, delivery notifications, and respond to your inquiries.
+          Send order confirmations, delivery notifications, and respond to your inquiries.
         </li>
         <li>
           <strong>Improvement:</strong>
-           Analyse usage patterns to improve our platform, fix bugs, and enhance user experience.
+          Analyse usage patterns to improve our platform, fix bugs, and enhance user experience.
         </li>
         <li>
           <strong>Security:</strong>
-           Detect and prevent fraud, unauthorised access, and other illegal activities.
+          Detect and prevent fraud, unauthorised access, and other illegal activities.
         </li>
         <li>
           <strong>Marketing:</strong>
-           Send promotional offers and newsletters (only with your consent, and you may opt out at any time).
+          Send promotional offers and newsletters (only with your consent, and you may opt out at any time).
         </li>
         <li>
           <strong>Legal Compliance:</strong>
-           Comply with applicable laws, regulations, and legal processes.
+          Comply with applicable laws, regulations, and legal processes.
         </li>
       </ul>
 
@@ -183,19 +183,19 @@
       <ul>
         <li>
           <strong>Service Providers:</strong>
-           Trusted third-party companies that help us operate the platform (payment processors, hosting providers, email services). These providers are contractually obligated to protect your data.
+          Trusted third-party companies that help us operate the platform (payment processors, hosting providers, email services). These providers are contractually obligated to protect your data.
         </li>
         <li>
           <strong>Legal Requirements:</strong>
-           When required by law, court order, or government regulation, we may disclose your information.
+          When required by law, court order, or government regulation, we may disclose your information.
         </li>
         <li>
           <strong>Business Transfers:</strong>
-           In the event of a merger, acquisition, or sale of assets, your information may be transferred as part of that transaction.
+          In the event of a merger, acquisition, or sale of assets, your information may be transferred as part of that transaction.
         </li>
         <li>
           <strong>Protection of Rights:</strong>
-           To protect our rights, property, or safety, or that of our users or the public.
+          To protect our rights, property, or safety, or that of our users or the public.
         </li>
       </ul>
 
@@ -204,15 +204,15 @@
       <ul>
         <li>
           <strong>Essential Cookies:</strong>
-           Required for the website to function properly (session management, authentication, security).
+          Required for the website to function properly (session management, authentication, security).
         </li>
         <li>
           <strong>Analytics Cookies:</strong>
-           Help us understand how visitors interact with our website (page views, navigation patterns, errors).
+          Help us understand how visitors interact with our website (page views, navigation patterns, errors).
         </li>
         <li>
           <strong>Functional Cookies:</strong>
-           Remember your preferences and settings (language, region, display preferences).
+          Remember your preferences and settings (language, region, display preferences).
         </li>
       </ul>
       <p>You can manage or disable cookies through your browser settings. Note that disabling certain cookies may affect the functionality of the Service.</p>
@@ -222,27 +222,27 @@
       <ul>
         <li>
           <strong>Access:</strong>
-           Request a copy of the personal data we hold about you.
+          Request a copy of the personal data we hold about you.
         </li>
         <li>
           <strong>Correction:</strong>
-           Request correction of inaccurate or incomplete personal data.
+          Request correction of inaccurate or incomplete personal data.
         </li>
         <li>
           <strong>Deletion:</strong>
-           Request deletion of your personal data, subject to legal obligations.
+          Request deletion of your personal data, subject to legal obligations.
         </li>
         <li>
           <strong>Portability:</strong>
-           Request your data in a structured, commonly used, machine-readable format.
+          Request your data in a structured, commonly used, machine-readable format.
         </li>
         <li>
           <strong>Objection:</strong>
-           Object to the processing of your data for marketing purposes.
+          Object to the processing of your data for marketing purposes.
         </li>
         <li>
           <strong>Withdrawal of Consent:</strong>
-           Withdraw consent for any processing based on consent at any time.
+          Withdraw consent for any processing based on consent at any time.
         </li>
       </ul>
       <p>To exercise any of these rights, please contact us using the details provided below. We will respond to your request within 30 days.</p>
@@ -271,17 +271,17 @@
         </li>
         <li>
           <strong>Live Chat:</strong>
-           Click the chat icon on our website
+          Click the chat icon on our website
         </li>
         <li>
           <strong>WhatsApp:</strong>
-           Click the WhatsApp button on our website
+          Click the WhatsApp button on our website
         </li>
       </ul>
       <div class="not-prose mt-8 rounded-lg bg-gray-50 p-6 dark:bg-neutral-800/50">
         <p class="text-sm text-gray-600 dark:text-neutral-400">
           PHK Factor is a product of <strong class="text-gray-900 dark:text-white">MOZYFLEX LTD</strong>
-           (RC 1577964), registered in Nigeria.
+          (RC 1577964), registered in Nigeria.
         </p>
       </div>
     </article>

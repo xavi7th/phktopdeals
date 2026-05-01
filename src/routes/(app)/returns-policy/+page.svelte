@@ -43,7 +43,7 @@
           <p class="font-semibold text-amber-800 dark:text-amber-300">Important: Digital Products</p>
           <p class="mt-1 text-sm text-amber-700 dark:text-amber-400/90">
             Digital products (games, gift cards, software, e-SIM, top-ups, and vouchers) are <strong>non-refundable</strong>
-             once the code, key, or activation details have been delivered and revealed to you.
+            once the code, key, or activation details have been delivered and revealed to you.
           </p>
         </div>
       </div>
@@ -61,7 +61,7 @@
     </ul>
     <p>
       Due to the instantaneous and consumable nature of digital products, <strong>all sales are final</strong>
-       once the product code or activation details have been delivered and revealed in your account.
+      once the product code or activation details have been delivered and revealed in your account.
     </p>
 
     <h3>Exceptions</h3>
@@ -69,15 +69,15 @@
     <ul>
       <li>
         <strong>Defective code:</strong>
-         The product code does not work as described and has not been redeemed.
+        The product code does not work as described and has not been redeemed.
       </li>
       <li>
         <strong>Wrong product delivered:</strong>
-         You received a different product than what you ordered.
+        You received a different product than what you ordered.
       </li>
       <li>
         <strong>Technical failure:</strong>
-         A system error on our end resulted in a failed or incorrect delivery.
+        A system error on our end resulted in a failed or incorrect delivery.
       </li>
     </ul>
 
@@ -86,19 +86,19 @@
     <ol>
       <li>
         Contact our support team within a <strong>reasonable time</strong>
-         of discovering the issue.
+        of discovering the issue.
       </li>
       <li>
         Provide your <strong>order ID</strong>
-         (found in your order history or confirmation email).
+        (found in your order history or confirmation email).
       </li>
       <li>
         Describe the <strong>issue</strong>
-         you are experiencing in detail.
+        you are experiencing in detail.
       </li>
       <li>
         Attach any relevant <strong>screenshots</strong>
-         or evidence (e.g., error messages, proof of non-delivery).
+        or evidence (e.g., error messages, proof of non-delivery).
       </li>
     </ol>
     <p>Our team will review your request and respond within 1-2 business days. We may ask for additional information to process your request.</p>
@@ -124,7 +124,7 @@
           <p class="font-semibold text-brand-700 dark:text-brand-300">Refund Method: Wallet Credit Only</p>
           <p class="mt-1 text-sm text-brand-600 dark:text-brand-400/90">
             <strong>All refunds are issued as wallet credit, not cash.</strong>
-             Wallet credit can be used for any future purchase on PHK Factor. We do not process bank transfers or reversals to the original payment method.
+            Wallet credit can be used for any future purchase on PHK Factor. We do not process bank transfers or reversals to the original payment method.
           </p>
         </div>
       </div>
@@ -144,12 +144,12 @@
       </li>
       <li>
         Wallet credit is <strong>non-transferable</strong>
-         to other accounts.
+        to other accounts.
       </li>
     </ul>
     <p>
       We do <strong>not</strong>
-       offer refunds via bank transfer, card reversal, or any other cash-out method. This policy allows us to process refunds quickly while keeping transaction costs low.
+      offer refunds via bank transfer, card reversal, or any other cash-out method. This policy allows us to process refunds quickly while keeping transaction costs low.
     </p>
 
     <h2 id="processing-time">Processing Time</h2>
@@ -166,28 +166,28 @@
     <h2 id="non-refundable">Non-Refundable Scenarios</h2>
     <p>
       Refunds will <strong>not</strong>
-       be issued in the following situations:
+      be issued in the following situations:
     </p>
     <ul>
       <li>
         <strong>Change of mind</strong>
-         after the product has been delivered and revealed.
+        after the product has been delivered and revealed.
       </li>
       <li>
         <strong>Codes already redeemed or used</strong>
-         — once a code has been activated, no refund is possible.
+        — once a code has been activated, no refund is possible.
       </li>
       <li>
         <strong>Wrong item purchased</strong>
-         — if you accidentally purchased the wrong product, contact support immediately. We will try to assist, but cannot guarantee a resolution if the code has been revealed.
+        — if you accidentally purchased the wrong product, contact support immediately. We will try to assist, but cannot guarantee a resolution if the code has been revealed.
       </li>
       <li>
         <strong>Price discrepancies</strong>
-         — prices may fluctuate based on market conditions; we cannot refund the difference.
+        — prices may fluctuate based on market conditions; we cannot refund the difference.
       </li>
       <li>
         <strong>Delayed delivery due to third-party issues</strong>
-         — if a delay is caused by the product supplier, we will work to resolve it but cannot issue a refund for the delay alone.
+        — if a delay is caused by the product supplier, we will work to resolve it but cannot issue a refund for the delay alone.
       </li>
     </ul>
 
@@ -195,11 +195,11 @@
     <ol>
       <li>
         <strong>Go to your Orders:</strong>
-         Navigate to your account and find the relevant order in your order history.
+        Navigate to your account and find the relevant order in your order history.
       </li>
       <li>
         <strong>Identify the order:</strong>
-         Locate the specific order you need help with and note the order ID.
+        Locate the specific order you need help with and note the order ID.
       </li>
       <li>
         <strong>Contact support:</strong>
@@ -211,17 +211,17 @@
           </li>
           <li>
             <strong>Live Chat:</strong>
-             Click the chat icon on our website
+            Click the chat icon on our website
           </li>
           <li>
             <strong>WhatsApp:</strong>
-             Click the WhatsApp button on our website
+            Click the WhatsApp button on our website
           </li>
         </ul>
       </li>
       <li>
         <strong>Provide details:</strong>
-         Share your order ID, describe the issue, and attach any relevant screenshots.
+        Share your order ID, describe the issue, and attach any relevant screenshots.
       </li>
     </ol>
     <p>Our support team is available to assist you and will do their best to resolve your issue promptly.</p>
@@ -235,18 +235,18 @@
       </li>
       <li>
         <strong>Live Chat:</strong>
-         Click the chat icon on our website
+        Click the chat icon on our website
       </li>
       <li>
         <strong>WhatsApp:</strong>
-         Click the WhatsApp button on our website
+        Click the WhatsApp button on our website
       </li>
     </ul>
 
     <div class="not-prose mt-8 rounded-lg bg-gray-50 p-6 dark:bg-neutral-800/50">
       <p class="text-sm text-gray-600 dark:text-neutral-400">
         PHK Factor is a product of <strong class="text-gray-900 dark:text-white">MOZYFLEX LTD</strong>
-         (RC 1577964), registered in Nigeria.
+        (RC 1577964), registered in Nigeria.
       </p>
     </div>
   </article>

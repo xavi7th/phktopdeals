@@ -88,7 +88,7 @@
       </p>
       <p>
         These terms constitute a legally binding agreement between you ("User", "you", "your") and <strong>MOZYFLEX LTD</strong>
-         (RC 1577964), the company that operates PHK Factor ("we", "our", "us").
+        (RC 1577964), the company that operates PHK Factor ("we", "our", "us").
       </p>
       <p>We reserve the right to modify these terms at any time. Continued use of the Service after changes are posted constitutes acceptance of the revised terms.</p>
 
@@ -96,27 +96,27 @@
       <ul>
         <li>
           <strong>"Service"</strong>
-           — The PHK Factor website, mobile applications, and all related platforms and features.
+          — The PHK Factor website, mobile applications, and all related platforms and features.
         </li>
         <li>
           <strong>"User"</strong>
-           — Any individual who accesses or uses the Service.
+          — Any individual who accesses or uses the Service.
         </li>
         <li>
           <strong>"Products"</strong>
-           — Digital goods available for purchase on the platform, including but not limited to game codes, gift cards, software licences, e-SIM activations, airtime and data top-ups, and vouchers.
+          — Digital goods available for purchase on the platform, including but not limited to game codes, gift cards, software licences, e-SIM activations, airtime and data top-ups, and vouchers.
         </li>
         <li>
           <strong>"Wallet"</strong>
-           — The digital credit system within your PHK Factor account used to store funds for purchases.
+          — The digital credit system within your PHK Factor account used to store funds for purchases.
         </li>
         <li>
           <strong>"Order"</strong>
-           — A request to purchase one or more Products through the Service.
+          — A request to purchase one or more Products through the Service.
         </li>
         <li>
           <strong>"Content"</strong>
-           — Text, images, graphics, and other materials displayed on the Service.
+          — Text, images, graphics, and other materials displayed on the Service.
         </li>
       </ul>
 
@@ -125,19 +125,19 @@
       <ul>
         <li>
           Provide <strong>accurate, current, and complete</strong>
-           information during registration.
+          information during registration.
         </li>
         <li>Keep your account information updated at all times.</li>
         <li>
           Maintain the <strong>security and confidentiality</strong>
-           of your login credentials.
+          of your login credentials.
         </li>
         <li>Accept responsibility for all activities that occur under your account.</li>
         <li>Notify us immediately of any unauthorised use of your account.</li>
       </ul>
       <p>
         You must be at least <strong>18 years old</strong>
-         to create an account. We reserve the right to suspend or terminate accounts that provide false information.
+        to create an account. We reserve the right to suspend or terminate accounts that provide false information.
       </p>
 
       <h2 id="products-and-services">Products & Services</h2>
@@ -145,7 +145,7 @@
       <ul>
         <li>
           All products are <strong>digital</strong>
-           in nature — no physical goods are shipped.
+          in nature — no physical goods are shipped.
         </li>
         <li>Product availability may change without notice.</li>
         <li>Prices are displayed in the applicable currency and may fluctuate based on market conditions.</li>
@@ -177,29 +177,29 @@
       <ul>
         <li>
           <strong>Topping Up:</strong>
-           You can add funds to your wallet using available payment methods.
+          You can add funds to your wallet using available payment methods.
         </li>
         <li>
           <strong>Usage:</strong>
-           Wallet credit can be used to purchase any product on the platform.
+          Wallet credit can be used to purchase any product on the platform.
         </li>
         <li>
           <strong>Non-Transferable:</strong>
-           Wallet credit cannot be transferred to another user account.
+          Wallet credit cannot be transferred to another user account.
         </li>
         <li>
           <strong>Non-Withdrawable:</strong>
-           Wallet credit cannot be withdrawn as cash, bank transfer, or to any external payment method.
+          Wallet credit cannot be withdrawn as cash, bank transfer, or to any external payment method.
         </li>
         <li>
           <strong>No Expiration:</strong>
-           Wallet credit does not expire.
+          Wallet credit does not expire.
         </li>
         <li>
           <strong>Refunds:</strong>
           Approved refunds are credited to your wallet. See our
           <a href="/returns-policy" class="text-brand-500 hover:text-brand-400 dark:text-brand-400 dark:hover:text-brand-300">Returns & Refund Policy</a>
-           for details.
+          for details.
         </li>
       </ul>
 
@@ -217,7 +217,7 @@
       <h2 id="user-conduct">User Conduct</h2>
       <p>
         By using the Service, you agree <strong>not</strong>
-         to:
+        to:
       </p>
       <ul>
         <li>Use the Service for any unlawful purpose or in violation of any applicable laws.</li>
@@ -237,7 +237,7 @@
       <ul>
         <li>
           Digital products are provided <strong>"as is"</strong>
-           without warranties of any kind beyond those expressly stated in these terms.
+          without warranties of any kind beyond those expressly stated in these terms.
         </li>
         <li>We do not guarantee uninterrupted or error-free operation of the Service.</li>
         <li>We shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the Service.</li>
@@ -284,15 +284,15 @@
       <ol>
         <li>
           <strong>Contact support first:</strong>
-           Reach out to our support team via email, live chat, or WhatsApp. Most issues can be resolved quickly.
+          Reach out to our support team via email, live chat, or WhatsApp. Most issues can be resolved quickly.
         </li>
         <li>
           <strong>Provide details:</strong>
-           Share relevant order IDs, screenshots, and a clear description of the issue.
+          Share relevant order IDs, screenshots, and a clear description of the issue.
         </li>
         <li>
           <strong>Escalation:</strong>
-           If your concern is not resolved to your satisfaction, you may request escalation to a senior team member for review.
+          If your concern is not resolved to your satisfaction, you may request escalation to a senior team member for review.
         </li>
       </ol>
       <p>We are committed to resolving disputes fairly and promptly. We encourage you to contact us before taking any external action.</p>
@@ -315,18 +315,18 @@
         </li>
         <li>
           <strong>Live Chat:</strong>
-           Click the chat icon on our website
+          Click the chat icon on our website
         </li>
         <li>
           <strong>WhatsApp:</strong>
-           Click the WhatsApp button on our website
+          Click the WhatsApp button on our website
         </li>
       </ul>
 
       <div class="not-prose mt-8 rounded-lg bg-gray-50 p-6 dark:bg-neutral-800/50">
         <p class="text-sm text-gray-600 dark:text-neutral-400">
           PHK Factor is a product of <strong class="text-gray-900 dark:text-white">MOZYFLEX LTD</strong>
-           (RC 1577964), registered in Nigeria.
+          (RC 1577964), registered in Nigeria.
         </p>
       </div>
     </article>
