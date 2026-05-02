@@ -6,12 +6,12 @@
   import ProductCard from "$partials/ProductCard.svelte";
   import Sidebar from "$partials/gift-cards/Sidebar.svelte";
   import PageNavigation from "$lib/Components/PageNavigation.svelte";
-  import { getPrefs, setPrefs } from "$stores/userPreferences";
+  import { getPrefs, setPrefs } from "$lib/stores/userPreferences";
   import { onMount } from "svelte";
 
-  export let data;
+  let { data } = $props();
 
-  $: ({ cards, category, meta, basePageUrl, search } = data);
+  let { cards, category, meta, basePageUrl, search } = $derived(data);
 
   let sortOrder = $state("default");
   let viewMode = $state("grid");
@@ -58,10 +58,16 @@
             class="hs-collapse rounded-0 mt-2 block grow basis-full space-x-0.5 overflow-hidden rounded-full border border-gray-200 bg-gray-200 transition-all duration-300 sm:grow-0 sm:basis-auto dark:border-white/20">
             <div class="flex items-center justify-evenly divide-y sm:flex-row sm:items-center sm:gap-5 sm:divide-y-0">
               {#each main_nav as { name, url }}
+                {@const isActive = $page.url.pathname === url || $page.url.pathname.startsWith(url + "/")}
                 <a
-                  class="p-3.5 font-bold tracking-tighter text-gray-600 hover:text-brand-500 focus:text-brand-500 focus:outline-none dark:font-semibold dark:text-neutral-700 dark:hover:text-brand-900 dark:focus:text-brand-900"
+                  class="text-underline-offset-4 p-3.5 font-bold font-bold tracking-tighter text-brand-500 text-gray-600 underline hover:text-brand-500 focus:text-brand-500 focus:outline-none dark:font-semibold dark:text-brand-400 dark:text-neutral-700 dark:hover:text-brand-900 dark:focus:text-brand-900"
+                  class:font-bold={isActive}
+                  class:underline={isActive}
+                  class:text-brand-500={isActive}
+                  class:dark:font-semibold={false}
+                  class:dark:text-brand-400={isActive}
                   href={url}
-                  aria-current={$page.url.pathname.includes(url) ? "page" : undefined}>
+                  aria-current={isActive ? "page" : undefined}>
                   {name}
                 </a>
               {/each}
@@ -72,7 +78,7 @@
         <div class="mb-4 flex items-center justify-between">
           <div class="flex items-center gap-2">
             <label class="text-sm text-gray-600 dark:text-neutral-400">Sort:</label>
-            <select class="rounded border border-gray-300 bg-white px-2 py-1 text-sm dark:border-neutral-600 dark:bg-neutral-800" on:change={(e) => updateSortOrder(e.target.value)}>
+            <select class="rounded border border-gray-300 bg-white px-2 py-1 text-sm dark:border-neutral-600 dark:bg-neutral-800" onchange={(e) => updateSortOrder(e.target.value)}>
               <option value="default" selected={sortOrder === "default"}>Default</option>
               <option value="price_asc" selected={sortOrder === "price_asc"}>Price: Low to High</option>
               <option value="price_desc" selected={sortOrder === "price_desc"}>Price: High to Low</option>

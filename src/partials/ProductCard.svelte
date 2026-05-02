@@ -53,9 +53,17 @@
   <img class="h-[120px] rounded-xl" src={product?.img_url} alt={product.name} />
 
   <div class="relative flex-1 px-4 py-2 md:px-5">
+    {#if product?.brand?.logo_url}
+      <img class="mb-1 h-4 object-contain" src={product.brand.logo_url} alt={product.brand.name} onerror={(e) => (e.currentTarget.style.display = "none")} />
+    {/if}
     <h3 class="text-xs text-gray-800 dark:text-white">
       {product?.name}
     </h3>
+    {#if product?.brand?.name}
+      <p class="text-[0.6rem] text-gray-500 dark:text-neutral-400">
+        {product.brand.name}
+      </p>
+    {/if}
   </div>
 
   <div class="absolute -right-10 top-20 flex flex-col space-y-2 transition-all duration-300 ease-in-out group-hover:right-4">

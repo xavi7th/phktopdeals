@@ -67,6 +67,7 @@ export type ProdSummary = {
   min_price: number;
   max_price: number;
   percentage_discount: number;
+  brand?: ProductBrand;
 };
 export type ProductPriceTag = {
   /** Minimum manual amount purchaseable */
@@ -82,6 +83,7 @@ export type ProductBrand = {
   id: string | undefined;
   name: string;
   name_slug: string;
+  logo_url?: string;
 };
 export type Product = {
   id: string;
