@@ -1,12 +1,15 @@
 /**
  * Safe API wrapper with error handling and cache fallback.
  *
- * NOTE: This file uses raw fetch (browser-compatible).
- * The server-only api() helper is in $lib/server/api-helpers.
+ * Browser-only. All requests go through SvelteKit endpoints — never directly
+ * to the Laravel API. For SSR data loading, use api() from $lib/server/api-helpers
+ * in +page.server.js load functions instead.
+ *
+ * params.resource must be a SvelteKit endpoint path, e.g. "/api/products/featured"
  */
 
 import { browser } from "$app/environment";
-import { api } from "$lib/helpers";
+import { trackedFetch } from "$lib/api/clientFetch";
 import { initCache, setCache, getCache, getStaleCache, cacheKey, getTtlForEndpoint, clearCachePattern } from "./cache";
 import { apiStatus } from "./stores/apiStatus";
 import { ApiError, API_UNAVAILABLE } from "./errors";
@@ -30,25 +33,18 @@ export async function safeApiCall(fn, errorMessage = "API call failed") {
 
 /**
  * For GET requests - graceful degradation with cache fallback.
- * Uses api() helper (server-side) for built-in retry logic.
+ * Browser-only — returns fallback immediately on server.
  *
- * @param {object} params - API params (resource, data, etc.)
+ * @param {{ resource: string, method?: string, data?: any }} params - resource must be a SvelteKit endpoint path
  * @param {any} [fallback=null] - Value to return if API fails and no cache
  * @returns {Promise<{data: any, error?: boolean, fromCache?: boolean, stale?: boolean}>}
  */
 export async function safeRead(params, fallback = null) {
   if (!browser) {
-    // Server-side: just call api directly (retry already built-in)
-    const res = await api(params);
-    if (!res?.ok) {
-      apiStatus.setOffline?.(res?.statusText || "API error");
-      return { data: fallback, error: true };
-    }
-    apiStatus.setOnline?.();
-    return { data: (await res.clone?.().json?.()) ?? fallback, error: false };
+    // safeRead is browser-only. For SSR, use api() from $lib/server/api-helpers in +page.server.js.
+    return { data: fallback, error: false };
   }
 
-  // Client-side: use cache
   const key = cacheKey(params.method || "GET", params.resource, params.data);
   const ttl = getTtlForEndpoint(params.resource);
 
@@ -62,7 +58,13 @@ export async function safeRead(params, fallback = null) {
   }
 
   try {
-    const res = await api(params);
+    const method = (params.method || "GET").toUpperCase();
+    const res = await trackedFetch(params.resource, {
+      method,
+      credentials: "include",
+      headers: { "content-type": "application/json", accept: "application/json" },
+      ...(method !== "GET" && params.data ? { body: JSON.stringify(params.data) } : {}),
+    });
 
     if (!res?.ok) {
       apiStatus.setOffline?.(res?.statusText || "API error");
@@ -106,17 +108,24 @@ export async function safeRead(params, fallback = null) {
 /**
  * For mutations - NO queueing, immediate error on failure.
  *
- * @param {object} params - API params (resource, method, data, etc.)
+ * @param {{ resource: string, method?: string, data?: any }} params - resource must be a SvelteKit endpoint path
  * @returns {Promise<any>}
  * @throws {ApiError} When API is unavailable or request fails
  */
 export async function safeMutation(params) {
-  // Check API health first (client-side check)
   if (browser && !apiStatus.isAvailable?.()) {
     throw API_UNAVAILABLE;
   }
 
-  const res = await api(params);
+  const isFormData = params.data instanceof FormData;
+  const res = await trackedFetch(params.resource, {
+    method: params.method || "POST",
+    credentials: "include",
+    headers: isFormData
+      ? { accept: "application/json" }
+      : { "content-type": "application/json", accept: "application/json" },
+    body: params.data ? (isFormData ? params.data : JSON.stringify(params.data)) : undefined,
+  });
 
   if (!res?.ok) {
     apiStatus.setOffline?.(res?.statusText || "API error");
@@ -126,10 +135,11 @@ export async function safeMutation(params) {
   apiStatus.setOnline?.();
 
   // Invalidate related cache on success
+  // NOTE: resource is a SvelteKit endpoint path — patterns must match cacheKey() output
   const resource = params.resource || "";
   if (resource.includes("purchase")) {
-    await clearCachePattern("api:get:purchase-invoices");
-    await clearCachePattern("api:get:store");
+    await clearCachePattern("api:get:/api/purchase-invoices");
+    await clearCachePattern("api:get:/api/store");
   }
 
   return res.clone?.().json?.();
