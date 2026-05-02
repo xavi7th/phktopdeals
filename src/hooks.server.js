@@ -14,6 +14,7 @@ import { dev } from "$app/environment";
 import { redirect } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
 import { handleSession } from "svelte-kit-cookie-session";
+import { handleDeviceDetector } from "sveltekit-device-detector";
 import { PUBLIC_VITE_BASE_API, PUBLIC_DEV_LOG_DETAILED } from "$env/static/public";
 import { VITE_SESSION_NAME, APP_SESSION_KEY, APP_LOG_REQUEST_DURATION_TIMING } from "$env/static/private";
 import { initDevLogger, getLogger } from "$lib/server/dev-logger";
