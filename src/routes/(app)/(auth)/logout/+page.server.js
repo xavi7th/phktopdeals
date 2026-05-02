@@ -1,6 +1,6 @@
 import { api } from "$lib/server/api-helpers";
 import { redirect } from "@sveltejs/kit";
-import { clearUserCache } from "../../../../hooks.server.js";
+import { clearUserCache } from "$lib/server/cache-store";
 import { VITE_SESSION_NAME } from "$env/static/private";
 import { logWithLocation as serverLog } from "$lib/server/dev-logger";
 
