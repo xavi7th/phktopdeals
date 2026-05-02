@@ -13,6 +13,30 @@ import { getLogger } from "./dev-logger";
 
 export { hasFile, toCurrency };
 
+// Retry configuration for GET requests
+const RETRY_DELAYS = [1000, 2000, 4000, 8000];
+const FIXED_DELAY = 30000;
+const MAX_EXPONENTIAL_RETRIES = 4;
+const retryTracker = new Map();
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function getRetryDelay(url) {
+  const count = retryTracker.get(url) || 0;
+  if (count >= MAX_EXPONENTIAL_RETRIES) return FIXED_DELAY;
+  return RETRY_DELAYS[count] || FIXED_DELAY;
+}
+
+function incrementRetry(url) {
+  retryTracker.set(url, (retryTracker.get(url) || 0) + 1);
+}
+
+function resetRetry(url) {
+  retryTracker.delete(url);
+}
+
 /**
  * Custom function to set API headers and make API calls.
  * Uses the file logger for all dev-mode output.
@@ -68,12 +92,81 @@ export async function api({ toBaseDomain, resource, event, method, data, logResp
   }
 
   let response;
-  try {
-    response = await event?.fetch(fullurl, {
+  const isGetRequest = method?.toUpperCase() === "GET";
+
+  const attemptFetch = async () => {
+    return await event?.fetch(fullurl, {
       method: method,
       headers,
       body: data || null,
     });
+  };
+
+  try {
+    if (isGetRequest) {
+      // Retry loop for GET requests
+      let attempt = 0;
+      let lastError;
+
+      while (attempt <= MAX_EXPONENTIAL_RETRIES) {
+        try {
+          response = await attemptFetch();
+
+          // Don't retry on 4xx errors
+          if (response?.status >= 400 && response?.status < 500) {
+            break;
+          }
+
+          // Retry on network errors (response is undefined) or 5xx errors
+          if (!response?.ok) {
+            lastError = response;
+            const delay = getRetryDelay(fullurl);
+
+            if (log) {
+              log.warning("API request failed, retrying", {
+                url: fullurl,
+                status: response?.status,
+                attempt: attempt + 1,
+                delay,
+              });
+            }
+
+            incrementRetry(fullurl);
+            attempt++;
+            await sleep(delay);
+            continue;
+          }
+
+          // Success - reset retry counter and break
+          resetRetry(fullurl);
+          break;
+        } catch (err) {
+          lastError = err;
+          const delay = getRetryDelay(fullurl);
+
+          if (log) {
+            log.warning("API request error, retrying", {
+              url: fullurl,
+              error: err.message,
+              attempt: attempt + 1,
+              delay,
+            });
+          }
+
+          incrementRetry(fullurl);
+          attempt++;
+          await sleep(delay);
+        }
+      }
+
+      // If all retries failed, use the last error response
+      if (!response?.ok && lastError) {
+        response = lastError;
+      }
+    } else {
+      // Non-GET requests: no retry (mutations should fail fast)
+      response = await attemptFetch();
+    }
   } catch (err) {
     if (ignoreErrors) {
       return undefined;
