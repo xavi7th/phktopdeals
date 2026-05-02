@@ -6,6 +6,7 @@ import { redirect, setFlash } from "sveltekit-flash-message/server";
 import { VoucherCodeDefaults, VoucherCodeSchema } from "$lib/schemas";
 import { message, superValidate, setError, fail } from "sveltekit-superforms";
 import { assertAdmin } from "$lib/server/auth";
+import { apiStatus } from "$lib/stores/apiStatus";
 
 export async function load(event) {
   assertAdmin(event);
@@ -41,6 +42,11 @@ export async function load(event) {
 export const actions = {
   create: async (event) => {
     assertAdmin(event);
+    // Check API health BEFORE processing
+    if (!apiStatus.isAvailable()) {
+      setFlash({ type: "error", msg: "Our service is temporarily unavailable. Please try again later." }, event);
+      return fail(503, { form: await superValidate(event, arktype(VoucherCodeSchema, { defaults: VoucherCodeDefaults })) });
+    }
     const form = await superValidate(event, arktype(VoucherCodeSchema, { defaults: VoucherCodeDefaults }));
 
     if (!form.valid) {
@@ -83,6 +89,11 @@ export const actions = {
 
   update: async (event) => {
     assertAdmin(event);
+    // Check API health BEFORE processing
+    if (!apiStatus.isAvailable()) {
+      setFlash({ type: "error", msg: "Our service is temporarily unavailable. Please try again later." }, event);
+      return fail(503, { form: await superValidate(event, arktype(VoucherCodeSchema, { defaults: VoucherCodeDefaults })) });
+    }
     const form = await superValidate(event, arktype(VoucherCodeSchema, { defaults: VoucherCodeDefaults }));
     if (!form.valid) {
       return message(form, { type: "error", msg: "There was an error process this request. Refresh the browser and try again" }, { status: 422 });
@@ -122,6 +133,11 @@ export const actions = {
 
   delete: async (event) => {
     assertAdmin(event);
+    // Check API health BEFORE processing
+    if (!apiStatus.isAvailable()) {
+      setFlash({ type: "error", msg: "Our service is temporarily unavailable. Please try again later." }, event);
+      return fail(503, { form: await superValidate(event, arktype(type({ id: type("string>3") }), { defaults: { id: "" } })) });
+    }
     const form = await superValidate(event, arktype(type({ id: type("string>3") }), { defaults: { id: "" } }));
 
     if (!form.valid) {

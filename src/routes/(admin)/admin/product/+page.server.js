@@ -1,5 +1,6 @@
 import { api } from "$lib/server/api-helpers";
 import { assertAdmin } from "$lib/server/auth";
+import { apiStatus } from "$lib/stores/apiStatus";
 
 export async function load(event) {
   assertAdmin(event);

@@ -2,11 +2,13 @@ import { type } from "arktype";
 import { cachedApiGet } from "$lib/server/cached-api";
 import { invalidateShared, invalidateSharedPattern } from "$lib/server/cache-store";
 import { getErrorString, extractErrorMessage } from "$lib/helpers";
+import { api } from "$lib/server/api-helpers";
 import { arktype } from "sveltekit-superforms/adapters";
 import { sliderDefaults, sliderSchema } from "$lib/schemas";
 import { redirect, setFlash } from "sveltekit-flash-message/server";
 import { fail, setError, superValidate } from "sveltekit-superforms";
 import { assertAdmin } from "$lib/server/auth";
+import { apiStatus } from "$lib/stores/apiStatus";
 
 export async function load(event) {
   assertAdmin(event);
@@ -38,6 +40,11 @@ export async function load(event) {
 export const actions = {
   create: async (event) => {
     assertAdmin(event);
+    // Check API health BEFORE processing
+    if (!apiStatus.isAvailable()) {
+      setFlash({ type: "error", msg: "Our service is temporarily unavailable. Please try again later." }, event);
+      return fail(503, { form: await superValidate(arktype(sliderSchema, { defaults: sliderDefaults })) });
+    }
     const form = await superValidate(event, arktype(sliderSchema, { defaults: sliderDefaults }));
 
     if (!form.valid) {
@@ -91,6 +98,11 @@ export const actions = {
 
   update: async (event) => {
     assertAdmin(event);
+    // Check API health BEFORE processing
+    if (!apiStatus.isAvailable()) {
+      setFlash({ type: "error", msg: "Our service is temporarily unavailable. Please try again later." }, event);
+      return fail(503, { form: await superValidate(arktype(sliderSchema, { defaults: sliderDefaults })) });
+    }
     const form = await superValidate(
       event,
       arktype(
@@ -158,6 +170,11 @@ export const actions = {
 
   delete: async (event) => {
     assertAdmin(event);
+    // Check API health BEFORE processing
+    if (!apiStatus.isAvailable()) {
+      setFlash({ type: "error", msg: "Our service is temporarily unavailable. Please try again later." }, event);
+      return fail(503, { form: await superValidate(arktype(sliderSchema, { defaults: sliderDefaults })) });
+    }
     const form = await superValidate(arktype(sliderSchema, { defaults: sliderDefaults }));
     const formData = await event.request.formData();
 

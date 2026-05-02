@@ -1,3 +1,4 @@
+import { apiStatus } from "$lib/stores/apiStatus";
 import { cachedApiGet } from "$lib/server/cached-api";
 import { api } from "$lib/server/api-helpers";
 import { error } from "@sveltejs/kit";
@@ -44,6 +45,12 @@ export async function load(event) {
 
 export const actions = {
   default: async (event) => {
+    // Check API health BEFORE processing
+    if (!apiStatus.isAvailable()) {
+      setFlash({ type: "error", msg: "Our service is temporarily unavailable. Please try again later." }, event);
+      return fail(503, { form });
+    }
+
     const form = await superValidate(event, arktype(PurchaseItemSchema, { defaults: PurchaseItemDefaults }));
 
     if (!form.valid) {

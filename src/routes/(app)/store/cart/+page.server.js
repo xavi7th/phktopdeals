@@ -1,6 +1,7 @@
 import { api } from "$lib/server/api-helpers";
 import { setFlash, redirect } from "sveltekit-flash-message/server";
 import { fail } from "@sveltejs/kit";
+import { apiStatus } from "$lib/stores/apiStatus";
 
 export async function load(event) {
   const user = event.locals.session.data?.user;
@@ -72,6 +73,10 @@ export async function load(event) {
 export const actions = {
   // Remove a single cart item by its obfuscated ID
   removeItem: async (event) => {
+    // Check API health BEFORE processing
+    if (!apiStatus.isAvailable()) {
+      return { success: false, error: "Service temporarily unavailable" };
+    }
     const data = await event.request.formData();
     const itemId = data.get("item_id");
 
@@ -89,6 +94,10 @@ export const actions = {
 
   // Update quantity of a specific cart item
   updateQty: async (event) => {
+    // Check API health BEFORE processing
+    if (!apiStatus.isAvailable()) {
+      return { success: false, error: "Service temporarily unavailable" };
+    }
     const data = await event.request.formData();
     const itemId = data.get("item_id");
     const quantity = Number(data.get("quantity"));
@@ -107,12 +116,21 @@ export const actions = {
 
   // Clear all cart items
   clearCart: async (event) => {
+    // Check API health BEFORE processing
+    if (!apiStatus.isAvailable()) {
+      return { success: false, error: "Service temporarily unavailable" };
+    }
     await api({ method: "delete", resource: "cart", event });
     return { success: true, action: "cleared" };
   },
 
   // Checkout all cart items
   checkout: async (event) => {
+    // Check API health BEFORE processing
+    if (!apiStatus.isAvailable()) {
+      setFlash({ type: "error", msg: "Our service is temporarily unavailable. Please try again later." }, event);
+      return fail(503, { checkoutError: true });
+    }
     const res = await api({
       method: "post",
       resource: "cart/checkout",

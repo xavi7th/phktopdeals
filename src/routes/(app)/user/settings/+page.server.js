@@ -1,4 +1,5 @@
 import { type } from "arktype";
+import { apiStatus } from "$lib/stores/apiStatus";
 import { api } from "$lib/server/api-helpers";
 import { extractErrorMessage } from "$lib/helpers";
 import { arktype } from "sveltekit-superforms/adapters";
@@ -17,6 +18,11 @@ export async function load(event) {
 
 export const actions = {
   updateProfile: async (event) => {
+    // Check API health BEFORE processing
+    if (!apiStatus.isAvailable()) {
+      return message(event, { type: "error", msg: "Our service is temporarily unavailable. Please try again later." }, { status: 503 });
+    }
+
     const form = await superValidate(event, arktype(AppUserSchema, { defaults: AppUserDefaults }));
 
     if (!form.valid) {
@@ -67,6 +73,11 @@ export const actions = {
   },
 
   updatePassword: async (event) => {
+    // Check API health BEFORE processing
+    if (!apiStatus.isAvailable()) {
+      return message(event, { type: "error", msg: "Our service is temporarily unavailable. Please try again later." }, { status: 503 });
+    }
+
     const form = await superValidate(
       event,
       arktype(

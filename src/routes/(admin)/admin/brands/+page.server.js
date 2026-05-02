@@ -1,3 +1,4 @@
+import { apiStatus } from "$lib/stores/apiStatus";
 import { cachedApiGet } from "$lib/server/cached-api";
 import { invalidateShared, invalidateSharedPattern } from "$lib/server/cache-store";
 import { assertAdmin } from "$lib/server/auth";
@@ -34,6 +35,11 @@ export async function load(event) {
 export const actions = {
   createBrand: async (event) => {
     assertAdmin(event);
+    // Check API health BEFORE processing
+    if (!apiStatus.isAvailable()) {
+      setFlash({ type: "error", msg: "Our service is temporarily unavailable. Please try again later." }, event);
+      return fail(503, { form });
+    }
     const form = await superValidate(event, arktype(brandSchema, { defaults: brandDefaults }));
     if (!form.valid) {
       setFlash({ type: "error", msg: "There are errors in your form." }, event);
@@ -74,6 +80,11 @@ export const actions = {
   },
   editBrand: async (event) => {
     assertAdmin(event);
+    // Check API health BEFORE processing
+    if (!apiStatus.isAvailable()) {
+      setFlash({ type: "error", msg: "Our service is temporarily unavailable. Please try again later." }, event);
+      return fail(503, { form });
+    }
     const form = await superValidate(event, arktype(brandSchema, { defaults: brandDefaults }));
     serverLog("editBrand: form submitted", { valid: form.valid, id: form.data?.id });
     if (!form.valid) {
@@ -120,6 +131,11 @@ export const actions = {
   /** @param {import('@sveltejs/kit').RequestEvent} event */
   deleteBrand: async (event) => {
     assertAdmin(event);
+    // Check API health BEFORE processing
+    if (!apiStatus.isAvailable()) {
+      setFlash({ type: "error", msg: "Our service is temporarily unavailable. Please try again later." }, event);
+      return fail(503, { form });
+    }
     const form = await superValidate(arktype(brandSchema, { defaults: brandDefaults }));
     const formData = await event.request.formData();
     const res = await api({

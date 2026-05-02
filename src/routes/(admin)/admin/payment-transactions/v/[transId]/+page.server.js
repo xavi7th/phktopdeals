@@ -1,6 +1,7 @@
 import { api } from "$lib/server/api-helpers";
 import { getErrorString, extractErrorMessage } from "$lib/helpers";
 import { error } from "@sveltejs/kit";
+import { apiStatus } from "$lib/stores/apiStatus";
 
 export async function load(event) {
   const fetchTransactionDetails = async () => {
@@ -40,6 +41,10 @@ export async function load(event) {
 
 export const actions = {
   default: async (event) => {
+    // Check API health BEFORE processing
+    if (!apiStatus.isAvailable()) {
+      return { message: { type: "error", msg: "Our service is temporarily unavailable. Please try again later." } };
+    }
     const form = await event.request.formData();
 
     if (!form.has("transactionId")) {

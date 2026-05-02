@@ -1,3 +1,4 @@
+import { apiStatus } from "$lib/stores/apiStatus";
 import { api } from "$lib/server/api-helpers";
 import { getErrorString, extractErrorMessage } from "$lib/helpers";
 import { redirect } from "@sveltejs/kit";
@@ -21,6 +22,11 @@ export async function load(event) {
 
 export const actions = {
   processCryptoPayment: async (event) => {
+    // Check API health BEFORE processing
+    if (!apiStatus.isAvailable()) {
+      return message(event, { type: "error", msg: "Our service is temporarily unavailable. Please try again later." }, { status: 503 });
+    }
+
     const form = await superValidate(event, arktype(TopUpAccountSchema, { defaults: TopUpAccountDefaults }));
 
     if (!form.valid) {
@@ -37,6 +43,11 @@ export const actions = {
   },
 
   processPaystackPayment: async (event) => {
+    // Check API health BEFORE processing
+    if (!apiStatus.isAvailable()) {
+      return message(event, { type: "error", msg: "Our service is temporarily unavailable. Please try again later." }, { status: 503 });
+    }
+
     const form = await superValidate(event, arktype(TopUpAccountSchema, { defaults: TopUpAccountDefaults }));
 
     /**
@@ -72,6 +83,11 @@ export const actions = {
     redirect(303, details.data.authorization_url);
   },
   processBankPayment: async (event) => {
+    // Check API health BEFORE processing
+    if (!apiStatus.isAvailable()) {
+      return message(event, { type: "error", msg: "Our service is temporarily unavailable. Please try again later." }, { status: 503 });
+    }
+
     const form = await superValidate(event, arktype(TopUpAccountSchema, { defaults: TopUpAccountDefaults }));
 
     serverLog("processBankPayment: form submitted", { valid: form.valid, data: form.data });

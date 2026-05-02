@@ -4,6 +4,7 @@ import { extractErrorMessage } from "$lib/helpers";
 import { arktype } from "sveltekit-superforms/adapters";
 import { message, superValidate, fail, setError } from "sveltekit-superforms";
 import { assertAdmin } from "$lib/server/auth";
+import { apiStatus } from "$lib/stores/apiStatus";
 
 export async function load(event) {
   assertAdmin(event);
@@ -46,6 +47,10 @@ export async function load(event) {
 export const actions = {
   createEmailTemplate: async (event) => {
     assertAdmin(event);
+    // Check API health BEFORE processing
+    if (!apiStatus.isAvailable()) {
+      return fail(503, { form: await superValidate(event, arktype(type({ alias: type("string"), instructions: type("string") }), { defaults: { alias: "", instructions: "" } })) });
+    }
     const form = await superValidate(event, arktype(type({ alias: type("string"), instructions: type("string") }), { defaults: { alias: "", instructions: "" } }));
 
     if (!form.valid) {
@@ -86,6 +91,10 @@ export const actions = {
 
   updateEmailTemplate: async (event) => {
     assertAdmin(event);
+    // Check API health BEFORE processing
+    if (!apiStatus.isAvailable()) {
+      return fail(503, { form: await superValidate(event, arktype(type({ alias: type("string"), instructions: type("string"), id: type("string>3") }), { defaults: { alias: "", instructions: "", id: "" } })) });
+    }
     const form = await superValidate(event, arktype(type({ alias: type("string"), instructions: type("string"), id: type("string>3") }), { defaults: { alias: "", instructions: "", id: "" } }));
 
     if (!form.valid) {
@@ -126,6 +135,10 @@ export const actions = {
 
   deleteEmailTemplate: async (event) => {
     assertAdmin(event);
+    // Check API health BEFORE processing
+    if (!apiStatus.isAvailable()) {
+      return fail(503, { form: await superValidate(event, arktype(type({ id: type("string>3") }), { defaults: { id: "" } })) });
+    }
     const form = await superValidate(event, arktype(type({ id: type("string>3") }), { defaults: { id: "" } }));
 
     if (!form.valid) {

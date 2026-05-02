@@ -7,6 +7,8 @@ import { brandDefaults, brandSchema } from "$lib/schemas";
 import { redirect, setFlash } from "sveltekit-flash-message/server";
 import { fail, setError, superValidate } from "sveltekit-superforms";
 import { assertAdmin } from "$lib/server/auth";
+import { api } from "$lib/server/api-helpers";
+import { apiStatus } from "$lib/stores/apiStatus";
 
 export async function load(event) {
   assertAdmin(event);
@@ -39,6 +41,11 @@ export async function load(event) {
 export const actions = {
   createCategory: async (event) => {
     assertAdmin(event);
+    // Check API health BEFORE processing
+    if (!apiStatus.isAvailable()) {
+      setFlash({ type: "error", msg: "Our service is temporarily unavailable. Please try again later." }, event);
+      return fail(503, { form: await superValidate(arktype(brandSchema, { defaults: brandDefaults })) });
+    }
     const form = await superValidate(event, arktype(brandSchema, { defaults: brandDefaults }));
 
     if (!form.valid) {
@@ -86,6 +93,11 @@ export const actions = {
 
   editCategory: async (event) => {
     assertAdmin(event);
+    // Check API health BEFORE processing
+    if (!apiStatus.isAvailable()) {
+      setFlash({ type: "error", msg: "Our service is temporarily unavailable. Please try again later." }, event);
+      return fail(503, { form: await superValidate(arktype(brandSchema, { defaults: brandDefaults })) });
+    }
     const form = await superValidate(event, arktype(brandSchema, { defaults: brandDefaults }));
 
     serverLog("editCategory: form submitted", { valid: form.valid, id: form.data?.id });
@@ -141,6 +153,11 @@ export const actions = {
   /** @param {import('@sveltejs/kit').RequestEvent} event */
   deleteCategory: async (event) => {
     assertAdmin(event);
+    // Check API health BEFORE processing
+    if (!apiStatus.isAvailable()) {
+      setFlash({ type: "error", msg: "Our service is temporarily unavailable. Please try again later." }, event);
+      return fail(503, { form: await superValidate(arktype(brandSchema, { defaults: brandDefaults })) });
+    }
     const form = await superValidate(arktype(brandSchema, { defaults: brandDefaults }));
     const formData = await event.request.formData();
 

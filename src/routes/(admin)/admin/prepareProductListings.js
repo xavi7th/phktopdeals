@@ -5,6 +5,7 @@ import { setFlash, redirect } from "sveltekit-flash-message/server";
 import { superValidate, fail, setError } from "sveltekit-superforms";
 import { productSchema, brandSchema, brandDefaults } from "$lib/schemas";
 import { assertAdmin } from "$lib/server/auth";
+import { apiStatus } from "$lib/stores/apiStatus";
 
 /**
  * @param {import('@sveltejs/kit').ServerLoadEvent} event
@@ -127,6 +128,11 @@ export async function getData(event, productDefaults) {
  */
 export async function createAction(event, productDefaults) {
   assertAdmin(event);
+  // Check API health BEFORE processing
+  if (!apiStatus.isAvailable()) {
+    setFlash({ type: "error", msg: "Our service is temporarily unavailable. Please try again later." }, event);
+    return fail(503, { form: await superValidate(arktype(productSchema, { defaults: productDefaults })) });
+  }
   const form = await superValidate(event, arktype(productSchema, { defaults: productDefaults }));
 
   if (!form.valid) {
@@ -184,6 +190,11 @@ export async function createAction(event, productDefaults) {
  */
 export async function updateAction(event, productDefaults) {
   assertAdmin(event);
+  // Check API health BEFORE processing
+  if (!apiStatus.isAvailable()) {
+    setFlash({ type: "error", msg: "Our service is temporarily unavailable. Please try again later." }, event);
+    return fail(503, { form: await superValidate(arktype(productSchema, { defaults: productDefaults })) });
+  }
   const form = await superValidate(event, arktype(productSchema, { defaults: productDefaults }));
 
   const formData = new FormData();

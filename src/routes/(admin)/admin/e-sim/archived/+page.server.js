@@ -3,6 +3,7 @@ import { api } from "$lib/server/api-helpers";
 import { extractErrorMessage } from "$lib/helpers";
 import { redirect, setFlash } from "sveltekit-flash-message/server";
 import { assertAdmin } from "$lib/server/auth";
+import { apiStatus } from "$lib/stores/apiStatus";
 
 export async function load(event) {
   assertAdmin(event);
@@ -37,6 +38,11 @@ export async function load(event) {
 export const actions = {
   unarchive: async (event) => {
     assertAdmin(event);
+    // Check API health BEFORE processing
+    if (!apiStatus.isAvailable()) {
+      setFlash({ type: "error", msg: "Our service is temporarily unavailable. Please try again later." }, event);
+      return fail(503, { message: "Our service is temporarily unavailable. Please try again later." });
+    }
     const formData = await event.request.formData();
 
     const res = await api({

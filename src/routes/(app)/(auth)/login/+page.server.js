@@ -1,6 +1,7 @@
 import { api } from "$lib/server/api-helpers";
 import { extractErrorMessage } from "$lib/helpers";
 import { redirect, fail } from "@sveltejs/kit";
+import { apiStatus } from "$lib/stores/apiStatus";
 
 export async function load(event) {
   if (!event.locals.session) {
@@ -19,6 +20,10 @@ export async function load(event) {
 
 export const actions = {
   login: async (event) => {
+    // Check API health BEFORE processing
+    if (!apiStatus.isAvailable()) {
+      return fail(503, { message: "Our service is temporarily unavailable. Please try again later." });
+    }
     const form = await event.request.formData();
 
     const response = await api({
@@ -65,6 +70,10 @@ export const actions = {
   },
 
   register: async (event) => {
+    // Check API health BEFORE processing
+    if (!apiStatus.isAvailable()) {
+      return fail(503, { message: "Our service is temporarily unavailable. Please try again later." });
+    }
     const form = await event.request.formData();
 
     const response = await api({
