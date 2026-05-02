@@ -49,6 +49,16 @@
     }
   });
 
+  function handleDenominationChange(e) {
+    const target = e.target;
+    const idx = parseInt(target.value.replace('btn-', ''), 10);
+    const amount = sortedDenoms[idx] ?? 0;
+    selectedDenomination = `btn-${idx}`;
+    $form.unit_price = amount;
+  }
+
+  let sortedDenoms = $derived([...(product?.product_price?.denominations || [])].sort((a, b) => a - b));
+
   // Handle the addToCart form action result
   // For guests: the server returns product data, we update localStorage
   $effect(() => {
@@ -141,22 +151,43 @@
           <span class="font-bold text-white md:font-extrabold">1</span>
         </div>
         <h3 class="pb-6 text-xl font-medium md:text-2xl">Choose a Denomination</h3>
-        <div class="grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-4">
-          {#each product?.product_price?.denominations?.sort((a, b) => a - b) || [] as amount, idx}
-            <button
-              type="button"
-              class="group relative flex items-center justify-center rounded-lg border border-transparent bg-brand py-5 font-medium text-brand-800 hover:bg-brand-700 hover:text-brand-50 focus:bg-brand-700 focus:text-brand-50 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-              class:selected={selectedDenomination == `btn-${idx}`}
-              onclick={() => {
-                (selectedDenomination = `btn-${idx}`), ($form.unit_price = Number(amount) || 0);
-              }}>
-              {toCurrency(amount)}
-              <span class="invisible absolute left-0 top-0 flex h-7 w-7 items-center justify-center rounded-ee-2xl rounded-ss-md bg-white text-brand-600 group-[.selected]:visible">
-                {@html checkPlus}
-              </span>
-            </button>
-          {/each}
-        </div>
+
+        {#if (product?.product_price?.denominations?.length || 0) > 7}
+          <!-- Dropdown for products with many denominations -->
+          {@const sortedDenoms = [...(product?.product_price?.denominations || [])].sort((a, b) => a - b)}
+          <select
+            class="w-full rounded-lg border border-transparent bg-brand px-4 py-3 font-medium text-brand-800 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500 dark:bg-brand-700 dark:text-white"
+            value={selectedDenomination}
+            onchange={handleDenominationChange}>
+            <option value="" disabled selected={!selectedDenomination || selectedDenomination === 'btn-0'}>
+              Select a denomination
+            </option>
+            {#each sortedDenoms as amount, idx}
+              <option value={`btn-${idx}`}>
+                {toCurrency(amount)}
+              </option>
+            {/each}
+          </select>
+        {:else}
+          <!-- Button grid for products with few denominations -->
+          {@const sortedDenoms = [...(product?.product_price?.denominations || [])].sort((a, b) => a - b)}
+          <div class="grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-4">
+            {#each sortedDenoms as amount, idx}
+              <button
+                type="button"
+                class="group relative flex items-center justify-center rounded-lg border border-transparent bg-brand py-5 font-medium text-brand-800 hover:bg-brand-700 hover:text-brand-50 focus:bg-brand-700 focus:text-brand-50 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+                class:selected={selectedDenomination == `btn-${idx}`}
+                onclick={() => {
+                  (selectedDenomination = `btn-${idx}`), ($form.unit_price = Number(amount) || 0);
+                }}>
+                {toCurrency(amount)}
+                <span class="invisible absolute left-0 top-0 flex h-7 w-7 items-center justify-center rounded-ee-2xl rounded-ss-md bg-white text-brand-600 group-[.selected]:visible">
+                  {@html checkPlus}
+                </span>
+              </button>
+            {/each}
+          </div>
+        {/if}
       </div>
 
       <div class="relative mt-5 overflow-hidden rounded-xl rounded-ss-3xl bg-brand-200 px-4 pb-8 pt-20 md:px-10 dark:bg-brand-900 dark:text-white">
