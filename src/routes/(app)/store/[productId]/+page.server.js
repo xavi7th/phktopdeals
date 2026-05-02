@@ -9,8 +9,8 @@ import { setError, superValidate, fail } from "sveltekit-superforms";
 import { PurchaseItemDefaults, PurchaseItemSchema } from "$lib/schemas";
 
 export async function load(event) {
-  const form = await superValidate(arktype(PurchaseItemSchema, { defaults: PurchaseItemDefaults }));
   const productId = event.params.productId.split("_")[1];
+  const user = event.locals.session.data?.user;
 
   const fetchProductDetails = async () => {
     const data = await cachedApiGet({
@@ -34,11 +34,26 @@ export async function load(event) {
     error(404);
   }
 
+  // Pre-populate form with actual product/user values so the component
+  // receives a ready-to-use form — no client-side $effect sync needed.
+  const form = await superValidate(
+    arktype(PurchaseItemSchema, {
+      defaults: {
+        ...PurchaseItemDefaults,
+        product_id: details.data?.id ?? null,
+        unit_price: details.data?.product_price?.denominations?.length ? Number(details.data.product_price.denominations[0]) : 0,
+        commission: details.data?.product_price?.commission ?? 0,
+        discount: details.data?.percentage_discount ?? 0,
+        email: user?.email,
+      },
+    }),
+  );
+
   return {
     form,
     /** @type { import('$lib/types').Product } */
     product: details.data,
-    user: event.locals.session.data?.user,
+    user,
     apiError: details.apiError,
   };
 }

@@ -9,7 +9,7 @@
   import LoadingButton from "$lib/Components/FormInputs/LoadingButton.svelte";
   import FloatingTextInput from "$lib/Components/FormInputs/FloatingTextInput.svelte";
   import FloatingNumericTextInput from "$lib/Components/FormInputs/FloatingNumericTextInput.svelte";
-  import { recordView } from "$stores/recentlyViewed";
+  import { recordView } from "$lib/stores/recentlyViewed";
   import { enhance } from "$app/forms";
   import { cartStore } from "$stores/cartStore.js";
   import { page } from "$app/stores";
@@ -18,14 +18,14 @@
 
   let selectedDenomination = "btn-0";
 
-  export let data;
+  let { data } = $props();
 
   const { form, errors, message } = superForm(data.form, {
     delayMs: 500,
     timeoutMs: 8000,
   });
 
-  $: ({ product, user } = data);
+  let { product, user } = $derived(data);
 
   let cartActionLoading = false;
   let cartMessage = "";
@@ -51,17 +51,20 @@
 
   // Handle the addToCart form action result
   // For guests: the server returns product data, we update localStorage
-  $: if ($page.form?.cartAction === "guest") {
-    cartStore.guestAdd({
-      product_id: $page.form.product_id,
-      product_name: $page.form.product_name,
-      product_image_url: $page.form.product_image_url,
-      unit_price: $page.form.unit_price,
-      quantity: $page.form.quantity,
-    });
-    cartMessage = "Item added to cart!";
-    setTimeout(() => (cartMessage = ""), 3000);
-  }
+  $effect(() => {
+    if ($page.form?.cartAction === "guest") {
+      cartStore.guestAdd({
+        product_id: $page.form.product_id,
+        product_name: $page.form.product_name,
+        product_image_url: $page.form.product_image_url,
+        unit_price: $page.form.unit_price,
+        quantity: $page.form.quantity,
+      });
+      cartMessage = "Item added to cart!";
+      const t = setTimeout(() => (cartMessage = ""), 3000);
+      return () => clearTimeout(t);
+    }
+  });
 
   async function handleAddToCart() {
     addToCartLoading = true;
@@ -99,14 +102,9 @@
     }
   }
 
-  $: $form.unit_price = product?.product_price?.denominations?.length ? Number(product.product_price.denominations[0]) : 0;
-  $: $form.product_id = product?.id;
-  $: $form.commission = product?.product_price.commission;
-  $: $form.discount = product?.percentage_discount;
-  $: $form.email = user?.email;
-  $: totalPurchaseAmount = percentageCalculation($form.unit_price, $form.quantity, product.product_price.commission, product.percentage_discount, true);
-  $: paymentAmount = percentageCalculation($form.unit_price, $form.quantity, product.product_price.commission, product.percentage_discount, true, true);
-  $: discountedUnitPrice = percentageCalculation($form.unit_price, 1, product.product_price.commission, product.percentage_discount, true);
+  let totalPurchaseAmount = $derived(percentageCalculation($form.unit_price, $form.quantity, product.product_price.commission, product.percentage_discount, true));
+  let paymentAmount = $derived(percentageCalculation($form.unit_price, $form.quantity, product.product_price.commission, product.percentage_discount, true, true));
+  let discountedUnitPrice = $derived(percentageCalculation($form.unit_price, 1, product.product_price.commission, product.percentage_discount, true));
 </script>
 
 <svelte:head>
@@ -149,7 +147,7 @@
               type="button"
               class="group relative flex items-center justify-center rounded-lg border border-transparent bg-brand py-5 font-medium text-brand-800 hover:bg-brand-700 hover:text-brand-50 focus:bg-brand-700 focus:text-brand-50 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
               class:selected={selectedDenomination == `btn-${idx}`}
-              on:click={() => {
+              onclick={() => {
                 (selectedDenomination = `btn-${idx}`), ($form.unit_price = Number(amount) || 0);
               }}>
               {toCurrency(amount)}
