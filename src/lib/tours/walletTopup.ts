@@ -1,13 +1,13 @@
-import { driver, type DriveStep } from 'driver.js';
+import { driver, type DriveStep } from "driver.js";
 
 const steps: DriveStep[] = [
   {
     element: '[data-tour="payment-method-select"]',
-    popover: { title: 'Choose payment method', description: 'Pick Manual Bank Deposit or Online Payment (Paystack).', side: 'bottom', align: 'start' },
+    popover: { title: "Choose payment method", description: "Pick Manual Bank Deposit or Online Payment (Paystack).", side: "bottom", align: "start" },
   },
   {
     element: '[data-tour="process-payment-btn"]',
-    popover: { title: 'Proceed to payment', description: 'Click to open the payment modal and complete your top-up.', side: 'top', align: 'start' },
+    popover: { title: "Proceed to payment", description: "Click to open the payment modal and complete your top-up.", side: "top", align: "start" },
   },
 ];
 

@@ -12,6 +12,8 @@
   import OrderDetailsPage from "../details/[orderId]/+page.svelte";
   import LoadingButton from "$lib/Components/FormInputs/LoadingButton.svelte";
   import { checkMarkFilledAlt, warningIcon } from "$lib/Components/iconPaths";
+  import { startAdminOrderMgmtTour } from "$lib/tours";
+  import TourTrigger from "$lib/Components/TourTrigger.svelte";
 
   export let data;
   /** @type {{ message: { type: string; msg: string; } }}*/
@@ -51,15 +53,23 @@
   <TableSkeleton />
 {:then transactions}
   <div class="mb-4 flex items-center justify-between px-2">
-    <DateFilterChips baseUrl="/admin/orders" showMonthPicker />
+    <TourTrigger startTour={startAdminOrderMgmtTour} />
+    <div data-tour="order-search">
+      <DateFilterChips baseUrl="/admin/orders" showMonthPicker />
+    </div>
     <a
+      data-tour="archived-orders-link"
       class="inline-flex items-center gap-x-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700"
       href="/admin/orders/archived">
       View Archived
     </a>
   </div>
 
-  <Table tCaption="List of Orders" tDescription="Your order history will be listed here. You can also view your vouchers for completed transactions." navData={{ ...transactions.metadata, basePageUrl: "/admin/orders" }}>
+  <Table
+    data-tour="order-list"
+    tCaption="List of Orders"
+    tDescription="Your order history will be listed here. You can also view your vouchers for completed transactions."
+    navData={{ ...transactions.metadata, basePageUrl: "/admin/orders" }}>
     <svelte:fragment slot="thead">
       <th scope="col" class="px-6 py-3 text-start">
         <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">Product</span>
@@ -92,6 +102,7 @@
                   #{order.id}
                 </span>
                 <a
+                  data-tour="order-details-link"
                   href="/admin/orders/details/{order.id}"
                   class="inline-flex items-center gap-x-1 text-sm font-medium text-brand-600 decoration-2 hover:underline focus:underline focus:outline-none dark:text-brand-500"
                   aria-haspopup="dialog"

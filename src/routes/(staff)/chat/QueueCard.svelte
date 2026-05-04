@@ -48,16 +48,25 @@
   const customerName = conversation?.customer?.name || "Guest";
   const customerEmail = conversation?.customer?.email || "";
   const lastMessage = conversation?.last_message?.content || "No messages yet";
+
+  let isEscalated = $derived(conversation?.is_escalated === true);
+  let unreadCount = $derived(conversation?.unread_count || 0);
 </script>
 
 <button type="button" onclick={onSelect} class="w-full p-3 text-left transition-colors hover:bg-gray-50 dark:hover:bg-neutral-700 {isSelected ? 'bg-yellow-50 dark:bg-yellow-900/20' : ''}">
   <div class="flex items-start justify-between gap-2">
     <div class="min-w-0 flex-1">
       <!-- Customer Name -->
-      <div class="flex items-center gap-2">
+      <div class="flex flex-wrap items-center gap-2">
         <span class="truncate font-medium text-gray-900 dark:text-white">
           {customerName}
         </span>
+        {#if isEscalated}
+          <span class="inline-flex items-center rounded bg-red-100 px-1.5 py-0.5 text-xs font-medium text-red-700 dark:bg-red-900/30 dark:text-red-400">Escalated</span>
+        {/if}
+        {#if unreadCount > 0}
+          <span class="inline-flex h-5 w-5 items-center justify-center rounded-full bg-blue-500 text-xs font-medium text-white">{unreadCount > 9 ? "9+" : unreadCount}</span>
+        {/if}
         {#if conversation?.customer?.type === "user"}
           <span class="inline-flex items-center rounded bg-blue-100 px-1.5 py-0.5 text-xs font-medium text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">User</span>
         {:else}

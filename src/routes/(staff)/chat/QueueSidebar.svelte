@@ -1,9 +1,10 @@
 <script>
   import QueueCard from "./QueueCard.svelte";
 
-  let { queue = [], myChats = [], otherActiveChats = [], selectedConversationId = null, onSelect = () => {}, onClaim = () => {} } = $props();
+  let { queue = [], myChats = [], otherActiveChats = [], selectedConversationId = null, isLoading = false, onSelect = () => {}, onClaim = () => {} } = $props();
 
   let activeTab = $state("queue"); // 'queue', 'myChats', 'active'
+  let searchQuery = $state("");
 
   function getDisplayList() {
     switch (activeTab) {
@@ -16,6 +17,18 @@
       default:
         return [];
     }
+  }
+
+  function getFilteredList() {
+    const list = getDisplayList();
+    if (!searchQuery.trim()) return list;
+    const q = searchQuery.toLowerCase();
+    return list.filter((c) => {
+      const name = c.customer?.name?.toLowerCase() || "";
+      const email = c.customer?.email?.toLowerCase() || "";
+      const subject = c.last_message?.content?.toLowerCase() || "";
+      return name.includes(q) || email.includes(q) || subject.includes(q);
+    });
   }
 
   function getTabLabel(tab) {
@@ -90,7 +103,25 @@
 
   <!-- Queue List -->
   <div class="flex-1 overflow-y-auto">
-    {#if getDisplayList().length === 0}
+    <!-- Search Input -->
+    <div class="border-b border-gray-100 p-2 dark:border-neutral-700">
+      <input
+        type="search"
+        bind:value={searchQuery}
+        placeholder="Search conversations..."
+        class="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 dark:border-neutral-600 dark:bg-neutral-700 dark:text-white dark:placeholder-gray-500" />
+    </div>
+
+    {#if isLoading}
+      <div class="space-y-3 p-4">
+        {#each [1, 2, 3] as i}
+          <div class="animate-pulse">
+            <div class="h-4 w-3/4 rounded bg-gray-200 dark:bg-neutral-700"></div>
+            <div class="mt-2 h-3 w-1/2 rounded bg-gray-200 dark:bg-neutral-700"></div>
+          </div>
+        {/each}
+      </div>
+    {:else if getFilteredList().length === 0}
       <div class="p-4 text-center text-gray-500 dark:text-gray-400">
         <svg class="mx-auto mb-2 h-12 w-12 text-gray-300 dark:text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path
@@ -111,7 +142,7 @@
       </div>
     {:else}
       <ul class="divide-y divide-gray-100 dark:divide-neutral-700">
-        {#each getDisplayList() as conversation (conversation.id)}
+        {#each getFilteredList() as conversation (conversation.id)}
           <li>
             <QueueCard {conversation} isSelected={selectedConversationId === conversation.id} showClaimButton={activeTab === "queue"} onSelect={() => onSelect(conversation)} onClaim={() => onClaim(conversation.id)} />
           </li>

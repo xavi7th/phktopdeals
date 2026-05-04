@@ -1,6 +1,8 @@
 import { getEchoClient, disconnectEcho } from "./echoClient.js";
 import { staffInboxStore } from "./staffInboxStore.js";
 import { fetchStaffInbox } from "$lib/api/staffApi.js";
+import { playStaffJoinedPing } from "$lib/ChatWidget/audioService.js";
+import { audioPreferences } from "./audioPreferences.js";
 
 let staffChannel = null;
 let presenceChannel = null;
@@ -17,7 +19,13 @@ export function subscribeToStaffInbox() {
     .private("staff.inbox")
     .listen(".conversation.created", (event) => {
       console.log("New conversation:", event.conversation);
-      // Refresh inbox to get new conversation in queue
+      let isMuted = false;
+      audioPreferences.subscribe((state) => {
+        isMuted = state.isMuted;
+      })();
+      if (!isMuted) {
+        playStaffJoinedPing();
+      }
       refreshInbox();
     })
     .listen(".conversation.claimed", (event) => {

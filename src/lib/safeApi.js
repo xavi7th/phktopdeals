@@ -121,9 +121,7 @@ export async function safeMutation(params) {
   const res = await trackedFetch(params.resource, {
     method: params.method || "POST",
     credentials: "include",
-    headers: isFormData
-      ? { accept: "application/json" }
-      : { "content-type": "application/json", accept: "application/json" },
+    headers: isFormData ? { accept: "application/json" } : { "content-type": "application/json", accept: "application/json" },
     body: params.data ? (isFormData ? params.data : JSON.stringify(params.data)) : undefined,
   });
 

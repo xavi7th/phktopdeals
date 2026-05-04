@@ -22,12 +22,13 @@
   }, 1500);
 </script>
 
-<aside class="hidden pr-4 md:block md:w-4/12 lg:w-3/12">
+<aside class="hidden pr-4 md:block md:w-4/12 lg:w-3/12" data-tour="category-sidebar">
   <div class="mb-[30px] hidden w-full overflow-y-scroll rounded-2xl bg-white px-[30px] pt-[40px] shadow md:block md:overflow-y-auto dark:bg-neutral-700/30 dark:text-slate-200">
     <div class="flex flex-col">
       <div class="relative max-w-sm space-y-3">
         <form action={url} method="GET" bind:this={form}>
           <input
+            data-tour="search-input"
             type="search"
             bind:value={searchQuery}
             on:input={sendQuery}

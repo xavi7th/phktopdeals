@@ -15,6 +15,7 @@ function createStaffInboxStore() {
     pagination: null, // Message pagination cursor info
     isLoading: false,
     isLoadingMessages: false,
+    isCustomerTyping: false,
     error: null,
     isOnline: true,
     staffList: [],
@@ -99,6 +100,7 @@ function createStaffInboxStore() {
     setError: (error) => update((state) => ({ ...state, error, isLoading: false })),
     setOnline: (isOnline) => update((state) => ({ ...state, isOnline })),
     setStaffList: (staffList) => update((state) => ({ ...state, staffList })),
+    setCustomerTyping: (isTyping) => update((state) => ({ ...state, isCustomerTyping: isTyping })),
     // AI escalation methods
     setAiEscalation: (escalationData) => update((state) => ({ ...state, aiEscalation: escalationData })),
     clearAiEscalation: () => update((state) => ({ ...state, aiEscalation: null })),
@@ -131,6 +133,7 @@ function createStaffInboxStore() {
         pagination: null,
         isLoading: false,
         isLoadingMessages: false,
+        isCustomerTyping: false,
         error: null,
         isOnline: true,
         staffList: [],

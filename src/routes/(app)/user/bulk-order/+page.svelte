@@ -26,7 +26,8 @@
         </div>
         <span class="text-[#FFDA1C]">Drage & Drop</span>
         <span>Or</span>
-        <label data-tour="file-upload"
+        <label
+          data-tour="file-upload"
           class="block text-nowrap rounded-full border border-transparent bg-[#FFDA1C] p-6 py-2.5 text-sm text-[#713f12] shadow-md hover:bg-brand-500 focus:bg-brand-500 focus:outline-none disabled:pointer-events-none disabled:opacity-50">
           Browse File
           <input type="file" class="hidden" />

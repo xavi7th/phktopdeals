@@ -57,7 +57,11 @@
 {#await pageData}
   <TableSkeleton />
 {:then pageData}
-  <Table data-tour="order-list" tCaption="List of Orders" tDescription="Your order history will be listed here. You can also view your vouchers for completed transactions." navData={{ ...pageData.metadata, basePageUrl: "/user/orders" }}>
+  <Table
+    data-tour="order-list"
+    tCaption="List of Orders"
+    tDescription="Your order history will be listed here. You can also view your vouchers for completed transactions."
+    navData={{ ...pageData.metadata, basePageUrl: "/user/orders" }}>
     <svelte:fragment slot="thead">
       <th scope="col" class="px-6 py-3 text-start">
         <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">Product</span>
@@ -83,7 +87,8 @@
                   #{order.id}
                 </span>
                 {#if order.is_processed}
-                  <a data-tour="voucher-link"
+                  <a
+                    data-tour="voucher-link"
                     href="/user/orders/details/{order.id}"
                     class="flex w-32 items-center rounded-lg pt-2 text-sm text-gray-800 underline dark:text-neutral-400 dark:hover:text-neutral-300 dark:focus:text-neutral-300"
                     on:click={loadDetails}>

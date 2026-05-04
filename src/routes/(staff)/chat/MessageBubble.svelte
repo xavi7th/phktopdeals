@@ -33,9 +33,18 @@
       </p>
     </div>
 
-    <!-- Timestamp -->
+    <!-- Timestamp & Status -->
     <p class="mt-1 text-xs text-gray-400 dark:text-gray-500 {isStaff ? 'mr-1 text-right' : 'ml-1'}">
       {formatTime(message.created_at)}
+      {#if isStaff && message.sender_type === "staff"}
+        {#if message.read_at}
+          <span class="ml-1 text-green-600" title="Read">✓✓</span>
+        {:else if message.delivered_at}
+          <span class="ml-1 text-gray-400" title="Delivered">✓</span>
+        {:else}
+          <span class="ml-1 text-gray-400" title="Sending...">⏱</span>
+        {/if}
+      {/if}
     </p>
   </div>
 </div>

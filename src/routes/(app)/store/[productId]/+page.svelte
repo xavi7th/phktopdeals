@@ -53,7 +53,7 @@
 
   function handleDenominationChange(e) {
     const target = e.target;
-    const idx = parseInt(target.value.replace('btn-', ''), 10);
+    const idx = parseInt(target.value.replace("btn-", ""), 10);
     const amount = sortedDenoms[idx] ?? 0;
     selectedDenomination = `btn-${idx}`;
     $form.unit_price = amount;
@@ -162,9 +162,7 @@
             class="w-full rounded-lg border border-transparent bg-brand px-4 py-3 font-medium text-brand-800 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500 dark:bg-brand-700 dark:text-white"
             value={selectedDenomination}
             onchange={handleDenominationChange}>
-            <option value="" disabled selected={!selectedDenomination || selectedDenomination === 'btn-0'}>
-              Select a denomination
-            </option>
+            <option value="" disabled selected={!selectedDenomination || selectedDenomination === "btn-0"}>Select a denomination</option>
             {#each sortedDenoms as amount, idx}
               <option value={`btn-${idx}`}>
                 {toCurrency(amount)}
@@ -202,15 +200,17 @@
             <div data-tour="email-input"><FloatingTextInput name="email" type="email" label="Email Address :" placeholder="Value will be sent to this email address" bind:value={$form.email} msg={$errors.email} /></div>
           {/if}
 
-          <div data-tour="quantity-input"><FloatingNumericTextInput
-            name="quantity"
-            label="Quantity"
-            size="p-3"
-            min={1}
-            placeholder={`${toCurrency(discountedUnitPrice)} per Quantity`}
-            bind:value={$form.quantity}
-            isError={!!$errors.quantity}
-            msg={$errors.quantity} /></div>
+          <div data-tour="quantity-input">
+            <FloatingNumericTextInput
+              name="quantity"
+              label="Quantity"
+              size="p-3"
+              min={1}
+              placeholder={`${toCurrency(discountedUnitPrice)} per Quantity`}
+              bind:value={$form.quantity}
+              isError={!!$errors.quantity}
+              msg={$errors.quantity} />
+          </div>
         </div>
       </div>
 
@@ -222,7 +222,8 @@
           </p>
         {/if}
 
-        <button data-tour="add-to-cart-btn"
+        <button
+          data-tour="add-to-cart-btn"
           type="button"
           onclick={handleAddToCart}
           disabled={addToCartLoading || $form.unit_price <= 0}
@@ -237,19 +238,21 @@
         </div>
         <div class="relative flex min-h-24 items-center justify-center">
           <div class="absolute flex shrink-0 flex-col items-center justify-center gap-3" transition:slide={{ duration: 900 }}>
-            <div data-tour="pay-with-wallet-btn"><LoadingButton
-              class="mt-10 bg-black px-10 py-4 font-medium hover:bg-gray-700 hover:text-neutral-50 focus:bg-gray-700"
-              disabled={Number(totalPurchaseAmount) > user?.wallet_balance || totalPurchaseAmount <= 0 || (!user?.email && !$form.email)}
-              aria-haspopup="dialog"
-              aria-expanded="false"
-              aria-controls="process-invoice-purchase-modal"
-              data-hs-overlay="#process-invoice-purchase-modal">
-              {#if !user?.email && !$form.email}
-                Enter email address to proceed
-              {:else}
-                Pay with Wallet Funds {toCurrency(totalPurchaseAmount)}
-              {/if}
-            </LoadingButton></div>
+            <div data-tour="pay-with-wallet-btn">
+              <LoadingButton
+                class="mt-10 bg-black px-10 py-4 font-medium hover:bg-gray-700 hover:text-neutral-50 focus:bg-gray-700"
+                disabled={Number(totalPurchaseAmount) > user?.wallet_balance || totalPurchaseAmount <= 0 || (!user?.email && !$form.email)}
+                aria-haspopup="dialog"
+                aria-expanded="false"
+                aria-controls="process-invoice-purchase-modal"
+                data-hs-overlay="#process-invoice-purchase-modal">
+                {#if !user?.email && !$form.email}
+                  Enter email address to proceed
+                {:else}
+                  Pay with Wallet Funds {toCurrency(totalPurchaseAmount)}
+                {/if}
+              </LoadingButton>
+            </div>
 
             <ProcessInvoicePurchase data={$form} {paymentAmount} {user} />
 

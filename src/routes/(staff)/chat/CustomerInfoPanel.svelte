@@ -7,6 +7,25 @@
   let orders = $state([]);
   let isLoadingOrders = $state(false);
   let showOrdersSection = $state(showOrders);
+  let ordersPage = $state(1);
+  const ordersPerPage = 5;
+
+  let totalOrdersPages = $derived(Math.ceil(orders.length / ordersPerPage) || 1);
+  let paginatedOrders = $derived(orders.slice((ordersPage - 1) * ordersPerPage, ordersPage * ordersPerPage));
+
+  function nextOrdersPage() {
+    if (ordersPage < totalOrdersPages) ordersPage++;
+  }
+
+  function prevOrdersPage() {
+    if (ordersPage > 1) ordersPage--;
+  }
+
+  $effect(() => {
+    if (customer?.id) {
+      ordersPage = 1;
+    }
+  });
 
   onMount(async () => {
     if (customer?.id && customer.type === "user") {
@@ -128,7 +147,7 @@
                 <p class="text-sm text-gray-500 dark:text-gray-400">No orders found</p>
               {:else}
                 <div class="space-y-2">
-                  {#each orders.slice(0, 5) as order (order.id)}
+                  {#each paginatedOrders as order (order.id)}
                     <div class="rounded border border-gray-200 p-2 dark:border-neutral-700">
                       <div class="flex items-center justify-between">
                         <p class="truncate text-xs font-medium text-gray-900 dark:text-white">
@@ -148,10 +167,22 @@
                       </div>
                     </div>
                   {/each}
-                  {#if orders.length > 5}
-                    <p class="text-center text-xs text-gray-500 dark:text-gray-400">
-                      +{orders.length - 5} more orders
-                    </p>
+                  {#if totalOrdersPages > 1}
+                    <div class="flex items-center justify-between pt-2">
+                      <button
+                        onclick={prevOrdersPage}
+                        disabled={ordersPage === 1}
+                        class="rounded bg-gray-100 px-2 py-1 text-xs font-medium text-gray-700 hover:bg-gray-200 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-neutral-700 dark:text-gray-300 dark:hover:bg-neutral-600">
+                        Prev
+                      </button>
+                      <span class="text-xs text-gray-500 dark:text-gray-400">{ordersPage} / {totalOrdersPages}</span>
+                      <button
+                        onclick={nextOrdersPage}
+                        disabled={ordersPage === totalOrdersPages}
+                        class="rounded bg-gray-100 px-2 py-1 text-xs font-medium text-gray-700 hover:bg-gray-200 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-neutral-700 dark:text-gray-300 dark:hover:bg-neutral-600">
+                        Next
+                      </button>
+                    </div>
                   {/if}
                 </div>
               {/if}

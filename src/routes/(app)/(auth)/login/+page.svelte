@@ -4,6 +4,8 @@
   import Toast from "$lib/Components/Toast.svelte";
   import PrimaryBtn from "$lib/Components/PrimaryBtn.svelte";
   import FloatingTextInput from "$lib/Components/FormInputs/FloatingTextInput.svelte";
+  import { startLoginTour } from "$lib/tours";
+  import TourTrigger from "$lib/Components/TourTrigger.svelte";
 
   export let form;
   export let data;
@@ -22,6 +24,7 @@
 <div class="container py-10 sm:py-40">
   <div class="flex justify-center">
     <div class="login-card my-10 w-full rounded-xl bg-white sm:w-auto dark:bg-white/20">
+      <TourTrigger startTour={startLoginTour} />
       <!-- svelte-ignore a11y-no-noninteractive-element-to-interactive-role -->
       <nav class="relative z-0 flex overflow-hidden rounded-xl border dark:border-neutral-700" aria-label="Tabs" role="tablist" aria-orientation="horizontal">
         <a
@@ -65,23 +68,29 @@
                 };
               }}>
               <div class="space-y-8">
-                <FloatingTextInput name="login-email" isError={!form?.success} msg={form?.success || (form?.errors?.email && form?.errors?.email[0])} label="Email" />
-                <FloatingTextInput
-                  name="login-password"
-                  type="password"
-                  isError={!form?.success}
-                  msg={form?.success || (form?.errors?.password && form?.errors?.password[0])}
-                  label="Password"
-                  togglePw={`"#login-password"`} />
+                <div data-tour="login-email-input">
+                  <FloatingTextInput name="login-email" isError={!form?.success} msg={form?.success || (form?.errors?.email && form?.errors?.email[0])} label="Email" />
+                </div>
+                <div data-tour="login-password-input">
+                  <FloatingTextInput
+                    name="login-password"
+                    type="password"
+                    isError={!form?.success}
+                    msg={form?.success || (form?.errors?.password && form?.errors?.password[0])}
+                    label="Password"
+                    togglePw={`"#login-password"`} />
+                </div>
               </div>
 
               <div class="mt-6 flex flex-col justify-center gap-6 text-sm">
-                <a href="#/" class="cursor-pointer text-right text-brand-500 hover:underline">Forgot Password?</a>
+                <a href="#/" data-tour="forgot-password-link" class="cursor-pointer text-right text-brand-500 hover:underline">Forgot Password?</a>
 
                 <!-- <button type="submit" class="rounded-full bg-brand px-5 py-3 hover:bg-brand-400">
                   <span class="">Sign in</span>
                 </button> -->
-                <PrimaryBtn label="Sign In" {loading} />
+                <div data-tour="login-submit-btn">
+                  <PrimaryBtn label="Sign In" {loading} />
+                </div>
               </div>
             </form>
 
@@ -89,7 +98,7 @@
           </div>
         </div>
 
-        <div id="bar-with-underline-2" class:hidden={!showRegister} role="tabpanel" aria-labelledby="bar-with-underline-item-2">
+        <div id="bar-with-underline-2" class:hidden={!showRegister} data-tour="register-section" role="tabpanel" aria-labelledby="bar-with-underline-item-2">
           <div class="w-full p-12 sm:w-[500px]">
             <form
               class="flex flex-col gap-6 dark:text-slate-50"

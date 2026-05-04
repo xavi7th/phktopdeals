@@ -5,6 +5,8 @@
   import PageNavigation from "$lib/Components/PageNavigation.svelte";
   import DateFilterChips from "$lib/Components/DateFilterChips.svelte";
   import { checkMarkCircle, plusIcon, search } from "$lib/Components/iconPaths";
+  import { startAdminProductMgmtTour } from "$lib/tours";
+  import TourTrigger from "$lib/Components/TourTrigger.svelte";
 
   /** @type { import('$lib/types').Product[] } */
 
@@ -23,6 +25,7 @@
 </script>
 
 <div class="space-y-4 p-4 sm:space-y-6 sm:p-6">
+  <TourTrigger startTour={startAdminProductMgmtTour} />
   <div class="flex flex-col">
     <div class="-m-1.5 overflow-x-auto">
       <div class="inline-block min-w-full p-1.5 align-middle">
@@ -53,11 +56,13 @@
                 <div class="inline-flex gap-x-2">
                   {#if !isArchivedView}
                     <a
+                      data-tour="archive-link"
                       class="inline-flex items-center gap-x-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700"
                       href={`${basePageUrl}/archived`}>
                       View Archived
                     </a>
                     <a
+                      data-tour="create-product-btn"
                       class="inline-flex items-center gap-x-2 rounded-lg border border-transparent bg-brand-600 px-3 py-2 text-sm font-medium text-white hover:bg-brand-700 focus:bg-brand-700 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
                       href={`${basePageUrl}/create`}>
                       {@html plusIcon}
@@ -80,7 +85,7 @@
             <DateFilterChips baseUrl={isArchivedView ? `${basePageUrl}/archived` : basePageUrl} />
           </div>
 
-          <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
+          <table data-tour="product-list" class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
             <thead class="bg-gray-50 dark:bg-neutral-800">
               <tr>
                 <th scope="col" class="py-3 pe-6 ps-6 text-start lg:ps-3 xl:ps-0">

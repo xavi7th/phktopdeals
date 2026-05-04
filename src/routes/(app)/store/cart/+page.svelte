@@ -4,6 +4,8 @@
   import { cartStore, cartTotal } from "$stores/cartStore.js";
   import { onMount } from "svelte";
   import { invalidateAll } from "$app/navigation";
+  import { startCartCheckoutTour } from "$lib/tours/cartCheckout";
+  import TourTrigger from "$lib/Components/TourTrigger.svelte";
 
   let { data } = $props();
 
@@ -27,7 +29,10 @@
 </svelte:head>
 
 <div class="container px-4 py-28 lg:py-40">
-  <h1 class="mb-8 text-2xl font-bold text-black md:text-3xl dark:text-white">Your Cart</h1>
+  <div class="flex items-center gap-4">
+    <h1 class="text-2xl font-bold text-black md:text-3xl dark:text-white">Your Cart</h1>
+    <TourTrigger startTour={startCartCheckoutTour} />
+  </div>
 
   {#if data.isGuest}
     <!-- Guest: show localStorage cart + login prompt -->
@@ -50,7 +55,7 @@
         </p>
       </div>
 
-      <ul class="space-y-4">
+      <ul data-tour="cart-items" class="space-y-4">
         {#each $cartStore.items as item (item.id)}
           <li class="flex items-center gap-4 rounded-xl bg-brand-100 p-4 dark:bg-brand-900">
             <div class="flex-1">
@@ -85,7 +90,7 @@
       <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
         <!-- Cart items list -->
         <div class="lg:col-span-2">
-          <ul class="space-y-4">
+          <ul data-tour="cart-items" class="space-y-4">
             {#each data.cartItems as item (item.id)}
               <li class="flex items-start gap-4 rounded-xl bg-brand-100 p-4 dark:bg-brand-900">
                 {#if item.product?.image_url}
@@ -119,6 +124,7 @@
                     <input type="hidden" name="item_id" value={item.id} />
                     <label class="text-sm text-gray-500">Qty:</label>
                     <select
+                      data-tour="quantity-select"
                       name="quantity"
                       onchange={(e) => e.target.form.requestSubmit()}
                       disabled={updatingId === item.id}
@@ -145,7 +151,7 @@
                     };
                   }}>
                   <input type="hidden" name="item_id" value={item.id} />
-                  <button type="submit" disabled={removingId === item.id} class="rounded-lg border border-red-300 px-3 py-1 text-sm text-red-600 hover:bg-red-50 disabled:opacity-50">
+                  <button data-tour="remove-item-btn" type="submit" disabled={removingId === item.id} class="rounded-lg border border-red-300 px-3 py-1 text-sm text-red-600 hover:bg-red-50 disabled:opacity-50">
                     {removingId === item.id ? "Removing…" : "Remove"}
                   </button>
                 </form>
@@ -161,7 +167,7 @@
 
         <!-- Order summary sidebar -->
         <div>
-          <div class="sticky top-28 rounded-xl bg-brand-200 p-6 dark:bg-brand-900">
+          <div data-tour="order-summary" class="sticky top-28 rounded-xl bg-brand-200 p-6 dark:bg-brand-900">
             <h2 class="mb-4 text-lg font-bold text-black dark:text-white">Order Summary</h2>
 
             <div class="space-y-2 text-sm">
@@ -203,6 +209,7 @@
                 };
               }}>
               <button
+                data-tour="checkout-btn"
                 type="submit"
                 disabled={checkoutLoading || data.walletBalance < data.cartTotal}
                 class="mt-6 flex w-full items-center justify-center rounded-lg bg-black px-8 py-3 font-medium text-white hover:bg-gray-700 disabled:cursor-not-allowed disabled:opacity-50">

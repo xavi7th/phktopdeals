@@ -1,6 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import { staffInboxStore } from "$lib/stores/staffInboxStore.js";
+  import { audioPreferences } from "$lib/stores/audioPreferences.js";
   import { fetchStaffInbox, fetchConversationMessages, claimConversation, transferConversation, resolveConversation, sendStaffMessage } from "$lib/api/staffApi.js";
   import { subscribeToStaffInbox, unsubscribeFromStaffInbox } from "$lib/stores/staffInboxEvents.js";
   import QueueSidebar from "./QueueSidebar.svelte";
@@ -8,6 +9,17 @@
   import CustomerInfoPanel from "./CustomerInfoPanel.svelte";
 
   let { data } = $props();
+
+  let audioEnabled = $state(true);
+
+  function toggleAudio() {
+    audioEnabled = !audioEnabled;
+    if (audioEnabled) {
+      audioPreferences.unmute();
+    } else {
+      audioPreferences.mute();
+    }
+  }
 
   // Initialize store with server data and WebSocket
   onMount(() => {
@@ -101,12 +113,33 @@
 
 <div class="flex h-[calc(100vh-64px)]">
   <!-- Queue Sidebar -->
-  <div data-tour="queue-sidebar" class="w-80 flex-shrink-0 border-r border-gray-200 bg-white dark:border-neutral-700 dark:bg-neutral-800">
+  <div data-tour="queue-sidebar" class="relative w-80 flex-shrink-0 border-r border-gray-200 bg-white dark:border-neutral-700 dark:bg-neutral-800">
+    <!-- Mute Toggle -->
+    <button
+      onclick={toggleAudio}
+      class="absolute right-2 top-2 z-10 rounded-lg p-2 text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-neutral-700"
+      title={audioEnabled ? "Mute notifications" : "Unmute notifications"}>
+      {#if audioEnabled}
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+        </svg>
+      {:else}
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
+        </svg>
+      {/if}
+    </button>
     <QueueSidebar
       queue={$staffInboxStore.queue}
       myChats={$staffInboxStore.myChats}
       otherActiveChats={$staffInboxStore.otherActiveChats}
       selectedConversationId={$staffInboxStore.selectedConversationId}
+      isLoading={$staffInboxStore.isLoading}
       onSelect={handleSelectConversation}
       onClaim={handleClaim} />
   </div>

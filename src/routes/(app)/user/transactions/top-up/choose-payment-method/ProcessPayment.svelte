@@ -51,7 +51,8 @@
   <SuperDebug data={{ $message, $form, $errors }} label="My form data" collapsible={true} display={dev} />
 </div>
 
-<button data-tour="process-payment-btn"
+<button
+  data-tour="process-payment-btn"
   type="button"
   class="mt-6 inline-flex w-full items-center justify-center rounded-md bg-brand-600 px-12 py-4 font-semibold text-white transition-all duration-200 hover:opacity-80 focus:opacity-80 dark:bg-brand-800"
   aria-haspopup="dialog"

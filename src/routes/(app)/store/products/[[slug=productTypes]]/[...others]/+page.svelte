@@ -8,6 +8,8 @@
   import PageNavigation from "$lib/Components/PageNavigation.svelte";
   import { getPrefs, setPrefs } from "$lib/stores/userPreferences";
   import { onMount } from "svelte";
+  import { startBrowseProductsTour } from "$lib/tours";
+  import TourTrigger from "$lib/Components/TourTrigger.svelte";
 
   let { data } = $props();
 
@@ -48,6 +50,7 @@
 </svelte:head>
 
 <div class="container">
+  <TourTrigger startTour={startBrowseProductsTour} />
   <div class="row">
     <div class="w-full pt-40 md:flex md:space-x-3">
       <Sidebar />
@@ -78,7 +81,7 @@
         <div class="mb-4 flex items-center justify-between">
           <div class="flex items-center gap-2">
             <label class="text-sm text-gray-600 dark:text-neutral-400">Sort:</label>
-            <select class="rounded border border-gray-300 bg-white px-2 py-1 text-sm dark:border-neutral-600 dark:bg-neutral-800" onchange={(e) => updateSortOrder(e.target.value)}>
+            <select data-tour="sort-select" class="rounded border border-gray-300 bg-white px-2 py-1 text-sm dark:border-neutral-600 dark:bg-neutral-800" onchange={(e) => updateSortOrder(e.target.value)}>
               <option value="default" selected={sortOrder === "default"}>Default</option>
               <option value="price_asc" selected={sortOrder === "price_asc"}>Price: Low to High</option>
               <option value="price_desc" selected={sortOrder === "price_desc"}>Price: High to Low</option>
@@ -89,7 +92,7 @@
           </button>
         </div>
 
-        <div class={viewMode === "grid" ? "mb-8 grid grid-cols-3 gap-4 lg:grid-cols-5 lg:gap-5 xl:gap-3" : "mb-8 flex flex-col gap-4"}>
+        <div data-tour="product-grid" class={viewMode === "grid" ? "mb-8 grid grid-cols-3 gap-4 lg:grid-cols-5 lg:gap-5 xl:gap-3" : "mb-8 flex flex-col gap-4"}>
           {#each sortedCards || [] as product}
             <ProductCard {product} />
           {:else}

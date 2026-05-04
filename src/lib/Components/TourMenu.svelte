@@ -12,11 +12,7 @@
 
   let open = $state(false);
 
-  let tours = $derived<TourEntry[]>(
-    $page.url.pathname.startsWith("/admin") || $page.url.pathname.startsWith("/staff")
-      ? staffTours
-      : customerTours
-  );
+  let tours = $derived<TourEntry[]>($page.url.pathname.startsWith("/admin") || $page.url.pathname.startsWith("/staff") ? staffTours : customerTours);
 
   function handleTourStart(start: () => void) {
     open = false;
@@ -42,12 +38,7 @@
 
   {#if open}
     <!-- Backdrop to close -->
-    <button
-      type="button"
-      class="fixed inset-0 z-10 cursor-default"
-      onclick={() => (open = false)}
-      aria-label="Close menu"
-      tabindex="-1"></button>
+    <button type="button" class="fixed inset-0 z-10 cursor-default" onclick={() => (open = false)} aria-label="Close menu" tabindex="-1"></button>
   {/if}
 
   <div
@@ -58,9 +49,7 @@
     <div class="rounded-t-lg bg-gray-100 px-5 py-3 dark:bg-neutral-700">
       <p class="text-sm font-medium text-gray-800 dark:text-neutral-200">Guided Tours</p>
       <p class="text-xs text-gray-500 dark:text-neutral-500">
-        {$page.url.pathname.startsWith("/admin") || $page.url.pathname.startsWith("/staff")
-          ? "Staff & Admin"
-          : "Customer"}{" "}journeys
+        {$page.url.pathname.startsWith("/admin") || $page.url.pathname.startsWith("/staff") ? "Staff & Admin" : "Customer"}{" "}journeys
       </p>
     </div>
     <div class="p-1.5">
@@ -70,7 +59,7 @@
           onclick={() => handleTourStart(tour.start)}
           class="flex w-full items-center gap-x-3.5 rounded-lg px-3 py-2 text-sm text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700 dark:focus:text-neutral-300">
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
           </svg>
           {tour.label}
         </button>

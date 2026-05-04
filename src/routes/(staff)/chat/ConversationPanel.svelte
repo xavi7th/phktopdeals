@@ -21,7 +21,9 @@
   let showResolveConfirm = $state(false);
   let showCannedDropdown = $state(false);
   let messagesContainer;
+  let messageInputElement = $state(null);
   let isLoadingMore = $state(false);
+  let isCustomerTyping = $state(false);
 
   const MAX_MESSAGE_LENGTH = 1000;
 
@@ -48,6 +50,7 @@
     messageInput = response.content;
     showCannedDropdown = false;
     onCannedResponseSelect(response);
+    messageInputElement?.focus();
   }
 
   function handleInput(event) {
@@ -189,6 +192,11 @@
         <MessageBubble {message} />
       {/each}
     {/if}
+
+    <!-- Typing Indicator -->
+    {#if isCustomerTyping}
+      <div class="px-4 py-2 text-sm text-gray-500 dark:text-gray-400">Customer is typing...</div>
+    {/if}
   </div>
 
   <!-- Message Input -->
@@ -217,6 +225,7 @@
 
       <div class="flex-1">
         <textarea
+          bind:this={messageInputElement}
           value={messageInput}
           placeholder="Type your reply..."
           rows="1"
