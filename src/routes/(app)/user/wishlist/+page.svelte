@@ -1,14 +1,20 @@
+<script>
+  import { startWishlistTour } from "$lib/tours";
+  import TourTrigger from "$lib/Components/TourTrigger.svelte";
+</script>
+
 <div class="rounded-xl bg-white p-8 px-8 shadow-lg sm:mx-10 dark:bg-[#404040]">
-  <div class="flex justify-between border-b py-2 text-slate-800 dark:text-slate-200">
+  <TourTrigger startTour={startWishlistTour} />
+  <div class="flex justify-between border-b py-2 text-slate-800 dark:text-slate-200" data-tour="wishlist-header">
     <p>Wishlist</p>
-    <button
+    <button data-tour="add-wishlist-btn"
       type="button"
       class="inline-flex items-center justify-center gap-x-2 text-nowrap rounded-md border border-transparent bg-brand-400 px-4 py-2.5 text-sm font-normal text-gray-800 shadow-md hover:bg-brand-500 focus:bg-brand-500 focus:outline-none disabled:pointer-events-none disabled:opacity-50">
       Add Wishlist
     </button>
   </div>
   <div class="mt-3 flex flex-col gap-2">
-    <div class="flex flex-col rounded-xl border bg-white shadow-sm dark:border-neutral-700 dark:bg-neutral-900 dark:shadow-neutral-700/70">
+    <div data-tour="wishlist-item-card" class="flex flex-col rounded-xl border bg-white shadow-sm dark:border-neutral-700 dark:bg-neutral-900 dark:shadow-neutral-700/70">
       <div class="relative p-4 md:p-5">
         <p class="mt-1 text-gray-500 dark:text-neutral-400">Card</p>
         <div class="sm:text-auto mt-1 items-center gap-2 text-[12px] text-gray-500 sm:flex dark:text-neutral-600">

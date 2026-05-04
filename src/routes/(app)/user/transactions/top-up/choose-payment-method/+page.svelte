@@ -1,5 +1,7 @@
 <script>
   import ProcessPayment from "./ProcessPayment.svelte";
+  import { startWalletTopupTour } from "$lib/tours";
+  import TourTrigger from "$lib/Components/TourTrigger.svelte";
 
   let { data } = $props();
   let { currencies, form, rate } = data;
@@ -13,6 +15,7 @@
 </svelte:head>
 
 <div class="relative">
+  <TourTrigger startTour={startWalletTopupTour} />
   <section class="relative pb-80 sm:pb-[35rem] md:pb-96 lg:min-h-[1000px]">
     <div class="absolute inset-x-0 bottom-0 z-10 lg:flex">
       <img class="hidden w-full md:block" src="https://cdn.rareblocks.xyz/collection/celebration/images/hero/5/credit-cards.png" alt="" />
@@ -27,7 +30,7 @@
         <p class="mt-5 text-base sm:text-lg dark:text-gray-400">Top up your wallet easily using our different payment methods. We accept payments in various Online Payment channels for your convenience.</p>
 
         <div class="mx-auto mt-8 max-w-sm sm:mt-16">
-          <div class="space-y-3">
+          <div data-tour="payment-method-select" class="space-y-3">
             <!-- <div
               class="overflow-hidden rounded-md border-2 border-gray-200 bg-white transition-all duration-200 hover:bg-gray-100/80 dark:border-gray-200/30 dark:bg-white/10 hover:dark:bg-gray-50/20 {paymentMethod ===
               'crypto'

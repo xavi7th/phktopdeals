@@ -15,6 +15,8 @@
   import { page } from "$app/stores";
   import { addToCart } from "$lib/cart.remote.js";
   import { invalidateAll } from "$app/navigation";
+  import { startPurchaseProductTour } from "$lib/tours";
+  import TourTrigger from "$lib/Components/TourTrigger.svelte";
 
   let selectedDenomination = "btn-0";
 
@@ -123,6 +125,7 @@
 </svelte:head>
 
 <div class="container px-4 py-28 lg:py-40">
+  <TourTrigger startTour={startPurchaseProductTour} />
   <div class="fixed bottom-0 left-0 z-[60] max-w-md">
     <SuperDebug data={{ $message, $form, $errors }} label="My form data" collapsible={true} display={dev} />
   </div>
@@ -171,7 +174,7 @@
         {:else}
           <!-- Button grid for products with few denominations -->
           {@const sortedDenoms = [...(product?.product_price?.denominations || [])].sort((a, b) => a - b)}
-          <div class="grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-4">
+          <div data-tour="denomination-grid" class="grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-4">
             {#each sortedDenoms as amount, idx}
               <button
                 type="button"
@@ -196,10 +199,10 @@
         </div>
         <div class="flex flex-col gap-2 sm:gap-4">
           {#if !user?.email}
-            <FloatingTextInput name="email" type="email" label="Email Address :" placeholder="Value will be sent to this email address" bind:value={$form.email} msg={$errors.email} />
+            <div data-tour="email-input"><FloatingTextInput name="email" type="email" label="Email Address :" placeholder="Value will be sent to this email address" bind:value={$form.email} msg={$errors.email} /></div>
           {/if}
 
-          <FloatingNumericTextInput
+          <div data-tour="quantity-input"><FloatingNumericTextInput
             name="quantity"
             label="Quantity"
             size="p-3"
@@ -207,7 +210,7 @@
             placeholder={`${toCurrency(discountedUnitPrice)} per Quantity`}
             bind:value={$form.quantity}
             isError={!!$errors.quantity}
-            msg={$errors.quantity} />
+            msg={$errors.quantity} /></div>
         </div>
       </div>
 
@@ -219,7 +222,7 @@
           </p>
         {/if}
 
-        <button
+        <button data-tour="add-to-cart-btn"
           type="button"
           onclick={handleAddToCart}
           disabled={addToCartLoading || $form.unit_price <= 0}
@@ -234,7 +237,7 @@
         </div>
         <div class="relative flex min-h-24 items-center justify-center">
           <div class="absolute flex shrink-0 flex-col items-center justify-center gap-3" transition:slide={{ duration: 900 }}>
-            <LoadingButton
+            <div data-tour="pay-with-wallet-btn"><LoadingButton
               class="mt-10 bg-black px-10 py-4 font-medium hover:bg-gray-700 hover:text-neutral-50 focus:bg-gray-700"
               disabled={Number(totalPurchaseAmount) > user?.wallet_balance || totalPurchaseAmount <= 0 || (!user?.email && !$form.email)}
               aria-haspopup="dialog"
@@ -246,7 +249,7 @@
               {:else}
                 Pay with Wallet Funds {toCurrency(totalPurchaseAmount)}
               {/if}
-            </LoadingButton>
+            </LoadingButton></div>
 
             <ProcessInvoicePurchase data={$form} {paymentAmount} {user} />
 

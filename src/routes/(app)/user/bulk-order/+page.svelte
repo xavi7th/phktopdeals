@@ -1,9 +1,15 @@
+<script>
+  import { startBulkOrderTour } from "$lib/tours";
+  import TourTrigger from "$lib/Components/TourTrigger.svelte";
+</script>
+
 <div class="rounded-xl bg-white p-10 shadow-lg sm:mx-10 dark:bg-[#404040]">
+  <TourTrigger startTour={startBulkOrderTour} />
   <h1 class="text-2xl font-extrabold text-slate-800 dark:text-slate-200">Bulk Order</h1>
   <span class="text-sm text-slate-700 dark:text-slate-300">Download, list, and upload your bulk order—all in a snap!</span>
   <div class="mt-8 space-y-4">
     <div class="rounded-xl border border-dashed p-6 text-slate-800 dark:text-slate-200">
-      <div class="flex flex-col items-center">
+      <div class="flex flex-col items-center" data-tour="bulk-order-download">
         <a href="#">Bulk Order.xlsx</a>
       </div>
       <div class="mt-8 flex flex-col items-center justify-center">
@@ -20,7 +26,7 @@
         </div>
         <span class="text-[#FFDA1C]">Drage & Drop</span>
         <span>Or</span>
-        <label
+        <label data-tour="file-upload"
           class="block text-nowrap rounded-full border border-transparent bg-[#FFDA1C] p-6 py-2.5 text-sm text-[#713f12] shadow-md hover:bg-brand-500 focus:bg-brand-500 focus:outline-none disabled:pointer-events-none disabled:opacity-50">
           Browse File
           <input type="file" class="hidden" />

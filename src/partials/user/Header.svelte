@@ -2,6 +2,7 @@
   import { toCurrency } from "$lib/helpers";
   import Logo from "$lib/Components/Logo.svelte";
   import SvgIcon from "$lib/Components/SvgIcon.svelte";
+  import TourMenu from "$lib/Components/TourMenu.svelte";
   import { bell, crescentMoon, dollarCircle, purchaseBag, sunRays, undoIcon } from "$lib/Components/iconPaths";
 
   /** @type { import('$lib/types').AppUser } */
@@ -35,6 +36,8 @@
               <SvgIcon class="size-4 shrink-0" svgHeight={24} minHeight="65%" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" slot={sunRays} />
             </span>
           </button>
+
+          <TourMenu />
 
           <button
             type="button"

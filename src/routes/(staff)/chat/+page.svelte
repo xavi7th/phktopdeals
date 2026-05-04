@@ -101,7 +101,7 @@
 
 <div class="flex h-[calc(100vh-64px)]">
   <!-- Queue Sidebar -->
-  <div class="w-80 flex-shrink-0 border-r border-gray-200 bg-white dark:border-neutral-700 dark:bg-neutral-800">
+  <div data-tour="queue-sidebar" class="w-80 flex-shrink-0 border-r border-gray-200 bg-white dark:border-neutral-700 dark:bg-neutral-800">
     <QueueSidebar
       queue={$staffInboxStore.queue}
       myChats={$staffInboxStore.myChats}
@@ -112,7 +112,7 @@
   </div>
 
   <!-- Conversation Panel -->
-  <div class="flex min-w-0 flex-1 flex-col">
+  <div data-tour="conversation-panel" class="flex min-w-0 flex-1 flex-col">
     {#if $staffInboxStore.selectedConversationId}
       <ConversationPanel
         conversation={$staffInboxStore.selectedConversation}

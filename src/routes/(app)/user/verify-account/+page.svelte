@@ -12,11 +12,14 @@
     "optionTemplate": "<div><div class='flex items-center'><div class='me-2' data-icon></div><div class='text-gray-800 dark:text-neutral-200' data-title></div></div></div>",
     "extraMarkup": "<div class='absolute top-1/2 end-3 -translate-y-1/2'><svg class='shrink-0 size-3.5 text-gray-500 dark:text-neutral-500' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m7 15 5 5 5-5'/><path d='m7 9 5-5 5 5'/></svg></div>"
   }`;
+  import { startVerifyAccountTour } from "$lib/tours";
+  import TourTrigger from "$lib/Components/TourTrigger.svelte";
 </script>
 
 <div class="mb-28 rounded-xl bg-white p-10 px-4 shadow-lg sm:mx-10 dark:bg-[#404040]">
+  <TourTrigger startTour={startVerifyAccountTour} />
   <h1 class="text-2xl font-extrabold text-slate-900 dark:text-slate-100">Verify Account</h1>
-  <div class="mt-10 flex items-center justify-between gap-4 text-slate-800 md:px-6 dark:text-slate-200">
+  <div data-tour="verify-step-indicator" class="mt-10 flex items-center justify-between gap-4 text-slate-800 md:px-6 dark:text-slate-200">
     <div class="flex items-center gap-2">
       <p class="grid size-6 place-content-center rounded-full bg-[#FFDA1C] text-sm">1</p>
       <span class="text-[.6em] md:text-sm">ID document</span>
@@ -36,13 +39,13 @@
     <div class="rounded-xl border border-dashed p-6 pb-12">
       <div class="flex flex-col items-center">
         <!-- <input type="text" name="" id="" class="block w-full border rounded-xl text-center"> -->
-        <select id="region-select" data-hs-select={regionSelectOptions} class="hidden" value="Drivers License">
+        <select data-tour="document-select" id="region-select" data-hs-select={regionSelectOptions} class="hidden" value="Drivers License">
           <option value="ID card">ID card</option>
           <option value="Drivers License">Drivers License</option>
         </select>
         <span class="text-xs">Only image/PDF file are accepted ( Max size 1MB )</span>
       </div>
-      <div class="mt-8 flex flex-col items-center justify-center">
+      <div data-tour="file-upload-zone" class="mt-8 flex flex-col items-center justify-center">
         <div class="grid size-20 place-content-center rounded-full border">
           <svg xmlns="http://www.w3.org/2000/svg" class="size-[45px]" viewBox="0 0 24 24">
             <path
@@ -56,7 +59,7 @@
         </div>
         <span class="text-[#FFDA1C]">Drage & Drop</span>
         <span>Or</span>
-        <label
+        <label data-tour="file-upload"
           class="block text-nowrap rounded-full border border-transparent bg-[#FFDA1C] p-6 py-2.5 text-sm text-[#713f12] shadow-md hover:bg-brand-500 focus:bg-brand-500 focus:outline-none disabled:pointer-events-none disabled:opacity-50">
           Browse File
           <input type="file" class="hidden" />

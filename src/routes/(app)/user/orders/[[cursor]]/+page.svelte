@@ -6,6 +6,8 @@
   import { preloadData, pushState, goto } from "$app/navigation";
   import TableSkeleton from "$lib/Components/TableSkeleton.svelte";
   import OrderDetailsPage from "../details/[orderId]/+page.svelte";
+  import { startOrderHistoryTour } from "$lib/tours";
+  import TourTrigger from "$lib/Components/TourTrigger.svelte";
 
   export let data;
 
@@ -33,7 +35,8 @@
   };
 </script>
 
-<div class="grid grid-cols-3 gap-6 sm:mx-10 sm:grid-cols-5">
+<div data-tour="order-tabs" class="grid grid-cols-3 gap-6 sm:mx-10 sm:grid-cols-5">
+  <TourTrigger startTour={startOrderHistoryTour} />
   {#each orderTabs as tab}
     <a
       href={tab.filter ? "/user/orders?filter=" + tab.filter : "/user/orders"}
@@ -54,7 +57,7 @@
 {#await pageData}
   <TableSkeleton />
 {:then pageData}
-  <Table tCaption="List of Orders" tDescription="Your order history will be listed here. You can also view your vouchers for completed transactions." navData={{ ...pageData.metadata, basePageUrl: "/user/orders" }}>
+  <Table data-tour="order-list" tCaption="List of Orders" tDescription="Your order history will be listed here. You can also view your vouchers for completed transactions." navData={{ ...pageData.metadata, basePageUrl: "/user/orders" }}>
     <svelte:fragment slot="thead">
       <th scope="col" class="px-6 py-3 text-start">
         <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">Product</span>
@@ -80,7 +83,7 @@
                   #{order.id}
                 </span>
                 {#if order.is_processed}
-                  <a
+                  <a data-tour="voucher-link"
                     href="/user/orders/details/{order.id}"
                     class="flex w-32 items-center rounded-lg pt-2 text-sm text-gray-800 underline dark:text-neutral-400 dark:hover:text-neutral-300 dark:focus:text-neutral-300"
                     on:click={loadDetails}>

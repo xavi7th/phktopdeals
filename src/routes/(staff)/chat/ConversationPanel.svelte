@@ -146,7 +146,7 @@
 
       <!-- Resolve Button -->
       {#if conversation?.status !== "resolved"}
-        <button onclick={() => (showResolveConfirm = true)} class="rounded-lg bg-green-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-green-700">Resolve</button>
+        <button data-tour="resolve-btn" onclick={() => (showResolveConfirm = true)} class="rounded-lg bg-green-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-green-700">Resolve</button>
       {/if}
     </div>
   </div>

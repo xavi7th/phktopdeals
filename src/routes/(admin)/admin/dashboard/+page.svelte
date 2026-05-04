@@ -10,7 +10,7 @@
 </script>
 
 <div class="space-y-4 p-4 sm:space-y-6 sm:p-6">
-  <div class="grid gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
+  <div data-tour="stat-cards" class="grid gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
     <div class="flex flex-col rounded-xl border bg-white shadow-sm dark:border-neutral-700 dark:bg-neutral-800">
       <div class="p-4 md:p-5">
         <div class="flex items-center gap-x-2">
@@ -121,7 +121,7 @@
   {#await transactions}
     <TableSkeleton />
   {:then transactions}
-    <Table tCaption="Latest Orders" tDescription="Last 10 orders received and their current status." navData={{ ...transactions.metadata, basePageUrl: "/admin/dashboard" }}>
+    <Table data-tour="orders-table" tCaption="Latest Orders" tDescription="Last 10 orders received and their current status." navData={{ ...transactions.metadata, basePageUrl: "/admin/dashboard" }}>
       <svelte:fragment slot="tableAction">
         <div class="grid gap-3 md:flex md:items-center md:justify-between">
           <div>

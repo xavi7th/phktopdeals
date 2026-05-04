@@ -78,6 +78,7 @@
     "@testing-library/svelte": "^5.3.1",
     "chart.js": "^4.5.1",
     "dompurify": "^3.3.3",
+    "driver.js": "^1.4.0",
     "laravel-echo": "^2.3.1",
     "motion": "^12.36.0",
     "pusher-js": "^8.4.0",

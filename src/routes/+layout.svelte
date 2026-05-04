@@ -14,6 +14,7 @@
   import "swiper/css";
   import "swiper/css/autoplay";
   import "swiper/css/pagination";
+  import "driver.js/dist/driver.css";
 
   let { children } = $props();
   let ChatWidgetComponent = $state(null);
