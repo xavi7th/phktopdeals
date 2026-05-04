@@ -34,6 +34,7 @@
   <div class="relative">
     <div class="absolute right-[-50%] top-2 hidden items-center rounded-full border border-gray-200 bg-gray-200 p-0.5 lg:flex dark:border-white/20 dark:bg-neutral-800">
       <a
+        data-tour="top-up-link"
         href="/user/transactions/top-up/choose-payment-method"
         title=""
         class="mr-4 inline-flex h-11 w-auto items-center justify-center justify-self-end rounded-full bg-gray-200 px-3 text-gray-800 dark:bg-neutral-800 dark:text-neutral-300">

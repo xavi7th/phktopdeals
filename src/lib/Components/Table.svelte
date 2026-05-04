@@ -14,7 +14,7 @@
   let itemsPerPage = navData?.items_count || 15;
 </script>
 
-<div class="mt-7 overflow-hidden rounded-xl bg-white shadow-lg dark:bg-gray-600 {$$slots.mobile ? 'hidden md:block' : ''}" {...$$restProps}>
+<div data-tour="transaction-list" class="mt-7 overflow-hidden rounded-xl bg-white shadow-lg dark:bg-gray-600 {$$slots.mobile ? 'hidden md:block' : ''}" {...$$restProps}>
   <!-- <div class="flex flex-col items-center gap-5 border-b border-[#00000020] px-5 py-7 pb-9 sm:flex-row sm:px-10">
 		<div class="flex w-full sm:w-[280px]">
 			<input type="date" name="" id="" class="block w-full rounded-xl border" />
@@ -122,7 +122,7 @@
   </div>
 </div>
 
-<div class="mt-8 grid gap-4 space-y-4 {$$slots.mobile ? 'md:hidden' : 'hidden'}" class:md:hidden={$$slots.mobile}>
+<div data-tour="transaction-list-mobile" class="mt-8 grid gap-4 space-y-4 {$$slots.mobile ? 'md:hidden' : 'hidden'}" class:md:hidden={$$slots.mobile}>
   <div class="ml-6 inline-flex w-11/12 flex-col justify-end pb-8 pt-4 text-start text-xl font-semibold text-gray-600 dark:text-neutral-300">
     <div class="caption flex-1">
       <span>{tCaption}</span>

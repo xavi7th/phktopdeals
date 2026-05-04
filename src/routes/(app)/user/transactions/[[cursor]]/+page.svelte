@@ -5,6 +5,8 @@
   import SvgIcon from "$lib/Components/SvgIcon.svelte";
   import TableSkeleton from "$lib/Components/TableSkeleton.svelte";
   import { checkMarkFilledAlt, exclamationCircle, xCircle } from "$lib/Components/iconPaths";
+  import TourTrigger from "$lib/Components/TourTrigger.svelte";
+  import { startUserTransactionsTour } from "$lib/tours/userTransactions";
 
   export let data;
 
@@ -53,6 +55,8 @@
     <Toast positioned={true} type={redirectStatus} msg={statusMsg[redirectStatus]} />
   </div>
 {/if}
+
+<TourTrigger startTour={startUserTransactionsTour} />
 
 <svelte:head>
   <title>Top Up Wallet | HotDeals</title>

@@ -10,6 +10,7 @@ export { startBulkOrderTour } from "./bulkOrder";
 export { startVerifyAccountTour } from "./verifyAccount";
 export { startAdminDashboardTour } from "./adminDashboard";
 export { startChatInboxTour } from "./chatInbox";
+export { startUserTransactionsTour } from "./userTransactions";
 export { startCartCheckoutTour } from "./cartCheckout";
 
 export const customerTours = [
@@ -22,6 +23,7 @@ export const customerTours = [
   { id: "bulk-order", label: "Bulk Order", start: startBulkOrderTour },
   { id: "verify-account", label: "Verify Account", start: startVerifyAccountTour },
   { id: "cart-checkout", label: "Cart & Checkout", start: startCartCheckoutTour },
+  { id: "user-transactions", label: "Transactions", start: startUserTransactionsTour },
 ];
 
 export const staffTours = [
