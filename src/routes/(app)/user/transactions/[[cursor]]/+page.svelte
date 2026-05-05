@@ -81,7 +81,7 @@
 {#await transactions}
   <TableSkeleton />
 {:then transactions}
-  <Table tCaption="List of Top Up Transactions" navData={{ ...transactions.metadata, basePageUrl: "/user/transactions" }}>
+  <Table data-tour="transaction-list" tCaption="List of Top Up Transactions" navData={{ ...transactions.metadata, basePageUrl: "/user/transactions" }}>
     <svelte:fragment slot="thead">
       <th scope="col" class="px-6 py-3 text-center">
         <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-neutral-200">ID</span>
